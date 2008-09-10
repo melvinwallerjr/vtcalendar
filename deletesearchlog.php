@@ -6,7 +6,7 @@ require_once('session_start.inc.php');
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 

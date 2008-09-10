@@ -15,7 +15,7 @@ require_once('session_start.inc.php');
     if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } else { unset($category['name']); }
 	}
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 

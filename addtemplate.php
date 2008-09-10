@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
   require("inputtdata.inc.php");
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }

@@ -42,7 +42,7 @@ How this script executes:
 	require_once('main_globalsettings.inc.php');
 	
 	// Open the database and verify that the user is authorized.
-	$database = DBopen();
+	$database = DBCONNECTION;
 	if (!viewauthorized($database)) { exit; }
 
 	// Set the default body color.

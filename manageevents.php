@@ -3,7 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('globalsettings.inc.php');
 
-$database = DBopen();
+$database = DBCONNECTION;
 if (!authorized($database)) { exit; }
 
 pageheader(lang('manage_events'),

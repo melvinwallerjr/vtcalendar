@@ -345,7 +345,7 @@ function DBopen() {
   $database = DB::connect( DATABASE );
   
 	if (DB::isError($database)) {
-		return "Cannot connect to the database: " . $database->getMessage();
+		return $database->getMessage();
 	}
 	
 	echo "<p>OPENED CONNECTION</p>";
@@ -872,10 +872,10 @@ function getCalendarData($calendarid, $database) {
 }
 
 function calendar_exists($calendarid) {
-  $database = DBopen();
-  $result = DBQuery($database, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
+  //$database = DBopen();
+  $result = DBQuery(DBCONNECTION, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
   $r = $result->fetchRow(0);
-  $database->disconnect();
+  DBCONNECTION->disconnect();
   return ($r[0]==1);
 }
 

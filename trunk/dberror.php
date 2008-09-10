@@ -29,7 +29,7 @@
 		<td style="padding: 8px;"><img src="images/warning_48w.gif" width="48" height="48"></td>
 	    <td style="padding: 8px;"><h1>Database Error:</h1>
     	<div>An error was encountered when attempting to connect to the database.<?php
-				if (defined(DBCONNECTION) && is_string(DBCONNECTION)) {
+				if (defined("DBCONNECTION") && is_string(DBCONNECTION)) {
 					?><br><b><?php echo htmlentities(DBCONNECTION); ?></b><?php
 				}
 				if (isset($_GET['message'])) {

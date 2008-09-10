@@ -107,8 +107,8 @@
       
 	    $event_timebegin_num = timestamp2timenumber($event['timebegin']);
 	    $event_timeend_num = timestamp2timenumber($event['timeend']);
-			$begintimediff = $currentTimestamp_num - $event_timebegin_num;
-			$endtimediff = $currentTimestamp_num - $event_timeend_num;
+			$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
+			$endtimediff = NOW_AS_TIMENUM - $event_timeend_num;
 			$event['timelabel'] = timenumber2timelabel($event_timeend_num - $event_timebegin_num);
 			$EventHasPassed = ( $datediff > 0 || ( $datediff == 0 && $endtimediff > 0 ) );
 			

@@ -113,8 +113,8 @@ while ($ievent < $result->numRows()) {
     $event_timeend_num = timestamp2timenumber($event['timeend']);
 		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
 		$timediff = $event_timeend_num - $event_timebegin_num;
-		$begintimediff = $currentTimestamp_num - $event_timebegin_num;
-		$endtimediff = $currentTimestamp_num - $event_timeend_num;
+		$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
+		$endtimediff = NOW_AS_TIMENUM - $event_timeend_num;
 		$EventHasPassed = ( $datediff > 0 || ( $datediff == 0 && $endtimediff > 0 ) );
 
 	// print event

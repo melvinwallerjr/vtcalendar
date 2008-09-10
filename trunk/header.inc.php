@@ -11,7 +11,7 @@ Defines a single function that outputs the page header:
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title><?php echo $title; ?> - Howard University</title>
+    <title><?php echo TITLEPREFIX; ?><?php echo $title; ?><?php echo TITLESUFFIX; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo lang('encoding'); ?>">
     <meta content="en-us" http-equiv=language>
     <?php if ($view == "event") { ?>

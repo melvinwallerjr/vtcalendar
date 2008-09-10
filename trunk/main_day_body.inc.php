@@ -1,10 +1,11 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-?>
 
-<?php if (!empty($_SESSION["AUTH_SPONSORID"])) { ?>
-<div style="padding: 5px;"><?php adminButtons($showdate, array('new'), "normal", "horizontal"); ?></div>
-<?php } ?>
+// Admin controls
+if (!empty($_SESSION["AUTH_SPONSORID"])) {
+	?><div style="padding: 5px;"><?php adminButtons($showdate, array('new'), "normal", "horizontal"); ?></div><?php
+}
+?>
 
 <!-- Start Day Body -->
 <table id="DayTable" width="100%" cellpadding="6" cellspacing="0" border="0">
@@ -54,8 +55,8 @@
  	  disassemble_eventtime($event);	
 		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
 		$timediff = $event_timeend_num - $event_timebegin_num;
-		$begintimediff = $currentTimestamp_num - $event_timebegin_num;
-		$endtimediff = $currentTimestamp_num - $event_timeend_num;
+		$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
+		$endtimediff = NOW_AS_TIMENUM - $event_timeend_num;
 		$EventHasPassed = ( $datediff > 0 || ( $datediff == 0 && $endtimediff > 0 ) );
 		
 		// Start of Event Row

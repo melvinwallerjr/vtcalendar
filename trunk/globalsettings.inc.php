@@ -1,5 +1,5 @@
 <?php
-// in effect, any file that includes "globalsettings.inc.php" is also authorized to call other include files
+// Allow any script that includes globalsettings.inc.php include files that restrict their access.
 define("ALLOWINCLUDES", TRUE);
 
 // Include the necessary files.
@@ -10,17 +10,9 @@ require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');
 require_once("content_modules.inc.php");
 
-/*
-How globalsettings.inc.php script runs:
-============================================================
-1. Set up some constants that define valid values.
-2. Set up variables that contain reusable information.
-2. Determine if a new calendar ID was set.
-3. If a new calendar ID was set, then reload preferences and log the user out.
-4. If the session variable is not set, then set it to the default, reload preferences and log the user out.
-5. If the visitor is using an old browser, exclude month view.
-6. Set up the week starting day, and whether or not we are using a 24-clock.
-*/
+/* ============================================================
+         Constants that define valid values for fields.
+============================================================ */
 
 define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
 //NOT USED define("BGCOLORNAVBARACTIVE","#993333");
@@ -38,49 +30,63 @@ define("MAXLENGTH_SPONSOR","50");
 define("FEEDBACKPOS","0");
 define("FEEDBACKNEG","1");
 
-$currentTimestamp = date("Y-m-d H:i:s");
-$currentTimestamp_num = timestamp2timenumber($currentTimestamp);
+
+/* ============================================================
+                   Current date and time
+============================================================ */
+
+define("NOW", date("Y-m-d H:i:s"));
+define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW));
+
+
+/* ============================================================
+                        Define colors
+============================================================ */
 
 $colorpast = $_SESSION["PASTCOLOR"];
 $colortoday  = $_SESSION["TODAYCOLOR"];
 $colorfuture = $_SESSION["FUTURECOLOR"];
 
-// If the session is already set, and the current value of the session is the same as the one being passed in the query string...
-if ( isset($_SESSION["CALENDARID"]) &&
-			( ( isset($_GET['calendarid']) && $_SESSION["CALENDARID"] == $_GET['calendarid'] ) ||
-				( isset($_GET['calendar']) && $_SESSION["CALENDARID"] == $_GET['calendar'] ) ) )
-	{ unset($calendarid); }
+/* ============================================================
+           Load the calendar preferences and logout
+============================================================ */
 
-// If the query string is passing a valid CalendarID
-elseif ( isset($_GET['calendarid']) && isValidInput($_GET['calendarid'],'calendarid') )
-	{ $calendarid = $_GET['calendarid']; }
+// Get the specified calendar ID from the query string, either as 'calendarid' or 'calendar'.
+if (isset($_GET['calendarid'])) {
+	$calendarid = $_GET['calendarid'];
+}
+elseif (isset($_GET['calendar'])) {
+	$calendarid = $_GET['calendar'];
+}
 
-// If the query string is passing a valid CalendarID (variation of the previous IF block)
-elseif ( isset($_GET['calendar']) && isValidInput($_GET['calendar'],'calendarid'))
-	{ $calendarid = $_GET['calendar']; }
+// Unset the calendar ID if it is invalid.
+if (!isValidInput($calendarid,'calendarid')) {
+	unset($calendarid);
+}
 
-// Otherwise, the query string is not passing in a new CalendarID...
-else
-	{ unset($calendarid); }
+// Unset the calendar ID if it is already set in the session.
+if (isset($_SESSION["CALENDARID"]) && isset($calendarid) && $_SESSION["CALENDARID"] == $calendarid) {
+	unset($calendarid);
+}
 
-// If a new CalendarID was specified then load that calendar
-if ( isset($calendarid) ) { 
-  if ( calendar_exists ( $calendarid ) ) { 
-  	// switch to different calendar
+// Set a default calendar if one was not specified in the query string or session.
+if (!isset($_SESSION["CALENDARID"]) && !isset($calendarid)) {
+  $calendarid = "default";
+}
+
+// If the calendar ID was specified then load that calendar
+if (isset($calendarid)) { 
+  if (calendar_exists($calendarid)) { 
     $_SESSION["CALENDARID"] = $calendarid;
     setCalendarPreferences();
 		logout();
   }
 }
 
-// If the session does not yet have a calendar ID load the default calendar
-if ( !isset($_SESSION["CALENDARID"]) ) {
-  $_SESSION["CALENDARID"] = "default";
-  setCalendarPreferences();
-	logout();
-}
 
-// Exclude month view for certain browsers because of extremely slow load times.
+/* ============================================================
+                  Fixes for slow browsers
+============================================================ */
 if ( $_SERVER["HTTP_USER_AGENT"] == "Mozilla/4.0 (compatible; MSIE 5.22; Mac_PowerPC)" ) {
 	$enableViewMonth = false;
 } 
@@ -88,21 +94,28 @@ else {
   $enableViewMonth = true; 
 }
 
+
+/* ============================================================
+     Set up the week starting day and time display format.
+============================================================ */
+
 // Sets variable to according to week starting day specified in "config.inc.php".
 // Sunday is default week starting day if WEEK_STARTING_DAY isn't defined in "config.inc.php'
-if(WEEK_STARTING_DAY == 0 || WEEK_STARTING_DAY == 1 ) {
+if (WEEK_STARTING_DAY == 0 || WEEK_STARTING_DAY == 1 ) {
     $week_start = WEEK_STARTING_DAY;
-}else{
+}
+else {
   $week_start = 0;  
 }
 
-if(USE_AMPM == false){
-  $use_ampm=false;
-  $day_beg_h=0;    // if 0:00 - 23:00 time format is used,appropriate day start, end hours will be passed to datetime2timestamp funtions where calculating day edges
-  $day_end_h=23;
-}else{
-  $use_ampm=true;
-  $day_beg_h=0;
-  $day_end_h=11;
+if (USE_AMPM == false) {
+  $use_ampm = false;
+  $day_beg_h = 0; // if 0:00 - 23:00 time format is used, appropriate day start/end hours will be passed to datetime2timestamp funtions where calculating day edges
+  $day_end_h = 23;
+}
+else {
+  $use_ampm = true;
+  $day_beg_h = 0;
+  $day_end_h = 11;
 }
 ?>

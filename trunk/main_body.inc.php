@@ -1,7 +1,7 @@
 <?php // prohibits direct calling of include files
 			if (!defined("ALLOWINCLUDES")) { exit; } ?>
 
-<!-- Start Right Column -->
+<!-- Start Body Column -->
 <td id="CalRightCol" width="100%" valign="top" <?php if ($IsTodayBodyColor) echo 'class="TodayHighlighted"'; ?>>
 	
 	<!-- Start Filter Notice -->
@@ -50,5 +50,6 @@
 		</tr>
 	</table>
 	<!-- End Body -->
+
 </td>
-<!-- End Right Column -->
+<!-- End Body Column -->

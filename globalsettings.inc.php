@@ -30,22 +30,12 @@ define("MAXLENGTH_SPONSOR","50");
 define("FEEDBACKPOS","0");
 define("FEEDBACKNEG","1");
 
-
 /* ============================================================
                    Current date and time
 ============================================================ */
 
 define("NOW", date("Y-m-d H:i:s"));
 define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW));
-
-
-/* ============================================================
-                        Define colors
-============================================================ */
-
-$colorpast = $_SESSION["PASTCOLOR"];
-$colortoday  = $_SESSION["TODAYCOLOR"];
-$colorfuture = $_SESSION["FUTURECOLOR"];
 
 /* ============================================================
            Load the calendar preferences and logout
@@ -83,6 +73,13 @@ if (isset($calendarid)) {
   }
 }
 
+/* ============================================================
+                        Define colors
+============================================================ */
+
+$colorpast = $_SESSION["PASTCOLOR"];
+$colortoday  = $_SESSION["TODAYCOLOR"];
+$colorfuture = $_SESSION["FUTURECOLOR"];
 
 /* ============================================================
                   Fixes for slow browsers
@@ -93,7 +90,6 @@ if ( $_SERVER["HTTP_USER_AGENT"] == "Mozilla/4.0 (compatible; MSIE 5.22; Mac_Pow
 else { 
   $enableViewMonth = true; 
 }
-
 
 /* ============================================================
      Set up the week starting day and time display format.

@@ -127,7 +127,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_inactive_sponsors'),
              lang('delete_inactive_sponsors'),
 	           "Update","",$database);
-  box_begin("inputbox",lang('delete_inactive_sponsors'));
+  contentsection_begin(lang('delete_inactive_sponsors'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php echo lang('delete_inactive_sponsors_message'); ?> 
@@ -142,7 +142,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

@@ -9,7 +9,7 @@ if (!authorized($database)) { exit; }
 pageheader(lang('manage_events'),
 				 lang('manage_events'),
 				 "Update","",$database);
-box_begin("inputbox",lang('manage_events'),true);
+contentsection_begin(lang('manage_events'),true);
 
 $ievent = 0;
 $today = Decode_Date_US(date("m/d/Y"));
@@ -162,7 +162,7 @@ if ($result->numRows() > 0 ) {
 	<?php
 } // end: if ($result->numRows() > 0 )
 
-box_end();
+contentsection_end();
 require("footer.inc.php");
 DBclose($database);
 

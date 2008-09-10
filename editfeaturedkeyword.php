@@ -57,7 +57,7 @@ require_once('session_start.inc.php');
     pageheader(lang('edit_featured_keyword'),
                lang('edit_featured_keyword'),
                "Update","",$database);
-    box_begin("inputbox",lang('edit_featured_keyword'));
+    contentsection_begin(lang('edit_featured_keyword'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
       $searchkeyword = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -69,7 +69,7 @@ require_once('session_start.inc.php');
     pageheader(lang('add_new_featured_keyword'),
                lang('add_new_featured_keyword'),
                "Update","",$database);
-    box_begin("inputbox",lang('add_new_featured_keyword'));
+    contentsection_begin(lang('add_new_featured_keyword'));
 	}
 ?>
 <br>
@@ -116,7 +116,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

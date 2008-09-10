@@ -120,7 +120,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_event'),
              lang('delete_event'),
              "Update","",$database);
-  box_begin("inputbox",lang('delete_event'));
+  contentsection_begin(lang('delete_event'));
 ?>
 <FORM method="post" action="deleteevent.php">
 <?php
@@ -179,7 +179,7 @@ require_once('session_start.inc.php');
   <BR>
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

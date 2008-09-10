@@ -40,7 +40,7 @@ require_once('session_start.inc.php');
   pageheader(lang('change_homepage'),
              lang('change_homepage'),
 	           "Update","",$database);
-  box_begin("inputbox",lang('change_homepage'));
+  contentsection_begin(lang('change_homepage'));
 ?>
 <p><B><?php echo lang('change_homepage_label'); ?></B><BR>
 <I><?php echo lang('change_homepage_example'); ?></I></p>
@@ -60,7 +60,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

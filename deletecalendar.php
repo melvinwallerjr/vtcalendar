@@ -49,7 +49,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_calendar'),
              lang('delete_calendar'),
              "Update","",$database);
-  box_begin("inputbox",lang('delete_calendar'));
+  contentsection_begin(lang('delete_calendar'));
 ?>
 <font color="#ff0000"><b><?php echo lang('warning_calendar_delete'); ?> &quot;<b><?php echo $c['name']; ?></b>&quot;</b></font>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -62,7 +62,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

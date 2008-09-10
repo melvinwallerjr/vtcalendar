@@ -32,7 +32,7 @@
 		----------------------------------------------------
 		function checknewpassword(&$user)
 		function checkoldpassword(&$user,$userid,$database)
-		function displaylogin($errormsg,$database)
+		function displaylogin($database, $errormsg="")
 		function displaymultiplelogin($database, $errorMessage="")
 		function displaynotauthorized($database)
 		function userauthenticated($database,$userid,$password)
@@ -76,10 +76,10 @@
 		
 		Message Windows:
 		----------------------------------------------------
-		function box_begin($class, $headertext, $showMenuButton=false)
-		function box_end()
-		function helpbox_begin()
-		function helpbox_end()
+		function contentsection_begin($headertext="", $showBackToMenuButton=false)
+		function contentsection_end()
+		function helpwindow_header()
+		function helpwindow_footer()
 		
 		Event Date/Time Functions:
 		----------------------------------------------------
@@ -382,7 +382,7 @@ function checkoldpassword(&$user,$userid,$database) {
 }
 
 // display login screen and errormsg (if exists)
-function displaylogin($errormsg,$database) {
+function displaylogin($database, $errormsg="") {
   global $lang;
   
   // Force HTTPS is the server is not being accessed via localhost.
@@ -397,7 +397,7 @@ function displaylogin($errormsg,$database) {
   pageheader(lang('update_page_header'),
              "Login",
             "Update","",$database);
-  box_begin("inputbox",lang('login'));
+  contentsection_begin(lang('login'));
 
   if (!empty($errormsg)) {
     echo "<BR>\n";
@@ -405,6 +405,7 @@ function displaylogin($errormsg,$database) {
   }
 	?>
   <DIV>
+  <?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
   <FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
 	<?php
 	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($GLOBALS["eventid"]),"\">\n"; }
@@ -429,19 +430,22 @@ function displaylogin($errormsg,$database) {
 	<script language="JavaScript1.2"><!--
 	  document.loginform.login_userid.focus();
 	//--></script>
+	<?php if (file_exists("static-includes/loginform-post.txt")) { include('static-includes/loginform-post.txt'); } ?>
   </DIV>
 	<?php
-  box_end();
+  contentsection_end();
 
   require("footer.inc.php");
-} // end: Function displaylogin
+} // end: function displaylogin
 
-// display login screen
+// Display a list of sponsors that the user belongs to
+// so they can choose the one they wish to login as.
 function displaymultiplelogin($database, $errorMessage="") {
   pageheader(lang('login'),
              lang('login'),
             "Update","",$database);
-  box_begin("inputbox",lang('choose_sponsor_role'));
+  
+  contentsection_begin(lang('choose_sponsor_role'));
   
   if (!empty($errorMessage)) {
   	echo "<p>", htmlentities($errorMessage) ,"</p>";
@@ -477,7 +481,7 @@ function displaymultiplelogin($database, $errorMessage="") {
 	}
 	?>
 	</table><?php
-  box_end();
+  contentsection_end();
 
   require("footer.inc.php");
 } // end: function displaymultiplelogin
@@ -486,14 +490,14 @@ function displaynotauthorized($database) {
   pageheader(lang('login'),
              lang('login'),
             "Update","",$database);
-  box_begin("inputbox",lang('error_not_authorized'));
+  contentsection_begin(lang('error_not_authorized'));
 	?>
 	<?php echo lang('error_not_authorized_message'); ?><br>
 	<br>
 	    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
 	<BR>
 	<?php
-  box_end();
+  contentsection_end();
 
   require("footer.inc.php");
 } // end: Function displaynotauthorized
@@ -654,7 +658,7 @@ function authorized($database) {
 			$_SESSION["AUTH_USERID"] = $userid;
 		}
     else {
-		  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult, $database);
+		  displaylogin($database, lang('login_failed') . "<br>Reason: " . $authresult);
 			return false;
     }
   }
@@ -761,7 +765,7 @@ function authorized($database) {
 	
 	// Otherwise, show the login form.
 	else {
-	  displaylogin("",$database);
+	  displaylogin($database, "");
 		return false;
 	}
 } // end: Function authorized()
@@ -812,7 +816,7 @@ function viewauthorized($database) {
     
     if (!$authok) {
 			// display login error message
-      displaylogin("Error! Your login failed. Please try again.",$database);
+      displaylogin($database, "Error! Your login failed. Please try again.");
     }
   }
   
@@ -833,7 +837,7 @@ function viewauthorized($database) {
 			redirect2URL(SECUREBASEURL.$page."?calendar=".$_SESSION["CALENDARID"]);
 		}
 		
-    displaylogin("",$database);
+    displaylogin($database);
   }
   
   return $authok;
@@ -1281,10 +1285,12 @@ function assemble_eventtime(&$event) {
   return 0;
 }
 
-// prints out the HTML code a box begins with, use box_end to finish the box
-function box_begin($class, $headertext, $showMenuButton=false) {
+// Output the beginning of a section where content can be displayed.
+// Normally, the background is colored and the background of the calendar cells are colored white.
+// When any other content needs to be displayed, it should be enclosed by contentsection_begin and contentsection_end.
+function contentsection_begin($headertext="", $showBackToMenuButton=false) {
 	
-	if ($showMenuButton) {
+	if ($showBackToMenuButton) {
 		?><div id="MenuButton"><table border="0" cellpadding="3" cellspacing="0"><tr><td><b><a href="update.php"><?php echo lang('back_to_menu'); ?></a></b></td></tr></table></div><?php
 	}
 	
@@ -1293,44 +1299,44 @@ function box_begin($class, $headertext, $showMenuButton=false) {
   if (!empty($headertext)) {
     echo "<h2>".htmlentities($headertext).":</h2>";
 	}
-	
 }
 
-// prints out the HTML code a box ends with, use box_begin to begin the box
-function box_end() {
+// Output the end of a section where content can be displayed.
+// Normally, the background is colored and the background of the calendar cells are colored white.
+// When any other content needs to be displayed, it should be enclosed by contentsection_begin and contentsection_end.
+function contentsection_end() {
 	?></div></div><?php
 }
 
-// prints out the HTML code a helpbox begins with, use helpbox_end to finish the helpbox
-function helpbox_begin() {
+// Outputs the header HTML code for a pop-up help window. See helpwindow_footer() as well.
+function helpwindow_header() {
 	?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 	<html>
-  <head>
-    <title><?php echo lang('help'); ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <meta content="en-us" http-equiv=language>
-    <link href="stylesheet.php" rel="stylesheet" type="text/css">
-  </head>
-  <body bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" onLoad="this.window.focus()">
+	<head>
+		<title><?php echo lang('help'); ?></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta content="en-us" http-equiv=language>
+		<link href="stylesheet.php" rel="stylesheet" type="text/css">
+	</head>
+	<body bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" onLoad="this.window.focus()">
 		<br>
 		<table border="0" cellPadding="5" cellSpacing="0">
 			<tr>
-				<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
-				<td bgcolor="#eeeeee">  
-				<?php
-				} // end: function helpbox_begin
-				
-				// prints out the HTML code a helpbox ends with, use helpbox_begin to begin the helpbox
-				function helpbox_end() {
-				?>
+			<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
+			<td bgcolor="#eeeeee"><?php
+} // end: function helpwindow_header
+	
+// Outputs the footer HTML code for a pop-up help window. See helpwindow_header() as well.
+function helpwindow_footer() {
+  ?></td>
 				<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
 			</tr>
 		</table>
 		<br>
-  </body>
+	</body>
 	</html>
 	<?php
-}
+} // end: function helpwindow_footer
 
 // display input fields for a date (month, day, year)
 function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar) {

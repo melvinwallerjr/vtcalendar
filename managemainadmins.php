@@ -10,7 +10,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_main_admins'),
 					 lang('manage_main_admins'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_main_admins'),true);
+	contentsection_begin(lang('manage_main_admins'),true);
 ?>
 <form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <p><a href="addmainadmin.php"><?php echo lang('add_new_main_admin'); ?></a> <?php echo lang('or_delete_existing'); ?></p>
@@ -40,7 +40,7 @@ require_once('session_start.inc.php');
 <b><?php echo $result->numRows(); ?> <?php echo lang('main_admins_total'); ?></b>
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

@@ -44,7 +44,7 @@ require_once('session_start.inc.php');
              lang('change_password'),
 	           "Update","",$database);
 
-  box_begin("inputbox",lang('change_password'));
+  contentsection_begin(lang('change_password'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <TABLE border="0" cellpadding="2" cellspacing="0">
@@ -96,7 +96,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

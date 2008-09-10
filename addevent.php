@@ -42,7 +42,7 @@ require_once('session_start.inc.php');
   pageheader(lang('choose_template'),
              lang('choose_template'),
              "","",$database);
-  box_begin("inputbox",lang('choose_template'));
+  contentsection_begin(lang('choose_template'));
 ?>
 <BR>
 <FORM method="post" action="changeeinfo.php">
@@ -72,7 +72,7 @@ require_once('session_start.inc.php');
 ?>
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

@@ -6,7 +6,7 @@ require_once('session_start.inc.php');
   if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
   $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
   $database = DBopen();
-  helpbox_begin();
+  helpwindow_header();
 ?>
 <H3><IMG alt="" border=0 height=16 src="images/nuvola/16x16/actions/help.png" width=16>
 <?php echo lang('help_export'); ?>
@@ -80,5 +80,5 @@ require_once('session_start.inc.php');
 </table>
 <br>
 <?php
-  helpbox_end();
+  helpwindow_footer();
 ?>

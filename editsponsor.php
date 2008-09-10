@@ -144,7 +144,7 @@ require_once('session_start.inc.php');
     pageheader(lang('edit_sponsor'),
                lang('edit_sponsor'),
                "Update","",$database);
-    box_begin("inputbox",lang('edit_sponsor'));
+    contentsection_begin(lang('edit_sponsor'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
       $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -154,7 +154,7 @@ require_once('session_start.inc.php');
     pageheader(lang('add_new_sponsor'),
                lang('add_new_sponsor'),
                "Update","",$database);
-    box_begin("inputbox",lang('add_new_sponsor'));
+    contentsection_begin(lang('add_new_sponsor'));
 	}
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -269,7 +269,7 @@ if ($sponsor['admin']) {
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

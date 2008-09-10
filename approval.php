@@ -83,7 +83,7 @@ pageheader(lang('approve_reject_event_updates'),
            lang('approve_reject_event_updates'),
            "Update","",$database);
 
-box_begin("inputbox",lang('approve_reject_event_updates'),true);
+contentsection_begin(lang('approve_reject_event_updates'),true);
 
 // print list with events
 $query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory";
@@ -176,7 +176,7 @@ else {
 		<?php
   }
 }
-box_end();
+contentsection_end();
 require("footer.inc.php");
 DBclose($database);
   

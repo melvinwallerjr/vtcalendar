@@ -11,6 +11,16 @@ require_once('languages/'.LANGUAGE.'.inc.php');
 require_once("content_modules.inc.php");
 
 /* ============================================================
+                Open the database connection
+============================================================ */
+
+define("DBCONNECTION", DBOpen());
+if (is_string(DBCONNECTION)) {
+	include("dberror.php");
+	exit;
+}
+
+/* ============================================================
          Constants that define valid values for fields.
 ============================================================ */
 

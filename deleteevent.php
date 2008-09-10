@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   if (isset($_POST['httpreferer'])) { setVar($httpreferer,$_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -26,33 +26,53 @@
   $database = DBopen();
   if (!authorized($database)) { exit; }
 
-  if (!isset($httpreferer)) { $httpreferer = $_SERVER["HTTP_REFERER"]; }
+  if (!isset($httpreferer)) {
+		if (empty($_SERVER["HTTP_REFERER"])) {
+			$httpreferer = "update.php";
+		}
+		else {
+	  	$httpreferer = $_SERVER["HTTP_REFERER"];
+	  }
+  }
+  if (isset($detailscaller)) { $httpreferer .= "&detailscaller=$detailscaller"; }
 
-  // check that none other than the even owner (or the calendar admin) calls for deletion
-  $query = "SELECT sponsorid FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
+  // check that the event exists.
+  $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query );
   if ($result->numRows() > 0) { 
   	  $e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-  	  if (!(
-  	        (isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"] == $e['sponsorid']) || 
-  	        !empty($_SESSION["AUTH_ADMIN"])
-  	       )) {
-           redirect2URL($httpreferer);
-           exit;
-      }
   }
   else {
-    redirect2URL($httpreferer);
-    exit;
-  }  
-
+  	$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
+		$result = DBQuery($database, $query ); 
+  	
+		// If the event exists in "event_public", then insert it into "event" since it is missing...
+		if ($result->numRows() > 0) {
+			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			insertintoevent($e['id'],$e,$database);
+		}
+		
+		// Otherwise, the event does not exist at all.
+		else {
+	    redirect2URL($httpreferer);
+	    exit;
+		}
+  }
+  
+  // Check that the user is an admin or the sponsor for the event to be deleted.
+  if (!(
+	    !empty($_SESSION["AUTH_ADMIN"]) ||
+	    (isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"] == $e['sponsorid'])
+	   )) {
+   redirect2URL($httpreferer);
+   exit;
+  }
 
   if (isset($cancel)) {
-    $target = $httpreferer;
-    if (isset($detailscaller)) { $target .= "&detailscaller=$detailscaller"; }
-    redirect2URL($target);
+    redirect2URL($httpreferer);
     exit;
-  }
+  };
+
   
   if (isset($deleteconfirmed)) {
     // get the event title from the database
@@ -88,9 +108,7 @@
       redirect2URL("update.php?fbid=edeletesuccess&fbparam=".urlencode(stripslashes($event['title'])));
     }
     else {
-      $target = $httpreferer;
-      if (isset($detailscaller)) { $target .= "&detailscaller=$detailscaller"; }
-      redirect2URL($target);
+      redirect2URL($httpreferer);
     }
     exit;
   }
@@ -102,7 +120,6 @@
   pageheader(lang('delete_event'),
              lang('delete_event'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('delete_event'));
 ?>
 <FORM method="post" action="deleteevent.php">
@@ -111,7 +128,7 @@
     if (isset($detailscaller)) { echo "<INPUT type=\"hidden\" name=\"detailscaller\" value=\"$detailscaller\">\n"; }
 
     if (isset($check)) { // ask for delete confirmation
-      $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.contact_name,e.contact_email,e.contact_phone,e.price,e.url,e.displayedsponsor,e.displayedsponsorurl,e.wholedayevent,e.repeatid,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.id='".sqlescape($eventid)."'";
+      $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.contact_name,e.contact_email,e.contact_phone,e.price,e.url,e.displayedsponsor,e.displayedsponsorurl,e.wholedayevent,e.repeatid,e.categoryid,c.id,c.name AS category_name FROM vtcal_event e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.id='".sqlescape($eventid)."'";
       $result = DBQuery($database, $query );
 
       if ($result->numRows() > 0) { // display the preview only if there is a corresponding entry in "event"
@@ -163,6 +180,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

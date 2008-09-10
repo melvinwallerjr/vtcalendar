@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
   require_once("xmlparser.inc.php");
 
   if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
@@ -52,19 +52,19 @@ global $eventlist,$event,$eventnr,
   $event['wholedayevent'] = ($timebegin == "00:00") && ($timeend == "23:59");
 
   // make sure that the previous event got all the input fields
-  if (!(strlen($event['displayedsponsor']) <= MAXLENGTH_SPONSOR)) { feedback(lang('import_error_displayedsponsor'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['displayedsponsorurl']) <= MAXLENGTH_URL && checkurl($event['displayedsponsorurl']))) { feedback(lang('import_error_displayedsponsorurl'),FEEDBACKNEG); $error = true; }
-  if (!(eventtimebeginvalid($event['timebegin']))) { feedback(lang('import_error_timebegin'),FEEDBACKNEG); $error = true; }
-  if (!(eventtimeendvalid($event['timeend']))) { feedback(lang('import_error_timeend'),FEEDBACKNEG); $error = true; }
-  if (!(array_key_exists($event['categoryid'],$validcategory))) { feedback(lang('import_error_categoryid'),FEEDBACKNEG); $error = true; }
-  if (!(!empty($event['title']) && strlen($event['title']) <= MAXLENGTH_TITLE)) { feedback(lang('import_error_title'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['description']) <= MAXLENGTH_DESCRIPTION)) { feedback(lang('import_error_description'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['location']) <= MAXLENGTH_LOCATION)) { feedback(lang('import_error_location'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['price']) <= MAXLENGTH_PRICE)) { feedback(lang('import_error_price'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['contact_name']) <= MAXLENGTH_CONTACT_NAME)) { feedback(lang('import_error_contact_name'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['contact_phone']) <= MAXLENGTH_CONTACT_PHONE)) { feedback(lang('import_error_contact_phone'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['contact_email']) <= MAXLENGTH_CONTACT_EMAIL)) { feedback(lang('import_error_contact_email'),FEEDBACKNEG); $error = true; }
-  if (!(strlen($event['url']) <= MAXLENGTH_URL && checkurl($event['url']))) { feedback(lang('import_error_contact_url'),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['displayedsponsor']) <= MAXLENGTH_SPONSOR)) { feedback(lang('import_error_displayedsponsor').": ".htmlentities($event['displayedsponsor']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['displayedsponsorurl']) <= MAXLENGTH_URL && checkurl($event['displayedsponsorurl']))) { feedback(lang('import_error_displayedsponsorurl').": ".htmlentities($event['displayedsponsorurl']),FEEDBACKNEG); $error = true; }
+  if (!(eventtimebeginvalid($event['timebegin']))) { feedback(lang('import_error_timebegin').": ".htmlentities($event['timebegin']),FEEDBACKNEG); $error = true; }
+  if (!(eventtimeendvalid($event['timeend']))) { feedback(lang('import_error_timeend').": ".htmlentities($event['timeend']),FEEDBACKNEG); $error = true; }
+  if (!(array_key_exists($event['categoryid'],$validcategory))) { feedback(lang('import_error_categoryid').": ".htmlentities($event['categoryid']),FEEDBACKNEG); $error = true; }
+  if (!(!empty($event['title']) && strlen($event['title']) <= MAXLENGTH_TITLE)) { feedback(lang('import_error_title').": ".htmlentities($event['']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['description']) <= MAXLENGTH_DESCRIPTION)) { feedback(lang('import_error_description').": ".htmlentities($event['description']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['location']) <= MAXLENGTH_LOCATION)) { feedback(lang('import_error_location').": ".htmlentities($event['location']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['price']) <= MAXLENGTH_PRICE)) { feedback(lang('import_error_price').": ".htmlentities($event['price']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['contact_name']) <= MAXLENGTH_CONTACT_NAME)) { feedback(lang('import_error_contact_name').": ".htmlentities($event['contact_name']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['contact_phone']) <= MAXLENGTH_CONTACT_PHONE)) { feedback(lang('import_error_contact_phone').": ".htmlentities($event['contact_phone']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['contact_email']) <= MAXLENGTH_CONTACT_EMAIL)) { feedback(lang('import_error_contact_email').": ".htmlentities($event['contact_email']),FEEDBACKNEG); $error = true; }
+  if (!(strlen($event['url']) <= MAXLENGTH_URL && checkurl($event['url']))) { feedback(lang('import_error_contact_url').": ".htmlentities($event['url']),FEEDBACKNEG); $error = true; }
 
   // save all the data of the previous event in the array
 	if (!$error) {
@@ -174,7 +174,6 @@ function xmlerror_importevent($xml_parser) {
   pageheader(lang('import_events'),
              lang('import_events'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('import_events'));
   
   $showinputbox = 1;
@@ -225,10 +224,6 @@ function xmlerror_importevent($xml_parser) {
 						$showinputbox = 0;
 						echo "<br>\n";
 						feedback($eventnr." ".lang('events_successfully_imported'),FEEDBACKPOS);
-						echo "<br>\n";
-						echo "<form method=\"post\" action=\"update.php\">\n";
-						echo '  <input type="submit" name="back" value="',lang('back_to_menu'),'">',"\n";
-						echo "</form>\n";
 					}
 					else {
 						feedback(lang('import_file_contains_no_events'),FEEDBACKNEG);
@@ -256,7 +251,7 @@ if (isset($importurl)) { echo $importurl; } ?>" size="60" maxlength="<?php echo 
 <?php
   } // end: if ($showinputbox)
   box_end();
-  echo "<BR>";
 
   require("footer.inc.php");
+DBclose($database);
 ?>

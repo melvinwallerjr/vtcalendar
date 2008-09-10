@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
   require("inputtdata.inc.php");
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -65,7 +65,6 @@
   pageheader(lang('edit_template'),
              lang('edit_template'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('edit_template'));
 ?>
 <BR>
@@ -81,6 +80,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

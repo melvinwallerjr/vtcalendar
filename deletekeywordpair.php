@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   if (isset($_GET['id'])) { setVar($id,$_GET['id'],'searchkeywordid'); } else { unset($id); }
 

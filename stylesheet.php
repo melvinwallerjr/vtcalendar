@@ -1,26 +1,11 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   header("Content-Type: text/css");	
   if (strpos(" ".$_SERVER["HTTP_USER_AGENT"],"MSIE") > 0) { $ie = 1; }
   else { $ie = 0; }  
 ?>
-BODY, TD, P {
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	FONT-FAMILY: Arial,Helvetica,Sans-Serif;
-	MARGIN: 0 0 0 0;
-}
-A {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>; 
-	TEXT-DECORATION: none;
-}
-A:visited {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>; 
-	TEXT-DECORATION: none;
-}
-A:hover {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>; 
-	TEXT-DECORATION: none;
-}
+
 .calendartitle {
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: 20px;
@@ -35,60 +20,8 @@ A:hover {
 .eventtimebig {
 	FONT-SIZE: 18px; 
 }
-.littlecalendardatetitle {
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small;
-}
-.littlecalendarheader {
-	FONT-SIZE: <?php if ($ie) { echo "x"; } ?>x-small; 
-	BACKGROUND-COLOR: <?php echo $_SESSION["BGCOLOR"]; ?>;
-}
-.littlecalendarday {
-	FONT-SIZE: <?php if ($ie) { echo "x"; } ?>x-small; 
-	BACKGROUND-COLOR: <?php echo $_SESSION["BGCOLOR"]; ?>;
-}
-.littlecalendarweek {
-	FONT-SIZE: xx-small; 
-	BACKGROUND-COLOR: <?php echo $_SESSION["BGCOLOR"]; ?>;
-}
-.littlecalendarother {
-	FONT-SIZE: <?php if ($ie) { echo "x"; } ?>x-small; 
-	COLOR: #cccccc;
-}
-.todayis {
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small;  
-}
-.todayis A {
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.todayis A:visited {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.todayis A:hover {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.weekheader {
-	BACKGROUND-COLOR: <?php echo $_SESSION["GRIDCOLOR"]; ?>; 
-	COLOR: <?php echo $_SESSION["TEXTCOLOR"]; ?>;
-}
-.monthheader {
-	BACKGROUND-COLOR: #aaaaaa; 
-	COLOR: #000000;
-}
-.past {
-	BACKGROUND-COLOR: <?php echo $_SESSION["PASTCOLOR"]; ?>;
-}
-A.past {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-A.past:visited {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-A.past:hover {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.today {
+
+/*.today {
 	BACKGROUND-COLOR: <?php echo $_SESSION["TODAYCOLOR"]; ?>;
 }
 .future {
@@ -118,16 +51,16 @@ A.past:hover {
 }
 .announcement {
 	FONT-SIZE: medium;
-}
+}*/
 .feedbackpos {
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	COLOR: #00CC14;
+	COLOR: #008800;
 }
 .feedbackneg {
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	COLOR: #FF1A00;
+	COLOR: #CC0000;
 }
 .example {
   color: #999999;

@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -27,7 +27,6 @@
   pageheader(lang('add_new_keyword_pair'),
              lang('add_new_keyword_pair'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('add_new_keyword_pair'));
 ?>
 <br>
@@ -68,14 +67,12 @@
 			</td>
 		</tr>
 	</table>
-	<input type="hidden" name="check" value="1">
-	<BR>
-  <BR>
+	<input type="hidden" name="check" value="1"><BR>
   <INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

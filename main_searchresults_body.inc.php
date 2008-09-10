@@ -1,12 +1,11 @@
 <?php
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-?><table cellspacing="5" cellpadding="0" width="100%" bgcolor="#ffffff" border="0">
-      <FORM method="post" action="main.php?view=search">
-			<tr><td colspan="3">
-			<br>
-        <INPUT type="submit" name="back" value="&laquo; <?php echo lang('back_to_prev_page'); ?>">
-				<br><br>
-			</td></tr>
+?>
+<FORM method="get" action="main.php" style="margin: 0; padding: 0;">
+<input type="hidden" name="calendarid" value="<?php echo htmlentities($_SESSION["CALENDARID"]) ?>">
+<input type="hidden" name="view" value="search">
+<p><INPUT type="submit" value="&laquo; <?php echo lang('back_to_prev_page'); ?>"></p>
+<table id="DayTable" width="100%" cellpadding="6" cellspacing="0" border="0">
 <?php
 if (isset($timebegin_year)) { // details was called from the searchform
 	$timebegin = datetime2timestamp($timebegin_year,$timebegin_month,$timebegin_day,12,0,"am");
@@ -66,12 +65,12 @@ if (!empty($keyword)) {
 		  // print featured text if exists
 			if ( isset($search_featured) && array_key_exists ($kw, $search_featured) ) {
 			  	echo "<tr valign=\"top\">\n  <td colspan=\"3\">\n";
-				echo '<table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td >';
-				echo '<table border="0" cellspacing="2" cellpadding="5" width="100%"><tr><td bgcolor="#ffffff">';
-				echo $search_featured[$kw];
+				echo '<table border="1" cellspacing="0" cellpadding="0" width="100%"><tr><td >';
+				echo '<table border="1" cellspacing="2" cellpadding="5" width="100%"><tr><td bgcolor="#ffffff">';
+				echo str_replace("\r", "<br>", make_clickable(htmlentities($search_featured[$kw])));
 				echo '</td></tr></table>';
 				echo '</td></tr></table>';
-			  	echo "  <br><br></td>\n</tr>\n";
+			  	echo "<br></td>\n</tr>\n";
 			}
 			
 			$query.= " and (";
@@ -102,16 +101,30 @@ if ($ievent < $result->numRows()) {
 else {
 ?>
         <tr valign="top">
-          <td colspan="3"><br><span class="announcement">&nbsp;&nbsp;<?php echo lang('no_events_found'); ?>.<br><br><br><br><br><br></span></td>
+          <td colspan="3"><span class="announcement">&nbsp;&nbsp;<?php echo lang('no_events_found'); ?>.</span></td>
         </tr>
 <?php	
 } // end: else: if ($ievent < $result->numRows())
 
 // print all events of one day
 while ($ievent < $result->numRows()) {
+ 	  disassemble_eventtime($event);	
+    $event_timebegin_num = timestamp2timenumber($event['timebegin']);
+    $event_timeend_num = timestamp2timenumber($event['timeend']);
+		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
+		$timediff = $event_timeend_num - $event_timebegin_num;
+		$begintimediff = $currentTimestamp_num - $event_timebegin_num;
+		$endtimediff = $currentTimestamp_num - $event_timeend_num;
+		$EventHasPassed = ( $datediff > 0 || ( $datediff == 0 && $endtimediff > 0 ) );
+
 	// print event
-	echo '        <tr valign="top">',"\n";
-	echo '          <td width="1%" align="right" valign="top" nowrap>',"\n";
+	echo '        <tr valign="top" class="BorderTop">',"\n";
+	echo '          <td width="1%" align="right" valign="top" nowrap';
+  if ( $EventHasPassed ) {
+	  echo ' class="TimeColumn-Past"'; }
+	else {
+		echo ' class="TimeColumn"'; }
+	echo '>',"\n";
 	echo '          	';
     echo searchresult_date_format($event_timebegin['day'],Day_of_Week_to_Text(Day_of_Week($event_timebegin['month'],$event_timebegin['day'],$event_timebegin['year'])),Month_to_Text($event_timebegin['month']),$event_timebegin['year']);
 
@@ -127,21 +140,16 @@ while ($ievent < $result->numRows()) {
         $previousWholeDay = true;
 	}
 	echo '</td>',"\n";
-	echo '          <td width="1%" bgcolor="',$_SESSION["MAINCOLOR"],'"><img src="images/spacer.gif" width="5" height=1" alt=""></td>',"\n";
-	echo "          <td width=\"98%\"><a href=\"main.php?view=event&eventid=",$event['eventid'],"\"><b>",highlight_keyword($keyword,$event['title']),"</b></a> -\n";
-	echo "            ",highlight_keyword($keyword,$event['category_name'])," ";
-	if (!empty($event['location'])) { echo "(".highlight_keyword($keyword,$event['location']).")"; }
-
-    if ((isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"] == $event['sponsorid']) || !empty($_SESSION["AUTH_ADMIN"])) {
-		echo " &nbsp;&nbsp;<a href=\"changeeinfo.php?eventid=",$event['eventid'],"\" title=\"",lang('update_event'),"\">";
-		echo "<img src=\"images/nuvola/16x16/actions/color_line.png\" height=\"16\" width=\"16\" alt=\"",lang('update_event'),"\" border=\"0\"></a>";
-		
-		echo " <a href=\"changeeinfo.php?copy=1&eventid=",$event['eventid'],"\" title=\"",lang('copy_event'),"\">";
-		echo "<img src=\"images/nuvola/16x16/actions/editcopy.png\" height=\"16\" width=\"16\" alt=\"",lang('copy_event'),"\" border=\"0\"></a>";
-		
-		echo " <a href=\"deleteevent.php?eventid=",$event['eventid'],"&check=1\" title=\"",lang('delete_event'),"\">";
-		echo "<img src=\"images/nuvola/16x16/actions/button_cancel.png\" height=\"16\" width=\"16\" alt=\"",lang('delete_event'),"\" border=\"0\"></a>";
-    }
+	echo '<td width="98%"';
+  if ( $EventHasPassed ) {
+	  echo ' class="DataColumn-Past"'; }
+	else {
+		echo ' class="DataColumn"'; }
+	echo '><div class="EventLeftBar"><b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+	echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
+	echo '">',highlight_keyword($keyword,$event['title']),"</a></b> - ";
+	if ( !empty($event['location']) ) { echo highlight_keyword($keyword,htmlentities($event['location'])); }
+	/*echo " -- <i>".highlight_keyword($keyword,htmlentities($event['category_name']))."</i>";*/
 
 	echo "<br>\n";
 	if (!empty($event['description'])) {
@@ -151,7 +159,7 @@ while ($ievent < $result->numRows()) {
 	else {
 		echo "<br>\n";
 	}
-	echo "</td>\n";
+	echo "</div></td>\n";
 	echo '        </tr>',"\n";
 
 	// read next event if one exists
@@ -166,8 +174,5 @@ while ($ievent < $result->numRows()) {
 // keep search log
 $searchlogresult = DBQuery($database, "INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(date("Y-m-d H:i:s", time()))."','".sqlescape($_SERVER['REMOTE_ADDR'])."','".sqlescape($result->numRows())."','".sqlescape($keyword)."')" );
 ?>
-        <tr valign="top">
-          <td colspan="3"><br><br><br></td>
-        </tr>
-      </FORM>
-      </table>
+</table>
+</FORM>

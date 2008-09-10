@@ -1,10 +1,10 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
   logout();
 	
   // reroute to calendar home page
-  redirect2URL("index.php");
+  redirect2URL("main.php");
   exit;
 ?>

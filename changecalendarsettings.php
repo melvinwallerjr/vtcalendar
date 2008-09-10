@@ -1,7 +1,7 @@
 <?php //
-session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
 require_once('globalsettings.inc.php');
-require_once('functions.inc.php');
 
 $database = DBopen();
 if (!authorized($database)) { exit; }
@@ -87,7 +87,7 @@ if ( isset($save) ) {
 				$addPIDError = lang('user_ids_invalid')." &quot;".$pidsInvalid."&quot;";
 			}
 			else {
-				$addPIDError = lange('user_id_invalid')." &quot;".$pidsInvalid."&quot;";
+				$addPIDError = lang('user_id_invalid')." &quot;".$pidsInvalid."&quot;";
 			}
 		}
 	} // end: else: if ( empty($users) )
@@ -124,67 +124,11 @@ $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 pageheader(lang('change_header_footer_colors_auth'),
            lang('change_header_footer_colors_auth'),
            "Update","",$database);
-echo "<br>\n";
 box_begin("inputbox", lang('change_header_footer_colors_auth'));
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="globalSettings">
-<script language="javascript">
-function UpdateNewColor( colorVarName, colorImgName, color ) {
-  document[colorImgName].src = "images/webcolors/" + color + ".gif";
-  document.globalSettings[colorVarName].value = '#' + color;
-}
 
-function WebColorTable( colorVarName, colorImgName, initColor )
-{
-  var cur_color = initColor.substr(1,6).toLowerCase();
-  var cur_image = "images/webcolors/" + cur_color + ".gif";
-
-  // have to nest table in a shell table so netscape correctly fills in background color
-  document.writeln('<table border="0" cellpadding="0" cellspacing="0"><tr><td bgcolor="#000000">');
-  document.writeln('<table border="0" cellpadding="0" cellspacing="1" bgcolor="#000000">');
-
-  var color;
-
-  for (hgreen=0; hgreen<=153; hgreen+=153) {
-    for (red=0; red<=255; red+=51) {
-      document.writeln('<tr>');
-      for (green=hgreen; green<=hgreen+102; green+=51) {
-        for (blue=0; blue<=255; blue+=51) {
-          // determine the color from the rgb value
-          color = '';
-
-          if (red<=16) color += '0' + red.toString(16);
-          else color += red.toString(16);
-
-          if (green<=16) color += '0' + green.toString(16);
-          else color += green.toString(16);
-
-          if (blue<=16) color += '0' + blue.toString(16);
-          else color += blue.toString(16);
-
-          document.write('<td align="center" bgcolor="#' + color + '">');
-          document.write('<a href="javascript:UpdateNewColor(\'' + colorVarName + '\', \'' + colorImgName + '\', \'' + color + '\');">');
-
-          if(color == cur_color) {
-            if((red/51 > 3) || (green/51 > 3) || (blue/51 > 3))
-              document.write('<img src="images/frame_dark.gif" width="13" height="13" border="0" alt=""></a></td>');
-            else
-              document.write('<img src="images/frame_lite.gif" width="13" height="13" border="0" alt=""></a></td>');
-          } else {
-            document.write('<img src="images/spacer.gif" width="13" height="13" border="0" alt=""></a></td>');
-          }
-        }
-      }
-      document.writeln('</tr>');
-    }
-  }
-
-  document.writeln('</table></td></tr>');
-  document.writeln('<tr><td align="right" valign="top">');
-  document.writeln('</td></tr></table>');
-}
-</script>
- <br>
+<p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 
   <b><?php echo lang('calendar_title'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_text'); ?></font><br>
   <input type="text" name="title" maxlength="<?php echo $constCalendarTitleMAXLENGTH; ?>" size="30" value="<?php 
@@ -201,12 +145,125 @@ function WebColorTable( colorVarName, colorImgName, initColor )
   <b><?php echo lang('footer_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
   <textarea name="footer" wrap="physical" cols="70" rows="10"><?php
 	echo htmlentities($footer);
-  ?></textarea><br>
-  <br>
+  ?></textarea>
 
+<?php if ($_SESSION["AUTH_USERID"] != "amekkawi") { ?>
+
+<p>Note: Changing colors on the calendar is currently disabled.</p>
+<input type="hidden" name="bgcolor" value="<?php echo $bgcolor; ?>">
+<input type="hidden" name="maincolor" value="<?php echo $maincolor; ?>">
+<input type="hidden" name="textcolor" value="<?php echo $textcolor; ?>">
+<input type="hidden" name="linkcolor" value="<?php echo $linkcolor; ?>">
+<input type="hidden" name="gridcolor" value="<?php echo $gridcolor; ?>">
+<input type="hidden" name="pastcolor" value="<?php echo $pastcolor; ?>">
+<input type="hidden" name="todaycolor" value="<?php echo $todaycolor; ?>">
+<input type="hidden" name="futurecolor" value="<?php echo $futurecolor; ?>">
+
+<?php } else { ?>
+
+<script language="javascript">
+var WebColorTableTemplate = "";
+
+function UpdateNewColor( colorVarName, colorImgName, color ) {
+  document[colorImgName].src = "images/webcolors/" + color + ".gif";
+  document.globalSettings[colorVarName].value = '#' + color;
+}
+
+function GenerateWebColorTableTemplate() {
+	if (WebColorTableTemplate == "") {
+	  // have to nest table in a shell table so netscape correctly fills in background color
+	  WebColorTableTemplate = WebColorTableTemplate + '<table class="ColorTable" border="0" cellpadding="0" cellspacing="0">';
+	
+		var color;
+	
+	  for (hgreen=0; hgreen<=153; hgreen+=153) {
+	    for (red=0; red<=255; red+=51) {
+	      WebColorTableTemplate = WebColorTableTemplate + '<tr>';
+	      for (green=hgreen; green<=hgreen+102; green+=51) {
+	        for (blue=0; blue<=255; blue+=51) {
+	          // determine the color from the rgb value
+	          color = '';
+	
+	          if (red<=16) color += '0' + red.toString(16);
+	          else color += red.toString(16);
+	
+	          if (green<=16) color += '0' + green.toString(16);
+	          else color += green.toString(16);
+	
+	          if (blue<=16) color += '0' + blue.toString(16);
+	          else color += blue.toString(16);
+	
+	          WebColorTableTemplate = WebColorTableTemplate + '<td bgcolor="#' + color + '">';
+	          WebColorTableTemplate = WebColorTableTemplate + '<a href="javascript:setColor(\'@colorID@\', \'' + color + '\');">';
+	          WebColorTableTemplate = WebColorTableTemplate + '<img src="images/spacer.gif" width="13" height="13" border="0" alt=""></a></td>';
+	        }
+	      }
+	      WebColorTableTemplate = WebColorTableTemplate + '</tr>';
+	    }
+	  }
+	
+	  WebColorTableTemplate = WebColorTableTemplate + '</table>';
+	}
+}
+
+function WebColorTable( colorID )
+{
+	return;
+	GenerateWebColorTableTemplate();
+  document.writeln(WebColorTableTemplate.replace(/@colorID@/g, colorID));
+}
+
+function setColor(colorID, color) {
+	if (document.getElementById) {
+		var objBlock = document.getElementById(colorID+"Block");
+		var objText = document.getElementById(colorID+"Text");
+		
+		if (objBlock && objText) {
+			objBlock.style.borderLeftColor = color;
+			objText.value = "#"+color;
+		}
+	}
+}
+
+function refreshColor(colorID) {
+	if (document.getElementById) {
+		var objBlock = document.getElementById(colorID+"Block");
+		var objText = document.getElementById(colorID+"Text");
+		
+		if (objBlock && objText) {
+			objBlock.style.borderLeftColor = objText.value;
+		}
+	}
+}
+
+function checkColor(text2Check) {
+	if (text2Check.length < 1) {
+		return false;
+	}
+	
+	if (text2Check.substring(0,1) == "#") {
+		text2Check = text2Check.substring(1,7);
+	}
+	
+	if (text2Check.length != 6) {
+		return false;
+	}
+	else {
+		for (i=0; i < text2Check.length; i++) {
+			
+		}
+	}
+}
+
+checkColor("#FF00XX");
+</script>
+
+<br>
+<br>
 <?php echo lang('colorscheme'); ?>
 <br>
 <br>
+
 <table border="0" cellspacing="0" cellpadding="0" >
 <tr>
 <td colspan="2"><strong><?php echo lang('backgroundcolor'); ?>:</strong></td>
@@ -222,33 +279,33 @@ name="imgBgColor" src="images/webcolors/<?php echo substr($bgcolor,1); ?>.gif" h
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'bgcolor', 'imgBgColor', '<?php echo substr($bgcolor,1); ?>' );
+  // WebColorTable( 'bgcolor', 'imgBgColor', '<?php echo substr($bgcolor,1); ?>' );
 </script>
 </td>
 </tr>
 </table>
+
+<table border="0" cellspacing="2" cellpadding="0">
+	<tr>
+		<td><strong><?php echo lang('backgroundcolor'); ?>:</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 4px; border-left: 18px solid <?php echo $bgcolor; ?>" id="bgcolorBlock"><input type="text" name="bgcolor" id="bgcolorText" size="8" maxlength="7" value="<?php echo $bgcolor; ?>" onKeyUp="refreshColor('bgcolor');" onBlur="refreshColor('bgcolor');"></td>
+	</tr>
+</table>
+<script language="JavaScript">//WebColorTable( 'bgcolor' );</script>
 
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" ><tr>
-<td colspan="2"><strong><?php echo lang('maincolor'); ?>:</strong></td>
-</tr>
-<tr>
-<td>
-<table   cellspacing="0" cellpadding="0"><tr><td bgcolor="#000000" ><table cellspacing="1" cellpadding="0"><tr><td>
-<img
-name="imgMaincolor" src="images/webcolors/<?php echo substr($maincolor,1); ?>.gif" height="15" width="15"><br></td>
-</tr></table></td></tr></table>
-</td>
-<td>&nbsp;<input type="text" name="maincolor" size="8" maxlength="7" value="<?php echo $maincolor; ?>"></td>
-</tr>
-<tr><td colspan="2">
-<script language="JavaScript">
-  WebColorTable( 'maincolor', 'imgMaincolor', '<?php echo substr($maincolor,1); ?>' );
-</script>
-</td>
-</tr>
+<table border="0" cellspacing="2" cellpadding="0">
+	<tr>
+		<td><strong><?php echo lang('maincolor'); ?>:</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 4px; border-left: 18px solid <?php echo $maincolor; ?>" id="maincolorBlock"><input type="text" name="maincolor" id="maincolorText" size="8" maxlength="7" value="<?php echo $maincolor; ?>" onKeyUp="refreshColor('maincolor');" onBlur="refreshColor('maincolor');"></td>
+	</tr>
 </table>
+<script language="JavaScript">WebColorTable( 'maincolor' );</script>
 
 <br>
 
@@ -266,7 +323,7 @@ name="imgTextcolor" src="images/webcolors/<?php echo substr($textcolor,1); ?>.gi
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'textcolor', 'imgTextcolor', '<?php echo substr($textcolor,1); ?>' );
+  // WebColorTable( 'textcolor', 'imgTextcolor', '<?php echo substr($textcolor,1); ?>' );
 </script>
 </td>
 </tr>
@@ -288,7 +345,7 @@ name="imgLinkcolor" src="images/webcolors/<?php echo substr($linkcolor,1); ?>.gi
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'linkcolor', 'imgLinkcolor', '<?php echo substr($linkcolor,1); ?>' );
+  // WebColorTable( 'linkcolor', 'imgLinkcolor', '<?php echo substr($linkcolor,1); ?>' );
 </script>
 </td>
 </tr>
@@ -310,7 +367,7 @@ name="imgGridcolor" src="images/webcolors/<?php echo substr($gridcolor,1); ?>.gi
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'gridcolor', 'imgGridcolor', '<?php echo substr($gridcolor,1); ?>' );
+  // WebColorTable( 'gridcolor', 'imgGridcolor', '<?php echo substr($gridcolor,1); ?>' );
 </script>
 </td>
 </tr>
@@ -332,7 +389,7 @@ name="imgPastcolor" src="images/webcolors/<?php echo substr($pastcolor,1); ?>.gi
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'pastcolor', 'imgPastcolor', '<?php echo substr($pastcolor,1); ?>' );
+  // WebColorTable( 'pastcolor', 'imgPastcolor', '<?php echo substr($pastcolor,1); ?>' );
 </script>
 </td>
 </tr>
@@ -354,7 +411,7 @@ name="imgTodayColor" src="images/webcolors/<?php echo substr($todaycolor,1); ?>.
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'todaycolor', 'imgTodayColor', '<?php echo substr($todaycolor,1); ?>' );
+  // WebColorTable( 'todaycolor', 'imgTodayColor', '<?php echo substr($todaycolor,1); ?>' );
 </script>
 </td>
 </tr>
@@ -376,13 +433,13 @@ name="imgFuturecolor" src="images/webcolors/<?php echo substr($futurecolor,1); ?
 </tr>
 <tr><td colspan="2">
 <script language="JavaScript">
-  WebColorTable( 'futurecolor', 'imgFuturecolor', '<?php echo substr($futurecolor,1); ?>' );
+  // WebColorTable( 'futurecolor', 'imgFuturecolor', '<?php echo substr($futurecolor,1); ?>' );
 </script>
 </td>
 </tr>
 </table>
-
 <br>
+<?php } ?>
 
 <?php
   if ( $_SESSION["CALENDARID"] != "default" ) {
@@ -445,12 +502,10 @@ name="imgFuturecolor" src="images/webcolors/<?php echo substr($futurecolor,1); ?
 	</td>
 </tr>
 </table>
-  <br>  
-  <br>
-  <input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button">
+<p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 </form>
 <?php 
   box_end();
-  echo "<br>";
   require("footer.inc.php");
+DBclose($database);
 ?>

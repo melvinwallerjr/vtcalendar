@@ -1,9 +1,9 @@
 <?php
-  session_start ();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   header("Cache-control: private");
 
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
   require_once("icalendar.inc.php");
 
   if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
@@ -300,7 +300,7 @@ $categoryidlist = $_GET['categoryidlist'];
 			for ($i=0; $i < $result->numRows(); $i++) {
 				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 				echo getICalFormat($event);
-			} // end: for ($i=0; $i < $result->numRows(); $i++) {
+			} // end: for ($i=0; $i < $result->numRows(); $i++)
 			echo getICalFooter();	
 	} // end: elseif ($type == "ical")
     elseif ($type == "vxml") {
@@ -347,7 +347,7 @@ $categoryidlist = $_GET['categoryidlist'];
         echo $event['title'],"\n";
         
         echo '<break size="large"/>',"\n";
-      } // end: for ($i=0; $i < $result->numRows(); $i++) {
+      } // end: for ($i=0; $i < $result->numRows(); $i++)
 
       echo '<break size="large"/>',"\n";
 	  echo lang('vxml_goodbye'),"\n";
@@ -386,7 +386,6 @@ $categoryidlist = $_GET['categoryidlist'];
     pageheader(lang('export_events'),
                lang('export_events'),
                "","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('export_events'));
 ?>
 <a target="newWindow" onclick="new_window(this.href); return false" 
@@ -431,7 +430,7 @@ for ($i=0; $i<$result->numRows(); $i++) {
   $category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
   echo "<OPTION ";
   if (!empty($categoryid) && $categoryid==$category['id']) { echo "selected "; }
-  echo "value=\"",$category['id'],"\">",$category['name'],"</OPTION>\n";
+  echo "value=\"",htmlentities($category['id']),"\">",htmlentities($category['name']),"</OPTION>\n";
 }
 ?>
       </SELECT><br>
@@ -449,7 +448,7 @@ for ($i=0; $i<$result->numRows(); $i++) {
     // read sponsor name from DB
     $result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
     $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-    echo '<input type="radio" name="sponsortype" value="self"> ',$s['name'],"<br>\n";
+    echo '<input type="radio" name="sponsortype" value="self"> ',htmlentities($s['name']),"<br>\n";
   }
 ?>
         <input type="radio" name="sponsortype" value="specific"> <?php echo lang('specific_sponsor'); ?>
@@ -554,7 +553,8 @@ for ($i=date("Y")-1; $i<=date("Y")+3; $i++) {
 </form>
 <?php    
     box_end();
-    echo "<BR>";
     require("footer.inc.php");
   }
+  
+  DBclose($database);
 ?>

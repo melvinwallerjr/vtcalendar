@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -10,15 +10,10 @@
 	pageheader(lang('manage_calendars'),
 					lang('manage_calendars'),
 					 "Update","",$database);
-	echo "<BR>\n";
-	box_begin("inputbox",lang('manage_calendars'));
+	box_begin("inputbox",lang('manage_calendars'),true);
 ?>
-<form method="post" action="update.php">
-	<input type="submit" name="back" value="<?php echo lang('back_to_menu'); ?>">
-</form>
-<a href="editcalendar.php?new=1"><?php echo lang('add_new_calendar'); ?></a>
-<?php echo lang('or_modify_existing_calendar'); ?><br>
-<br>
+<p><a href="editcalendar.php?new=1"><?php echo lang('add_new_calendar'); ?></a> <?php echo lang('or_modify_existing_calendar'); ?></p>
+
 <table border="0" cellspacing="0" cellpadding="4">
   <tr bgcolor="#CCCCCC">
     <td bgcolor="#CCCCCC"><b><?php echo lang('calendar_id'); ?></b></td>
@@ -34,13 +29,13 @@
 		if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
 ?>	
   <tr bgcolor="<?php echo $color; ?>">
-    <td bgcolor="<?php echo $color; ?>"><?php echo $calendar['id']; ?></td>
-    <td bgcolor="<?php echo $color; ?>"><?php echo $calendar['name']; ?></td>
-    <td bgcolor="<?php echo $color; ?>"><a href="editcalendar.php?cal[id]=<?php echo $calendar['id']; ?>"><?php echo lang('edit'); ?></a>&nbsp; 
+    <td bgcolor="<?php echo $color; ?>"><?php echo htmlentities($calendar['id']); ?></td>
+    <td bgcolor="<?php echo $color; ?>"><?php echo htmlentities($calendar['name']); ?></td>
+    <td bgcolor="<?php echo $color; ?>"><a href="editcalendar.php?cal[id]=<?php echo urlencode($calendar['id']); ?>"><?php echo lang('edit'); ?></a>&nbsp; 
 <?php
   if ( $calendar['id'] != "default" ) {
 ?>
-		<a href="deletecalendar.php?cal[id]=<?php echo $calendar['id']; ?>"><?php echo lang('delete'); ?></a>
+		<a href="deletecalendar.php?cal[id]=<?php echo urlencode($calendar['id']); ?>"><?php echo lang('delete'); ?></a>
 <?php
   } // end: if ( $calendar['id'] != "default" )
 ?>
@@ -58,12 +53,8 @@
 		</td>
 	</tr>
 </table>
-<br>
-<form method="post" action="update.php">
-	<input type="submit" name="back" value="<?php echo lang('back_to_menu'); ?>">
-</form>
 <?php
   box_end();
-  echo "<br><br>\n";
   require("footer.inc.php");
+DBclose($database);
 ?>

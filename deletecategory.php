@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
@@ -49,10 +49,9 @@
   pageheader(lang('delete_event_category'),
              lang('delete_event_category'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('delete_event_category'));
 ?>
-<font color="#ff0000"><b><?php echo lang('warning_event_category_delete'); ?> &quot;<b><?php echo $category['name']; ?></b>&quot;</b></font>
+<font color="#ff0000"><b><?php echo lang('warning_event_category_delete'); ?> &quot;<b><?php echo htmlentities($category['name']); ?></b>&quot;</b></font>
 <form method="post" action="deletecategory.php">
 	<input type="radio" name="deleteevents" value="1"> <?php echo lang('delete_all_events_in_category'); ?><br>
   <input type="radio" name="deleteevents" value="0" checked> 
@@ -65,7 +64,7 @@
   for ($i=0; $i<$result->numRows(); $i++) {
     $newcategory = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
     echo "<option ";
-    echo "value=\"".$newcategory['id']."\">".$newcategory['name']."</option>\n";
+    echo "value=\"".$newcategory['id']."\">".htmlentities($newcategory['name'])."</option>\n";
   }
 ?>
   </select>
@@ -77,6 +76,6 @@
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

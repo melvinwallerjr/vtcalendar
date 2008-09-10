@@ -24,8 +24,7 @@
     </td>
   <tr>
 </table>
-<hr align="left" size="1">
 <?php
-    inputeventdata($event,$sponsorid,0,$check,0,$repeat,$database);
+    inputeventdata($event,$sponsorid,0,$check,0,$repeat,$database,0);
   } // end: Function inputtemplatedata
 ?>

@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -22,16 +22,12 @@
 	pageheader(lang('manage_users'),
 					 lang('manage_users'),
 					 "Update","",$database);
-	echo "<BR>\n";
-	box_begin("inputbox",lang('manage_users'));
+	box_begin("inputbox",lang('manage_users'),true);
 ?>
-<form method="post" action="update.php">
-	<input type="submit" name="back" value="<?php echo lang('back_to_menu'); ?>">
-</form>
 <form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<a href="changeuserinfo.php"><?php echo lang('add_new_user'); ?></a>
-<?php echo lang('or_modify_existing_user'); ?><br>
-<br>
+
+<p><a href="changeuserinfo.php"><?php echo lang('add_new_user'); ?></a> <?php echo lang('or_modify_existing_user'); ?></p>
+
 <?php
   $numLines = 15;
 ?>
@@ -55,12 +51,9 @@
 <script language="JavaScript" type="text/javascript"><!--
 document.mainform.userid.focus();
 //--></script>
-<form method="post" action="update.php">
-	<input type="submit" name="back" value="<?php echo lang('back_to_menu'); ?>">
-</form>
 
 <?php
   box_end();
-  echo "<br><br>\n";
   require("footer.inc.php");
+DBclose($database);
 ?>

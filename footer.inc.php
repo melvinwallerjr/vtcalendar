@@ -1,5 +1,8 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-?><?php echo $_SESSION["FOOTER"]; ?>
+?>
+</div>
+
+<!-- Start Footer --><?php echo $_SESSION["FOOTER"]; ?><!-- End Footer -->
   </body>
 </html>

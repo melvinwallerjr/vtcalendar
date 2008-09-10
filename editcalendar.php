@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -41,19 +41,17 @@
 			}
 			else {
 				// create new calendar
-			  			  $query = "INSERT INTO vtcal_calendar (id, name,                       title,             header, footer, bgcolor, maincolor,  todaycolor, pastcolor, futurecolor, textcolor, linkcolor, gridcolor, viewauthrequired, forwardeventdefault) VALUES 
-                                    ('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '',    '', '#ffffff','#ff9900', '#ffcc66', '#eeeeee',  '#ffffff',   '#000000', '#3333cc', '#cccccc', 0, '".sqlescape($cal['forwardeventdefault'])."')";
-
-
+				$query = "INSERT INTO vtcal_calendar (id,                         name,                          title,                  header, footer, bgcolor,  maincolor, todaycolor, pastcolor, futurecolor, textcolor, linkcolor, gridcolor, viewauthrequired, forwardeventdefault) VALUES 
+				                                     ('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '',     '',     '#ffffff','#ff9900', '#ffcc66',  '#eeeeee', '#ffffff',   '#000000', '#3333cc', '#cccccc', 0,                '".sqlescape($cal['forwardeventdefault'])."')";
         $result = DBQuery($database, $query );
 
 				$query = "INSERT INTO vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".lang('administration')."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";
 				$result = DBQuery($database, $query ); 
 				
 				// create three categories to have a starting point
-        $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category1')."')" );
-        $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category2')."')" );
-        $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category3')."')" );
+        $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','General')" );
+        //$result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category2')."')" );
+        //$result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category3')."')" );
 			}
 		} // end: if ( isset($new) )
 		else { 
@@ -117,7 +115,6 @@
     pageheader(lang('edit_calendar'),
                lang('edit_calendar'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('edit_calendar'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
@@ -128,7 +125,6 @@
     pageheader(lang('add_new_calendar'),
                lang('add_new_calendar'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('add_new_calendar'));
 	}
 ?>
@@ -267,6 +263,6 @@
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

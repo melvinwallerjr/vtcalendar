@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -53,10 +53,9 @@
   pageheader(lang('delete_sponsor'),
              lang('delete_sponsor'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('delete_sponsor'));
 ?>
-<font color="#ff0000"><b><?php echo lang('delete_sponsor_confirm'); ?> &quot;<b><?php echo $sponsor['name']; ?></b>&quot;</b></font>
+<p><font color="#ff0000"><b><?php echo lang('delete_sponsor_confirm'); ?> &quot;<b><?php echo $sponsor['name']; ?></b>&quot;</b></font></p>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="radio" name="deleteevents" value="1"> <?php echo lang('delete_all_events_of_sponsor'); ?><br>
   <input type="radio" name="deleteevents" value="0" checked> 
@@ -78,11 +77,11 @@
 ?>	
 	<BR>
   <BR>
-  <INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+  <INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">&nbsp;&nbsp;&nbsp;&nbsp;
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

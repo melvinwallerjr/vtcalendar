@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
@@ -57,7 +57,6 @@
     pageheader(lang('edit_featured_keyword'),
                lang('edit_featured_keyword'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('edit_featured_keyword'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
@@ -70,7 +69,6 @@
     pageheader(lang('add_new_featured_keyword'),
                lang('add_new_featured_keyword'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('add_new_featured_keyword'));
 	}
 ?>
@@ -119,6 +117,6 @@
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
   require("inputtdata.inc.php");
 
   $database = DBopen();
@@ -54,7 +54,6 @@
   pageheader(lang('add_new_template'),
              lang('add_new_template'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('add_new_template'));
 ?>
 <BR>
@@ -69,6 +68,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

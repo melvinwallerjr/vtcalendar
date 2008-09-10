@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   helpbox_begin();
 ?>
@@ -9,7 +9,7 @@
 <?php echo lang('help_signup'); ?>
 </H3>
 <?php echo lang('help_signup_authorization'); ?>
-<a href="mailto:<?php echo $_SESSION["ADMINEMAIL"]; ?>"><?php echo $_SESSION["ADMINEMAIL"]; ?></a>.
+<a href="mailto:<?php echo htmlentities($_SESSION["ADMINEMAIL"]); ?>"><?php echo htmlentities($_SESSION["ADMINEMAIL"]); ?></a>.
 <?php echo lang('help_signup_contents'); ?>
 <?php
   helpbox_end();

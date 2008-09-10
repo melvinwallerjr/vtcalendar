@@ -14,12 +14,12 @@ $lang['lit_cal_wed'] = 'W';
 $lang['lit_cal_thu'] = 'T';
 $lang['lit_cal_fri'] = 'F';
 $lang['lit_cal_sat'] = 'S';
-$lang['lit_cal_week'] = 'W';
+$lang['lit_cal_week'] = 'Wk';
 
 $lang['jump_to'] = 'Jump to...';
 $lang['today_is'] = 'Today is: ';
-$lang['subscribe_download'] = 'Subscribe &amp; download';
-$lang['filter_events'] = 'Filter events';
+$lang['subscribe_download'] = 'Subscribe &amp; Download';
+$lang['filter_events'] = 'Filter Events';
 $lang['showing_filtered_events'] = 'Showing only filtered events';
 
 
@@ -66,17 +66,17 @@ $lang['nov'] = 'Nov';
 $lang['dec'] = 'Dec';
 
 //navprevious next in all views
-$lang['previous_day'] = 'previous day';
-$lang['next_day'] = 'next day';
-$lang['previous_week'] = 'previous week';
-$lang['next_week'] = 'next week';
-$lang['previous_month'] = 'previous month';
-$lang['next_month'] = 'next month';
+$lang['previous_day'] = 'Previous Day';
+$lang['next_day'] = 'Next Day';
+$lang['previous_week'] = 'Previous Week';
+$lang['next_week'] = 'Next Week';
+$lang['previous_month'] = 'Previous Month';
+$lang['next_month'] = 'Next Month';
 
 //day view
-$lang['day_page_header'] = 'Day - Calendar';
+$lang['day_page_header'] = 'Day';
 $lang['no_events'] = 'No events scheduled for this day.';
-$lang['all_day'] = 'All day';
+$lang['all_day'] = 'All Day';
 
 //week view
 $lang['week_page_header'] = 'Week';
@@ -121,8 +121,8 @@ $lang['user_id'] = 'User-ID';
 $lang['password']='Password:';
 $lang['new_user'] = 'Create New User';
 
-$lang['subscribe'] = 'subscribe';
-$lang['download'] = 'download';
+$lang['subscribe'] = 'Subscribe';
+$lang['download'] = 'Download';
 $lang['copy_event_to_pda'] = 'copy this event into your personal desktop calendar';
 $lang['subscribe_message'] = 'If you have a desktop calendar or PDA compatible with the iCalendar standard you
 can subscribe to a calendar or download events. Currently the iCalendar standard
@@ -168,7 +168,7 @@ $lang['email_admin_rejected_event'] = 'The calendar administrator rejected the e
 $lang['email_reason_for_rejection'] = 'Reason for the rejection:';
 $lang['email_login_edit_resubmit'] = 'Please login to the calendar, edit and re-submit your event.';
 $lang['approve_reject_event_updates'] = 'Approve/reject event updates';
-$lang['back_to_menu'] = '&laquo; Back to menu';
+$lang['back_to_menu'] = 'Back to Menu';
 $lang['refresh_display'] = 'Refresh display';
 $lang['approve_all_events'] = 'Approve ALL events';
 $lang['date'] = 'Date';
@@ -176,9 +176,9 @@ $lang['time'] = 'Time';
 $lang['category'] = 'Category';
 $lang['title'] = 'Title';
 $lang['description'] = 'Description';
-$lang['approve'] = 'approve';
-$lang['reject'] = 'reject';
-$lang['edit'] = 'edit';
+$lang['approve'] = 'Approve';
+$lang['reject'] = 'Reject';
+$lang['edit'] = 'Edit';
 $lang['user_ids_invalid'] = 'The following user-IDs are invalid:';
 $lang['user_id_invalid'] = 'The following user-ID is invalid:';
 $lang['change_header_footer_colors_auth'] = 'Change header, footer, colors, authorization';
@@ -310,6 +310,7 @@ $lang['sponsor_already_exists'] = 'A sponsor with this name already exists. Plea
 $lang['sponsor_name_example'] = '(e.g. Mikado Club)';
 $lang['choose_email'] = 'Please choose an email address.';
 $lang['url_example'] = '(e.g. http://www.vtmc.vt.edu/)';
+$lang['sponsor_members'] = 'Sponsor members:';
 $lang['administrative_members'] = 'Administrative members:';
 $lang['administrative_members_example'] = '(separate user-id\'s with a comma)';
 
@@ -333,8 +334,9 @@ Use the &quot;<b>View Source</b>&quot; option of your browser to view the export
 $lang['choose_sponsor_role'] = 'Choose your sponsor role';
 $lang['error_not_authorized'] = 'Error! Not authorized.';
 $lang['error_not_authorized_message'] = 'You are currently not authorized to update the calendar because you have not been assigned to an event sponsor.';
+$lang['error_bad_sponsorid'] = 'You do not belong to the sponsor that you selected. Please select a sponsor from the list below.';
 $lang['help_signup_link'] = 'Sign up with the calendar';
-$lang['login_failed'] = 'Login failed.<br> Please check your user-ID and password and try again.';
+$lang['login_failed'] = 'Login failed.';
 $lang['help'] = 'Help';
 $lang['recurring'] = 'recurring';
 $lang['on_the'] = 'on the';
@@ -411,8 +413,8 @@ $lang['contact_email_example'] = '(e.g. icinfo@hotmail.com)';
 $lang['event_page_web_address'] = 'Event page<br> web address';
 $lang['event_page_url_example'] = '(e.g. http://www.ic.vt.edu/talks/future.html)';
 $lang['button_restore_all_sponsor_defaults'] = 'Restore all sponsor defaults';
-$lang['displayed_sponsor_name'] = 'Displayed<br> sponsor name';
-$lang['sponsor_page_web_address'] = 'Sponsor page<br> web address';
+$lang['displayed_sponsor_name'] = 'Displayed Name';
+$lang['sponsor_page_web_address'] = 'Sponsor\'s Website';
 $lang['button_restore_default'] = 'Restore default';
 $lang['also_display_on'] = 'Also display this event on the'; // ... Calendar ...
 $lang['assign_to_category'] = 'and assign it to this category';
@@ -423,23 +425,23 @@ $lang['template_name_example'] = '(e.g. Guest speaker)';
 
 $lang['manage_calendars'] = 'Manage calendars';
 $lang['or_modify_existing_calendar'] = 'or modify existing calendar:';
-$lang['delete'] = 'delete';
+$lang['delete'] = 'Delete';
 $lang['calendars'] = 'Calendars';
 
 $lang['manage_event_categories'] = 'Manage event categories';
 $lang['or_modify_existing_category'] = 'or modify existing category:';
-$lang['rename'] = 'rename';
+$lang['rename'] = 'Rename';
 
-$lang['manage_events'] = 'Manage events';
+$lang['manage_events'] = 'My submitted events';
 $lang['or_manage_existing_events'] = 'or manage existing events:';
 $lang['status'] = 'Status';
-$lang['submitted_for_approval'] = 'submitted for approval';
+$lang['submitted_for_approval'] = 'awaiting approval';
 $lang['approved'] = 'approved';
-$lang['copy'] = 'copy';
+$lang['copy'] = 'Copy';
 $lang['status_info_message'] = 'The status information has the following meaning:';
 $lang['rejected'] = 'rejected';
 $lang['rejected_explanation'] = '...event was not approved for publication';
-$lang['submitted_for_approval_explanation'] = '...update has yet to be reviewed and approved';
+$lang['submitted_for_approval_explanation'] = '...event has yet to be reviewed and approved';
 $lang['approved_explanation'] = '...event is displayed in the calendar';
 
 $lang['manage_featured_search_keywords'] = 'Manage featured search keywords';
@@ -1029,7 +1031,7 @@ Here is what you can do:
 $lang['help_updatecopydelete'] = 'Update/Copy/Delete event';
 $lang['help_updatecopydelete_contents'] = 'You have 2 options:
 <OL>
-  <LI>Click on the &quot;Manage events&quot; link in the update menu</LI> or
+  <LI>Click on the &quot;' . $lang['manage_events'] . '&quot; link in the update menu</LI> or
   <LI>In the weekly/monthly view use the icon <IMG src="images/nuvola/16x16/actions/color_line.png" width="16" height="16" alt="update event" border="0">
    to <A href="helpupdateevent.php">update</A>, <IMG src="images/nuvola/16x16/actions/editcopy.png" width="16" height="16" alt="copy event" border="0"> to
    <A href="helpcopyevent.php">copy</A> or <IMG src="images/nuvola/16x16/actions/button_cancel.png" width="16" height="16" alt="delete event" border="0"> to <A href="helpdeleteevent.php">delete</A> an event</LI>

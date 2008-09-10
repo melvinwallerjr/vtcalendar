@@ -201,7 +201,7 @@ function highlight_keyword($keyword, $text) {
 }
 
 /**
- * Taken from phpBB 2.0.19 (from phpBB2/includes/bbcode.php) www.
+ * Taken from phpBB 2.0.19 (from phpBB2/includes/bbcode.php)
  *
  * Rewritten by Nathan Codding - Feb 6, 2001.
  * - Goes through the given string, and replaces xxxx://yyyy with an HTML <a> tag linking

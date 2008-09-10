@@ -10,6 +10,6 @@
  	  disassemble_eventtime($event);	
     $event_timebegin  = timestamp2datetime($event['timebegin']);
     $event_timeend    = timestamp2datetime($event['timeend']);
-    $titleextension = ": ".htmlentities($event['title']);
+    $basetitle = ": ".htmlentities($event['title']);
   }
 ?>

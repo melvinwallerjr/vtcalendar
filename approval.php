@@ -23,7 +23,7 @@ if (isset($_POST['rejectconfirmedthis'])) { setVar($rejectconfirmedthis,$_POST['
 // Approve all events.
 if (isset($approveallevents)) {
   $eventids=split(",",$eventidlist);
-	for ($i=0; $i<count($eventids); $i++) {
+	for ($i = 0; $i < count($eventids); $i++) {
 		$eventid = $eventids[$i];
 		if (!empty($eventid)) {
 			$result = DBQuery($database, "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" );
@@ -116,15 +116,19 @@ else {
 	<?php
 	$defaultcalendarname = getCalendarName($database, 'default');
 	
+	// Loop through all the events waiting for approval
   for ($i=0; $i<$result->numRows(); $i++) {
     $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
     disassemble_eventtime($event);
 		
-		// keep track of repeat id and print recurring events only once
+		// Keep track of repeat IDs so we only output repeating events once.
   	if (!empty($event['repeatid']) ) { 
-		  if ( isset($recurring_exists) && array_key_exists ($event['repeatid'],$recurring_exists) ) { continue; }
+		  if ( isset($recurring_exists) && array_key_exists($event['repeatid'],$recurring_exists) ) {
+		  	// Skip to the next event if this event is repeating and has already been outputted.
+		  	continue;
+		  }
 			else { 
-			  // remember this recurring event
+			  // Remember this recurring event so we only add it once.
 				$recurring_exists[$event['repeatid']] = $event['repeatid']; 
 			}
 		}
@@ -137,6 +141,7 @@ else {
 		  echo Month_to_Text($event['timebegin_month'])," ",$event['timebegin_day'],", ",$event['timebegin_year'];
 		  ?></b><?php
 		  
+		  // Output details about how the event repeats, if it is a repeating event.
 		  if (!empty($event['repeatid'])) {
 				echo "<br>\n";
 				echo '<font color="#00AA00">';
@@ -149,6 +154,7 @@ else {
 				echo '</font>';
 			}
 			
+			// Note that the event will also be submitted to the default calendar.
 			if ($_SESSION['CALENDARID'] != "default" && $event['showondefaultcal'] == 1) {
 				echo "<br>\n",'<font color="#CC0000"><b>Note:</b> This event will also be submitted to the &quot;'.htmlentities($defaultcalendarname).'&quot; calendar under the &quot;'.htmlentities(getCategoryName($database,$event['showincategory'])).'&quot; category.</font>';
 			}
@@ -168,8 +174,8 @@ else {
 			</tr>
 		</table>
 		<?php
-  } // end: for ($i=0; $i<$result->numRows(); $i++)
-} // end: if ($result->numRows() > 0 )
+  }
+}
 box_end();
 require("footer.inc.php");
 DBclose($database);

@@ -15,14 +15,11 @@ $ievent = 0;
 $today = Decode_Date_US(date("m/d/Y"));
 $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$today['day'],12,0,"am");
 
-// print list with events
+// Output list with events
 $queryHeader = "SELECT e.calendarid = 'default' as isdefaultcal, e.calendarid as calendarid, e.id AS id,e.approved,e.rejectreason,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE ";
 $queryFooter.= "e.categoryid = c.id AND e.sponsorid = s.id AND e.sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY e.timebegin, e.wholedayevent DESC, e.id, isdefaultcal";
-//Removed from footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
-//$queryCurrent = $queryHeader."e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND s.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND ".$queryFooter;
-//$queryDefault = $queryHeader."e.calendarid='default' AND c.calendarid='default' AND s.calendarid='default' AND ".$queryFooter;
-//echo $queryHeader.$queryFooter;
-$result = DBQuery($database, $queryHeader.$queryFooter); 
+/Removed from the query footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
+$result = DBQuery($database, $queryHeader.$queryFooter);
 ?>
 
 <p><a href="addevent.php"><?php echo lang('add_new_event'); ?></a>
@@ -35,6 +32,7 @@ if ($result->numRows() > 0 ) {
 	$defaultcalendarname = getCalendarName($database, 'default');
 	
 	/*
+	
 	Below you see a list of all <i>future</i> events. <span style="color:#FF0000; font-weight:bold">Past events are NOT shown here.</span><br>
 	However, you can use the <a href="main.php?view=day">day</a>/<a href="main.php?view=week">week</a>/<a href="main.php?view=month">month</a> view to find, edit and delete past events.<br>
 	<br>

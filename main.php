@@ -97,50 +97,52 @@ How this script executes:
 		}
 	}
 	
-	// Default title extension, which is changed by the main_(view)_data.inc.php files.
-	$titleextension = "";
+	// The base text for the page title, which can be changed by the main_(view)_data.inc.php files.
+	$basetitle = "";
 	
 	// Load any information that we may need to display in the header.
-	// Typically this only sets the title extension, however, it may load data from the database.
+	// Typically this only changes the base title, however, it may load data from the database.
 	// A situation where it will do this is with events, since it will want to output the event title in the <title> tag.
 	require("main_".$view."_data.inc.php");
 	
 	// Output the header HTML
 	if ( $view == "day" ) {
-		pageheader(lang('day_page_header').$titleextension,"","Day","",$database);
+		pageheader(lang('day_page_header').$basetitle,"","Day","",$database);
 	}
 	elseif ( $view == "week" ) {
-		pageheader(lang('week_page_header').$titleextension,"","Week","",$database);
+		pageheader(lang('week_page_header').$basetitle,"","Week","",$database);
 	}
 	elseif ( $view == "month" ) { 
-		pageheader(lang('month_page_header').$titleextension,"","Month","",$database);
+		pageheader(lang('month_page_header').$basetitle,"","Month","",$database);
 	}
 	elseif ( $view == "event" ) { 
-		pageheader(lang('event_page_header').$titleextension,"","","",$database);
+		pageheader(lang('event_page_header').$basetitle,"","","",$database);
 	}
 	elseif ( $view == "search" ) { 
-		pageheader(lang('search_page_header').$titleextension,"","Search","",$database);
+		pageheader(lang('search_page_header').$basetitle,"","Search","",$database);
 	}
 	elseif ( $view == "searchresults" ) { 
-		pageheader(lang('searchresults_page_header').$titleextension,"","SearchResults","",$database);
+		pageheader(lang('searchresults_page_header').$basetitle,"","SearchResults","",$database);
 	}
 	elseif ( $view == "subscribe" ) { 
-		pageheader(lang('subscribe_page_header').$titleextension,"","Subscribe","",$database);
+		pageheader(lang('subscribe_page_header').$basetitle,"","Subscribe","",$database);
 	}
 	elseif ( $view == "filter" ) { 
-		pageheader(lang('filter_page_header').$titleextension,"","Filter","",$database);
+		pageheader(lang('filter_page_header').$basetitle,"","Filter","",$database);
 	}
 
-// Start the actual calendar table.
+// Output the calendar table.
 ?>
 <table id="CalendarTable" width="100%" border="0" cellpadding="8" cellspacing="0">
 <tr>
 	
 <?php
+// If the column should be on the left, output it first then the body.
 if (COLUMNSIDE == "LEFT") {
 	include('main_column.inc.php');
 	include('main_body.inc.php');
 }
+// If the column should be on the right, output the body then the column.
 elseif (COLUMNSIDE == "RIGHT") {
 	include('main_body.inc.php');
 	include('main_column.inc.php');

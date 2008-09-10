@@ -22,7 +22,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_users'),
 					 lang('manage_users'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_users'),true);
+	contentsection_begin(lang('manage_users'),true);
 ?>
 <form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -53,7 +53,7 @@ document.mainform.userid.focus();
 //--></script>
 
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

@@ -115,7 +115,7 @@ require_once('session_start.inc.php');
     pageheader(lang('edit_calendar'),
                lang('edit_calendar'),
                "Update","",$database);
-    box_begin("inputbox",lang('edit_calendar'));
+    contentsection_begin(lang('edit_calendar'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
       $cal = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -125,7 +125,7 @@ require_once('session_start.inc.php');
     pageheader(lang('add_new_calendar'),
                lang('add_new_calendar'),
                "Update","",$database);
-    box_begin("inputbox",lang('add_new_calendar'));
+    contentsection_begin(lang('add_new_calendar'));
 	}
 ?>
 <br>
@@ -262,7 +262,7 @@ require_once('session_start.inc.php');
 </TABLE>
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

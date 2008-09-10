@@ -52,7 +52,7 @@ require_once('session_start.inc.php');
   pageheader(lang('rename_event_category'),
              lang('rename_event_category'),
              "Update","",$database);
-  box_begin("inputbox",lang('rename_event_category'));
+  contentsection_begin(lang('rename_event_category'));
 ?>
 <br>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -78,7 +78,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

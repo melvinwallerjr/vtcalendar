@@ -5,7 +5,7 @@
   pageheader(lang('reject_event_update'),
              lang('reject_event_update'),
    	         "Update","",$database);
-  box_begin("inputbox",lang('reject_event_update'));
+  contentsection_begin(lang('reject_event_update'));
 
   $query = "SELECT e.id AS id,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND s.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid=c.id AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query ); 
@@ -47,7 +47,7 @@
 </FORM>
 <BR>
 <?php
-  box_end();
+  contentsection_end();
 	require("footer.inc.php");
 DBclose($database);
 ?>

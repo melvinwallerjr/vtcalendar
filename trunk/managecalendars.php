@@ -10,7 +10,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_calendars'),
 					lang('manage_calendars'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_calendars'),true);
+	contentsection_begin(lang('manage_calendars'),true);
 ?>
 <p><a href="editcalendar.php?new=1"><?php echo lang('add_new_calendar'); ?></a> <?php echo lang('or_modify_existing_calendar'); ?></p>
 
@@ -54,7 +54,7 @@ require_once('session_start.inc.php');
 	</tr>
 </table>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

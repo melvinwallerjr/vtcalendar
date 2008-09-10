@@ -174,7 +174,7 @@ function xmlerror_importevent($xml_parser) {
   pageheader(lang('import_events'),
              lang('import_events'),
              "Update","",$database);
-  box_begin("inputbox",lang('import_events'));
+  contentsection_begin(lang('import_events'));
   
   $showinputbox = 1;
   if (isset($importurl)) {
@@ -250,7 +250,7 @@ if (isset($importurl)) { echo $importurl; } ?>" size="60" maxlength="<?php echo 
 </form>
 <?php
   } // end: if ($showinputbox)
-  box_end();
+  contentsection_end();
 
   require("footer.inc.php");
 DBclose($database);

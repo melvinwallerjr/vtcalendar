@@ -98,14 +98,14 @@ require_once('session_start.inc.php');
       pageheader(lang('edit_user'),
                lang('edit_user'),
 	             "Update","",$database);
-      box_begin("inputbox",lang('edit_user'));
+      contentsection_begin(lang('edit_user'));
 		}
   }
   else {
     pageheader(lang('add_new_user'),
                lang('add_new_user'),
                "Update","",$database);
-    box_begin("inputbox",lang('add_new_user'));
+    contentsection_begin(lang('add_new_user'));
   }
 
   if (isset($user['id']) && (!isset($check) || $check != 1)) { // load user to update information if it's the first time the form is viewed
@@ -189,7 +189,7 @@ require_once('session_start.inc.php');
 <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

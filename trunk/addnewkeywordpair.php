@@ -27,7 +27,7 @@ require_once('session_start.inc.php');
   pageheader(lang('add_new_keyword_pair'),
              lang('add_new_keyword_pair'),
              "Update","",$database);
-  box_begin("inputbox",lang('add_new_keyword_pair'));
+  contentsection_begin(lang('add_new_keyword_pair'));
 ?>
 <br>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -72,7 +72,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

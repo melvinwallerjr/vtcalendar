@@ -10,7 +10,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_event_categories'),
 					 lang('manage_event_categories'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_event_categories'),true);
+	contentsection_begin(lang('manage_event_categories'),true);
 
   $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
 ?>
@@ -44,7 +44,7 @@ require_once('session_start.inc.php');
 <?php
   } // end: if ($result->numRows() > 0 )
 	
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

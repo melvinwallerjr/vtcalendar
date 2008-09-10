@@ -39,7 +39,7 @@ require_once('session_start.inc.php');
   pageheader(lang('change_email'),
              lang('change_email'),
              "Update","",$database);
-  box_begin("inputbox",lang('change_email'));
+  contentsection_begin(lang('change_email'));
 ?>
 <p><B><?php echo lang('change_email_label'); ?></B></p>
 <FORM method="post" action="changeemail.php">
@@ -58,7 +58,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
 
   require("footer.inc.php");
 DBclose($database);

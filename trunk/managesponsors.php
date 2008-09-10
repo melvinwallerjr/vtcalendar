@@ -29,7 +29,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_sponsors'),
 					 lang('manage_sponsors'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_sponsors'),true);
+	contentsection_begin(lang('manage_sponsors'),true);
 ?>
 <form method="post" name="mainform" action="managesponsors.php">
 <p><a href="editsponsor.php"><?php echo lang('add_new_sponsor'); ?></a> <?php echo lang('or_modify_existing_sponsor'); ?></p>
@@ -62,7 +62,7 @@ document.mainform.id.focus();
 //--></script>
 
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

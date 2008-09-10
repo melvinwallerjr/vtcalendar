@@ -39,7 +39,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_user'),
              lang('delete_user'),
              "Update","",$database);
-  box_begin("inputbox",lang('delete_user'));
+  contentsection_begin(lang('delete_user'));
 ?>
 <FORM method="post" action="deleteuser.php">
   <B><?php echo lang('delete_user_confirm'); ?> &quot;<?php echo $userid; ?>&quot;</B>
@@ -53,7 +53,7 @@ require_once('session_start.inc.php');
   <BR>
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

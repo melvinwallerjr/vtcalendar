@@ -114,7 +114,7 @@ WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
 		
 		redirect2URL("update.php");
 		exit;
-	} // end: if (empty($addPIDError))
+	}
 }
 
 // read sponsor name from DB
@@ -124,7 +124,7 @@ $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 pageheader(lang('change_header_footer_colors_auth'),
            lang('change_header_footer_colors_auth'),
            "Update","",$database);
-box_begin("inputbox", lang('change_header_footer_colors_auth'));
+contentsection_begin(lang('change_header_footer_colors_auth'));
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="globalSettings">
 
@@ -222,7 +222,7 @@ box_begin("inputbox", lang('change_header_footer_colors_auth'));
 <p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 </form>
 <?php 
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

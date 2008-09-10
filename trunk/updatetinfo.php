@@ -65,7 +65,7 @@ require_once('session_start.inc.php');
   pageheader(lang('edit_template'),
              lang('edit_template'),
              "Update","",$database);
-  box_begin("inputbox",lang('edit_template'));
+  contentsection_begin(lang('edit_template'));
 ?>
 <BR>
 <FORM method="post" action="updatetinfo.php">
@@ -79,7 +79,7 @@ require_once('session_start.inc.php');
 <INPUT type="hidden" name="templateid" value="<?php echo $templateid; ?>">
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

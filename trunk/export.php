@@ -386,7 +386,7 @@ $categoryidlist = $_GET['categoryidlist'];
     pageheader(lang('export_events'),
                lang('export_events'),
                "","",$database);
-    box_begin("inputbox",lang('export_events'));
+    contentsection_begin(lang('export_events'));
 ?>
 <a target="newWindow" onclick="new_window(this.href); return false" 
    href="helpexport.php"><img src="images/nuvola/16x16/actions/help.png" width="16" height="16" alt="" border="0"> 
@@ -552,7 +552,7 @@ for ($i=date("Y")-1; $i<=date("Y")+3; $i++) {
 <input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php    
-    box_end();
+    contentsection_end();
     require("footer.inc.php");
   }
   

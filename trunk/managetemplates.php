@@ -9,7 +9,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_templates'),
 					 lang('manage_templates'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('manage_templates'), true);
+	contentsection_begin(lang('manage_templates'), true);
 
   $result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY name" ); 
 ?>
@@ -42,7 +42,7 @@ require_once('session_start.inc.php');
 <br>
 <?php
   } // end: if ($result->numRows() > 0 )
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

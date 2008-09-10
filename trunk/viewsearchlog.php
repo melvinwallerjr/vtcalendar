@@ -10,7 +10,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('view_search_log'),
 					 lang('view_search_log'),
 					 "Update","",$database);
-	box_begin("inputbox",lang('view_search_log'),true);
+	contentsection_begin(lang('view_search_log'),true);
 
 ?>
 <a href="deletesearchlog.php"><?php echo lang('clear_search_log'); ?></a>
@@ -33,7 +33,7 @@ require_once('session_start.inc.php');
 ?>	
 </pre>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

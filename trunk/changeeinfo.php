@@ -345,7 +345,7 @@ require_once('session_start.inc.php');
 			$event['category_name']="???";
 		}
 	
-		box_begin("inputbox",lang('preview_event'));
+		contentsection_begin(lang('preview_event'));
 
 		?>
 		<form method="post" action="changeeinfo.php">
@@ -412,7 +412,7 @@ require_once('session_start.inc.php');
 		</span>
 		</form>
 		<?php
-		box_end();
+		contentsection_end();
   } // end: if (isset($check) && $eventvalid && isset($preview))
   
   // Display input form
@@ -483,7 +483,7 @@ require_once('session_start.inc.php');
 		  //$sponsorid = $event[sponsorid];
 		}
 		
-		box_begin("inputbox",lang('input_event_information'));
+		contentsection_begin(lang('input_event_information'));
 		
 		echo "<form name=\"inputevent\" method=\"post\" action=\"changeeinfo.php\">\n";
 		inputeventbuttons($httpreferer);
@@ -502,7 +502,7 @@ require_once('session_start.inc.php');
 		inputeventbuttons($httpreferer);
 		echo "</form>\n";
 		
-		box_end();
+		contentsection_end();
   } // end: ELSE of displaying the input form
 
 	require("footer.inc.php");

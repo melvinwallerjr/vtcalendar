@@ -49,7 +49,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_event_category'),
              lang('delete_event_category'),
              "Update","",$database);
-  box_begin("inputbox",lang('delete_event_category'));
+  contentsection_begin(lang('delete_event_category'));
 ?>
 <font color="#ff0000"><b><?php echo lang('warning_event_category_delete'); ?> &quot;<b><?php echo htmlentities($category['name']); ?></b>&quot;</b></font>
 <form method="post" action="deletecategory.php">
@@ -75,7 +75,7 @@ require_once('session_start.inc.php');
   <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

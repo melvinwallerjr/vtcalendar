@@ -37,7 +37,7 @@ require_once('session_start.inc.php');
   pageheader(lang('delete_main_admin'),
              lang('delete_main_admin'),
              "","",$database);
-  box_begin("inputbox",lang('delete_main_admin'));
+  contentsection_begin(lang('delete_main_admin'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <B><?php echo lang('delete_main_admin_confirm'); ?> &quot;<?php echo $mainuserid; ?>&quot;</B>
@@ -50,7 +50,7 @@ require_once('session_start.inc.php');
   <BR>
 </FORM>
 <?php
-  box_end();
+  contentsection_end();
   require("footer.inc.php");
 DBclose($database);
 ?>

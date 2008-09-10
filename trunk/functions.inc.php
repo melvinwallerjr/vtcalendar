@@ -1,33 +1,124 @@
 <?php
-  $colorpast = $_SESSION["PASTCOLOR"];
-  $colortoday  = $_SESSION["TODAYCOLOR"];
-  $colorfuture = $_SESSION["FUTURECOLOR"];
-  $colorhelpbox = "#FFFFCC";
-  $colorinputbox = "#FFFFFF";
-
+/*
+1. Defines some color constants.
+2. Includes other function files.
+3. Defines various other contants.
+4. Defines numerous functions:
+		
+		Misc Functions:
+		----------------------------------------------------
+		function getNewEventId()
+		function feedback($msg,$type)
+		function verifyCancelURL($httpreferer)
+		function redirect2URL($url)
+		function getFullCalendarURL()
+		function sendemail2sponsor($sponsorname,$sponsoremail,$subject,$body)
+		function sendemail2user($useremail,$subject,$body)
+		function highlight_keyword($keyword, $text)
+		function make_clickable($text)
+		function removeslashes(&$event)
+		function checkURL($url)
+		function checkemail($email)
+		function setVar(&$var,$value,$type)
+		function lang($sTextKey)
+		
+		Generic Database Functions:
+		----------------------------------------------------
+		function DBopen()
+		function DBclose($database)
+		function DBQuery($database, $query)
+		
+		Authenticate users:
+		----------------------------------------------------
+		function checknewpassword(&$user)
+		function checkoldpassword(&$user,$userid,$database)
+		function displaylogin($errormsg,$database)
+		function displaymultiplelogin($database, $errorMessage="")
+		function displaynotauthorized($database)
+		function userauthenticated($database,$userid,$password)
+		function authorized($database)
+		function viewauthorized($database)
+		function logout()
+		
+		Get various information from the database:
+		----------------------------------------------------
+		function calendar_exists($calendarid)
+		function setCalendarPreferences()
+		function getNumCategories($database)
+		function getCategoryName(&$database, $categoryid)
+		function getCalendarName(&$database, $calendarid)
+		function getSponsorCalendarName(&$database, $sponsorid)
+		function getSponsorName(&$database, $sponsorid)
+		function getSponsorURL(&$database, $sponsorid)
+		function num_unapprovedevents($repeatid,$database)
+		function userExistsInDB($database, $userid)
+		function isValidUser($database, $userid)
+		
+		Date/Time Conversions & Formatting:
+		----------------------------------------------------
+		function datetocolor($month,$day,$year,$colorpast,$colortoday,$colorfuture)
+		function datetoclass($month,$day,$year)
+		function printeventdate(&$event)
+		function printeventtime(&$event)
+		function yearmonth2timestamp($year,$month)
+		function yearmonthday2timestamp($year,$month,$day)
+		function datetime2timestamp($year,$month,$day,$hour,$min,$ampm)
+		function timestamp2datetime($timestamp)
+		function timestamp2timenumber($timestamp)
+		function timenumber2timelabel($timenum)
+		function datetime2ISO8601datetime($year,$month,$day,$hour,$min,$ampm)
+		function ISO8601datetime2datetime($ISO8601datetime)
+		function disassemble_eventtime(&$event)
+		function settimeenddate2timebegindate(&$event)
+		function assemble_eventtime(&$event)
+		function timestring($hour,$min,$ampm)
+		function endingtime_specified(&$event)
+		
+		Message Windows:
+		----------------------------------------------------
+		function box_begin($class, $headertext, $showMenuButton=false)
+		function box_end()
+		function helpbox_begin()
+		function helpbox_end()
+		
+		Event Date/Time Functions:
+		----------------------------------------------------
+		function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar)
+		function readinrepeat($repeatid,&$event,&$repeat,$database)
+		function repeatinput2repeatdef(&$event,&$repeat)
+		function getfirstslice($s)
+		function repeatdefdisassemble($repeatdef,&$frequency,&$interval,&$frequencymodifier,&$endyear,&$endmonth,&$endday)
+		function printrecurrence($startyear,$startmonth,$startday,$repeatdef)
+		function repeatdefdisassembled2repeatlist($startyear,$startmonth,$startday,$frequency,$interval,$frequencymodifier,$endyear, $endmonth, $endday)
+		function producerepeatlist(&$event,&$repeat)
+		function printrecurrencedetails(&$repeatlist)
+		function repeatdef2repeatinput($repeatdef,&$event,&$repeat)
+		
+		Modification of events:
+		----------------------------------------------------
+		function deletefromevent($eventid,$database)
+		function deletefromevent_public($eventid,$database)
+		function repeatdeletefromevent($repeatid,$database)
+		function repeatdeletefromevent_public($repeatid,$database)
+		function deletefromrepeat($repeatid,$database)
+		function insertintoevent($eventid,&$event,$database)
+		function insertintoeventsql($calendarid,$eventid,&$event,$database)
+		function insertintoevent_public(&$event,$database)
+		function updateevent($eventid,&$event,$database)
+		function updateevent_public($eventid,&$event,$database)
+		function insertintotemplate($template_name,&$event,$database)
+		function updatetemplate($templateid,$template_name,&$event,$database)
+		function insertintorepeat($repeatid,&$event,&$repeat,$database)
+		function updaterepeat($repeatid,&$event,&$repeat,$database)
+		function publicizeevent($eventid,&$event,$database)
+		function repeatpublicizeevent($eventid,&$event,$database)
+*/
+	
   require_once("datecalc.inc.php");
   require_once("header.inc.php");
   require_once("email.inc.php");
-
-  define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");	
-  define("BGCOLORNAVBARACTIVE","#993333");
-  define("BGCOLORWEEKMONTHNAVBAR","#993333");
-  define("BGCOLORDETAILSHEADER","#993333");
-  define("MAXLENGTH_URL","100");
-  define("MAXLENGTH_TITLE","40");
-  define("MAXLENGTH_DESCRIPTION","5000");
-  define("MAXLENGTH_LOCATION","100");
-  define("MAXLENGTH_PRICE","100");
-  define("MAXLENGTH_CONTACT_NAME","100");
-  define("MAXLENGTH_CONTACT_PHONE","100");
-  define("MAXLENGTH_CONTACT_EMAIL","100");
-  define("MAXLENGTH_SPONSOR","50");
-  define("FEEDBACKPOS","0");
-  define("FEEDBACKNEG","1");
-
-  $nopreview    = 0;
-  $showpreview  = 1;
-
+  
+// Create an ID for an event that is as unique as possible.
 function getNewEventId() {
   $random = rand(0,999);
   $id = time();
@@ -40,6 +131,7 @@ function getNewEventId() {
   return $id.$random;
 }
 
+// Used by the calendar admin scripts (e.g. update.php) to output small error messages.
 function feedback($msg,$type) {
   echo '<span class="';
 	if ($type==0) { echo "feedbackpos"; } // positive feedback
@@ -49,86 +141,319 @@ function feedback($msg,$type) {
   echo '</span><br>';
 }
 
+// NOT USED
+function verifyCancelURL($httpreferer) {
+	if (empty($httpreferer)) {
+		$httpreferer = "update.php";
+	}
+  return $httpreferer;
+}
+
+// Used by the calendar admin scripts (e.g. update.php)
+// to fully redirect a visitor from one page to another
 function redirect2URL($url) {
-  Header("Location: $url");
+	if (empty($url)) {
+		$url = "update.php";
+	}
+	if (preg_match("/^[a-z]+:\/\//i", $url) == 0)
+	{
+		$url = SECUREBASEURL . $url;
+	}
+	header("HTTP/1.1 301 Moved Permanently");
+  header("Location: $url");
   return TRUE;
-} // end: Function redirect2URL($url)
+}
+
+// Get the complete URL that points to the current calendar.
+function getFullCalendarURL($calendarid) {
+  if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
+  $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/main.php?calendarid=".urlencode($calendarid);
+  return $calendarurl;
+}
+
+// Sends an email to a sponsor.
+function sendemail2sponsor($sponsorname,$sponsoremail,$subject,$body) {
+  $body.= "\n\n";
+  $body.= "----------------------------------------\n";
+  $body.= $_SESSION["NAME"]." \n";
+  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
+  $body.= $_SESSION["ADMINEMAIL"]."\n";
+  
+  sendemail($sponsorname,$sponsoremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
+}
+
+function sendemail2user($useremail,$subject,$body) {
+  $body.= "\n\n";
+  $body.= "----------------------------------------\n";
+  $body.= $_SESSION["NAME"]."\n";
+  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
+  $body.= $_SESSION["ADMINEMAIL"]."\n";
+  
+  sendemail($useremail,$useremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
+}
+
+// highlights all occurrences of the keyword in the text
+// case-insensitive
+function highlight_keyword($keyword, $text) {
+	$keyword = preg_quote($keyword);
+	$newtext = preg_replace('/'.$keyword.'/Usi','<span style="background-color:#ffff99">\\0</span>',$text);
+	return $newtext;
+}
+
+/**
+ * Taken from phpBB 2.0.19 (from phpBB2/includes/bbcode.php) www.
+ *
+ * Rewritten by Nathan Codding - Feb 6, 2001.
+ * - Goes through the given string, and replaces xxxx://yyyy with an HTML <a> tag linking
+ * 	to that URL
+ * - Goes through the given string, and replaces www.xxxx.yyyy[zzzz] with an HTML <a> tag linking
+ * 	to http://www.xxxx.yyyy[/zzzz]
+ * - Goes through the given string, and replaces xxxx@yyyy with an HTML mailto: tag linking
+ *		to that email address
+ * - Only matches these 2 patterns either after a space, or at the beginning of a line
+ *
+ * Notes: the email one might get annoying - it's easy to make it more restrictive, though.. maybe
+ * have it require something like xxxx@yyyy.zzzz or such. We'll see.
+ */
+function make_clickable($text)
+{
+	$text = preg_replace('#(script|about|applet|activex|chrome):#is', "\\1&#058;", $text);
+
+	// pad it with a space so we can match things at the start of the 1st line.
+	$ret = ' ' . $text;
+
+	// matches an "xxxx://yyyy" URL at the start of a line, or after a space.
+	// xxxx can only be alpha characters.
+	// yyyy is anything up to the first space, newline, comma, double quote or <
+	$ret = preg_replace("#(^|[\n ])([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $ret);
+
+	// matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing
+	// Must contain at least 2 dots. xxxx contains either alphanum, or "-"
+	// zzzz is optional.. will contain everything up to the first space, newline, 
+	// comma, double quote or <.
+	$ret = preg_replace("#(^|[\n ])((www|ftp)\.[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $ret);
+
+	// matches an email@domain type address at the start of a line, or after a space.
+	// Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
+	$ret = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $ret);
+
+	// Remove our padding..
+	$ret = substr($ret, 1);
+
+	return($ret);
+}
+
+// remove slashes from event fields
+function removeslashes(&$event) {
+	if (get_magic_quotes_gpc()) {
+	  $event['title']=stripslashes($event['title']);
+	  $event['description']=stripslashes($event['description']);
+	  $event['location']=stripslashes($event['location']);
+	  $event['price']=stripslashes($event['price']);
+	  $event['contact_name']=stripslashes($event['contact_name']);
+	  $event['contact_phone']=stripslashes($event['contact_phone']);
+	  $event['contact_email']=stripslashes($event['contact_email']);
+	  $event['url']=stripslashes($event['url']);
+	  $event['displayedsponsor']=stripslashes($event['displayedsponsor']);
+	  $event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
+  }
+}
+
+/* Make sure a URL starts with a protocol */
+function checkURL($url) {
+  return
+    (empty($url) || 
+		 strtolower(substr($url,0,7))=="http://" ||
+		 strtolower(substr($url,0,8))=="https://"
+		 );
+}
+
+/* Check that a e-mail address is valid */
+function checkemail($email) {
+  return
+    ((!empty($email)) && (eregi("^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3}$",$email)));
+}
+
+// Run a sanity check on incoming request variables and set particular variables if checks are passed
+function setVar(&$var,$value,$type) {
+	// Since we are using the ISO-8859-1 we must handle characters from 127 to 159, which are invalid.
+	// These typically come from Microsoft word or from other Web sites.
+	$badchars = array(
+		chr(133), // ...
+		chr(145), // left single quote
+		chr(146), // right single quote
+		chr(147), // left double quote
+		chr(148), // right double quote
+		chr(149), // bullet
+		chr(150), // ndash
+		chr(151), // mdash
+		chr(153)  // trademark
+	);
+	$goodchar = array(
+		'...',    // ...
+		"'",      // left single quote
+		"'",      // right single quote
+		'"',      // left double quote
+		'"',      // right double quote
+		chr(183), // bullet (converted to middle dot)
+		'-',      // ndash
+		'-',      // mdash
+		'(TM)'    // trademark
+	);
+	$value = str_replace($badchars, $goodchar, $value);
+	
+	// Remove all other characters from 127 to 159
+	$value = preg_replace("/[\x7F-\x9F]/","",$value);
+	
+	if (isset($value)) {
+	  // first, remove any escaping that may have happened if magic_quotes_gpc is set to ON in php.ini
+		if (get_magic_quotes_gpc()) {
+		  if (is_array($value)) {
+			  foreach ($value as $key=>$v) {
+				  $value[$key] = stripslashes($v);
+				}
+			}
+			else {
+			  $value = stripslashes($value);
+			}
+		}
+		
+	  if (isValidInput($value, $type)) {
+		  $var = $value;
+			return;
+		}
+	}
+	
+  // unless something is explicitly allowed unset the variable
+	$var = NULL;
+	return;
+}
+
+// returns a string in a particular language
+function lang($sTextKey) {
+  if (isset($GLOBALS['lang'][$sTextKey])) {
+		return $GLOBALS['lang'][$sTextKey];
+  }
+  else {
+    require('languages/en.inc.php');
+  	return $lang[$sTextKey];
+  }
+}
+
+// opens a DB connection to postgres
+function DBopen() {
+  $database = DB::connect( DATABASE );
+  return $database;
+}
+
+// closes a DB connection to postgres
+function DBclose($database) {
+  $database->disconnect();
+}
+
+function DBQuery($database, $query) {
+	$result = $database->query( $query );
+	
+	// Write to the SQL log file if one is defined.
+	if ( SQLLOGFILE!="" ) {
+		$logfile = fopen(SQLLOGFILE, "a");
+		if (!empty($_SESSION["AUTH_USERID"])) { $user = $_SESSION["AUTH_USERID"]; } else { $user = "anonymous"; }
+		fputs($logfile, date( "Y-m-d H:i:s", time() )." ".$_SERVER["REMOTE_ADDR"]." ".$user." ".$_SERVER["PHP_SELF"]." ".$query."\n");
+		fclose($logfile);	
+	}
+	
+	return $result;
+}
+
+/* Make sure the password meets standards for a new password (e.g. not the same as their old password */
+function checknewpassword(&$user) {
+  /* include more sophisticated constraints here */
+  if ($user['newpassword1']!=$user['newpassword2']) { return 1; }
+  elseif ((empty($user['newpassword1'])) || (strlen($user['newpassword1']) < 5)) { return 2; }
+  else { return 0; }
+}
+
+/* Verify the  user's old password in the database */
+function checkoldpassword(&$user,$userid,$database) {
+  $result = DBQuery($database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
+  $data = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	return
+    ($data['password']!=crypt($user['oldpassword'],$data['password']));
+}
 
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg,$database) {
- 
-  global $colorinputbox, $lang;
+  global $lang;
+  
+  // Force HTTPS is the server is not being accessed via localhost.
+	if ( $_SERVER['SERVER_ADDR'] != "127.0.0.1" ) {
+		$protocol = "http";
+		if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
+		if ( BASEURL != SECUREBASEURL && $protocol."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] != SECUREBASEURL."update.php" ) {
+			redirect2URL(SECUREBASEURL."update.php?calendar=".$_SESSION["CALENDARID"]);
+		}
+	}
 
   pageheader(lang('update_page_header'),
              "Login",
             "Update","",$database);
-  echo "<BR>\n";
   box_begin("inputbox",lang('login'));
 
   if (!empty($errormsg)) {
     echo "<BR>\n";
     feedback($errormsg,1);
   }
-?>
-    <BR>
-    <DIV align="center">
-    <FORM method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" name="loginform">
-<?php
-	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",$GLOBALS["eventid"],"\">\n"; }
-  if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",$GLOBALS["httpreferer"],"\">\n"; }
-	if (isset($GLOBALS["authsponsorid"])) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",$GLOBALS["authsponsorid"],"\">\n"; }
-?>
-      <TABLE width="50%" border="0" cellspacing="1" cellpadding="3" align="center">
-        <TR>
-          <TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
-          <TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
-        </TR>
-        <TR>
-          <TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
-          <TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
-        </TR>
-        <TR>
-          <TD class="inputbox">&nbsp;</TD>
-          <TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"><br>
-    <br>
-		<a href="helpsignup.php" target="newWindow"
-		onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a>
-    <BR>
-					
-					</TD>
-        </TR>
-      </TABLE>
-      <BR>
-		
-      
-    </FORM>
-<script language="JavaScript1.2"><!--
-  document.loginform.login_userid.focus();
-//--></script>
-    </DIV>
-    <BR>
-<?php
+	?>
+  <DIV>
+  <FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
+	<?php
+	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($GLOBALS["eventid"]),"\">\n"; }
+  if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($GLOBALS["httpreferer"]),"\">\n"; }
+	if (isset($GLOBALS["authsponsorid"])) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($GLOBALS["authsponsorid"]),"\">\n"; }
+	?>
+    <TABLE border="0" cellspacing="1" cellpadding="3">
+      <TR>
+        <TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
+        <TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
+      </TR>
+      <TR>
+        <TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
+        <TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
+      </TR>
+      <TR>
+        <TD class="inputbox">&nbsp;</TD>
+        <TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
+      </TR>
+    </TABLE>
+  </FORM>
+	<script language="JavaScript1.2"><!--
+	  document.loginform.login_userid.focus();
+	//--></script>
+  </DIV>
+	<?php
   box_end();
-  echo "<BR>\n";
 
   require("footer.inc.php");
 } // end: Function displaylogin
 
 // display login screen
-function displaymultiplelogin($database) {
-  global $colorinputbox;
-
+function displaymultiplelogin($database, $errorMessage="") {
   pageheader(lang('login'),
              lang('login'),
             "Update","",$database);
-  echo "<BR>\n";
   box_begin("inputbox",lang('choose_sponsor_role'));
-?>
-<table cellpadding="2" cellspacing="2" border="0">
-<?php
+  
+  if (!empty($errorMessage)) {
+  	echo "<p>", htmlentities($errorMessage) ,"</p>";
+  } else {
+  	echo "<div>&nbsp;</div>";
+  }
+	?>
+	<table cellpadding="2" cellspacing="2" border="0">
+	<?php
 	$result = DBQuery($database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
 	if ($result->numRows() > 0) {
-    for ($i=0;$i<=$result->numRows();$i++) {
+    for ($i=0;$i < $result->numRows();$i++) {
       $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
   
 	    // read sponsor name from DB
@@ -137,140 +462,222 @@ function displaymultiplelogin($database) {
       $sponsor = $r->fetchRow(DB_FETCHMODE_ASSOC,0);			
 			
 			echo "<tr><td>&nbsp;&nbsp;&nbsp;\n";
-			echo "<a href=\"".$_SERVER["PHP_SELF"]."?authsponsorid=".$authorization['sponsorid'];
+			echo "<a href=\"".$_SERVER["PHP_SELF"]."?authsponsorid=".urlencode($authorization['sponsorid']);
     	if (isset($GLOBALS["eventid"])) { 
-			  echo "&eventid=",$GLOBALS["eventid"];
+			  echo "&eventid=",urlencode($GLOBALS["eventid"]);
 			}
       if (isset($GLOBALS["httpreferer"])) { 
-			  echo "&httpreferer=",$GLOBALS["httpreferer"]; 
+			  echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
 			}
 			echo "\">";
-			echo $sponsor['name'];
+			echo htmlentities($sponsor['name']);
 			echo "</a>";
 			echo "</td></tr>\n";
 		}
 	}
-?>
-</table>
-    <BR>
-<?php
-    box_end();
-  echo "<BR>\n";
+	?>
+	</table><?php
+  box_end();
 
   require("footer.inc.php");
 } // end: function displaymultiplelogin
 
 function displaynotauthorized($database) {
-  global $colorinputbox;
-
   pageheader(lang('login'),
              lang('login'),
             "Update","",$database);
-  echo "<BR>\n";
   box_begin("inputbox",lang('error_not_authorized'));
-?>
-<?php echo lang('error_not_authorized_message'); ?><br>
-<br>
-    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
-<BR>
-<?php
-    box_end();
-  echo "<BR>\n";
+	?>
+	<?php echo lang('error_not_authorized_message'); ?><br>
+	<br>
+	    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
+	<BR>
+	<?php
+  box_end();
 
   require("footer.inc.php");
 } // end: Function displaynotauthorized
 
 
+// Validate the username and password.
 function userauthenticated($database,$userid,$password) {
 	if ( AUTH_DB ) {
 		$result = DBQuery( $database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
     if ($result->numRows() > 0) {
 			$u = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			if ( crypt($password,$u['password'])==$u['password'] ) {
+				$_SESSION["AUTH_TYPE"] = "DB";
 			  return true;
 			}
 		}
-	} 
+	}
 	if ( AUTH_LDAP ) {
-    $host = LDAP_HOST;
-		$baseDn = LDAP_BASE_DN;
-		$userfield = LDAP_USERFIELD;
-		$pid = $userid;
-		$credential = $password;
-    
-		/*ldap will bind anonymously, make sure we have some credentials*/
-		if (isset($pid) && $pid != '' && isset($credential)) {
-			$ldap = ldap_connect($host);
-			if (isset($ldap) && $ldap != '') {
-				/* search for pid dn */
-				$result = @ldap_search($ldap, $baseDn, $userfield.'='.$pid, array('dn'));
-				if ($result != 0) {
-					$entries = ldap_get_entries($ldap, $result);
-					$principal = $entries[0]['dn'];
-					if (isset($principal)) {
-						/* bind as this user */
-						if (@ldap_bind($ldap, $principal, $credential)) {
-//							print('Authenticate success');
-							return true;
-						} 
-						else {
-//							print('Authenticate failure');
-							return false;
+		//$host = LDAP_HOST;
+		//$port = LDAP_PORT;
+		//$bindUser = LDAP_BIND_USER;
+		//$bindPassword = LDAP_BIND_PASSWORD;
+		//$pid = $userid;
+		//$credential = $password;
+		
+		// Create the base search filter using the specified userfield.
+		$searchFilter = '(' . LDAP_USERFIELD . '=' . $userid . ')';
+		
+		// If an additional search filter was specified, then append it to the userfield filter
+		if (LDAP_SEARCH_FILTER != '') {
+			$searchFilter = '(&' . $searchFilter . LDAP_SEARCH_FILTER . ')';
+		}
+		
+		// Make sure the userid and password are specified.
+		if (isset($userid) && $userid != '' && isset($password)) {
+		
+			$ldap = ldap_connect(LDAP_HOST, LDAP_PORT);
+			if (isset($ldap) && $ldap !== false) {
+			
+				// Bind to the LDAP as a specific user, if defined
+				if (LDAP_BIND_USER == '' || ldap_bind($ldap, LDAP_BIND_USER, LDAP_BIND_PASSWORD)) {
+				
+					// Search for users name to dn
+					$result = ldap_search($ldap, LDAP_BASE_DN, $searchFilter, array('dn'));
+					
+					if ($result) {
+						// Get a multi-dimentional array from the results
+						$entries = ldap_get_entries($ldap, $result);
+						
+						// Determine the distinguished name (dn) of the found username.
+						$principal = $entries[0]['dn'];
+						if (isset($principal)) {
+						
+							/* bind (or rebind) as the DN and the password that was supplied via the login form */
+							if (@ldap_bind($ldap, $principal, $password)) {
+								//print('LDAP Success');
+								$_SESSION["AUTH_TYPE"] = "LDAP";
+								return true;
+							} 
+							else {
+								//print('LDAP failure');
+								return "Password is incorrect. Please try again. (LDAP)";
+							}
 						}
-					} // end: if (isset($principal))
+						else {
+							//print('User not found in LDAP');
+							return "User-ID not found. (LDAP)";
+						}
+						
+						// Clean up
+						ldap_free_result($result);
+						
+					}
 					else {
-//						print('User not found in LDAP');
-						return false;
-					} // end: else: if (isset($principal))
-					ldap_free_result($result);
-				} // end: if ($result != 0)
-				else {
-					print('Error occured searching the LDAP');
-					return false;
+						return "An error occured while searching the LDAP server for your username.";
+					}
+					ldap_close($ldap);
 				}
-				ldap_close($ldap);
+				else {
+					return "Could not connect to the LDAP server due to an authentication problem.";
+				}
 			} 
 			else {
-				print('Could not connect to LDAP at '.$host);
-				return false;
+				return "Could not connect to the login server. (LDAP)";
 			}
-    } // end: if (isset($pid) && $pid != '' && isset($credential))
-		else {
-		  return false;
 		}
 	}
-	else {
-	  return false;
+	
+	if (AUTH_HTTP ) {
+		require_once("HTTP/Request.php");
+
+		$req =& new HTTP_Request(AUTH_HTTP_URL);
+		$req->setBasicAuth($userid, $password);
+		
+		$response = $req->sendRequest();
+		
+		if (PEAR::isError($response)) {
+			return "An error occurred while connecting to the login server. (HTTP)";
+		}
+		else {
+			if ($req->getResponseCode() == 200) {
+				$_SESSION["AUTH_TYPE"] = "HTTP";
+				
+				if (AUTH_HTTP_CACHE) {
+					$passhash = crypt($password);
+					$result = DBQuery( $database, "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
+				}
+				
+				return true;
+			}
+			else {
+				if (AUTH_HTTP_CACHE) {
+					$result = DBQuery( $database, "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
+					if ($result->numRows() > 0) {
+						$record = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+						$passhash = $record['PassHash'];
+						
+						if (crypt($password, $passhash) == $passhash) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	return false; // default rule
 }
 
+/**
+ * authorized() checks if the person is logged in and has authorization to view the calendar management pages (e.g. update.php)
+ *
+ * This is how the following function executes:
+ * 1. Grab the login username/password from _POST, if they exist.
+ * 2. 
+ */
 function authorized($database) {
-  global $authsponsorid;
+	// Get sponsor related URL values
+  if (isset($_GET['authsponsorid'])) { setVar($authsponsorid,$_GET['authsponsorid'],'sponsorid'); } else { unset($authsponsorid); }
+  $changesponsorid = isset($_GET['changesponsorid']);
+  
+  // Get username/password POST values.
   if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
-	  $userid = $_POST['login_userid'];
+  	setVar($userid,strtolower($_POST['login_userid']),'userid');
 	  $password = $_POST['login_password'];
-	  $userid=strtolower($userid);
   }
-	$message_loginerror = lang('login_failed'); 
-
-	if ( isset($userid) && preg_match(REGEXVALIDUSERID, $userid) && isset($password) ) {
+  else {
+  	unset($userid);
+  	unset($password);
+  }
+  
+  $authresult = false;
+  
+  // Check the authenticity of the username/password, if they are set and are not different from the currently logged in user.
+	if ( $_SESSION["AUTH_USERID"] != $userid && isset($userid) && isset($password) ) {
     // checking authentication of PID/password
-		if ( userauthenticated($database,$userid,$password) ) {
+		if ( ($authresult = userauthenticated($database,$userid,$password)) === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;
-		} // end: if ( userauthenticated($userid,$password) )
+		}
     else {
-		  displaylogin($message_loginerror, $database);
+		  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult, $database);
 			return false;
-    } // end: if (!session_is_registered("AUTH_SPONSORID"))
-  } // end: if (isset($userid) && isset($password))
-
-  if ( isset($_SESSION["AUTH_USERID"]) && 
-	     isset($authsponsorid) ) {
-    // checking authentication of authsponsorid/pid combination
+    }
+  }
+  
+  // Removed the current sponsor ID if we are changing the sponsor
+  if ($changesponsorid) {
+  	unset($_SESSION["AUTH_SPONSORID"]);
+  }
+	
+	// The user is already logged in, but wants to change his/her sponsor...
+  if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) ) {
+    
+    // Verify that the user does in fact belong to that sponsor group.
   	$result = DBQuery( $database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
-		if ($result->numRows() > 0) {
+  	
+  	// If the user does not belong to the sponsor that he/she submitted...
+		if ($result->numRows() == 0) {
+			displaymultiplelogin($database, lang('error_bad_sponsorid'));
+			return FALSE;
+		}
+		
+		// Otherwise, assign the user to the requested sponsor.
+		else {
 			$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
  			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($database, $authsponsorid);
 			
@@ -279,9 +686,9 @@ function authorized($database) {
       $result = DBQuery($database, "SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
   		if ($result->numRows() > 0) {
 			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			  if ( $s["admin"]==1 ) { 
+			  if ( $s["admin"]==1 ) {
   			  $_SESSION["AUTH_ADMIN"] = true;
-	      }			
+	      }
 			}
 
 			// determine if the user is one of the main administrators
@@ -291,28 +698,30 @@ function authorized($database) {
 			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
   			  $_SESSION["AUTH_MAINADMIN"] = true;
-	      }			
+	      }
 			}
-
+			
 			return TRUE;
 	  }
-		else {
-			displaymultiplelogin($database);
-			return FALSE;
-		}
 	} // end: if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) )
-
+	
+	
+	// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
   if ( isset($_SESSION["AUTH_USERID"]) && !isset($_SESSION["AUTH_SPONSORID"]) ) {
-    // checking authentication of authsponsorid/pid combination
   	$result = DBQuery($database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-		if ($result->numRows() == 0) { // the user has only access to one sponsor
+  	
+  	// if the user does not have a sponsor for this calendar, then the user is not authorized.
+		if ($result->numRows() == 0) {
 		  displaynotauthorized($database);
 			return false;
 		}
-		elseif ($result->numRows() == 1) { // the user has only access to one sponsor
+		
+		// The user has only access to one sponsor
+		elseif ($result->numRows() == 1) {
 		  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
  			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($database, $authorization['sponsorid']);
+ 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
 
 			// determine if the sponsor is administrator for the calendar
 		  $_SESSION["AUTH_ADMIN"] = false;
@@ -336,38 +745,62 @@ function authorized($database) {
 			
 			return true;
 		}
+		
+		// If the user belongs to more than one sponsor, then display the form to select a sponsor.
 		else {
+ 			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
   		displaymultiplelogin($database);
 	  	return false;	
 		}
 	}
-
-  if ( isset($_SESSION["AUTH_USERID"]) && 
-	     isset($_SESSION["AUTH_SPONSORID"]) && 
-			 $_SESSION["AUTH_SPONSORNAME"] ) {
+	
+	// If the user is fully logged in...
+  if ( isset($_SESSION["AUTH_USERID"]) && isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORNAME"] ) {
     return true;
 	}
+	
+	// Otherwise, show the login form.
 	else {
 	  displaylogin("",$database);
 		return false;
 	}
 } // end: Function authorized()
 
+/**
+ * viewauthorized() checks if a user is allowed to view the main calendar (main.php) or export data (export.php, icalendar.php).
+ * 
+ * This is how the viewauthorized function executes:
+ * 	1. If the userid and password are in the _POST, then set them (local scope only).
+ * 	2a. If the calendar does not require authentication to view, then set that the user is allowed to view.
+ * 	2b. If the userid and password is set...
+ * 		A. If the username and password combo is valid then verify that the user has access to the calendar.
+ * 		B. If the combo was bad or the user does not have access then output a message and set that the user is not allowed to view.
+ * 	2c. If the user is already logged in then they should have access, so set that the user is allowed to view.
+ * 	2d. Otherwise...
+ * 		A. If the user is not using SSL, redirect them.
+ * 		B. Show the login page.
+ */
 function viewauthorized($database) {
-  $authok = 0;
+  $authok = 0; // Default that view authorization is not allowed.
+  
   if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
 	  $userid = $_POST['login_userid'];
 	  $password = $_POST['login_password'];
 	  $userid=strtolower($userid);
   }
+	
+	// If the calendar does not require authorization...
 	if ( $_SESSION["VIEWAUTHREQUIRED"] == 0 ) {
 	  $authok = 1;
 	}
-	elseif (isset($userid) && isset($password)) { // verify userid/password
+  
+  // If it requires authorization,
+  // and the username/password were submitted via POST...
+	elseif (isset($userid) && isset($password)) {
     $userid=strtolower($userid);
 
     // checking authentication
-		if ( userauthenticated($database,$userid,$password) ) {
+		if ( ($authresult = userauthenticated($database,$userid,$password)) === true ) {
 			// checking authorization
 			$result = DBQuery($database, "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($userid)."'" );
 			if ($result->numRows() > 0) {
@@ -375,16 +808,21 @@ function viewauthorized($database) {
 				$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
 				$authok = 1;
 			}
-		} // end: if ( userauthenticated($userid,$password) )
+		}
     
-    if (!$authok) { // display error message
+    if (!$authok) {
+			// display login error message
       displaylogin("Error! Your login failed. Please try again.",$database);
     }
-
-  } // end: if (isset($userid) && isset($password))
+  }
+  
+  // If it requires authorization,
+  // and the username/password are stored in the session...
   elseif ( isset($_SESSION["AUTH_USERID"]) && !empty($_SESSION["AUTH_USERID"]) ) {
 		$authok = 1;
 	}
+	
+	// Otherwise, make sure the user is using HTTPS and give them the login page.
 	else {
 		$protocol = "http";
 		$path = substr($_SERVER["PHP_SELF"],0,strrpos($_SERVER["PHP_SELF"],"/")+1);
@@ -394,14 +832,113 @@ function viewauthorized($database) {
 		    $protocol."://".$_SERVER["HTTP_HOST"].$path != SECUREBASEURL ) {
 			redirect2URL(SECUREBASEURL.$page."?calendar=".$_SESSION["CALENDARID"]);
 		}
+		
     displaylogin("",$database);
   }
   
   return $authok;
 } // end: function viewauthorized()
 
-function getSponsorName ($database, $sponsorid) {
-	$result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" );
+function logout() {
+	unset($_SESSION["AUTH_USERID"]);
+	unset($_SESSION["AUTH_SPONSORID"]);
+	unset($_SESSION["AUTH_SPONSORNAME"]);
+	unset($_SESSION["AUTH_ADMIN"]);
+	unset($_COOKIE['CategoryFilter']);
+	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
+}
+
+function getCalendarData($calendarid, $database) {
+	if ( DB::isError( $result = $database->query( "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ) ) ) {
+		return DB::errorMessage($result);
+	}
+	elseif ($result->numRows() != 1) {
+		return $result->numRows();
+	}
+	else {
+		return $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	}
+}
+
+function calendar_exists($calendarid) {
+  $database = DBopen();
+  $result = DBQuery($database, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
+  $r = $result->fetchRow(0);
+  $database->disconnect();
+  return ($r[0]==1);
+}
+
+function setCalendarPreferences() {
+	$database = DBopen();
+	$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
+	$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	
+	$_SESSION["TITLE"] = $calendar['title'];
+	$_SESSION["NAME"] = $calendar['name'];
+	$_SESSION["HEADER"] = $calendar['header'];
+	$_SESSION["FOOTER"] = $calendar['footer'];
+	$_SESSION["VIEWAUTHREQUIRED"] = $calendar['viewauthrequired'];
+	$_SESSION["FORWARDEVENTDEFAULT"] = $calendar['forwardeventdefault'];
+	
+	$_SESSION["BGCOLOR"] = $calendar['bgcolor'];
+	$_SESSION["MAINCOLOR"] = $calendar['maincolor'];
+	$_SESSION["TODAYCOLOR"] = $calendar['todaycolor'];
+	$_SESSION["PASTCOLOR"] = $calendar['pastcolor'];		
+	$_SESSION["FUTURECOLOR"] = $calendar['futurecolor'];		
+	$_SESSION["TEXTCOLOR"] = $calendar['textcolor'];		
+	$_SESSION["LINKCOLOR"] = $calendar['linkcolor'];		
+	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];
+	
+	$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND admin='1'" ); 
+	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	$_SESSION["ADMINEMAIL"] = $sponsor['email'];
+}
+
+function getNumCategories($database) {
+  $result = DBQuery($database, "SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+  $r = $result->fetchRow(0);
+  return $r[0];
+}
+
+/* Get the name of a category from the database */
+function getCategoryName(&$database, $categoryid) {
+	$result = DBQuery($database, "SELECT name FROM vtcal_category WHERE id='".sqlescape($categoryid)."'" );
+  if ($result->numRows() > 0) {
+    $category = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+    return $category['name'];
+	}
+	else {
+	  return "";
+	}
+}
+
+/* Get the name of a calendar from the database */
+function getCalendarName(&$database, $calendarid) {
+	$result = DBQuery($database, "SELECT name FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
+  if ($result->numRows() > 0) {
+    $calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+    return $calendar['name'];
+	}
+	else {
+	  return "";
+	}
+}
+
+/* Get the name of a calendar that a sponsor belongs to from the database */
+function getSponsorCalendarName(&$database, $sponsorid) {
+	$result = DBQuery($database, "SELECT c.name FROM vtcal_sponsor AS s, vtcal_calendar AS c WHERE s.id = '".sqlescape($sponsorid)."' AND c.id = s.calendarid");
+  if ($result->numRows() > 0) {
+    $calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+    return $calendar['name'];
+	}
+	else {
+	  return "";
+	}
+}
+
+/* Get the name of a sponsor from the database */
+function getSponsorName(&$database, $sponsorid) {
+	$result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
   if ($result->numRows() > 0) {
     $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $sponsor['name'];
@@ -409,6 +946,24 @@ function getSponsorName ($database, $sponsorid) {
 	else {
 	  return "";
 	}
+}
+
+/* Get the URL of a sponsor from the database */
+function getSponsorURL(&$database, $sponsorid) {
+	$result = DBQuery($database, "SELECT url FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
+  if ($result->numRows() > 0) {
+    $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+    return $sponsor['url'];
+	}
+	else {
+	  return "";
+	}
+}
+
+// Get the number of unapproved events for an entire calendar. */
+function num_unapprovedevents($repeatid,$database) {
+  $result = DBQuery($database, "SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
+  return $result->numRows();
 }
 
 // returns true if a particular userid exists in the database
@@ -425,6 +980,13 @@ function userExistsInDB($database, $userid) {
 
 // returns true if the user-id is valid
 function isValidUser($database, $userid) {
+	
+	// If we are using HTTP authentication, we must assume all
+	// users are valid, since we have no way of verifying HTTP users.
+	if ( AUTH_HTTP ) {
+		return true;
+	}
+	
   if ( AUTH_DB ) {
   	$query = "SELECT count(id) FROM vtcal_user WHERE id='".sqlescape($userid)."'";
     $result = DBQuery($database, $query ); 
@@ -474,33 +1036,7 @@ function datetoclass($month,$day,$year) {
   return $class;
 }
 
-function checkURL($url) {
-  return
-    (empty($url) || 
-		 strtolower(substr($url,0,7))=="http://" ||
-		 strtolower(substr($url,0,8))=="https://"
-		 );
-}
-
-function checkemail($email) {
-  return
-    ((!empty($email)) && (eregi("^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3}$",$email)));
-}
-
-function checknewpassword(&$user) {
-  /* include more sophisticated constraints here */
-  if ($user['newpassword1']!=$user['newpassword2']) { return 1; }
-  elseif ((empty($user['newpassword1'])) || (strlen($user['newpassword1']) < 5)) { return 2; }
-  else { return 0; }
-}
-
-function checkoldpassword(&$user,$userid,$database) {
-  $result = DBQuery($database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
-  $data = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	return
-    ($data['password']!=crypt($user['oldpassword'],$data['password']));
-}
-
+// NOT USED
 function printeventdate(&$event) {
   $event_timebegin_month = $event['timebegin_month'];
   if (strlen($event_timebegin_month) == 1) { $event_timebegin_month = "0".$event_timebegin_month; }
@@ -510,6 +1046,7 @@ function printeventdate(&$event) {
   return $event_timebegin_month.'/'.$event_timebegin_day.'/'.$event['timebegin_year'];
 }
 
+// NOT USED
 function printeventtime(&$event) {
   $event_timebegin_hour = $event['timebegin_hour'];
   if (strlen($event_timebegin_hour) == 1) { $event_timebegin_hour = "0".$event_timebegin_hour; }
@@ -523,6 +1060,7 @@ function printeventtime(&$event) {
   return $event_timebegin_hour.':'.$event_timebegin_min.$event['timebegin_ampm'].'-'.$event_timeend_hour.':'.$event_timeend_min.$event['timeend_ampm'];
 }
 
+// NOTUSED
 /* converts a year/month-pair to a timestamp in the format "1999-09" */
 function yearmonth2timestamp($year,$month) {
   $timestamp="$year-";
@@ -594,6 +1132,45 @@ function timestamp2datetime($timestamp) {
 
   return $datetime;
 }
+
+/* converts the time from a timestamp "1999-09-16 18:57:00" to a number representing the number of seconds that have passed in that day. */
+function timestamp2timenumber($timestamp) {
+  $hour  = substr($timestamp,11,2);
+  $minute = substr($timestamp,14,2);
+  return ($hour * 60) + $minute;
+}
+
+// converts the number of minutes from 00:00:00 to a label for output.
+function timenumber2timelabel($timenum) {
+	//$hoursText = "";
+	//$minutesText = "";
+	
+	if ($timenum > 59) {
+		$hours = floor($timenum / 60);
+		$timenum -= $hours * 60;
+		//$hoursText = $hours . "hr";
+	}
+
+	if ($timenum > 0) {
+		$minutes = $timenum;
+		//$minutesText = $timenum . "m";
+	}
+	
+	if (isset($hours) && isset($minutes)) {
+		return $hours . 'hr ' . $minutes . 'm';
+	}
+	elseif (isset($hours) && !isset($minutes)) {
+		if ($hours > 1) { return $hours . ' hours'; }
+		else { return $hours . ' hour'; }
+	}
+	elseif (!isset($hours) && isset($minutes)) {
+		return $minutes . ' min';
+	}
+	else {
+		return "";
+	}
+}
+
 // returns the date&time in the ISO8601format: 20000211T235900 (used by vCalendar)
 function datetime2ISO8601datetime($year,$month,$day,$hour,$min,$ampm) {
   $datetime = strtr(datetime2timestamp($year,$month,$day,$hour,$min,$ampm)," ","T");
@@ -654,6 +1231,20 @@ function disassemble_eventtime(&$event) {
   return 0;
 }
 
+// returns a string like "5:00pm" from the input "5", "0", "pm"
+function timestring($hour,$min,$ampm) {
+  if (strlen($min)==1) { $min = "0".$min; }
+
+  return $hour.":".$min.$ampm;
+}
+
+// returns true if the ending time is not 11:59pm (meaning: not specified)
+function endingtime_specified(&$event) {
+  return !($event['timeend_hour']==11 &&
+          $event['timeend_min']==59 &&
+          $event['timeend_ampm']=="pm");
+}
+
 // for non-recurring events the ending time equals the starting time
 function settimeenddate2timebegindate(&$event) {
   $event['timeend_year'] = $event['timebegin_year'];
@@ -691,33 +1282,29 @@ function assemble_eventtime(&$event) {
 }
 
 // prints out the HTML code a box begins with, use box_end to finish the box
-function box_begin($class, $headertext) {
-?>
-<TABLE border="0" cellPadding="7" cellSpacing="0">
-  <TR>
-    <TD bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
-    <TD bgcolor="#eeeeee">
-<?php
-
-  if (!empty($headertext)) {
-    echo "<h3>".$headertext."</h3>";
+function box_begin($class, $headertext, $showMenuButton=false) {
+	
+	if ($showMenuButton) {
+		?><div id="MenuButton"><table border="0" cellpadding="3" cellspacing="0"><tr><td><b><a href="update.php"><?php echo lang('back_to_menu'); ?></a></b></td></tr></table></div><?php
 	}
 	
-} // end: function box_begin()
+	?><div id="UpdateBlock"><div style="border: 1px solid #666666; padding: 8px;"><?php
+	
+  if (!empty($headertext)) {
+    echo "<h2>".htmlentities($headertext).":</h2>";
+	}
+	
+}
 
 // prints out the HTML code a box ends with, use box_begin to begin the box
 function box_end() {
-?>
-    </TD>
-  </TR>
-</TABLE>
-<?php
-} // end: function box_end()
+	?></div></div><?php
+}
 
 // prints out the HTML code a helpbox begins with, use helpbox_end to finish the helpbox
 function helpbox_begin() {
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+	?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+	<html>
   <head>
     <title><?php echo lang('help'); ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -730,83 +1317,20 @@ function helpbox_begin() {
 			<tr>
 				<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
 				<td bgcolor="#eeeeee">  
-<?php
-} // end: function helpbox_begin
-
-// prints out the HTML code a helpbox ends with, use helpbox_begin to begin the helpbox
-function helpbox_end() {
-?>
+				<?php
+				} // end: function helpbox_begin
+				
+				// prints out the HTML code a helpbox ends with, use helpbox_begin to begin the helpbox
+				function helpbox_end() {
+				?>
 				<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
 			</tr>
 		</table>
 		<br>
   </body>
-</html>
-<?php
-} // end: function helpbox_end()
-
-// returns a string like "5:00pm" from the input "5", "0", "pm"
-function timestring($hour,$min,$ampm) {
-  if (strlen($min)==1) { $min = "0".$min; }
-
-  return $hour.":".$min.$ampm;
-} // function timestring($hour,$min,$ampm)
-
-// returns true if the ending time is not 11:59pm (meaning: not specified)
-function endingtime_specified(&$event) {
-  return !($event['timeend_hour']==11 &&
-          $event['timeend_min']==59 &&
-          $event['timeend_ampm']=="pm");
+	</html>
+	<?php
 }
-
-// prints one event in the format of the week view
-function print_week_event(&$event,$preview) {
-  disassemble_eventtime($event);
-
-  if ($event['wholedayevent']==0) {
-    echo '<span class="eventtime">';
-		echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-    echo '</span>';
-		echo "<br>";
-  }
-
-  if ($preview!=1) {
-    echo "<a href=\"main.php?view=event&eventid=",$event['eventid'],"\">";
-  }
-  echo "<b>",$event['title'],"</b><br>";
-  if ($preview!=1) {
-    echo "</a>";
-  echo '<span class="eventcategory">'.$event['category_name'].'</span>';
-
-    // add little update, delete icons
-    if ((isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"] == $event['sponsorid']) || 
-         !empty($_SESSION["AUTH_ADMIN"]) ) {
-      echo "<br><a href=\"changeeinfo.php?eventid=",$event['eventid'],"\" title=\"",lang('update_event'),"\">";
-      echo "<img src=\"images/nuvola/16x16/actions/color_line.png\" height=\"16\" width=\"16\" alt=\"",lang('update_event'),"\" border=\"0\"></a>";
-
-      echo " <a href=\"changeeinfo.php?copy=1&eventid=",$event['eventid'],"\" title=\"",lang('copy_event'),"\">";
-      echo "<img src=\"images/nuvola/16x16/actions/editcopy.png\" height=\"16\" width=\"16\" alt=\"",lang('copy_event'),"\" border=\"0\"></a>";
-
-      echo " <a href=\"deleteevent.php?eventid=",$event['eventid'],"&check=1\" title=\"",lang('delete_event'),"\">";
-      echo "<img src=\"images/nuvola/16x16/actions/button_cancel.png\" height=\"16\" width=\"16\" alt=\"",lang('delete_event'),"\" border=\"0\"></a>";
-    }
-  };
-  echo "<BR><BR>\n";
-} // end: function print_week_event(&$event)
-
-// remove slashes from event fields
-function removeslashes(&$event) {
-  $event['title']=stripslashes($event['title']);
-  $event['description']=stripslashes($event['description']);
-  $event['location']=stripslashes($event['location']);
-  $event['price']=stripslashes($event['price']);
-  $event['contact_name']=stripslashes($event['contact_name']);
-  $event['contact_phone']=stripslashes($event['contact_phone']);
-  $event['contact_email']=stripslashes($event['contact_email']);
-  $event['url']=stripslashes($event['url']);
-  $event['displayedsponsor']=stripslashes($event['displayedsponsor']);
-  $event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
-} // end: function removeslashes
 
 // display input fields for a date (month, day, year)
 function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar) {
@@ -936,6 +1460,13 @@ function repeatinput2repeatdef(&$event,&$repeat) {
      if ($repeat['frequency1']=="tuethu") { $frequency = "W"; $frequencymodifier="TU TH"; }
      if ($repeat['frequency1']=="montuewedthufri") { $frequency = "W"; $frequencymodifier="MO TU WE TH FR"; }
      if ($repeat['frequency1']=="satsun") { $frequency = "W"; $frequencymodifier="SA SU"; }
+     if ($repeat['frequency1']=="sunday") { $frequency = "W"; $frequencymodifier="SU"; }
+     if ($repeat['frequency1']=="monday") { $frequency = "W"; $frequencymodifier="MO"; }
+     if ($repeat['frequency1']=="tuesday") { $frequency = "W"; $frequencymodifier="TU"; }
+     if ($repeat['frequency1']=="wednesday") { $frequency = "W"; $frequencymodifier="WE"; }
+     if ($repeat['frequency1']=="thursday") { $frequency = "W"; $frequencymodifier="TH"; }
+     if ($repeat['frequency1']=="friday") { $frequency = "W"; $frequencymodifier="FR"; }
+     if ($repeat['frequency1']=="saturday") { $frequency = "W"; $frequencymodifier="SA"; }
   }
   elseif ($repeat['mode'] == 2) {
      $frequency = "MP";
@@ -1224,16 +1755,16 @@ function repeatdefdisassembled2repeatlist($startyear,$startmonth,$startday,
 	     if (strpos($frequencymodifier,"TU")!=0) {
           if ($dateJD+2 >= $startdateJD && $dateJD+2 <= $enddateJD) { $repeatlist[$ecount]=$dateJD+2; $ecount++; }
         }
-	if (strpos($frequencymodifier,"WE")!=0) {
+	     if (strpos($frequencymodifier,"WE")!=0) {
           if ($dateJD+3 >= $startdateJD && $dateJD+3 <= $enddateJD) { $repeatlist[$ecount]=$dateJD+3; $ecount++; }
         }
-	if (strpos($frequencymodifier,"TH")!=0) {
+	     if (strpos($frequencymodifier,"TH")!=0) {
           if ($dateJD+4 >= $startdateJD && $dateJD+4 <= $enddateJD) { $repeatlist[$ecount]=$dateJD+4; $ecount++; }
         }
-	if (strpos($frequencymodifier,"FR")!=0) {
+	     if (strpos($frequencymodifier,"FR")!=0) {
           if ($dateJD+5 >= $startdateJD && $dateJD+5 <= $enddateJD) { $repeatlist[$ecount]=$dateJD+5; $ecount++; }
         }
-	if (strpos($frequencymodifier,"SA")!=0) {
+	     if (strpos($frequencymodifier,"SA")!=0) {
           if ($dateJD+6 >= $startdateJD && $dateJD+6 <= $enddateJD) { $repeatlist[$ecount]=$dateJD+6; $ecount++; }
         }
         if (strpos($frequencymodifier,"SU")!=0) {
@@ -1241,7 +1772,7 @@ function repeatdefdisassembled2repeatlist($startyear,$startmonth,$startday,
         }
 
         $i++;
-	$dateJD = $weekfromJD + $i * $interval*7;
+	      $dateJD = $weekfromJD + $i * $interval*7;
       }
     }
   }
@@ -1339,7 +1870,7 @@ function printrecurrencedetails(&$repeatlist) {
     }
     echo ")";
   }
-} // end: function printrecurrencedetails
+}
 
 // translates the contents of a repeat definition string in vCalendar format
 // to the input variables required for the input form
@@ -1388,6 +1919,13 @@ function repeatdef2repeatinput($repeatdef,&$event,&$repeat) {
       elseif ($frequencymodifier=="TU TH") { $repeat['frequency1']="tuethu"; }
       elseif ($frequencymodifier=="MO TU WE TH FR") { $repeat['frequency1']="montuewedthufri"; }
       elseif ($frequencymodifier=="SA SU") { $repeat['frequency1']="satsun"; }
+      elseif ($frequencymodifier=="SU") { $repeat['frequency1']="sunday"; }
+      elseif ($frequencymodifier=="MO") { $repeat['frequency1']="monday"; }
+      elseif ($frequencymodifier=="TU") { $repeat['frequency1']="tuesday"; }
+      elseif ($frequencymodifier=="WE") { $repeat['frequency1']="wednesday"; }
+      elseif ($frequencymodifier=="TH") { $repeat['frequency1']="thursday"; }
+      elseif ($frequencymodifier=="FR") { $repeat['frequency1']="friday"; }
+      elseif ($frequencymodifier=="SA") { $repeat['frequency1']="saturday"; }
     }
   } // end: else:   if ($frequency=="MP")
 
@@ -1398,6 +1936,8 @@ function repeatdef2repeatinput($repeatdef,&$event,&$repeat) {
   return 1;
 } // end: Function repeatdef2repeatinput($repeatdef,&$event,&$repeat)
 
+/* Remove an event from the event table (aka: still under review) for the current calendar,
+and from the default calendar if the event was submitted to it. */
 function deletefromevent($eventid,$database) {
   $query = "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query ); 
@@ -1408,13 +1948,16 @@ function deletefromevent($eventid,$database) {
     $query = "DELETE FROM vtcal_event WHERE calendarid='default' AND id='".sqlescape($eventid)."'";
     $result = DBQuery($database, $query ); 
 	} // end: if ( $_SESSION["CALENDARID"] != "default" )
-} // end: function deletefromevent
+}
 
+/* Remove an event from the event_public table (aka: the event will no longer be public) */
 function deletefromevent_public($eventid,$database) {
   $query = "DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query ); 
-} // end: function deletefromevent_public
+}
 
+/* Remove all repeating entries from the event table (aka: still under review) for the current calendar,
+and from the default calendar if the event was submitted to it. */
 function repeatdeletefromevent($repeatid,$database) {
   if (!empty($repeatid)) {
 		$query = "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."'";
@@ -1427,8 +1970,10 @@ function repeatdeletefromevent($repeatid,$database) {
 			$result = DBQuery($database, $query ); 
 		} // end: if ( $_SESSION["CALENDARID"] != "default" )
 	}
-} // end: function repeatdeletefromevent
+}
 
+/* Remove all repeating entries from the event_public table (aka: the event will no longer be public),
+and from the default calendar if the event was submitted to it. */
 function repeatdeletefromevent_public($repeatid,$database) {
   if (!empty($repeatid)) {
     $query = "DELETE FROM vtcal_event_public WHERE calendarid='".$_SESSION["CALENDARID"]."' AND repeatid='".sqlescape($repeatid)."'";
@@ -1441,18 +1986,19 @@ function repeatdeletefromevent_public($repeatid,$database) {
 			$result = DBQuery($database, $query ); 
 		} // end: if ( $_SESSION["CALENDARID"] != "default" )
 	}
-} // end: function repeatdeletefromevent_public
+}
 
+/* Remove all repeating entries from the event table (aka: still under review) for the current calendar. */
 function deletefromrepeat($repeatid,$database) {
   if (!empty($repeatid)) {
     $query = "DELETE FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($repeatid)."'";
     $result = DBQuery($database, $query ); 
 	}
-} // end: function deletefromrepeat
+}
 
 function insertintoevent($eventid,&$event,$database) {
   return insertintoeventsql($_SESSION["CALENDARID"],$eventid,$event,$database);
-} // end: function insertintoevent
+}
 
 function insertintoeventsql($calendarid,$eventid,&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1476,8 +2022,9 @@ function insertintoeventsql($calendarid,$eventid,&$event,$database) {
 	if (isset($event['showincategory'])) { $showincategory = $event['showincategory']; } else { $showincategory = 0; }
 	$query.= sqlescape($showincategory)."')";
   $result = DBQuery($database, $query ); 
+  echo $result;
   return $eventid;
-} // end: function insertintoevent
+}
 
 function insertintoevent_public(&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1495,7 +2042,7 @@ function insertintoevent_public(&$event,$database) {
 	$query.= sqlescape($_SESSION["AUTH_USERID"])."')";
 
   $result = DBQuery($database, $query ); 
-} // end: function insertintoevent_public
+}
 
 function updateevent($eventid,&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1512,7 +2059,7 @@ function updateevent($eventid,&$event,$database) {
 	$query.= "',showondefaultcal='".sqlescape($event['showondefaultcal'])."',showincategory='".sqlescape($event['showincategory'])."' ";
 	$query.= "WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query ); 
-} // end: function updateevent
+}
 
 function updateevent_public($eventid,&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1528,7 +2075,7 @@ function updateevent_public($eventid,&$event,$database) {
 	$query.= "',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($database, $query ); 
-} // end: function updateevent_public
+}
 
 function insertintotemplate($template_name,&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1542,7 +2089,7 @@ function insertintotemplate($template_name,&$event,$database) {
 	$query.= "','".sqlescape($event['contact_phone'])."','".sqlescape($event['contact_email']);
 	$query.= "','".sqlescape($event['url'])."','".sqlescape($changed)."','".sqlescape($_SESSION["AUTH_USERID"])."')";
   $result = DBQuery($database, $query ); 
-} // end: function updatetemplate
+}
 
 function updatetemplate($templateid,$template_name,&$event,$database) {
   $changed = date ("Y-m-d H:i:s");
@@ -1556,7 +2103,7 @@ function updatetemplate($templateid,$template_name,&$event,$database) {
 	$query.= "',recordchangedtime='".sqlescape($changed)."',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' AND id='".sqlescape($templateid)."'";
   $result = DBQuery($database, $query ); 
-} // end: function updatetemplate
+}
 
 function insertintorepeat($repeatid,&$event,&$repeat,$database) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
@@ -1571,7 +2118,7 @@ function insertintorepeat($repeatid,&$event,&$repeat,$database) {
   $repeat['id'] = $repeatid;
   
   return $repeat['id'];
-} // end: function insertintorepeat
+}
 
 function updaterepeat($repeatid,&$event,&$repeat,$database) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
@@ -1585,13 +2132,9 @@ function updaterepeat($repeatid,&$event,&$repeat,$database) {
   $result = DBQuery($database, $query ); 
 
   return $repeatid;
-} // end: function updaterepeat
+}
 
-function num_unapprovedevents($repeatid,$database) {
-  $result = DBQuery($database, "SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
-  return $result->numRows();
-} // end: function num_unapprovedevents
-
+// Make a non-repeating event public and remove the old event if a previous version existed.
 function publicizeevent($eventid,&$event,$database) {
   if (!empty($event['repeatid'])) { // if event delivers repeatid that's fine
     $r['repeatid'] = $event['repeatid'];
@@ -1632,6 +2175,7 @@ function publicizeevent($eventid,&$event,$database) {
 	} // end: if ( $_SESSION["CALENDARID"] != "default" )
 } // end: publicizeevent
 
+// Make a repeating event public and remove the old event if a previous version existed.
 function repeatpublicizeevent($eventid,&$event,$database) {
   deletefromevent_public($eventid,$database);
   if (!empty($event['repeatid'])) {
@@ -1687,186 +2231,8 @@ function repeatpublicizeevent($eventid,&$event,$database) {
 	$result = DBQuery($database, $query ); 
 } // end: repeatpublicizeevent
 
-function getFullCalendarURL () {
-  if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
-  $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/index.php?calendarid=".$_SESSION["CALENDARID"];
-  return $calendarurl;
-}
-
-// sends an email to a sponsor
-function sendemail2sponsor($sponsorname,$sponsoremail,$subject,$body) {
-  $body.= "\n\n";
-  $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]." \n";
-  $body.= getFullCalendarURL()."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
-  
-  sendemail($sponsorname,$sponsoremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
-} // end: Function sendemail2sponsor
-// sends an email to a sponsor
-
-function sendemail2user($useremail,$subject,$body) {
-  $body.= "\n\n";
-  $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]."\n";
-  $body.= getFullCalendarURL()."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
-  
-  sendemail($useremail,$useremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
-} // end: Function sendemail2user
-
-// opens a DB connection to postgres
-function DBopen() {
-  $database = DB::connect( DATABASE );
-  return $database;
-} // end: openDB
-
-// closes a DB connection to postgres
-function DBclose($database) {
-  $database->disconnect();
-} // end: openDB
-
-function getNumCategories($database) {
-  $result = DBQuery($database, "SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
-  $r = $result->fetchRow(0);
-  return $r[0];
-}
-
-function print_event(&$event) {
-global $lang, $day_end_h;
-?>
-		  <table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#FFFFFF">
-				<tr valign="top">
-          <td align="center" valign="top" class="eventtimebig">
-					  <img alt="" src="images/spacer.gif" width="1" height="6"><br>
-<?php 
-		if ($event['wholedayevent']==0) {
-			echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-			if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
-			  echo "<br>",lang('to'),"<br>";
-			  echo timestring($event['timeend_hour'],$event['timeend_min'],$event['timeend_ampm']);
-			}
-    }
-		else {
-		  echo lang('all_day'),"\n";
-		}
-?>          </td>
-          <td bgcolor="<?php echo $_SESSION["MAINCOLOR"]; ?>">&nbsp;</td>
-          <td>
-<span class="eventtitlebig"><?php echo $event['title']; ?></span>
-&nbsp;<br>(<?php echo $event['category_name']; ?>)<br>
-<br>
-<?php 
-  if (!empty($event['description'])) {
-		echo "<p>",str_replace("\r", "<br>", $event['description']);
-
-  }
-?>
-<?php 
-  if (!empty($event['url']) && $event['url'] != "http://") {
-?>
-     <br><a href="<?php echo $event['url'],"\">",lang('more_information');?></a>
-<?php
-  } // end: if (!empty($event['url'])) {
-	
-  if (!empty($event['description'])) {
- 	  echo"</p><br>";
-	}
-?>				
-
-      <table border="0" cellspacing="5" cellpadding="0">
-<?php 
-  if (!empty($event['location'])) {
-?>
-        <tr> 
-          <td align="left" valign="top" nowrap width="5%"><strong><?php echo lang('location'); ?>:</strong></td>
-          <td width="95%"><?php echo $event['location']; ?></td>
-        </tr>
-<?php
-  } // end: if (!empty($event['location'])) {
-?>				
-<?php 
-  if (!empty($event['price'])) {
-?>
-        <tr> 
-          <td align="left" valign="top" nowrap width="5%"><strong><?php echo lang('price'); ?>:</strong></td>
-          <td width="95%"><?php echo $event['price']; ?></td>
-        </tr>
-<?php
-  } // end: if (!empty($event['price'])) {
-?>	        
-<?php 
-  if (!empty($event['displayedsponsor'])) {
-?>
-        <tr> 
-          <td align="left" valign="top" nowrap width="5%"><strong><?php echo lang('sponsor'); ?>:</strong></td>
-          <td width="95%"><?php 
-    if (!empty($event['displayedsponsorurl'])) {
-		  echo "<a href=\"",$event['displayedsponsorurl'],"\">";
-			echo $event['displayedsponsor'];
-			echo "</a>";
-		}
-		else {
-		  echo $event['displayedsponsor'];
-		}
-?>          </td>
-        </tr>
-<?php
-  } // end: if (!empty($event['displayedsponsor'])) {
-?>				
-<?php 
-  if (!empty($event['contact_name']) ||
-	    !empty($event['contact_email']) ||
-			!empty($event['contact_phone']) 
-	) {
-?>
-        <tr> 
-          <td align="left" valign="top" nowrap width="5%"><strong><?php echo lang('contact'); ?>:</strong></td>
-          <td width="95%">
-<?php if (!empty($event['contact_name']) ) { echo $event['contact_name'],"<br>"; } ?>
-<?php if (!empty($event['contact_email']) ) { 
-  echo '<img src="images/email.gif" width="20" height="20" alt="',lang('email'),'" align="absmiddle">';
-  echo " <a href=\"mailto:",$event['contact_email'],"\">",$event['contact_email'],"</a><br>"; } 
-?>
-<?php if (!empty($event['contact_phone']) ) { 
-  echo '<img src="images/phone.gif" width="20" height="20" align="absmiddle"> ';
-  echo $event['contact_phone'],"<br>"; } 
-?>
-          </td>
-        </tr>
-<?php
-  } // end: if (...)
-?>				
-        <tr> 
-          <td align="left" valign="top">&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr> 
-          <td align="left" valign="top" colspan="2">
-<?php
-  if (!empty($event['id'])) {
-?>						
-					<a 
-            href="icalendar.php?eventid=<?php echo $event['id']; ?>"><img 
-            src="images/vcalendar.gif" width="20" height="20" border="0" align="absmiddle"></a>
-          <a href="icalendar.php?eventid=<?php echo $event['id']; ?>"><?php echo lang('copy_event_to_pda'); ?></a>
-<?php
-  } // end: if (!empty($event['id']))
-?>					
-					</td>
-        </tr>
-      </table>
-					</td>
-        </tr>
-    </table>
-<?php		
-} // end: Function print_event
-
-// highlights all occurrences of the keyword in the text
-// case-insensitive
-function highlight_keyword($keyword, $text) {
-	$keyword = preg_quote($keyword);
-	$newtext = preg_replace('/'.$keyword.'/Usi','<span style="background-color:#ffff99">\\0</span>',$text);
-	return $newtext;
+// Formats a string so that it can be placed inside of a JavaScript string (e.g. document.write('');)
+function escapeJavaScriptString($string) {
+	return str_replace("\t", "\\t", str_replace("\r", "\\r", str_replace("\n", "\\n", str_replace("\"", "\\\"", str_replace("'", "\\'", str_replace("\\", "\\\\", $string))))));
 }
 ?>

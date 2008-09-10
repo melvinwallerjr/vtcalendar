@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -36,7 +36,6 @@
   pageheader(lang('add_new_event_category'),
              lang('add_new_event_category'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('add_new_event_category'));
 ?>
 <br>
@@ -67,6 +66,6 @@
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

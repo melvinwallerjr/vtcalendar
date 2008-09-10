@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -98,7 +98,6 @@
       pageheader(lang('edit_user'),
                lang('edit_user'),
 	             "Update","",$database);
-      echo "<BR>\n";
       box_begin("inputbox",lang('edit_user'));
 		}
   }
@@ -106,7 +105,6 @@
     pageheader(lang('add_new_user'),
                lang('add_new_user'),
                "Update","",$database);
-    echo "<BR>\n";
     box_begin("inputbox",lang('add_new_user'));
   }
 
@@ -118,7 +116,7 @@
 <FORM method="post" action="changeuserinfo.php">
 <?php
   // set the allowed length for the input fields
-  $maxlength_id = 8;
+  $maxlength_id = 50;
 ?>
 <TABLE border="0" cellpadding="2" cellspacing="0">
   <TR>
@@ -192,6 +190,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<br><br>";
   require("footer.inc.php");
+DBclose($database);
 ?>

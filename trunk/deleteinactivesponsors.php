@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -127,7 +127,6 @@
   pageheader(lang('delete_inactive_sponsors'),
              lang('delete_inactive_sponsors'),
 	           "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('delete_inactive_sponsors'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -144,6 +143,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

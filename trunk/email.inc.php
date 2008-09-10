@@ -1,5 +1,11 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+  
+/*
+Defines functions to verify and send e-mail:
+	function emailaddressok($email)
+	function sendemail($toName,$toAddress,$fromName,$fromAddress,$subject,$body)
+*/
 
 	// code adapted from php.net, "mail" help page, author: tstrum@salter.com
 	function emailaddressok($email) {

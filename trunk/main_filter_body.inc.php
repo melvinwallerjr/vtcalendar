@@ -1,5 +1,14 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+  
+/*
+1. Outputs the body for the filter view.
+
+2. Defines javascript functions used by only this file.
+		function checkAll(myForm, id, state)
+		function validate ( myForm, id )
+*/
+  
 ?><table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#FFFFFF">
 <tr valign="top">
 	<td>
@@ -39,7 +48,7 @@ function validate ( myForm, id ) {
 }
 //--></script>
 	<table border="0" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF">
-		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="categorylist">
+		<form method="get" action="main.php" name="categorylist">
 			<tr align="left" valign="top">
 			<td colspan="4" valign="top">
 				<strong><?php echo lang('select_categories'); ?></strong>
@@ -64,15 +73,15 @@ function validate ( myForm, id ) {
 		}
 		
 		if ($c > 0 && $c % $percolumn == 0) {
-		  echo "    </td>\n";
-				echo "    <td align=\"left\" nowrap>\n";
-			}
-		echo "    <input type=\"checkbox\" name=\"filtercategories[]\" id=\"category",$c,"\" value=\"".$categories_id[$c]."\"";
+				echo "</td>\n";
+				echo "<td align=\"left\" nowrap>\n";
+		}
+		echo '<input type="checkbox" name="filtercategories[]" id="category',$c,'" value="'.$categories_id[$c].'"';
 			if ( $categoryselected || count($filtercategories)==0 ) {
 			  echo " checked";
 			}
 			echo ">\n";
-		echo "<label for=\"category",$c,"\">",$categories_name[$c],"</label><br>\n";
+		echo '<label for="category',$c,'">',htmlentities($categories_name[$c]),"</label><br>\n";
 	} // end: for ($c=0; $c<$numcategories; $c++)
 ?>    
 				</td>
@@ -80,10 +89,11 @@ function validate ( myForm, id ) {
 			<tr valign="top">
 				<td colspan="3" align="left" valign="top">
 			  	<br>
-					<input type="submit" name="ok" value="&nbsp;&nbsp;<?php echo lang('apply_filter'); ?>&nbsp;&nbsp;">&nbsp;
+					<input type="submit" value="&nbsp;&nbsp;<?php echo lang('apply_filter'); ?>&nbsp;&nbsp;">&nbsp;
 				</td>
 			</tr>
 			<input type="hidden" name="view" value="week">
+			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION["CALENDARID"]); ?>">
 		</form>
 		</table>
   	<br>

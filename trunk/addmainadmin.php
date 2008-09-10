@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -51,7 +51,6 @@
       pageheader(lang('edit_user'),
                  lang('edit_user'),
 	             "Update","",$database);
-      echo "<BR>\n";
       box_begin("inputbox",lang('edit_user'));
 		}
   }
@@ -59,7 +58,6 @@
     pageheader(lang('add_new_main_admin'),
                lang('add_new_main_admin'),
                "Update","",$database);
-    echo "<BR>\n";
     box_begin("inputbox",lang('add_new_main_admin'));
   }
   if (isset($user['id']) && (!isset($check) || $check != 1)) { // load user to update information if it's the first time the form is viewed
@@ -108,6 +106,6 @@ document.mainform.userid.focus();
 </FORM>
 <?php
   box_end();
-  echo "<br><br>";
   require("footer.inc.php");
+DBclose($database);
 ?>

@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -144,7 +144,6 @@
     pageheader(lang('edit_sponsor'),
                lang('edit_sponsor'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('edit_sponsor'));
 		if ( !isset($check) ) {
   		$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
@@ -155,12 +154,17 @@
     pageheader(lang('add_new_sponsor'),
                lang('add_new_sponsor'),
                "Update","",$database);
-    echo "<BR>";
     box_begin("inputbox",lang('add_new_sponsor'));
 	}
 ?>
-<br>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<?php
+if ($sponsor['admin']) {
+	?><p><b>Note:</b> Users added to this sponsor will have administrative access to this calendar.</p><?php
+} else {
+	echo "<br>";
+}
+?>
 <TABLE border="0" cellpadding="2" cellspacing="0">
   <TR>
     <TD class="bodytext" valign="top">
@@ -221,7 +225,13 @@
   </TR>
   <TR>
     <TD class="bodytext" valign="top">
-      <strong><?php echo lang('administrative_members'); ?></strong>
+      <strong><?php
+				if ($sponsor['admin']) {
+					echo lang('administrative_members');
+				} else {
+					echo lang('sponsor_members');
+				}
+			?></strong>
     </TD>
     <TD class="bodytext" valign="top">
 <?php
@@ -260,6 +270,6 @@
 </form>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

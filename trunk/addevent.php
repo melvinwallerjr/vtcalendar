@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -28,11 +28,11 @@
 
   if ($result->numRows() == 0) { // before: if ($result->numRows() == '0')
     // reroute to input page
-    $url = "changeeinfo.php";
+    $url = "changeeinfo.php?calendarid=".urlencode($_SESSION["CALENDARID"]);
 
     // if addevent was called by clicking on the icons in week or month view provide the date info
     if (isset($timebegin_year)) {
-      $url.="?templateid=0&timebegin_year=".$timebegin_year."&timebegin_month=".$timebegin_month."&timebegin_day=".$timebegin_day;
+      $url.="&templateid=0&timebegin_year=".$timebegin_year."&timebegin_month=".$timebegin_month."&timebegin_day=".$timebegin_day;
     }
     redirect2URL($url);
     exit;
@@ -42,7 +42,6 @@
   pageheader(lang('choose_template'),
              lang('choose_template'),
              "","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('choose_template'));
 ?>
 <BR>
@@ -56,7 +55,7 @@
   $result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
   for ($i=0; $i<$result->numRows(); $i++) {
     $template = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-    echo "<OPTION value=\"",$template['id'],"\">",$template['name'],"</OPTION>\n";
+    echo "<OPTION value=\"",htmlentities($template['id']),"\">",htmlentities($template['name']),"</OPTION>\n";
   }
 ?>
   </SELECT>
@@ -74,6 +73,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

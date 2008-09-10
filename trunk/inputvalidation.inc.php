@@ -1,17 +1,30 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+ 
+/*
+1. Defines constants used for validation.
+   The MAXLENGTH versions are typically outputted to the MaxLength attribute of the <Input> HTML tag.
 
-  define("constValidTextCharWithoutSpacesRegEx",'\w~!@#\$%^&*\(\)\-+=\{\}\[\]\|\\\:";\'<>?,.\/');
+2. Defines several functions for validation:
+		function isValidInput($value, $type)
+		function isDate($value)
+		function isTime($value)
+*/
+
+  // Regular Expressions that validate text input
+  define("constValidTextCharFullRegEx",'\s\x20-\x7E\xA0-\xFF'); // Includes all valid ISO-8859-1 characters
+  define("constValidTextCharWithoutSpacesRegEx",'\w~!@#\$%^&*\(\)\-+=\{\}\[\]\|\\\:";\'<>?,.\/'.chr(188).chr(189).chr(190)); //188-190 are 1/4, 1/2, 3/4 respectively
   define("constValidTextCharWithSpacesRegEx",'\s'.constValidTextCharWithoutSpacesRegEx);
+  
+  define("constPasswordMaxLength",20);
+  define("constPasswordRegEx", '/^['.constValidTextCharWithoutSpacesRegEx.']{1,'.constPasswordMaxLength.'}$/');
+  
+  // Max length of input
 	define("constCalendaridMAXLENGTH",20);
-	define("constCalendaridVALIDMESSAGE", '1 to '.constCalendaridMAXLENGTH.' characters (A-Z,a-z,0-9,-,.)');
   define("constCalendarnameMAXLENGTH",100);
-	define("constCalendarnameVALIDMESSAGE", '1 to '.constCalendarnameMAXLENGTH.' characters (A-Z,a-z,0-9,-,.,&amp;,\',[space],[comma])');
 	define("constCalendarTitleMAXLENGTH",50);
   define("constKeywordMaxLength",100);
   define("constSpecificsponsorMaxLength",100);
-  define("constPasswordMaxLength",20);
-  define("constPasswordRegEx", '/^['.constValidTextCharWithoutSpacesRegEx.']{1,'.constPasswordMaxLength.'}$/');
   define("constTitleMaxLength",1024);
 	define("constImporturlMaxLength",100);
 	define("constUrlMaxLength",100);
@@ -26,10 +39,14 @@
 	define("constEmailMaxLength",100);
 	define("constCategory_nameMaxLength",100);
 	define("constSponsor_nameMaxLength",100);
+  
+  // Special error messages for invalid input
+	define("constCalendaridVALIDMESSAGE", '1 to '.constCalendaridMAXLENGTH.' characters (A-Z,a-z,0-9,-,.)');
+	define("constCalendarnameVALIDMESSAGE", '1 to '.constCalendarnameMAXLENGTH.' characters (A-Z,a-z,0-9,-,.,&amp;,\',[space],[comma])');
 	
   // checks the input against regular expressions
 	function isValidInput($value, $type) {
-        global $use_ampm;
+    global $use_ampm;
 	  if (!isset($value)) { 
 			return FALSE; 
 		}
@@ -119,7 +136,7 @@
 		  if (!empty($value)) { return TRUE; }
 		}
 		elseif ($type=='description') {
-		  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constDescriptionMaxLength.'}$/',$value)) { return TRUE; }
+		  if (preg_match('/^['.constValidTextCharFullRegEx.']{1,'.constDescriptionMaxLength.'}$/',$value)) { return TRUE; }
 		}
 		elseif ($type=='detailscaller') {
 		  if ($value=='0' || $value=='1') { return TRUE; }
@@ -165,7 +182,8 @@
 		  if ($value=='1') { return TRUE; }
 		}
 		elseif ($type=='frequency1') {
-		  if ($value=='day' || $value=='week' || $value=='month' || $value=='year' || $value=='monwedfri' || $value=='tuethu' || $value=='montuewedthufri' || $value=='satsun') { return TRUE; }
+		  if ($value=='day' || $value=='week' || $value=='month' || $value=='year' || $value=='monwedfri' || $value=='tuethu' || $value=='montuewedthufri' || $value=='satsun'
+		  	|| $value=='sunday' || $value=='monday' || $value=='tuesday' || $value=='wednesday' || $value=='thursday' || $value=='friday' || $value=='saturday') { return TRUE; }
 		}
 		elseif ($type=='frequency2modifier1') {
 		  if ($value=='first' || $value=='second' || $value=='third' || $value=='fourth' || $value=='last') { return TRUE; }
@@ -269,7 +287,7 @@
 		elseif ($type=='template_name') {
 		  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constTemplate_nameMaxLength.'}$/',$value)) { return TRUE; }
 		}
-		elseif ($type=='timebegin' || $type=='timeend') { // e.g. "2004-05-26 00:00:00" or "today"
+		elseif ($type=='timebegin' || $type=='timeend' || $type=='littlecal') { // e.g. "2004-05-26 00:00:00" or "today"
 		  if ($value=='today' || $value=='now') { return TRUE; }
 			if (strlen($value)==19 && isDate(substr($value,0,10)) && $value{0} && isTime(substr($value,11,8))) { return TRUE; }
 		}
@@ -292,7 +310,7 @@
 		  if ($value=='am' || $value=='pm') { return TRUE; }
 		}
 		elseif ($type=='title') {
-		  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constTitleMaxLength.'}$/',$value)) { return TRUE; }
+		  if (preg_match('/^['.constValidTextCharFullRegEx.']{1,'.constTitleMaxLength.'}$/',$value)) { return TRUE; }
 		}
 		elseif ($type=='type') {
 		  if ($value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }

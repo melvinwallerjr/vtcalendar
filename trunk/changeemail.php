@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -39,10 +39,9 @@
   pageheader(lang('change_email'),
              lang('change_email'),
              "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('change_email'));
 ?>
-<B><?php echo lang('change_email_label'); ?></B><BR>
+<p><B><?php echo lang('change_email_label'); ?></B></p>
 <FORM method="post" action="changeemail.php">
 <?php
   if (!checkemail($sponsor["email"])) {
@@ -60,7 +59,7 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
 
   require("footer.inc.php");
+DBclose($database);
 ?>

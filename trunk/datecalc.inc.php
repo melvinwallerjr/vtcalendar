@@ -1,5 +1,23 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+  
+/*
+Defines functions for date encoding/decoding, and formatting:
+	function JulianToJD($month, $day, $year)
+	function JDToJulian($jd)
+	function Day_of_Week($month,$day,$year)
+	function Day_of_Week_Abbreviation($dow)
+	function Delta_Days($m1,$d1,$y1,$m2,$d2,$y2)
+	function Decode_Date_US($datestr)
+	function Encode_Date_US($month,$day,$year)
+	function Add_Delta_Days($month,$day,$year,$delta)
+	function Month_to_Text($month)
+	function Month_to_Text_Abbreviation($month)
+	Function Day_of_Week_to_Text($dow)
+	function isDST($timestamp)
+	function EST2UTC($year, $month, $day, $hour, $min, $ampm)
+	function Timezone2UTC($offset, $year, $month, $day, $hour, $min, $ampm)
+*/
 
 	if (!function_exists('JulianToJD')) {
 		// taken from: http://www.holger.oertel.com/calc_en.htm

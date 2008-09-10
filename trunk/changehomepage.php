@@ -1,7 +1,7 @@
 <?php
-  session_start();
+require_once('config.inc.php');
+require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
-  require_once('functions.inc.php');
 
   $database = DBopen();
   if (!authorized($database)) { exit; }
@@ -40,11 +40,10 @@
   pageheader(lang('change_homepage'),
              lang('change_homepage'),
 	           "Update","",$database);
-  echo "<BR>";
   box_begin("inputbox",lang('change_homepage'));
 ?>
-<B><?php echo lang('change_homepage_label'); ?></B><BR>
-<I><?php echo lang('change_homepage_example'); ?></I>
+<p><B><?php echo lang('change_homepage_label'); ?></B><BR>
+<I><?php echo lang('change_homepage_example'); ?></I></p>
 <FORM method="post" action="changehomepage.php">
 <?php
   if (!checkURL($sponsor['url'])) {
@@ -62,6 +61,6 @@
 </FORM>
 <?php
   box_end();
-  echo "<BR>";
   require("footer.inc.php");
+DBclose($database);
 ?>

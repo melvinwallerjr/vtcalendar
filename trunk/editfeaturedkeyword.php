@@ -12,7 +12,7 @@ require_once('session_start.inc.php');
 	  if (isset($_GET['id'])) { setVar($id,$_GET['id'],'searchkeywordid'); } else { unset($id); }
  }
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 

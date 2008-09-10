@@ -47,7 +47,14 @@ if ( isset($_GET['htmlencode']) && $_GET['htmlencode'] != "" ) { if ( isValidRem
 // Load the Calendar Information
 // ==========================================================
 
+// Open the DB connection
 $database = DBopen();
+
+// Exit if the DB connection failed.
+if (is_string($database)) {
+	exit;
+}
+
 $calendardata = getCalendarData($config['CalendarID'], $database);
 
 // If there was an error, output the reason.

@@ -872,15 +872,15 @@ function getCalendarData($calendarid, $database) {
 }
 
 function calendar_exists($calendarid) {
-  //$database = DBopen();
-  $result = DBQuery(DBCONNECTION, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
+  $database = DBCONNECTION;
+  $result = DBQuery($database, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
   $r = $result->fetchRow(0);
-  DBCONNECTION->disconnect();
+  $database->disconnect();
   return ($r[0]==1);
 }
 
 function setCalendarPreferences() {
-	$database = DBopen();
+	$database = DBCONNECTION;
 	$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
 	$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	

@@ -29,7 +29,7 @@ require_once('session_start.inc.php');
   } // end: if (isset($_POST['event'])) {
 
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
 
   if (isset($cancel)) {

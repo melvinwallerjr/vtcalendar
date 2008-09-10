@@ -9,7 +9,7 @@ require_once('session_start.inc.php');
   if (isset($_GET['startimport'])) { setVar($startimport,$_GET['startimport'],'startimport'); } else { unset($startimport); }
 
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   if (!authorized($database)) { exit; }
   
 	if (isset($cancel)) {

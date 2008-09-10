@@ -1,7 +1,7 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
-  $database = DBopen();
+  $database = DBCONNECTION;
   pageheader(lang('reject_event_update'),
              lang('reject_event_update'),
    	         "Update","",$database);

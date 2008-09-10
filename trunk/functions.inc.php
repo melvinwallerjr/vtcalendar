@@ -340,19 +340,26 @@ function lang($sTextKey) {
   }
 }
 
-// opens a DB connection to postgres
+// Returns a DB connection to the database, or a string that represents an error message.
 function DBopen() {
   $database = DB::connect( DATABASE );
+  
+	if (DB::isError($database)) {
+		return "Cannot connect to the database: " . $database->getMessage();
+	}
+	
+	echo "<p>OPENED CONNECTION</p>";
+  
   return $database;
 }
 
-// closes a DB connection to postgres
+// closes a DB connection to the database
 function DBclose($database) {
   $database->disconnect();
 }
 
 function DBQuery($database, $query) {
-	$result = $database->query( $query );
+	$result = $database->query($query);
 	
 	// Write to the SQL log file if one is defined.
 	if ( SQLLOGFILE!="" ) {

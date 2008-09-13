@@ -518,7 +518,7 @@ $lang['help_addevent_contents'] = 'You have 4 options:
 <OL>
   <LI>Create a <A href="helpaddeventnew.php">new event</A>
   by clicking on the &quot;Add new event&quot; link in the update menu</LI>
-  <LI>Use the icon <IMG src="images/nuvola/16x16/actions/filenew.png" width="16" height="16" alt="new event" border="0">
+  <LI>Use the icon <IMG src="images/new.gif" width="16" height="16" alt="new event" border="0">
   in the day/week/month view to create a <A href="helpaddeventnew.php">new event</A></LI>
   <LI><A href="helpupdatecopydelete.php">Copy from an existing event</A> by clicking on the link
   &quot;Update/Copy/Delete event&quot; in the update menu</LI>
@@ -1032,9 +1032,9 @@ $lang['help_updatecopydelete'] = 'Update/Copy/Delete event';
 $lang['help_updatecopydelete_contents'] = 'You have 2 options:
 <OL>
   <LI>Click on the &quot;Manage events&quot; link in the update menu</LI> or
-  <LI>In the weekly/monthly view use the icon <IMG src="images/nuvola/16x16/actions/color_line.png" width="16" height="16" alt="update event" border="0">
-   to <A href="helpupdateevent.php">update</A>, <IMG src="images/nuvola/16x16/actions/editcopy.png" width="16" height="16" alt="copy event" border="0"> to
-   <A href="helpcopyevent.php">copy</A> or <IMG src="images/nuvola/16x16/actions/button_cancel.png" width="16" height="16" alt="delete event" border="0"> to <A href="helpdeleteevent.php">delete</A> an event</LI>
+  <LI>In the weekly/monthly view use the icon <IMG src="images/edit.gif" width="16" height="16" alt="update event" border="0">
+   to <A href="helpupdateevent.php">update</A>, <IMG src="images/copy.gif" width="16" height="16" alt="copy event" border="0"> to
+   <A href="helpcopyevent.php">copy</A> or <IMG src="images/delete.gif" width="16" height="16" alt="delete event" border="0"> to <A href="helpdeleteevent.php">delete</A> an event</LI>
 </OL>';
 $lang['help_updateevent'] = 'Update event';
 $lang['help_updateevent_contents'] = 'When you choose to update an existing event you can make changes or

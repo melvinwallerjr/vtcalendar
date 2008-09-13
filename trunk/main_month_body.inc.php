@@ -113,7 +113,7 @@
 					// Display an "add event" icon
 					if (!empty($_SESSION["AUTH_SPONSORID"])) {
 	          echo '<td><a style="font-size: 11px;" href="addevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
-	          echo '<img src="images/nuvola/16x16/actions/filenew.png" height="16" width="16" title="',lang('add_new_event'),'" alt="',lang('add_new_event'),'" border="0">';
+	          echo '<img src="images/new.gif" height="16" width="16" title="',lang('add_new_event'),'" alt="',lang('add_new_event'),'" border="0">';
 	          echo '</a></td>';
 	        }
 	        
@@ -180,7 +180,7 @@
 <?php if (!empty($_SESSION["AUTH_SPONSORID"])) { ?>
 <table border="0" cellpadding="3" cellspacing="0">
 	<tr>
-		<td><img src="images/nuvola/16x16/actions/filenew.png" height="16" width="16" alt="" border="0"></td>
+		<td><img src="images/new.gif" height="16" width="16" alt="" border="0"></td>
 		<td>= <?php echo lang('add_new_event'); ?></td>
 	</tr>
 </table>

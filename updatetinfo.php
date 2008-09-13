@@ -1,8 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
-  require("inputtdata.inc.php");
+require_once('application.inc.php');
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }

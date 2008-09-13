@@ -164,4 +164,22 @@ function isValidInput($value, $type)
 function isDate($value)
 function isTime($value) */
 require_once("functions-inputvalidation.inc.php");
+
+/* Functions used to output the event input form and process data related to it.
+----------------------------------------------------
+function defaultevent(&$event,$sponsorid)
+function checktime($hour,$min)
+function checkeventdate(&$event,&$repeat)
+function checkstartenddate($startdate_month,$startdate_day,$startdate_year,$enddate_month,$enddate_day,$enddate_year)
+function checkeventtime(&$event)
+function checkevent(&$event,&$repeat)
+function inputrecurrences(&$event,&$repeat,$check)
+function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetime,&$repeat,$copy) */
+require("functions-inputdata-event.inc.php");
+
+
+/* Functions used to output the event input form and process data related to it.
+----------------------------------------------------
+function inputtemplatedata(&$event,$sponsorid,$check,$template_name) */
+require("functions-inputdata-template.inc.php");
 ?>

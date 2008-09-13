@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
+require_once('application.inc.php');
 
   if (!authorized()) { exit; }
 
@@ -25,7 +25,7 @@ require_once('session_start.inc.php');
   // test if any template exists already
   $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
 
-  if ($result->numRows() == 0) { // before: if ($result->numRows() == '0')
+  if ($result->numRows() == 0) {
     // reroute to input page
     $url = "changeeinfo.php?calendarid=".urlencode($_SESSION["CALENDARID"]);
 

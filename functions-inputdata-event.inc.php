@@ -1,6 +1,4 @@
 <?php
-  if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-
 function defaultevent(&$event,$sponsorid) {
 
 	// Set the default date.

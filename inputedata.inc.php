@@ -257,8 +257,11 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		<div style="padding-left: 18px;">
 		
 		<?php
-		if ($_SESSION['CALENDARID'] == "default" && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
+		// Do not allow the date/time to be changed if we are logged into the default calendar and the current event is from a different calendar.
+		if ($_SESSION['CALENDARID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
 			passeventtimevalues($event, $repeat);
+			
+			// Output the basic date/time information.
 			echo Day_of_Week_to_Text(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']));
 		  echo ", ";
 			echo substr(Month_to_Text($event['timebegin_month']),0,3)," ",$event['timebegin_day'],", ",$event['timebegin_year'];
@@ -273,6 +276,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			  echo lang('all_day');
 			}
 		
+			// Output additional re-occurring event information.
 			if (!empty($event['repeatid'])) {
 				echo "<br>\n";
 				echo '<font color="#00AA00">';
@@ -285,8 +289,10 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 				echo '</font>';
 			}
 		}
+		
+		// Otherwise, allow the date/time to be edited.
 		else {
-		?>
+			?>
 			<table border="0" cellpadding="2" cellspacing="0">
 			<TR><TD class="bodytext" valign="top"><strong><?php echo lang('date'); ?>:</strong><?php
 			
@@ -453,7 +459,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		}
 		
 		?></div><?php
-	} /* end: if ($displaydatetime) */
+		
+	} // End of date/time block.
 	?>
 	
 	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;"><h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Basic Event Information:</h3></div>
@@ -656,7 +663,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	      <strong><?php echo lang('sponsor'); ?>:</strong>
 	    </TD>
 	    <TD class="bodytext"><?php
-	    	if ($_SESSION['CALENDARID'] == "default" && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
+	    	if ($_SESSION['CALENDARID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
 	    		?><input type="hidden" id="selectedsponsorid" name="event[sponsorid]" value="<?php echo $event['sponsorid']; ?>">
 	    		<input type="hidden" name="event[showondefaultcal]" value="<?php echo $event['showondefaultcal']; ?>">
 	    		<input type="hidden" name="event[showincategory]" value="<?php echo $event['showincategory']; ?>"><?php

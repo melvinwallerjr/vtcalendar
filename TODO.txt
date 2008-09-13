@@ -11,6 +11,9 @@ TODO:
 - Check current database schema vs 2.2.2.
 - Determine what 'detailscaller' did and if they can be removed.
 - Why was the saveall button disabled?
+- Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
+- Get row by reference. Example $row =& $results->fetchRow()
+- Free results by using $results->free()
 
 
 OLD TODO:

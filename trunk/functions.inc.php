@@ -157,4 +157,11 @@ require_once("functions-content.inc.php");
 function emailaddressok($email)
 function sendemail($toName,$toAddress,$fromName,$fromAddress,$subject,$body) */
 require_once("functions-email.inc.php");
+
+/* Functions for validating input:
+----------------------------------------------------
+function isValidInput($value, $type)
+function isDate($value)
+function isTime($value) */
+require_once("functions-inputvalidation.inc.php");
 ?>

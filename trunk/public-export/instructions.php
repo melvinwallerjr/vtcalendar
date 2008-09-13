@@ -1,8 +1,8 @@
 <?php
 define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
 require_once('../config.inc.php');
-require_once('../inputvalidation.inc.php');
-//require_once('../functions.inc.php');
+require_once('../constants.inc.php');
+require_once('../functions.inc.php');
 require_once('functions.inc.php');
 require_once('defaults_and_constants.inc.php');
 

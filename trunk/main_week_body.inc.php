@@ -184,12 +184,12 @@ function print_week_event(&$event) {
   
   echo '</b></div>';
  	
- 	if ($preview != 1) {
+ 	//if ($preview != 1) {
   	// echo '<div class="WeekEvent-Category">' . $event['category_name'] . '</div>';
   	//if (!empty($event['location'])) {
   		echo '<div class="WeekEvent-Category">' . htmlentities($event['location']) . '</div>';
   	//}
-  };
+  //};
   echo "</div>\n";
 } // end: function print_week_event(&$event)
 ?>

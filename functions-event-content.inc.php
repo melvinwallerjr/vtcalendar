@@ -1,10 +1,4 @@
 <?php
-
-/*
-function print_event($event, $linkfeatures=true)
-function adminButtons($eventORshowdate, $buttons, $size, $orientation)
-*/
-
 function print_event($event, $linkfeatures=true) {
 	global $lang, $day_end_h;
 	?>

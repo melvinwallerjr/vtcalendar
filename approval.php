@@ -174,7 +174,7 @@ else {
   }
 }
 contentsection_end();
-require("footer.inc.php");
+pagefooter();
 DBclose();
   
 function sendrejectionemail($eventid) {

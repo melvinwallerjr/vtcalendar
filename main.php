@@ -153,6 +153,6 @@ elseif (COLUMNSIDE == "RIGHT") {
 <table id="PoweredBy" width="100%" border="0" cellpadding="4" cellspacing="0"><tr><td align="right"><!--Powered by univCal <?php if (file_exists("VERSION.txt")) { include('VERSION.txt'); } ?>. --> Based on <a href="http://vtcalendar.sourceforge.net/" target="_blank">VTCalendar</a></td></tr></table>
 
 <?php
-	require("footer.inc.php");
+	pagefooter();
 	DBclose();
 ?>

@@ -550,7 +550,7 @@ for ($i=date("Y")-1; $i<=date("Y")+3; $i++) {
 </form>
 <?php    
     contentsection_end();
-    require("footer.inc.php");
+    pagefooter();
   }
   
   DBclose();

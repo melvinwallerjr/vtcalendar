@@ -52,6 +52,6 @@ require_once('session_start.inc.php');
 </table>
 <?php
   contentsection_end();
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

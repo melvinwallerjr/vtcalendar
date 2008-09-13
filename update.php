@@ -152,6 +152,6 @@ if ( $_SESSION["AUTH_MAINADMIN"] ) {
 </table>
 </div></div>
 <?php
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

@@ -13,10 +13,10 @@ $today = Decode_Date_US(date("m/d/Y"));
 $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$today['day'],12,0,"am");
 
 // Output list with events
-$queryHeader = "SELECT e.calendarid = 'default' as isdefaultcal, e.calendarid as calendarid, e.id AS id,e.approved,e.rejectreason,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE ";
-$queryFooter.= "e.categoryid = c.id AND e.sponsorid = s.id AND e.sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY e.timebegin, e.wholedayevent DESC, e.id, isdefaultcal";
-//Removed from the query footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
-$result = DBQuery($queryHeader.$queryFooter);
+$query  = "SELECT e.calendarid = 'default' as isdefaultcal, e.calendarid as calendarid, e.id AS id,e.approved,e.rejectreason,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE ";
+$query .= "e.categoryid = c.id AND e.sponsorid = s.id AND e.sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY e.timebegin, e.wholedayevent DESC, e.id, isdefaultcal";
+//Removed from the query's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
+$result = DBQuery($query);
 ?>
 
 <p><a href="addevent.php"><?php echo lang('add_new_event'); ?></a>
@@ -45,7 +45,7 @@ if ($result->numRows() > 0 ) {
 	  $color = "#eeeeee";
 	  for ($i=0; $i<$result->numRows(); $i++) {
 	    $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-	    disassemble_eventtime($event);
+	    disassemble_timestamp($event);
 	    
 	    // Skip this event if this event is from the "default" calendar
 	    // but is not following its corresponding event from this calendar or has yet to be approved.

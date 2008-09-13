@@ -52,7 +52,7 @@ if (!empty($_SESSION["AUTH_SPONSORID"])) {
 	// print all events of one day
 	while ($ievent < $result->numRows()) {
 		// print event
- 	  disassemble_eventtime($event);	
+ 	  disassemble_timestamp($event);	
 		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
 		$timediff = $event_timeend_num - $event_timebegin_num;
 		$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;

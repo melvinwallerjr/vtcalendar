@@ -31,7 +31,7 @@
 	} // end: iCalPrintMultipleLines
 	
 	function getICalFormat(&$event) {
-		disassemble_eventtime($event);
+		disassemble_timestamp($event);
 	
 		$begintime = Timezone2UTC(TIMEZONE_OFFSET, $event['timebegin_year'], $event['timebegin_month'], $event['timebegin_day'], 
 												 $event['timebegin_hour'], $event['timebegin_min'], $event['timebegin_ampm']);

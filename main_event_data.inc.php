@@ -7,7 +7,7 @@
   
   if ( $result->numRows() > 0 ) {
     $event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
- 	  disassemble_eventtime($event);	
+ 	  disassemble_timestamp($event);	
     $event_timebegin  = timestamp2datetime($event['timebegin']);
     $event_timeend    = timestamp2datetime($event['timeend']);
     $basetitle = ": ".htmlentities($event['title']);

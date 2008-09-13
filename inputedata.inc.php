@@ -1,23 +1,20 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
-function defaulteventtime(&$event) {
+function defaultevent(&$event,$sponsorid) {
+
+	// Set the default date.
   $event['timebegin_year']=date("Y");
   $event['timebegin_month']=0;
   $event['timebegin_day']=0;
+  
+  // Set the default begin/end time.
   $event['timebegin_hour']=0;
   $event['timebegin_min']=0;
   $event['timebegin_ampm']="pm";
-
   $event['timeend_hour']=0;
   $event['timeend_min']=0;
   $event['timeend_ampm']="pm";
-
-  return 0;
-}
-
-function defaultevent(&$event,$sponsorid) {
-  defaulteventtime($event);
 
   // find sponsor name
   $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
@@ -52,7 +49,6 @@ function checktime($hour,$min) {
          (($hour>=0) && ($hour<23)) &&
          (($min>=0) && ($min<=59));
    }
-
 }
 
 function checkeventdate(&$event,&$repeat) {
@@ -124,7 +120,7 @@ function checkeventtime(&$event) {
 function checkevent(&$event,&$repeat) {
   return
     (!empty($event['title'])) &&
-    checkeventdate($event,$repeat) &&
+    checkeventdate($event, $repeat) &&
     checkeventtime($event) &&
     ($event['categoryid']>=1) &&
     checkURL(urldecode($event['url'])) &&
@@ -260,7 +256,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		
 		<div style="padding-left: 18px;">
 		
-		<?php if ($_SESSION['CALENDARID'] == "default" && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
+		<?php
+		if ($_SESSION['CALENDARID'] == "default" && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
 			passeventtimevalues($event, $repeat);
 			echo Day_of_Week_to_Text(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']));
 		  echo ", ";

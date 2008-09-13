@@ -123,6 +123,7 @@
 	require_once("functions-misc.inc.php");
 	require_once("functions-dbgeneric.inc.php");
 	require_once("functions-authentication.inc.php");
+	require_once("functions-gets.inc.php");
 	require_once("functions-dates.inc.php");
 	require_once("functions-event-dates.inc.php");
 	require_once("functions-event-db.inc.php");

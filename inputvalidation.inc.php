@@ -1,5 +1,5 @@
 <?php
-  if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
  
 /*
 1. Defines constants used for validation.

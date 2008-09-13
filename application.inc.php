@@ -1,5 +1,5 @@
 <?php
-// Allow any script that includes globalsettings.inc.php include files that restrict their access.
+// Allow any script that includes this file to include php files that restrict their access.
 define("ALLOWINCLUDES", TRUE);
 
 // Include the necessary files.

@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-require_once('globalsettings.inc.php');
+require_once('application.inc.php');
 
 //  if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }
 //  if (isset($_POST['password'])) { setVar($password,$_POST['password'],'password'); } else { unset($password); }

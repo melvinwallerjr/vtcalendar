@@ -25,34 +25,34 @@
 		Generic Database Functions:
 		----------------------------------------------------
 		function DBopen()
-		function DBclose($database)
-		function DBQuery($database, $query)
+		function DBclose()
+		function DBQuery($query)
 		
 		Authenticate users:
 		----------------------------------------------------
 		function checknewpassword(&$user)
-		function checkoldpassword(&$user,$userid,$database)
-		function displaylogin($database, $errormsg="")
-		function displaymultiplelogin($database, $errorMessage="")
-		function displaynotauthorized($database)
-		function userauthenticated($database,$userid,$password)
-		function authorized($database)
-		function viewauthorized($database)
+		function checkoldpassword(&$user,$userid)
+		function displaylogin($errormsg="")
+		function displaymultiplelogin($errorMessage="")
+		function displaynotauthorized()
+		function userauthenticated($userid,$password)
+		function authorized()
+		function viewauthorized()
 		function logout()
 		
 		Get various information from the database:
 		----------------------------------------------------
 		function calendar_exists($calendarid)
 		function setCalendarPreferences()
-		function getNumCategories($database)
-		function getCategoryName(&$database, $categoryid)
-		function getCalendarName(&$database, $calendarid)
-		function getSponsorCalendarName(&$database, $sponsorid)
-		function getSponsorName(&$database, $sponsorid)
-		function getSponsorURL(&$database, $sponsorid)
-		function num_unapprovedevents($repeatid,$database)
-		function userExistsInDB($database, $userid)
-		function isValidUser($database, $userid)
+		function getNumCategories()
+		function getCategoryName($categoryid)
+		function getCalendarName($calendarid)
+		function getSponsorCalendarName($sponsorid)
+		function getSponsorName($sponsorid)
+		function getSponsorURL($sponsorid)
+		function num_unapprovedevents($repeatid)
+		function userExistsInDB($userid)
+		function isValidUser($userid)
 		
 		Date/Time Conversions & Formatting:
 		----------------------------------------------------
@@ -84,7 +84,7 @@
 		Event Date/Time Functions:
 		----------------------------------------------------
 		function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar)
-		function readinrepeat($repeatid,&$event,&$repeat,$database)
+		function readinrepeat($repeatid,&$event,&$repeat)
 		function repeatinput2repeatdef(&$event,&$repeat)
 		function getfirstslice($s)
 		function repeatdefdisassemble($repeatdef,&$frequency,&$interval,&$frequencymodifier,&$endyear,&$endmonth,&$endday)
@@ -96,22 +96,22 @@
 		
 		Modification of events:
 		----------------------------------------------------
-		function deletefromevent($eventid,$database)
-		function deletefromevent_public($eventid,$database)
-		function repeatdeletefromevent($repeatid,$database)
-		function repeatdeletefromevent_public($repeatid,$database)
-		function deletefromrepeat($repeatid,$database)
-		function insertintoevent($eventid,&$event,$database)
-		function insertintoeventsql($calendarid,$eventid,&$event,$database)
-		function insertintoevent_public(&$event,$database)
-		function updateevent($eventid,&$event,$database)
-		function updateevent_public($eventid,&$event,$database)
-		function insertintotemplate($template_name,&$event,$database)
-		function updatetemplate($templateid,$template_name,&$event,$database)
-		function insertintorepeat($repeatid,&$event,&$repeat,$database)
-		function updaterepeat($repeatid,&$event,&$repeat,$database)
-		function publicizeevent($eventid,&$event,$database)
-		function repeatpublicizeevent($eventid,&$event,$database)
+		function deletefromevent($eventid)
+		function deletefromevent_public($eventid)
+		function repeatdeletefromevent($repeatid)
+		function repeatdeletefromevent_public($repeatid)
+		function deletefromrepeat($repeatid)
+		function insertintoevent($eventid,&$event)
+		function insertintoeventsql($calendarid,$eventid,&$event)
+		function insertintoevent_public(&$event)
+		function updateevent($eventid,&$event)
+		function updateevent_public($eventid,&$event)
+		function insertintotemplate($template_name,&$event)
+		function updatetemplate($templateid,$template_name,&$event)
+		function insertintorepeat($repeatid,&$event,&$repeat)
+		function updaterepeat($repeatid,&$event,&$repeat)
+		function publicizeevent($eventid,&$event)
+		function repeatpublicizeevent($eventid,&$event)
 */
 	
   require_once("datecalc.inc.php");
@@ -342,29 +342,48 @@ function lang($sTextKey) {
 
 // Returns a DB connection to the database, or a string that represents an error message.
 function DBopen() {
-  $database = DB::connect( DATABASE );
+	global $DBCONNECTION;
+  $DBCONNECTION = DB::connect( DATABASE );
   
-	if (DB::isError($database)) {
-		return $database->getMessage();
+	if (DB::isError($DBCONNECTION)) {
+		return $DBCONNECTION->getMessage();
 	}
 	
 	echo "<p>OPENED CONNECTION</p>";
   
-  return $database;
+  return $DBCONNECTION;
 }
 
 // closes a DB connection to the database
-function DBclose($database) {
-  $database->disconnect();
+function DBclose() {
+	global $DBCONNECTION;
+  $DBCONNECTION->disconnect();
 }
 
-function DBQuery($database, $query) {
-	$result = $database->query($query);
+// Runs a query against the database connection.
+// Returns a record list if successful.
+// Returns a string with an error message if unsuccessful.
+function DBQuery($query) {
+	global $DBCONNECTION;
+	$result = $DBCONNECTION->query($query);
+	
+	if (DB::isError($result)) {
+		return DB::errorMessage($result);
+	}
 	
 	// Write to the SQL log file if one is defined.
-	if ( SQLLOGFILE!="" ) {
+	if (SQLLOGFILE != "") {
 		$logfile = fopen(SQLLOGFILE, "a");
-		if (!empty($_SESSION["AUTH_USERID"])) { $user = $_SESSION["AUTH_USERID"]; } else { $user = "anonymous"; }
+		
+		// Log the username if logged in.
+		if (!empty($_SESSION["AUTH_USERID"])) {
+			$user = $_SESSION["AUTH_USERID"];
+		}
+		else {
+			$user = "anonymous";
+		}
+		
+		// Write the log entry and close the log.
 		fputs($logfile, date( "Y-m-d H:i:s", time() )." ".$_SERVER["REMOTE_ADDR"]." ".$user." ".$_SERVER["PHP_SELF"]." ".$query."\n");
 		fclose($logfile);	
 	}
@@ -381,15 +400,15 @@ function checknewpassword(&$user) {
 }
 
 /* Verify the  user's old password in the database */
-function checkoldpassword(&$user,$userid,$database) {
-  $result = DBQuery($database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
+function checkoldpassword(&$user,$userid) {
+  $result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
   $data = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	return
     ($data['password']!=crypt($user['oldpassword'],$data['password']));
 }
 
 // display login screen and errormsg (if exists)
-function displaylogin($database, $errormsg="") {
+function displaylogin($errormsg="") {
   global $lang;
   
   // Force HTTPS is the server is not being accessed via localhost.
@@ -401,9 +420,7 @@ function displaylogin($database, $errormsg="") {
 		}
 	}
 
-  pageheader(lang('update_page_header'),
-             "Login",
-            "Update","",$database);
+  pageheader(lang('update_page_header'), "Update");
   contentsection_begin(lang('login'));
 
   if (!empty($errormsg)) {
@@ -447,10 +464,8 @@ function displaylogin($database, $errormsg="") {
 
 // Display a list of sponsors that the user belongs to
 // so they can choose the one they wish to login as.
-function displaymultiplelogin($database, $errorMessage="") {
-  pageheader(lang('login'),
-             lang('login'),
-            "Update","",$database);
+function displaymultiplelogin($errorMessage="") {
+  pageheader(lang('login'), "Update");
   
   contentsection_begin(lang('choose_sponsor_role'));
   
@@ -462,13 +477,13 @@ function displaymultiplelogin($database, $errorMessage="") {
 	?>
 	<table cellpadding="2" cellspacing="2" border="0">
 	<?php
-	$result = DBQuery($database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
+	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
 	if ($result->numRows() > 0) {
     for ($i=0;$i < $result->numRows();$i++) {
       $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
   
 	    // read sponsor name from DB
-	    $r = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'");
+	    $r = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'");
 
       $sponsor = $r->fetchRow(DB_FETCHMODE_ASSOC,0);			
 			
@@ -493,10 +508,8 @@ function displaymultiplelogin($database, $errorMessage="") {
   require("footer.inc.php");
 } // end: function displaymultiplelogin
 
-function displaynotauthorized($database) {
-  pageheader(lang('login'),
-             lang('login'),
-            "Update","",$database);
+function displaynotauthorized() {
+  pageheader(lang('login'), "Update");
   contentsection_begin(lang('error_not_authorized'));
 	?>
 	<?php echo lang('error_not_authorized_message'); ?><br>
@@ -511,9 +524,9 @@ function displaynotauthorized($database) {
 
 
 // Validate the username and password.
-function userauthenticated($database,$userid,$password) {
+function userauthenticated($userid,$password) {
 	if ( AUTH_DB ) {
-		$result = DBQuery( $database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
+		$result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'"); 
     if ($result->numRows() > 0) {
 			$u = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			if ( crypt($password,$u['password'])==$u['password'] ) {
@@ -610,14 +623,14 @@ function userauthenticated($database,$userid,$password) {
 				
 				if (AUTH_HTTP_CACHE) {
 					$passhash = crypt($password);
-					$result = DBQuery( $database, "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
+					$result = DBQuery( "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
 				}
 				
 				return true;
 			}
 			else {
 				if (AUTH_HTTP_CACHE) {
-					$result = DBQuery( $database, "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
+					$result = DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
 					if ($result->numRows() > 0) {
 						$record = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 						$passhash = $record['PassHash'];
@@ -641,7 +654,7 @@ function userauthenticated($database,$userid,$password) {
  * 1. Grab the login username/password from _POST, if they exist.
  * 2. 
  */
-function authorized($database) {
+function authorized() {
 	// Get sponsor related URL values
   if (isset($_GET['authsponsorid'])) { setVar($authsponsorid,$_GET['authsponsorid'],'sponsorid'); } else { unset($authsponsorid); }
   $changesponsorid = isset($_GET['changesponsorid']);
@@ -661,11 +674,11 @@ function authorized($database) {
   // Check the authenticity of the username/password, if they are set and are not different from the currently logged in user.
 	if ( $_SESSION["AUTH_USERID"] != $userid && isset($userid) && isset($password) ) {
     // checking authentication of PID/password
-		if ( ($authresult = userauthenticated($database,$userid,$password)) === true ) {
+		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;
 		}
     else {
-		  displaylogin($database, lang('login_failed') . "<br>Reason: " . $authresult);
+		  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult);
 			return false;
     }
   }
@@ -679,22 +692,22 @@ function authorized($database) {
   if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) ) {
     
     // Verify that the user does in fact belong to that sponsor group.
-  	$result = DBQuery( $database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
+  	$result = DBQuery( "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
   	
   	// If the user does not belong to the sponsor that he/she submitted...
 		if ($result->numRows() == 0) {
-			displaymultiplelogin($database, lang('error_bad_sponsorid'));
+			displaymultiplelogin(lang('error_bad_sponsorid'));
 			return FALSE;
 		}
 		
 		// Otherwise, assign the user to the requested sponsor.
 		else {
 			$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
- 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($database, $authsponsorid);
+ 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authsponsorid);
 			
 			// determine if the sponsor is administrator for the calendar
 		  $_SESSION["AUTH_ADMIN"] = false;
-      $result = DBQuery($database, "SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
+      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
   		if ($result->numRows() > 0) {
 			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			  if ( $s["admin"]==1 ) {
@@ -704,7 +717,7 @@ function authorized($database) {
 
 			// determine if the user is one of the main administrators
 		  $_SESSION["AUTH_MAINADMIN"] = false;
-      $result = DBQuery($database, "SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
   		if ($result->numRows() > 0) {
 			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
@@ -719,11 +732,11 @@ function authorized($database) {
 	
 	// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
   if ( isset($_SESSION["AUTH_USERID"]) && !isset($_SESSION["AUTH_SPONSORID"]) ) {
-  	$result = DBQuery($database, "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+  	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'" );
   	
   	// if the user does not have a sponsor for this calendar, then the user is not authorized.
 		if ($result->numRows() == 0) {
-		  displaynotauthorized($database);
+		  displaynotauthorized();
 			return false;
 		}
 		
@@ -731,12 +744,12 @@ function authorized($database) {
 		elseif ($result->numRows() == 1) {
 		  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
- 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($database, $authorization['sponsorid']);
+ 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authorization['sponsorid']);
  			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
 
 			// determine if the sponsor is administrator for the calendar
 		  $_SESSION["AUTH_ADMIN"] = false;
-      $result = DBQuery($database, "SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'" );
+      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'" );
   		if ($result->numRows() > 0) {
 			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			  if ( $s["admin"]==1 ) { 
@@ -746,7 +759,7 @@ function authorized($database) {
 
 			// determine if the user is one of the main administrators
 		  $_SESSION["AUTH_MAINADMIN"] = false;
-      $result = DBQuery($database, "SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
   		if ($result->numRows() > 0) {
 			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
@@ -760,7 +773,7 @@ function authorized($database) {
 		// If the user belongs to more than one sponsor, then display the form to select a sponsor.
 		else {
  			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
-  		displaymultiplelogin($database);
+  		displaymultiplelogin();
 	  	return false;	
 		}
 	}
@@ -772,7 +785,7 @@ function authorized($database) {
 	
 	// Otherwise, show the login form.
 	else {
-	  displaylogin($database, "");
+	  displaylogin();
 		return false;
 	}
 } // end: Function authorized()
@@ -791,7 +804,7 @@ function authorized($database) {
  * 		A. If the user is not using SSL, redirect them.
  * 		B. Show the login page.
  */
-function viewauthorized($database) {
+function viewauthorized() {
   $authok = 0; // Default that view authorization is not allowed.
   
   if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
@@ -811,9 +824,9 @@ function viewauthorized($database) {
     $userid=strtolower($userid);
 
     // checking authentication
-		if ( ($authresult = userauthenticated($database,$userid,$password)) === true ) {
+		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
 			// checking authorization
-			$result = DBQuery($database, "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($userid)."'" );
+			$result = DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($userid)."'" );
 			if ($result->numRows() > 0) {
   			$_SESSION["AUTH_USERID"] = $userid;
 				$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
@@ -823,7 +836,7 @@ function viewauthorized($database) {
     
     if (!$authok) {
 			// display login error message
-      displaylogin($database, "Error! Your login failed. Please try again.");
+      displaylogin("Error! Your login failed. Please try again.");
     }
   }
   
@@ -844,7 +857,7 @@ function viewauthorized($database) {
 			redirect2URL(SECUREBASEURL.$page."?calendar=".$_SESSION["CALENDARID"]);
 		}
 		
-    displaylogin($database);
+    displaylogin();
   }
   
   return $authok;
@@ -859,9 +872,15 @@ function logout() {
 	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
 }
 
-function getCalendarData($calendarid, $database) {
-	if ( DB::isError( $result = $database->query( "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ) ) ) {
-		return DB::errorMessage($result);
+// Gets the data for a calendar.
+// Returns a DB row if successful.
+// Returns a number if more than one row was found.
+// Returns a string of a DB error occurred.
+function getCalendarData($calendarid) {
+	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'");
+	
+	if ( is_string($result) ) {
+		return $result;
 	}
 	elseif ($result->numRows() != 1) {
 		return $result->numRows();
@@ -871,17 +890,17 @@ function getCalendarData($calendarid, $database) {
 	}
 }
 
+// Determine if a calendar with the specified ID exists.
+// Returns true if the calendar eixsts. False otherwise.
+// Returns a string of a DB error occurred.
 function calendar_exists($calendarid) {
-  $database = DBCONNECTION;
-  $result = DBQuery($database, "SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" ); 
+  $result = DBQuery("SELECT count(id) FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
   $r = $result->fetchRow(0);
-  $database->disconnect();
   return ($r[0]==1);
 }
 
 function setCalendarPreferences() {
-	$database = DBCONNECTION;
-	$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
+	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
 	$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	
 	$_SESSION["TITLE"] = $calendar['title'];
@@ -900,20 +919,20 @@ function setCalendarPreferences() {
 	$_SESSION["LINKCOLOR"] = $calendar['linkcolor'];		
 	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];
 	
-	$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND admin='1'" ); 
+	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND admin='1'" ); 
 	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	$_SESSION["ADMINEMAIL"] = $sponsor['email'];
 }
 
-function getNumCategories($database) {
-  $result = DBQuery($database, "SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+function getNumCategories() {
+  $result = DBQuery("SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
   $r = $result->fetchRow(0);
   return $r[0];
 }
 
 /* Get the name of a category from the database */
-function getCategoryName(&$database, $categoryid) {
-	$result = DBQuery($database, "SELECT name FROM vtcal_category WHERE id='".sqlescape($categoryid)."'" );
+function getCategoryName($categoryid) {
+	$result = DBQuery("SELECT name FROM vtcal_category WHERE id='".sqlescape($categoryid)."'" );
   if ($result->numRows() > 0) {
     $category = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $category['name'];
@@ -924,8 +943,8 @@ function getCategoryName(&$database, $categoryid) {
 }
 
 /* Get the name of a calendar from the database */
-function getCalendarName(&$database, $calendarid) {
-	$result = DBQuery($database, "SELECT name FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
+function getCalendarName($calendarid) {
+	$result = DBQuery("SELECT name FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
   if ($result->numRows() > 0) {
     $calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $calendar['name'];
@@ -936,8 +955,8 @@ function getCalendarName(&$database, $calendarid) {
 }
 
 /* Get the name of a calendar that a sponsor belongs to from the database */
-function getSponsorCalendarName(&$database, $sponsorid) {
-	$result = DBQuery($database, "SELECT c.name FROM vtcal_sponsor AS s, vtcal_calendar AS c WHERE s.id = '".sqlescape($sponsorid)."' AND c.id = s.calendarid");
+function getSponsorCalendarName($sponsorid) {
+	$result = DBQuery("SELECT c.name FROM vtcal_sponsor AS s, vtcal_calendar AS c WHERE s.id = '".sqlescape($sponsorid)."' AND c.id = s.calendarid");
   if ($result->numRows() > 0) {
     $calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $calendar['name'];
@@ -948,8 +967,8 @@ function getSponsorCalendarName(&$database, $sponsorid) {
 }
 
 /* Get the name of a sponsor from the database */
-function getSponsorName(&$database, $sponsorid) {
-	$result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
+function getSponsorName($sponsorid) {
+	$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
   if ($result->numRows() > 0) {
     $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $sponsor['name'];
@@ -960,8 +979,8 @@ function getSponsorName(&$database, $sponsorid) {
 }
 
 /* Get the URL of a sponsor from the database */
-function getSponsorURL(&$database, $sponsorid) {
-	$result = DBQuery($database, "SELECT url FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
+function getSponsorURL($sponsorid) {
+	$result = DBQuery("SELECT url FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
   if ($result->numRows() > 0) {
     $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     return $sponsor['url'];
@@ -972,16 +991,16 @@ function getSponsorURL(&$database, $sponsorid) {
 }
 
 // Get the number of unapproved events for an entire calendar. */
-function num_unapprovedevents($repeatid,$database) {
-  $result = DBQuery($database, "SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
+function num_unapprovedevents($repeatid) {
+  $result = DBQuery("SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
   return $result->numRows();
 }
 
 // returns true if a particular userid exists in the database
-function userExistsInDB($database, $userid) {
+function userExistsInDB($userid) {
   if ( AUTH_DB ) {
   	$query = "SELECT count(id) FROM vtcal_user WHERE id='".sqlescape($userid)."'";
-    $result = DBQuery($database, $query ); 
+    $result = DBQuery($query ); 
     $r = $result->fetchRow(0);
     if ($r[0]>0) { return true; }
 	}
@@ -990,7 +1009,7 @@ function userExistsInDB($database, $userid) {
 }
 
 // returns true if the user-id is valid
-function isValidUser($database, $userid) {
+function isValidUser($userid) {
 	
 	// If we are using HTTP authentication, we must assume all
 	// users are valid, since we have no way of verifying HTTP users.
@@ -1000,7 +1019,7 @@ function isValidUser($database, $userid) {
 	
   if ( AUTH_DB ) {
   	$query = "SELECT count(id) FROM vtcal_user WHERE id='".sqlescape($userid)."'";
-    $result = DBQuery($database, $query ); 
+    $result = DBQuery($query ); 
     $r = $result->fetchRow(0);
     if ($r[0]>0) { return true; }
 	}
@@ -1443,9 +1462,9 @@ Calendar.setup({
 END;
 } // end: function inputdate
 
-function readinrepeat($repeatid,&$event,&$repeat,$database) {
+function readinrepeat($repeatid, &$event, &$repeat) {
   $query = "SELECT * FROM vtcal_event_repeat WHERE id = '".sqlescape($repeatid)."'";
-	$result = DBQuery($database, $query ); 
+	$result = DBQuery($query ); 
   $r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   repeatdef2repeatinput($r['repeatdef'],$event,$repeat);
@@ -1951,69 +1970,69 @@ function repeatdef2repeatinput($repeatdef,&$event,&$repeat) {
 
 /* Remove an event from the event table (aka: still under review) for the current calendar,
 and from the default calendar if the event was submitted to it. */
-function deletefromevent($eventid,$database) {
+function deletefromevent($eventid) {
   $query = "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 
   // delete event from default calendar if it had been forwarded
 	if ( $_SESSION["CALENDARID"] != "default" ) {
 	  // delete existing events in default calendar with same id
     $query = "DELETE FROM vtcal_event WHERE calendarid='default' AND id='".sqlescape($eventid)."'";
-    $result = DBQuery($database, $query ); 
+    $result = DBQuery($query ); 
 	} // end: if ( $_SESSION["CALENDARID"] != "default" )
 }
 
 /* Remove an event from the event_public table (aka: the event will no longer be public) */
-function deletefromevent_public($eventid,$database) {
+function deletefromevent_public($eventid) {
   $query = "DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
 /* Remove all repeating entries from the event table (aka: still under review) for the current calendar,
 and from the default calendar if the event was submitted to it. */
-function repeatdeletefromevent($repeatid,$database) {
+function repeatdeletefromevent($repeatid) {
   if (!empty($repeatid)) {
 		$query = "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."'";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 	
 		// delete event from default calendar if it had been forwarded
 		if ( $_SESSION["CALENDARID"] != "default" ) {
 			// delete existing events in default calendar with same id
 			$query = "DELETE FROM vtcal_event WHERE calendarid='default' AND repeatid='".sqlescape($repeatid)."'";
-			$result = DBQuery($database, $query ); 
+			$result = DBQuery($query ); 
 		} // end: if ( $_SESSION["CALENDARID"] != "default" )
 	}
 }
 
 /* Remove all repeating entries from the event_public table (aka: the event will no longer be public),
 and from the default calendar if the event was submitted to it. */
-function repeatdeletefromevent_public($repeatid,$database) {
+function repeatdeletefromevent_public($repeatid) {
   if (!empty($repeatid)) {
     $query = "DELETE FROM vtcal_event_public WHERE calendarid='".$_SESSION["CALENDARID"]."' AND repeatid='".sqlescape($repeatid)."'";
-    $result = DBQuery($database, $query ); 
+    $result = DBQuery($query ); 
 
 		// delete event from default calendar if it had been forwarded
 		if ( $_SESSION["CALENDARID"] != "default" ) {
 			// delete existing events in default calendar with same id
 			$query = "DELETE FROM vtcal_event_public WHERE calendarid='default' AND repeatid='".sqlescape($repeatid)."'";
-			$result = DBQuery($database, $query ); 
+			$result = DBQuery($query ); 
 		} // end: if ( $_SESSION["CALENDARID"] != "default" )
 	}
 }
 
 /* Remove all repeating entries from the event table (aka: still under review) for the current calendar. */
-function deletefromrepeat($repeatid,$database) {
+function deletefromrepeat($repeatid) {
   if (!empty($repeatid)) {
     $query = "DELETE FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($repeatid)."'";
-    $result = DBQuery($database, $query ); 
+    $result = DBQuery($query ); 
 	}
 }
 
-function insertintoevent($eventid,&$event,$database) {
-  return insertintoeventsql($_SESSION["CALENDARID"],$eventid,$event,$database);
+function insertintoevent($eventid,&$event) {
+  return insertintoeventsql($_SESSION["CALENDARID"],$eventid,$event);
 }
 
-function insertintoeventsql($calendarid,$eventid,&$event,$database) {
+function insertintoeventsql($calendarid,$eventid,&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "INSERT INTO vtcal_event (calendarid,id,approved,rejectreason,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,url,recordchangedtime,recordchangeduser,showondefaultcal,showincategory) ";
   $query.= "VALUES ('".sqlescape($calendarid)."','".sqlescape($eventid)."',0,'";
@@ -2034,12 +2053,12 @@ function insertintoeventsql($calendarid,$eventid,&$event,$database) {
 	$query.= sqlescape($_SESSION["AUTH_USERID"])."','".sqlescape($showondefaultcal)."','";
 	if (isset($event['showincategory'])) { $showincategory = $event['showincategory']; } else { $showincategory = 0; }
 	$query.= sqlescape($showincategory)."')";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
   echo $result;
   return $eventid;
 }
 
-function insertintoevent_public(&$event,$database) {
+function insertintoevent_public(&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "INSERT INTO vtcal_event_public (calendarid,id,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,url,recordchangedtime,recordchangeduser) VALUES ";
   $query.= "('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($event['id'])."','";
@@ -2054,10 +2073,10 @@ function insertintoevent_public(&$event,$database) {
 	$query.= sqlescape($event['url'])."','".sqlescape($changed)."','";
 	$query.= sqlescape($_SESSION["AUTH_USERID"])."')";
 
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
-function updateevent($eventid,&$event,$database) {
+function updateevent($eventid,&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "UPDATE vtcal_event SET approved=0, rejectreason='".sqlescape($event['rejectreason']);
 	$query.= "',timebegin='".sqlescape($event['timebegin'])."',timeend='".sqlescape($event['timeend']);
@@ -2071,10 +2090,10 @@ function updateevent($eventid,&$event,$database) {
 	$query.= "',recordchangedtime='".sqlescape($changed)."',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "',showondefaultcal='".sqlescape($event['showondefaultcal'])."',showincategory='".sqlescape($event['showincategory'])."' ";
 	$query.= "WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
-function updateevent_public($eventid,&$event,$database) {
+function updateevent_public($eventid,&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "UPDATE vtcal_event_public SET timebegin='".sqlescape($event['timebegin']);
   $query.= "',timeend='".sqlescape($event['timeend'])."',repeatid='".sqlescape($event['repeatid']);
@@ -2087,10 +2106,10 @@ function updateevent_public($eventid,&$event,$database) {
 	$query.= "',url='".sqlescape($event['url'])."',recordchangedtime='".sqlescape($changed);
 	$query.= "',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
-function insertintotemplate($template_name,&$event,$database) {
+function insertintotemplate($template_name,&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "INSERT INTO vtcal_template (calendarid,name,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,url,recordchangedtime,recordchangeduser) ";
   $query.= "VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($template_name);
@@ -2101,10 +2120,10 @@ function insertintotemplate($template_name,&$event,$database) {
 	$query.= "','".sqlescape($event['price'])."','".sqlescape($event['contact_name']);
 	$query.= "','".sqlescape($event['contact_phone'])."','".sqlescape($event['contact_email']);
 	$query.= "','".sqlescape($event['url'])."','".sqlescape($changed)."','".sqlescape($_SESSION["AUTH_USERID"])."')";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
-function updatetemplate($templateid,$template_name,&$event,$database) {
+function updatetemplate($templateid,$template_name,&$event) {
   $changed = date ("Y-m-d H:i:s");
   $query = "UPDATE vtcal_template SET name='".sqlescape($template_name)."',sponsorid='".sqlescape($event['sponsorid']);
 	$query.= "',displayedsponsor='".sqlescape($event['displayedsponsor'])."',displayedsponsorurl='".sqlescape($event['displayedsponsorurl']);
@@ -2115,10 +2134,10 @@ function updatetemplate($templateid,$template_name,&$event,$database) {
 	$query.= "',contact_email='".sqlescape($event['contact_email'])."',url='".sqlescape($event['url']);
 	$query.= "',recordchangedtime='".sqlescape($changed)."',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' AND id='".sqlescape($templateid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 }
 
-function insertintorepeat($repeatid,&$event,&$repeat,$database) {
+function insertintorepeat($repeatid,&$event,&$repeat) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
   $repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
   $repeatdef = repeatinput2repeatdef($event,$repeat);
@@ -2127,13 +2146,13 @@ function insertintorepeat($repeatid,&$event,&$repeat,$database) {
   // write record into repeat table
   $query = "INSERT INTO vtcal_event_repeat (calendarid,id,repeatdef,startdate,enddate,recordchangedtime,recordchangeduser) ";
 	$query.= "VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($repeatid)."','".sqlescape($repeatdef)."','".sqlescape($repeat['startdate'])."','".sqlescape($repeat['enddate'])."','".sqlescape($changed)."','".sqlescape($_SESSION["AUTH_USERID"])."')";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
   $repeat['id'] = $repeatid;
   
   return $repeat['id'];
 }
 
-function updaterepeat($repeatid,&$event,&$repeat,$database) {
+function updaterepeat($repeatid,&$event,&$repeat) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
   $repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
   $repeatdef = repeatinput2repeatdef($event,$repeat);
@@ -2142,57 +2161,57 @@ function updaterepeat($repeatid,&$event,&$repeat,$database) {
   $query = "UPDATE vtcal_event_repeat SET repeatdef='".sqlescape($repeatdef)."',startdate='";
 	$query.= sqlescape($repeat['startdate'])."',enddate='".sqlescape($repeat['enddate']);
 	$query.= "' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($repeatid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 
   return $repeatid;
 }
 
 // Make a non-repeating event public and remove the old event if a previous version existed.
-function publicizeevent($eventid,&$event,$database) {
+function publicizeevent($eventid,&$event) {
   if (!empty($event['repeatid'])) { // if event delivers repeatid that's fine
     $r['repeatid'] = $event['repeatid'];
   }
   else { // get repeatid from old entry in event_public (important if event changes from recurring to one-time)
-    $result = DBQuery($database, "SELECT repeatid FROM vtcal_event_public WHERE id='".sqlescape($eventid)."'" ); 
+    $result = DBQuery("SELECT repeatid FROM vtcal_event_public WHERE id='".sqlescape($eventid)."'" ); 
     if ($result->numRows()>0) { 
       $r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     }
   }
 
-  if (!empty($r['repeatid'])) { repeatdeletefromevent_public($r['repeatid'],$database); }
-  else { deletefromevent_public($eventid,$database); }
+  if (!empty($r['repeatid'])) { repeatdeletefromevent_public($r['repeatid']); }
+  else { deletefromevent_public($eventid); }
   
 	$event['id'] = $eventid; // this line should not be necessary but some functions still have a bug that doesn't pass the id in event['id']
   
-	insertintoevent_public($event,$database);
+	insertintoevent_public($event);
 
-  $result = DBQuery($database, "UPDATE vtcal_event SET approved=1 WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
+  $result = DBQuery("UPDATE vtcal_event SET approved=1 WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
 
   // forward event to default calendar if that's indicated
 	if ( $_SESSION["CALENDARID"] != "default" ) {
 		// delete existing events in default calendar with same id
 		$query = "DELETE FROM vtcal_event WHERE calendarid='default' AND id='".sqlescape($eventid)."'";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 		
 	  if ( $event['showondefaultcal'] == 1 ) {
 		  // add new event in default calendar (with approved=0)
 			$eventcategoryid = $event['categoryid'];
 			$event['categoryid'] = $event['showincategory'];
-			insertintoeventsql("default",$eventid,$event,$database);
+			insertintoeventsql("default",$eventid,$event);
 			$event['categoryid'] = $eventcategoryid;
 		} 
 		else {
 			$query = "DELETE FROM vtcal_event_public WHERE calendarid='default' AND id='".sqlescape($eventid)."'";
-			$result = DBQuery($database, $query ); 
+			$result = DBQuery($query ); 
 		}
 	} // end: if ( $_SESSION["CALENDARID"] != "default" )
 } // end: publicizeevent
 
 // Make a repeating event public and remove the old event if a previous version existed.
-function repeatpublicizeevent($eventid,&$event,$database) {
-  deletefromevent_public($eventid,$database);
+function repeatpublicizeevent($eventid,&$event) {
+  deletefromevent_public($eventid);
   if (!empty($event['repeatid'])) {
-    repeatdeletefromevent_public($event['repeatid'],$database);
+    repeatdeletefromevent_public($event['repeatid']);
   }
 
 	// forward events to default calendar: delete old events
@@ -2204,29 +2223,29 @@ function repeatpublicizeevent($eventid,&$event,$database) {
 		  $e = substr($e,0,$dashpos); 
 		}
 		$query = "DELETE FROM vtcal_event WHERE calendarid='default' AND id='".sqlescape($e)."'";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
     
 		if (!empty($event['repeatid'])) {
   		$query = "DELETE FROM vtcal_event WHERE calendarid='default' AND repeatid='".sqlescape($event['repeatid'])."'";
-		  $result = DBQuery($database, $query ); 
+		  $result = DBQuery($query ); 
 		}
 		
 		if ( $event['showondefaultcal'] != 1 ) { // remove events if checkmark for forwarding is removed
 			$query = "DELETE FROM vtcal_event_public WHERE calendarid='default' AND id='".sqlescape($e)."'";
-			$result = DBQuery($database, $query ); 
+			$result = DBQuery($query ); 
 			if (!empty($event['repeatid'])) {
   			$query = "DELETE FROM vtcal_event_public WHERE calendarid='default' AND repeatid='".sqlescape($event['repeatid'])."'";
-		  	$result = DBQuery($database, $query ); 
+		  	$result = DBQuery($query ); 
 			}
 		}
 	} // end: if ( $_SESSION["CALENDARID"] != "default" )
 
   // copy all events into event_public
-  $result = DBQuery($database, "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($event['repeatid'])."'" );
+  $result = DBQuery("SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($event['repeatid'])."'" );
   for ($i=0;$i<$result->numRows();$i++) {
     $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 //    eventaddslashes($event);
-    insertintoevent_public($event,$database);
+    insertintoevent_public($event);
 		
 		// forward event to default calendar if that's indicated
 		if ( $_SESSION["CALENDARID"] != "default" ) {
@@ -2234,14 +2253,14 @@ function repeatpublicizeevent($eventid,&$event,$database) {
 				// add new event in default calendar (with approved=0)
 				$eventcategoryid = $event['categoryid'];
 				$event['categoryid'] = $event['showincategory'];
-				insertintoeventsql("default",$event['id'],$event,$database);
+				insertintoeventsql("default",$event['id'],$event);
 				$event['categoryid'] = $eventcategoryid;
 			}
 		} // end: if ( $_SESSION["CALENDARID"] != "default" )
   } // end: for(...
 
   $query = "UPDATE vtcal_event SET approved=1 WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND approved=0 AND repeatid='".sqlescape($event['repeatid'])."'";
-	$result = DBQuery($database, $query ); 
+	$result = DBQuery($query ); 
 } // end: repeatpublicizeevent
 
 // Formats a string so that it can be placed inside of a JavaScript string (e.g. document.write('');)

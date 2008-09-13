@@ -4,8 +4,7 @@ require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
   require("inputtdata.inc.php");
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
@@ -32,14 +31,14 @@ require_once('session_start.inc.php');
   }
 
   // read sponsor name from DB
-  $result = DBQuery($database, "SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+  $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
   $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC);
 
   $event['sponsorid']=$_SESSION["AUTH_SPONSORID"];
   if (isset($check)) { // check all the parameter passed for validity and save into DB
     if (!empty($template_name)) { // parameter is ok
       // save template into DB
-      insertintotemplate($template_name,$event,$database);
+      insertintotemplate($template_name,$event);
 
       // reroute to sponsormenu page
       redirect2URL("managetemplates.php");
@@ -48,19 +47,17 @@ require_once('session_start.inc.php');
   } // end: if (isset($check))
   else {
     $template_name = "";
-    defaultevent($event,$_SESSION["AUTH_SPONSORID"],$database); // empty template
+    defaultevent($event,$_SESSION["AUTH_SPONSORID"]); // empty template
   } // end else: if (isset($check))
 
-  pageheader(lang('add_new_template'),
-             lang('add_new_template'),
-             "Update","",$database);
+  pageheader(lang('add_new_template'), "Update");
   contentsection_begin(lang('add_new_template'));
 ?>
 <BR>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php
   if (!isset($check)) { $check=0; }
-  inputtemplatedata($event,$_SESSION["AUTH_SPONSORID"],$check,$template_name,$database);
+  inputtemplatedata($event,$_SESSION["AUTH_SPONSORID"],$check,$template_name);
 ?>
  <BR>
  <INPUT type="submit" name="savetemplate" value="<?php echo lang('ok_button_text'); ?>">
@@ -69,5 +66,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

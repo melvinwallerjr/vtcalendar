@@ -45,7 +45,7 @@ if (!empty($keyword)) {
 	$keywords = split ( " ", $keyword );
 		
 	// read alternative keywords from database
-	$r = DBQuery($database, "SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+	$r = DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
     for ($i=0; $i < $r->numRows(); $i++) {
   		$searchkeyword = $r->fetchRow(DB_FETCHMODE_ASSOC,$i);
 		$search_keyword[$i]=$searchkeyword['keyword'];
@@ -53,7 +53,7 @@ if (!empty($keyword)) {
 	}
 
 	// read featured keywords from database
-	$featuredresult = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+	$featuredresult = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
     for ($i=0; $i < $featuredresult->numRows(); $i++) {
   		$feature = $featuredresult->fetchRow(DB_FETCHMODE_ASSOC,$i);
 		$search_featured[$feature['keyword']]=$feature['featuretext'];
@@ -91,7 +91,7 @@ if (!empty($keyword)) {
 } // end: if (!empty($keyword)) {
 	
 $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
-$result = DBQuery($database, $query );
+$result = DBQuery($query );
 // read first event if one exists
 if ($ievent < $result->numRows()) {
 	$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
@@ -172,7 +172,7 @@ while ($ievent < $result->numRows()) {
 } // end: while (...)
 	
 // keep search log
-$searchlogresult = DBQuery($database, "INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(date("Y-m-d H:i:s", time()))."','".sqlescape($_SERVER['REMOTE_ADDR'])."','".sqlescape($result->numRows())."','".sqlescape($keyword)."')" );
+$searchlogresult = DBQuery("INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(date("Y-m-d H:i:s", time()))."','".sqlescape($_SERVER['REMOTE_ADDR'])."','".sqlescape($result->numRows())."','".sqlescape($keyword)."')" );
 ?>
 </table>
 </FORM>

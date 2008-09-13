@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
 
   if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
@@ -19,9 +18,7 @@ require_once('session_start.inc.php');
     redirect2URL("deleteuser.php?userid=".$userid); exit;
 	}
  
-	pageheader(lang('manage_users'),
-					 lang('manage_users'),
-					 "Update","",$database);
+	pageheader(lang('manage_users'), "Update");
 	contentsection_begin(lang('manage_users'),true);
 ?>
 <form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -33,7 +30,7 @@ require_once('session_start.inc.php');
 ?>
 <select name="userid" size="<?php echo $numLines; ?>" style="width:200px">
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_user ORDER BY id" ); 
+  $result = DBQuery("SELECT * FROM vtcal_user ORDER BY id" ); 
 
   for ($i=0; $i<$result->numRows(); $i++) {
     $user = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -55,5 +52,5 @@ document.mainform.userid.focus();
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

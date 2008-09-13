@@ -3,16 +3,13 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
  
-	pageheader(lang('manage_event_categories'),
-					 lang('manage_event_categories'),
-					 "Update","",$database);
+	pageheader(lang('manage_event_categories'), "Update");
 	contentsection_begin(lang('manage_event_categories'),true);
 
-  $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
 ?>
 <p><a href="addnewcategory.php"><?php echo lang('add_new_event_category'); ?></a>
 <?php
@@ -46,5 +43,5 @@ require_once('session_start.inc.php');
 	
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

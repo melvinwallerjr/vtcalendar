@@ -3,13 +3,10 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
  
-	pageheader(lang('manage_calendars'),
-					lang('manage_calendars'),
-					 "Update","",$database);
+	pageheader(lang('manage_calendars'), "Update");
 	contentsection_begin(lang('manage_calendars'),true);
 ?>
 <p><a href="editcalendar.php?new=1"><?php echo lang('add_new_calendar'); ?></a> <?php echo lang('or_modify_existing_calendar'); ?></p>
@@ -21,7 +18,7 @@ require_once('session_start.inc.php');
     <td bgcolor="#CCCCCC">&nbsp;</td>
   </tr>
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_calendar ORDER BY id" ); 
+  $result = DBQuery("SELECT * FROM vtcal_calendar ORDER BY id" ); 
 
   $color = "#eeeeee";
   for ($i=0; $i<$result->numRows(); $i++) {
@@ -56,5 +53,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

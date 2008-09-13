@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
   
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   
   if (!($_SESSION["AUTH_TYPE"] == "DB")) {
   	redirect2URL("update.php");
@@ -26,12 +25,12 @@ require_once('session_start.inc.php');
     $user['newpassword1']=$user_newpassword1;
     $user['newpassword2']=$user_newpassword2;
 
-    $oldpw_error = checkoldpassword($user,$_SESSION["AUTH_USERID"],$database);
-    $newpw_error = checknewpassword($user,$database);
+    $oldpw_error = checkoldpassword($user,$_SESSION["AUTH_USERID"]);
+    $newpw_error = checknewpassword($user);
     if ($oldpw_error==0) {
       if ($newpw_error==0) { // new password is valid
         // save password to DB
-        $result = DBQuery($database, "UPDATE vtcal_user SET password='".sqlescape(crypt($user['newpassword1']))."' WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" ); 
+        $result = DBQuery("UPDATE vtcal_user SET password='".sqlescape(crypt($user['newpassword1']))."' WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" ); 
 
         // reroute to sponsormenu page
         redirect2URL("update.php?fbid=passwordchangesuccess");
@@ -40,9 +39,7 @@ require_once('session_start.inc.php');
     }
   }
 
-  pageheader(lang('change_password'),
-             lang('change_password'),
-	           "Update","",$database);
+  pageheader(lang('change_password'), "Update");
 
   contentsection_begin(lang('change_password'));
 ?>
@@ -98,5 +95,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

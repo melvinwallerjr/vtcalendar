@@ -3,13 +3,10 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
  
-	pageheader(lang('view_search_log'),
-					 lang('view_search_log'),
-					 "Update","",$database);
+	pageheader(lang('view_search_log'), "Update");
 	contentsection_begin(lang('view_search_log'),true);
 
 ?>
@@ -17,7 +14,7 @@ require_once('session_start.inc.php');
 <img src="images/spacer.gif" width="400" height="1" alt="1">
 <pre>
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_searchlog WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY time" ); 
+  $result = DBQuery("SELECT * FROM vtcal_searchlog WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY time" ); 
   if ( $result->numRows() > 0 ) {
 		for ($i=0; $i<$result->numRows(); $i++) {
 			$searchlog = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -35,5 +32,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

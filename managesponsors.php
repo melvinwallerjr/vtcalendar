@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
@@ -15,7 +14,7 @@ require_once('session_start.inc.php');
 	  redirect2URL("editsponsor.php?id=".$id); exit;
 	}
   elseif ( isset($delete) ) {
-    $result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" ); 
+    $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" ); 
     $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     
 		if ( $sponsor['admin'] == 0 ) {
@@ -26,9 +25,7 @@ require_once('session_start.inc.php');
 		}
 	}
  
-	pageheader(lang('manage_sponsors'),
-					 lang('manage_sponsors'),
-					 "Update","",$database);
+	pageheader(lang('manage_sponsors'), "Update");
 	contentsection_begin(lang('manage_sponsors'),true);
 ?>
 <form method="post" name="mainform" action="managesponsors.php">
@@ -42,7 +39,7 @@ require_once('session_start.inc.php');
 ?>
 <select name="id" size="<?php echo $numLines; ?>">
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
+  $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
 
   for ($i=0; $i<$result->numRows(); $i++) {
     $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -64,5 +61,5 @@ document.mainform.id.focus();
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

@@ -30,7 +30,7 @@
     closedir($iCalDir);
   } // end: if ($caldir = opendir('calendars'))
 	else { 
-    $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
+    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
 ?>
 <?php
     for ($i=0; $i<$result->numRows(); $i++) {

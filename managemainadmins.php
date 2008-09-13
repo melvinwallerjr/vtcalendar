@@ -3,13 +3,10 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"]) { exit; } // additional security
 
-	pageheader(lang('manage_main_admins'),
-					 lang('manage_main_admins'),
-					 "Update","",$database);
+	pageheader(lang('manage_main_admins'), "Update");
 	contentsection_begin(lang('manage_main_admins'),true);
 ?>
 <form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -21,7 +18,7 @@ require_once('session_start.inc.php');
     <td bgcolor="#CCCCCC">&nbsp;</td>
   </tr>
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_adminuser ORDER BY id" ); 
+  $result = DBQuery("SELECT * FROM vtcal_adminuser ORDER BY id" ); 
 
   $color = "#eeeeee";
   for ($i=0; $i<$result->numRows(); $i++) {
@@ -42,5 +39,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

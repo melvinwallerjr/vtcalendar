@@ -15,8 +15,7 @@ require_once('session_start.inc.php');
     if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } else { unset($category['name']); }
 	}
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($cancel)) {
@@ -27,18 +26,18 @@ require_once('session_start.inc.php');
   // check if name already exists
 	$namealreadyexists = false;
 	if (!empty($category['name'])) {
-    $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."' AND id!='".sqlescape($categoryid)."'" );
+    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."' AND id!='".sqlescape($categoryid)."'" );
     if ( $result->numRows() > 0 ) { $namealreadyexists = true; }
 	}
 
   if (isset($save) && !$namealreadyexists && !empty($category['name']) ) {
-    $result = DBQuery($database, "UPDATE vtcal_category SET name='".sqlescape($category['name'])."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
+    $result = DBQuery("UPDATE vtcal_category SET name='".sqlescape($category['name'])."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
     redirect2URL("manageeventcategories.php");
     exit;
   }
   else { // read category from DB
 		if ( !isset($check) ) {
-			$result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
+			$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
 			if ( $result->numRows() != 1 ) {
 				redirect2URL("manageeventcategories.php");
 				exit;
@@ -49,9 +48,7 @@ require_once('session_start.inc.php');
     }
   } // end else: if (isset($save))
 
-  pageheader(lang('rename_event_category'),
-             lang('rename_event_category'),
-             "Update","",$database);
+  pageheader(lang('rename_event_category'), "Update");
   contentsection_begin(lang('rename_event_category'));
 ?>
 <br>
@@ -80,5 +77,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

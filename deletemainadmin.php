@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"]) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -23,7 +22,7 @@ require_once('session_start.inc.php');
 
   if (isset($deleteconfirmed)) {
     // get the user from the database
-    $result = DBQuery($database, "DELETE FROM vtcal_adminuser WHERE id='".sqlescape($mainuserid)."'" );
+    $result = DBQuery("DELETE FROM vtcal_adminuser WHERE id='".sqlescape($mainuserid)."'" );
     redirect2URL("managemainadmins.php");
     exit;
   }
@@ -34,9 +33,7 @@ require_once('session_start.inc.php');
   }
 
   // print page header
-  pageheader(lang('delete_main_admin'),
-             lang('delete_main_admin'),
-             "","",$database);
+  pageheader(lang('delete_main_admin'), "");
   contentsection_begin(lang('delete_main_admin'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -52,5 +49,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

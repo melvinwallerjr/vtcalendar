@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('globalsettings.inc.php');
 
-$database = DBCONNECTION;
-if (!authorized($database)) { exit; }
+if (!authorized()) { exit; }
 if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
 if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -70,7 +69,7 @@ if ( isset($save) ) {
 			$pidName = $pidsTokens[$i];
 			$pidName = trim($pidName);
 			if ( !empty($pidName) ) {
-				if ( isValidUser ( $database, $pidName ) ) {
+				if ( isValidUser ( $pidName ) ) {
 					$pidsAdded[$pidsAddedCount] = $pidName;
 					$pidsAddedCount++;
 				} 
@@ -96,8 +95,7 @@ if ( isset($save) ) {
 		// save the settings to database
 		if ( $viewauthrequired != 0 ) { $viewauthrequired = 1; }
 		if ( $forwardeventdefault!="1" ) { $forwardeventdefault = "0"; }
-		$result = DBQuery($database, 
-		"UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',
+		$result = DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',
 bgcolor='".sqlescape($bgcolor)."',maincolor='".sqlescape($maincolor)."',todaycolor='".sqlescape($todaycolor)."',
 pastcolor='".sqlescape($pastcolor)."',futurecolor='".sqlescape($futurecolor)."',textcolor='".sqlescape($textcolor)."',
 linkcolor='".sqlescape($linkcolor)."',gridcolor='".sqlescape($gridcolor)."',
@@ -105,9 +103,9 @@ viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqles
 WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" ); 
 		
 		// substitute existing auth info with the new one
-		$result = DBQuery($database, "DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+		$result = DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
 		for ($i=0; $i<count($pidsAdded); $i++) {
-			$result = DBQuery($database, "INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($pidsAdded[$i])."')" );
+			$result = DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($pidsAdded[$i])."')" );
 		}
 		
 		setCalendarPreferences();
@@ -118,12 +116,10 @@ WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
 }
 
 // read sponsor name from DB
-$result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
 $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
-pageheader(lang('change_header_footer_colors_auth'),
-           lang('change_header_footer_colors_auth'),
-           "Update","",$database);
+pageheader(lang('change_header_footer_colors_auth'), "Update");
 contentsection_begin(lang('change_header_footer_colors_auth'));
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="globalSettings">
@@ -162,7 +158,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
   if ( $_SESSION["CALENDARID"] != "default" ) {
 ?>
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='default'" ); 
+  $result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
   $c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
   $defaultcalendarname = $c['name'];
 ?>
@@ -205,7 +201,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 		}
 		else {
 		  $query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY userid";
-      $result = DBQuery($database, $query ); 
+      $result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {
 			  $viewauth = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -224,5 +220,5 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 <?php 
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

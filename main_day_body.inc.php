@@ -31,7 +31,7 @@ if (!empty($_SESSION["AUTH_SPONSORID"])) {
 
   if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
   $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
-  $result = DBQuery($database, $query );
+  $result = DBQuery($query );
 
   // read first event if one exists
   if ($ievent < $result->numRows()) {

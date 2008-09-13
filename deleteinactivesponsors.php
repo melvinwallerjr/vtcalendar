@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
 
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -22,7 +21,7 @@ require_once('session_start.inc.php');
 
 		$query = "SELECT timebegin, sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
 		$query.= " ORDER BY sponsorid, timebegin ASC";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
     $sponsors_latest_event = array();
 		for ($i=0; $i<$result->numRows(); $i++) {
       $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -31,7 +30,7 @@ require_once('session_start.inc.php');
 		
     // go through whole sponsor list and delete the ones that don't have new events
 		$query = "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 		$s = 0;
 		for ($i=0; $i<$result->numRows(); $i++) {
       $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -52,7 +51,7 @@ require_once('session_start.inc.php');
 			$query.="id='".sqlescape($deletesponsor[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
     
     // delete from authorization table
 		$query = "DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND (";
@@ -61,7 +60,7 @@ require_once('session_start.inc.php');
 			$query.="sponsorid='".sqlescape($deletesponsor[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 
     // delete from template table
 		$query = "DELETE FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND (";
@@ -70,7 +69,7 @@ require_once('session_start.inc.php');
 			$query.="sponsorid='".sqlescape($deletesponsor[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 
     // delete from event table
 		$query = "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND (";
@@ -79,7 +78,7 @@ require_once('session_start.inc.php');
 			$query.="sponsorid='".sqlescape($deletesponsor[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 
     // delete from event_public table
 		$query = "DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND (";
@@ -88,11 +87,11 @@ require_once('session_start.inc.php');
 			$query.="sponsorid='".sqlescape($deletesponsor[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 				
 		// go through events and remember all the repeat-id's used
 		$query = "SELECT repeatid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
-		$result = DBQuery($database, $query );
+		$result = DBQuery($query );
 		for ($i=0; $i<$result->numRows(); $i++) {
       $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			$repeatid_used[$event['repeatid']]=1;
@@ -101,7 +100,7 @@ require_once('session_start.inc.php');
     // go through repeat table and remove all un-used records
 		$r = 0;
 		$query = "SELECT id FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
-		$result = DBQuery($database, $query );
+		$result = DBQuery($query );
 		for ($i=0; $i<$result->numRows(); $i++) {
       $repeat = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			if ( !array_key_exists($repeat['id'],$repeatid_used) ) {
@@ -117,16 +116,14 @@ require_once('session_start.inc.php');
 			$query.="id='".sqlescape($deleterepeat[$i])."'";
 		}
 		$query.= ")";
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 		
     // reroute to sponsormenu page
     redirect2URL("update.php");
 	  exit;
   }
 
-  pageheader(lang('delete_inactive_sponsors'),
-             lang('delete_inactive_sponsors'),
-	           "Update","",$database);
+  pageheader(lang('delete_inactive_sponsors'), "Update");
   contentsection_begin(lang('delete_inactive_sponsors'));
 ?>
 <FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -144,5 +141,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -62,13 +61,13 @@ require_once('session_start.inc.php');
   	$user['id'] = $userid;
 	}
 
-  if (isset($save) && checkuser($user) && ($chooseuser || !userExistsInDB($database, $user['id'])) ) { // save user into DB
+  if (isset($save) && checkuser($user) && ($chooseuser || !userExistsInDB($user['id'])) ) { // save user into DB
     if (!empty($chooseuser)) { // update an existing user
       if ( $user['password'] == "#nochange$" ) { // update only the e-mail address
-  			$result = DBQuery($database, "UPDATE vtcal_user SET email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
+  			$result = DBQuery("UPDATE vtcal_user SET email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
 		  }	
 			else { // update password and email address
-	  		$result = DBQuery($database, "UPDATE vtcal_user SET password='".sqlescape(crypt($user['password']))."',email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
+	  		$result = DBQuery("UPDATE vtcal_user SET password='".sqlescape(crypt($user['password']))."',email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
       }
 			
       emailuseraccountchanged($user);
@@ -77,7 +76,7 @@ require_once('session_start.inc.php');
     }
     else { // insert as a new user
       $query = "INSERT INTO vtcal_user (id,password,email) VALUES ('".sqlescape($user['id'])."','".sqlescape(crypt($user['password']))."','".sqlescape($user['email'])."')";
-      $result = DBQuery($database, $query ); 
+      $result = DBQuery($query ); 
 
       emailuseraccountchanged($user);
 
@@ -95,21 +94,17 @@ require_once('session_start.inc.php');
       exit;
     }
     else {
-      pageheader(lang('edit_user'),
-               lang('edit_user'),
-	             "Update","",$database);
+      pageheader(lang('edit_user'), "Update");
       contentsection_begin(lang('edit_user'));
 		}
   }
   else {
-    pageheader(lang('add_new_user'),
-               lang('add_new_user'),
-               "Update","",$database);
+    pageheader(lang('add_new_user'), "Update");
     contentsection_begin(lang('add_new_user'));
   }
 
   if (isset($user['id']) && (!isset($check) || $check != 1)) { // load user to update information if it's the first time the form is viewed
-    $result = DBQuery($database, "SELECT * FROM vtcal_user WHERE id='".sqlescape($user['id'])."'" ); 
+    $result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($user['id'])."'" ); 
     $user = $result->fetchRow(DB_FETCHMODE_ASSOC);
   } // end if: "if (isset($userid))"
 ?>
@@ -132,7 +127,7 @@ require_once('session_start.inc.php');
   	if (isset($check) && $check && (empty($userid))) {
       feedback(lang('choose_user_id'),1);
     }
-    if (isset($check) && $check && userExistsInDB($database,$userid)) {
+    if (isset($check) && $check && userExistsInDB($userid)) {
       feedback(lang('user_id_already_exists'),1);
     }
 		
@@ -191,5 +186,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

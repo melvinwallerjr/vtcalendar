@@ -16,11 +16,11 @@ function defaulteventtime(&$event) {
   return 0;
 }
 
-function defaultevent(&$event,$sponsorid,$database) {
+function defaultevent(&$event,$sponsorid) {
   defaulteventtime($event);
 
   // find sponsor name
-  $result = DBQuery($database, "SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
+  $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
   $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   $event['sponsorid']=$sponsorid;
@@ -237,7 +237,7 @@ function inputrecurrences(&$event,&$repeat,$check) {
 } // end: function inputrecurrences
 
 /* print out the event input form and use the provided parameter as preset */
-function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetime,&$repeat,$database,$copy) {
+function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetime,&$repeat,$copy) {
   /* now printing the HTML code for the input form */
   global $use_ampm;
   $unknownvalue = "???"; /* this is printed when the value of input field is unspecified */
@@ -248,7 +248,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
   $defaultButtonPressed = isset($event['defaultdisplayedsponsor']) || isset($event['defaultdisplayedsponsorurl']) || isset($event['defaultallsponsor']);
 
   // read sponsor name from DB
-  //$result = DBQuery($database, "SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
+  //$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
   //$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
   
 	// switch from "recurring event" to "repeat ..."
@@ -279,7 +279,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			if (!empty($event['repeatid'])) {
 				echo "<br>\n";
 				echo '<font color="#00AA00">';
-				readinrepeat($event['repeatid'],$event,$repeat,$database);
+				readinrepeat($event['repeatid'],$event,$repeat);
 				$repeatdef = repeatinput2repeatdef($event,$repeat);
 				printrecurrence($event['timebegin_year'],
 												$event['timebegin_month'],
@@ -484,7 +484,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	<?php
 	
   // read event categories from DB
-  $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
 
   // print list with categories and select the one read from the DB
 
@@ -663,15 +663,15 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	    		?><input type="hidden" id="selectedsponsorid" name="event[sponsorid]" value="<?php echo $event['sponsorid']; ?>">
 	    		<input type="hidden" name="event[showondefaultcal]" value="<?php echo $event['showondefaultcal']; ?>">
 	    		<input type="hidden" name="event[showincategory]" value="<?php echo $event['showincategory']; ?>"><?php
-	    		echo htmlentities(getSponsorName($database,$event['sponsorid']));
-	    		echo ' (from the &quot;'.htmlentities(getSponsorCalendarName($database,$event['sponsorid'])).'&quot; calendar)';
+	    		echo htmlentities(getSponsorName($event['sponsorid']));
+	    		echo ' (from the &quot;'.htmlentities(getSponsorCalendarName($event['sponsorid'])).'&quot; calendar)';
 	    	}
 	    	else {
 		    	?>
 		      <SELECT id="selectedsponsorid" name="event[sponsorid]" size="1">
 						<?php
 						// read sponsors from DB
-						$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
 						
 						// print list with sponsors and select the one read from the DB
 						
@@ -741,7 +741,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
   </div>
 <?php
   if ( $_SESSION["CALENDARID"] != "default" && $inputrequired ) {
-	  $defaultcalendarname = getCalendarName($database, 'default');
+	  $defaultcalendarname = getCalendarName('default');
 		?>
 		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
 			<h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Submit to the &quot;<?php echo $defaultcalendarname; ?>&quot; calendar.:</h3>
@@ -764,7 +764,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			  			<SELECT name="event[showincategory]" size="1">
 								<?php
 								  // read event categories from DB
-								  $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='default' ORDER BY name ASC" );
+								  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='default' ORDER BY name ASC" );
 								
 								  // print list with categories and select the one read from the DB
 								  if (empty($event['showincategory'])) {

@@ -3,16 +3,13 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
  
-	pageheader(lang('manage_featured_search_keywords'),
-					 lang('manage_featured_search_keywords'),
-					 "Update","",$database);
+	pageheader(lang('manage_featured_search_keywords'), "Update");
 	contentsection_begin(lang('manage_featured_search_keywords'),true);
 
-  $result = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY keyword" ); 
+  $result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY keyword" ); 
 ?>
 <p><?php echo lang('featured_search_keywords_message'); ?><p>
 
@@ -47,5 +44,5 @@ require_once('session_start.inc.php');
   } // end: if ($result->numRows() > 0 )
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

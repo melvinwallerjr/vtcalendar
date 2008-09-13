@@ -29,8 +29,7 @@ require_once('session_start.inc.php');
   } // end: if (isset($_POST['event'])) {
 
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
 
   if (isset($cancel)) {
     redirect2URL("managetemplates.php");
@@ -41,7 +40,7 @@ require_once('session_start.inc.php');
   if (isset($check)) { // check all the parameter passed for validity and save into DB
     if (!empty($template_name)) { // all parameters are ok
       // save event into DB
-      updatetemplate($templateid,$template_name,$event,$database);
+      updatetemplate($templateid,$template_name,$event);
       
       // reroute to sponsormenu page
       redirect2URL("managetemplates.php");
@@ -50,7 +49,7 @@ require_once('session_start.inc.php');
   } // end if: if (isset($check))
   else { // read template from DB
     if ($templateid > 0) {
-      $result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($templateid)."'" ); 
+      $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($templateid)."'" ); 
       $event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
       $template_name = $event['name'];
@@ -62,16 +61,14 @@ require_once('session_start.inc.php');
     }  // end else: if ($templateid > 0)
   }
   
-  pageheader(lang('edit_template'),
-             lang('edit_template'),
-             "Update","",$database);
+  pageheader(lang('edit_template'), "Update");
   contentsection_begin(lang('edit_template'));
 ?>
 <BR>
 <FORM method="post" action="updatetinfo.php">
 <?php
   if (!isset($check)) { $check=0; }
-  inputtemplatedata($event,$_SESSION["AUTH_SPONSORID"],$check,$template_name,$database);
+  inputtemplatedata($event,$_SESSION["AUTH_SPONSORID"],$check,$template_name);
 ?>
 <BR>
 <INPUT type="submit" name="savetemplate" value="<?php echo lang('ok_button_text'); ?>">
@@ -81,5 +78,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

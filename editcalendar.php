@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -33,7 +32,7 @@ require_once('session_start.inc.php');
   $calendarexists = false;
   $addPIDError="";
   if (isset($save) && checkcalendar($cal) ) {
-    $result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".$cal['id']."'" );
+    $result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".$cal['id']."'" );
 		if ( $cal['forwardeventdefault']!="1" ) { $cal['forwardeventdefault'] = "0"; }
 		if ( isset($new) ) {
 			if ( $result->numRows()>0 ) {
@@ -43,21 +42,21 @@ require_once('session_start.inc.php');
 				// create new calendar
 				$query = "INSERT INTO vtcal_calendar (id,                         name,                          title,                  header, footer, bgcolor,  maincolor, todaycolor, pastcolor, futurecolor, textcolor, linkcolor, gridcolor, viewauthrequired, forwardeventdefault) VALUES 
 				                                     ('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '',     '',     '#ffffff','#ff9900', '#ffcc66',  '#eeeeee', '#ffffff',   '#000000', '#3333cc', '#cccccc', 0,                '".sqlescape($cal['forwardeventdefault'])."')";
-        $result = DBQuery($database, $query );
+        $result = DBQuery($query );
 
 				$query = "INSERT INTO vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".lang('administration')."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";
-				$result = DBQuery($database, $query ); 
+				$result = DBQuery($query ); 
 				
 				// create three categories to have a starting point
-        $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','General')" );
-        //$result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category2')."')" );
-        //$result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category3')."')" );
+        $result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','General')" );
+        //$result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category2')."')" );
+        //$result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category3')."')" );
 			}
 		} // end: if ( isset($new) )
 		else { 
       // update existing calendar
 		  $query = "UPDATE vtcal_calendar SET name='".sqlescape($cal['name'])."',forwardeventdefault='".sqlescape($cal['forwardeventdefault'])."' WHERE id='".sqlescape($cal['id'])."'";
-      $result = DBQuery($database, $query );
+      $result = DBQuery($query );
 		} // end: else: if ( isset($new) )
 		
 		if (!$calendarexists) {
@@ -71,7 +70,7 @@ require_once('session_start.inc.php');
 					$pidName = $pidsTokens[$i];
 					$pidName = trim($pidName);
 					if ( !empty($pidName) ) {
-						if ( isvaliduser ( $database, $pidName ) ) {
+						if ( isvaliduser ( $pidName ) ) {
 							$pidsAdded[$pidsAddedCount] = $pidName;
 							$pidsAddedCount++;
 						} 
@@ -95,14 +94,14 @@ require_once('session_start.inc.php');
 
   		if (empty($addPIDError)) {    
 				// determine the id of sponsor "Administration"
-				$result = DBQuery($database, "SELECT id FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."' AND admin='1'" );
+				$result = DBQuery("SELECT id FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."' AND admin='1'" );
 				$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 				$administrationId = $s['id'];
 				
 				// substitute existing auth info with the new one
-				$result = DBQuery($database, "DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."'" );
+				$result = DBQuery("DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."'" );
 				for ($i=0; $i<count($pidsAdded); $i++) {
-					$result = DBQuery($database, "INSERT INTO vtcal_auth (calendarid,userid,sponsorid) VALUES ('".$cal['id']."','".$pidsAdded[$i]."','".$administrationId."')" );
+					$result = DBQuery("INSERT INTO vtcal_auth (calendarid,userid,sponsorid) VALUES ('".$cal['id']."','".$pidsAdded[$i]."','".$administrationId."')" );
 				}
 									
 				redirect2URL("managecalendars.php");
@@ -112,19 +111,15 @@ require_once('session_start.inc.php');
 	} // end: if (isset($save) && checkcalendar($cal) )
 
   if ( isset($cal['id']) ) {
-    pageheader(lang('edit_calendar'),
-               lang('edit_calendar'),
-               "Update","",$database);
+    pageheader(lang('edit_calendar'), "Update");
     contentsection_begin(lang('edit_calendar'));
 		if ( !isset($check) ) {
-  		$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
+  		$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
       $cal = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		}
 	}
 	else {
-    pageheader(lang('add_new_calendar'),
-               lang('add_new_calendar'),
-               "Update","",$database);
+    pageheader(lang('add_new_calendar'), "Update");
     contentsection_begin(lang('add_new_calendar'));
 	}
 ?>
@@ -199,13 +194,13 @@ require_once('session_start.inc.php');
 		}
 		elseif ( isset($cal['id']) ) {
 			// determine the automatically generated sponsor-id
-			$result = DBQuery($database, "SELECT id FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."' AND admin='1'" );
+			$result = DBQuery("SELECT id FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."' AND admin='1'" );
 			$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			$administrationId = $s['id'];
 
 
 		  $query = "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."' ORDER BY userid";
-      $result = DBQuery($database, $query ); 
+      $result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {
 			  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -225,7 +220,7 @@ require_once('session_start.inc.php');
     <TD class="bodytext" valign="top">&nbsp;</TD>
     <TD class="bodytext" valign="top">
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='default'" ); 
+  $result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
   $c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
   $defaultcalendarname = $c['name'];
 ?>
@@ -264,5 +259,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

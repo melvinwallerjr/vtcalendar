@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['httpreferer'])) { setVar($httpreferer,$_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
@@ -20,11 +19,11 @@ require_once('session_start.inc.php');
   if (!isset($httpreferer)) { $httpreferer = $_SERVER["HTTP_REFERER"]; }
 	
   // read sponsor name from DB
-  $result = DBQuery($database, "SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+  $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
   $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   // test if any template exists already
-  $result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+  $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
 
   if ($result->numRows() == 0) { // before: if ($result->numRows() == '0')
     // reroute to input page
@@ -39,9 +38,7 @@ require_once('session_start.inc.php');
   }
 
   // print page header
-  pageheader(lang('choose_template'),
-             lang('choose_template'),
-             "","",$database);
+  pageheader(lang('choose_template'), "");
   contentsection_begin(lang('choose_template'));
 ?>
 <BR>
@@ -52,7 +49,7 @@ require_once('session_start.inc.php');
   <SELECT name="templateid" size="6">
     <OPTION selected value="0">----- <?php echo lang('blank'); ?> -----</OPTION>
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+  $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
   for ($i=0; $i<$result->numRows(); $i++) {
     $template = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
     echo "<OPTION value=\"",htmlentities($template['id']),"\">",htmlentities($template['name']),"</OPTION>\n";
@@ -74,5 +71,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

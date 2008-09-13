@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -23,8 +22,8 @@ require_once('session_start.inc.php');
 
   if (isset($deleteconfirmed)) {
     // get the user from the database
-    $result = DBQuery($database, "DELETE FROM vtcal_user WHERE id='".sqlescape($userid)."'" );
-    $result = DBQuery($database, "DELETE FROM vtcal_auth WHERE userid='".sqlescape($userid)."'" );
+    $result = DBQuery("DELETE FROM vtcal_user WHERE id='".sqlescape($userid)."'" );
+    $result = DBQuery("DELETE FROM vtcal_auth WHERE userid='".sqlescape($userid)."'" );
 
     redirect2URL("manageusers.php");
     exit;
@@ -36,9 +35,7 @@ require_once('session_start.inc.php');
   }
 
   // print page header
-  pageheader(lang('delete_user'),
-             lang('delete_user'),
-             "Update","",$database);
+  pageheader(lang('delete_user'), "Update");
   contentsection_begin(lang('delete_user'));
 ?>
 <FORM method="post" action="deleteuser.php">
@@ -55,5 +52,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

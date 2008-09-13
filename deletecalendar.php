@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -20,7 +19,7 @@ require_once('session_start.inc.php');
   }
 
   // make sure the calendar exists
-	$result = DBQuery($database, "SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
+	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
 	if ( $result->numRows() != 1 ) {
 		redirect2URL("managecalendars.php");
 		exit;
@@ -30,25 +29,23 @@ require_once('session_start.inc.php');
 	}
 
   if (isset($save) ) {
-	  $result = DBQuery($database, "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_event_repeat WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_searchlog WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_category WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_template WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."'" );
-	  $result = DBQuery($database, "DELETE FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_event WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_event_repeat WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_searchlog WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_category WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_template WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
     redirect2URL("managecalendars.php");
     exit;
   }
 
-  pageheader(lang('delete_calendar'),
-             lang('delete_calendar'),
-             "Update","",$database);
+  pageheader(lang('delete_calendar'), "Update");
   contentsection_begin(lang('delete_calendar'));
 ?>
 <font color="#ff0000"><b><?php echo lang('warning_calendar_delete'); ?> &quot;<b><?php echo $c['name']; ?></b>&quot;</b></font>
@@ -64,5 +61,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

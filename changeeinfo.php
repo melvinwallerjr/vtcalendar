@@ -77,8 +77,7 @@ require_once('session_start.inc.php');
     unset($event);	
 	}
 	
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!isset($httpreferer)) {
 		if (empty($_SERVER["HTTP_REFERER"])) {
 			$httpreferer = "update.php";
@@ -97,7 +96,7 @@ require_once('session_start.inc.php');
   // Do some checks if the ID was set.
   if (!empty($eventid)) {
 	  $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-	  $result = DBQuery($database, $query );
+	  $result = DBQuery($query );
 	  
 	  // Check that the record exists in "event"...
 	  if ($result->numRows() > 0) {
@@ -107,12 +106,12 @@ require_once('session_start.inc.php');
 	  // Otherwise, see if it exists in "event_public"
 	  else {
 	  	$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
-			$result = DBQuery($database, $query ); 
+			$result = DBQuery($query ); 
 	  	
 			// If the event exists in "event_public", then insert it into "event" since it is missing...
 			if ($result->numRows() > 0) {
 				$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-				insertintoevent($e['id'],$e,$database);
+				insertintoevent($e['id'],$e);
 			}
 			
 			// Otherwise, the event does not exist at all.
@@ -147,7 +146,7 @@ require_once('session_start.inc.php');
 	}
 
   // check if user chose to reset the sponsorname/url to the default values
-  //$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
+  //$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
   //$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
   
   if (isset($event['defaultdisplayedsponsor']) || isset($event['defaultallsponsor'])) {
@@ -192,12 +191,12 @@ require_once('session_start.inc.php');
       	// the event now has recurrences
         if (sizeof($repeatlist) > 0) {
           // delete the old single event
-          deletefromevent($eventid,$database);
+          deletefromevent($eventid);
 
       	  // insert recurrences
 	        $event['repeatid'] = $eventid; // = getNewEventId();
-	        insertintorepeat($event['repeatid'],$event,$repeat,$database);
-          insertrecurrences($event['repeatid'],$event,$repeatlist,$database);
+	        insertintorepeat($event['repeatid'],$event,$repeat);
+          insertrecurrences($event['repeatid'],$event,$repeatlist);
 
         }
         
@@ -205,11 +204,11 @@ require_once('session_start.inc.php');
         else {
           if ($repeat['mode']>=1 && $repeat['mode']<=2) { // it is a recurring event but has no real recurrences
             // delete the event completely
-            deletefromevent($eventid,$database);
+            deletefromevent($eventid);
       	  }
           else { // it's a single event
             $event['repeatid']="";
-  	        updateevent($eventid,$event,$database);
+  	        updateevent($eventid,$event);
 	        }
         }
       }
@@ -219,17 +218,17 @@ require_once('session_start.inc.php');
       	// the event still has recurrences
         if (!empty($repeatlist)) {
           if (isset($saveall) ||
-             (isset($savethis) /* && recurrenceschanged($event['repeatid'],$repeat,$event,$database) */)
+             (isset($savethis) /* && recurrenceschanged($event['repeatid'],$repeat,$event) */)
        	     ) { // apply the changes to all recurrences
          	  // delete the old events
-            repeatdeletefromevent($event['repeatid'],$database);
+            repeatdeletefromevent($event['repeatid']);
 
             // insert recurrences
-            updaterepeat($event['repeatid'],$event,$repeat,$database);
-            insertrecurrences($event['repeatid'],$event,$repeatlist,$database);
+            updaterepeat($event['repeatid'],$event,$repeat);
+            insertrecurrences($event['repeatid'],$event,$repeatlist);
       	  }
           elseif (isset($savethis)) { // apply the changes only to one recurrence (recurrence pattern hasn't changed)
-            updateevent($eventid,$event,$database);
+            updateevent($eventid,$event);
 	        }
         }
         
@@ -239,21 +238,21 @@ require_once('session_start.inc.php');
         	// it is a recurring event but has no real recurrences
           if ($repeat['mode']>=1 && $repeat['mode']<=2) {
             // delete the event completely
-            repeatdeletefromevent($event['repeatid'],$database);
-            deletefromrepeat($event['repeatid'],$database);
+            repeatdeletefromevent($event['repeatid']);
+            deletefromrepeat($event['repeatid']);
        	  }
        	  
 					// it's a single event
           else {
-						deletefromrepeat($event['repeatid'],$database);
+						deletefromrepeat($event['repeatid']);
        	    $oldrepeatid=$event['repeatid'];
 						$eventid=$event['repeatid']; // added to avoid "...-0001" in eventid if it's not repeating
 	          $event['repeatid']="";
-            insertintoevent($eventid,$event,$database);
+            insertintoevent($eventid,$event);
       	    
 						// delete all old recurring events but one
-            repeatdeletefromevent($oldrepeatid,$database);
-            repeatdeletefromevent_public($oldrepeatid,$database);
+            repeatdeletefromevent($oldrepeatid);
+            repeatdeletefromevent_public($oldrepeatid);
 	        }
         }
       }
@@ -261,10 +260,10 @@ require_once('session_start.inc.php');
       // whatever the "admin" edits gets approved right away
       if ($_SESSION["AUTH_ADMIN"]) {
 	      if (!empty($event['repeatid'])) {
-	      	repeatpublicizeevent($eventid,$event,$database);
+	      	repeatpublicizeevent($eventid,$event);
 	      }
         else {
-        	publicizeevent($eventid,$event,$database);
+        	publicizeevent($eventid,$event);
         }
       }
 
@@ -285,21 +284,21 @@ require_once('session_start.inc.php');
     else {
       if (sizeof($repeatlist) > 0) { // save multiple events
         $event['repeatid'] = getNewEventId();
-	      insertintorepeat($event['repeatid'],$event,$repeat,$database);
-	      insertrecurrences($event['repeatid'],$event,$repeatlist,$database);
+	      insertintorepeat($event['repeatid'],$event,$repeat);
+	      insertrecurrences($event['repeatid'],$event,$repeatlist);
         $eventid = "";
       }
       else { // save just one event
         $event['repeatid'] = ""; // no recurrences
 		    $eventid = getNewEventId();
-        insertintoevent($eventid,$event,$database);
+        insertintoevent($eventid,$event);
       }
       $event['id'] = $eventid;
 
       // whatever the "admin" edits gets approved right away
       if ($_SESSION["AUTH_ADMIN"]) {
-      	if (!empty($event['repeatid'])) { repeatpublicizeevent($eventid,$event,$database); }
-        else { publicizeevent($eventid,$event,$database); }
+      	if (!empty($event['repeatid'])) { repeatpublicizeevent($eventid,$event); }
+        else { publicizeevent($eventid,$event); }
       }
 
       // reroute
@@ -317,14 +316,12 @@ require_once('session_start.inc.php');
   } // end: if ((isset($saveall) || ...)
 
   // read sponsor name from DB
-  //$result = DBQuery($database, "SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+  //$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
   //$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	
 	// display preview
   if (isset($check) && $eventvalid && isset($preview)) {
-		pageheader(lang('preview_event'),
-							 lang('preview_event'),
-							 "Update","",$database);
+		pageheader(lang('preview_event'), "Update");
 	
 		// determine the text representation in the form "MM/DD/YYYY" and the day of the week
 		$day['text'] = Encode_Date_US($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
@@ -335,7 +332,7 @@ require_once('session_start.inc.php');
 		removeslashes($event);
 	
 		// determine the name of the category
-		$result = DBQuery($database, "SELECT id,name AS category_name FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['categoryid'])."'" ); 
+		$result = DBQuery("SELECT id,name AS category_name FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['categoryid'])."'" ); 
 	
 		if ($result->numRows() > 0) { // error checking, actually there should be always a category
 			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -353,7 +350,7 @@ require_once('session_start.inc.php');
 		<?php
 		/*
 				if ($repeat['mode'] > 0 && !empty($event['repeatid'])) {
-					if (!recurrenceschanged($event['repeatid'],$repeat,$event,$database)) {
+					if (!recurrenceschanged($event['repeatid'],$repeat,$event)) {
 						echo '<input type="submit" name="saveall" value="Save changes for ALL recurrences"><BR><BR>';
 					}
 				}
@@ -419,31 +416,25 @@ require_once('session_start.inc.php');
   else {
 		if (isset($eventid)) {
 			if (isset($copy)) {
-				pageheader(lang('copy_event'),
-									 lang('copy_event'),
-									 "Update","",$database);
+				pageheader(lang('copy_event'), "Update");
 				echo "<INPUT type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n";
 			} else {
-				pageheader(lang('update_event'),
-									 lang('update_event'),
-									 "Update","",$database);
+				pageheader(lang('update_event'), "Update");
 			}
 		}
 		else {
-			pageheader(lang('add_new_event'),
-								 lang('add_new_event'),
-								 "Update","",$database);
+			pageheader(lang('add_new_event'), "Update");
 		}
 		
 		// Preset event with defaults if the form has not yet been submitted.
 		if (!isset($check)) {
-			defaultevent($event,$_SESSION["AUTH_SPONSORID"],$database);
+			defaultevent($event,$_SESSION["AUTH_SPONSORID"]);
 		}
 		
 		// Load template if necessary
 		if (isset($templateid)) {
 			if ($templateid > 0) {
-				$result = DBQuery($database, "SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($templateid)."'" ); 
+				$result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($templateid)."'" ); 
 				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			}
 		}
@@ -455,7 +446,7 @@ require_once('session_start.inc.php');
 		
 		// Load event to update information if it's the first time the form is viewed.
 		if (isset($eventid) && (!isset($check) || $check != 1)) {
-			$result = DBQuery($database, "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
+			$result = DBQuery("SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
 			
 			// Event exists in vtcal_event.
 			if ($result->numRows() > 0) {
@@ -464,20 +455,20 @@ require_once('session_start.inc.php');
 			// For some reason the event is not in vtcal_event (even though it should be).
 			// Try to load it from "event_public".
 			else {
-				$result = DBQuery($database, "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
+				$result = DBQuery("SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" ); 
 		
 				// Event exists in "event_public".
 				// Insert into vtcal_event since it is missing.
 				if ($result->numRows() > 0) {
 					$event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 					//eventaddslashes($event);
-					insertintoevent($event['id'],$event,$database);
+					insertintoevent($event['id'],$event);
 				}
 			}
 		
 			disassemble_eventtime($event);
 			if (!empty($event['repeatid'])) {
-				readinrepeat($event['repeatid'],$event,$repeat,$database);
+				readinrepeat($event['repeatid'],$event,$repeat);
 			}
 			else { $repeat['mode'] = 0; }
 		  //$sponsorid = $event[sponsorid];
@@ -492,7 +483,7 @@ require_once('session_start.inc.php');
 			echo "<INPUT type=\"hidden\" name=\"detailscaller\" value=\"",$detailscaller,"\">\n"; 
 		}
 		if (!isset($check)) { $check = 0; }
- 		inputeventdata($event,$event['sponsorid'],1,$check,1,$repeat,$database,$copy);
+ 		inputeventdata($event,$event['sponsorid'],1,$check,1,$repeat,$copy);
 		echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
 		if (isset($eventid)) { echo "<INPUT type=\"hidden\" name=\"eventid\" value=\"",$event['id'],"\">\n"; }
 		echo '<INPUT type="hidden" name="event[repeatid]" value="',HTMLSpecialChars($event['repeatid']),"\">\n";
@@ -506,7 +497,7 @@ require_once('session_start.inc.php');
   } // end: ELSE of displaying the input form
 
 	require("footer.inc.php");
-	DBclose($database);
+	DBclose();
 	
 function passeventtimevalues($event,$repeat) {
   echo '<INPUT type="hidden" name="event[timebegin_year]" value="',HTMLSpecialChars($event['timebegin_year']),"\">\n";
@@ -556,12 +547,12 @@ function passeventvalues($event,$sponsorid,$repeat) {
 // test if the recurrence info was changed, return true if it was
 // not used because changing only one instance of a recurring event was too error-prone
 /*
-function recurrenceschanged($repeatid,&$repeat,&$event,$database) {
+function recurrenceschanged($repeatid,&$repeat,&$event) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
   $repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
 
   $query = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($repeatid)."'";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
   $r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   return ($r['repeatdef']!=$repeat['repeatdef']) ||
@@ -570,7 +561,7 @@ function recurrenceschanged($repeatid,&$repeat,&$event,$database) {
 } // end: function recurrenceschanged
 */
 
-function insertrecurrences($repeatid,&$event,&$repeatlist,$database) {
+function insertrecurrences($repeatid,&$event,&$repeatlist) {
   $i = 0;
   while ($dateJD = each($repeatlist)) {
     $i++;
@@ -596,15 +587,15 @@ function insertrecurrences($repeatid,&$event,&$repeatlist,$database) {
 	  }
     $eventidext .= $i;
 
-    insertintoevent($repeatid."-".$eventidext,$event,$database);
+    insertintoevent($repeatid."-".$eventidext,$event);
   } // end: while ($dateJD = each($repeatlist))
 } // end: function insertrecurrences
 
-/*function savechangesbuttons($event,$repeat,$database) {
+/*function savechangesbuttons($event,$repeat) {
   echo '<INPUT type="submit" name="savethis" value="',lang('save_changes'),'"> ';
 / *
   if ($repeat['mode'] > 0 && !empty($event['repeatid'])) {
-    if (!recurrenceschanged($event['repeatid'],$repeat,$event,$database)) {
+    if (!recurrenceschanged($event['repeatid'],$repeat,$event)) {
       echo '<INPUT type="submit" name="saveall" value="Save changes for ALL recurrences"><BR><BR>';
     }
   }

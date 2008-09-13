@@ -47,19 +47,16 @@ if ( isset($_GET['htmlencode']) && $_GET['htmlencode'] != "" ) { if ( isValidRem
 // Load the Calendar Information
 // ==========================================================
 
-// Open the DB connection
-$database = DBopen();
-
-// Exit if the DB connection failed.
-if (is_string($database)) {
-	exit;
+$DBCONNECTION = DBOpen();
+if (is_string($DBCONNECTION)) {
+	outputErrorMessage("A database error occurred: " . $DBCONNECTION);
 }
 
-$calendardata = getCalendarData($config['CalendarID'], $database);
+$calendardata = getCalendarData($config['CalendarID']);
 
 // If there was an error, output the reason.
 if (is_string($calendardata)) {
-	outputErrorMessage("A database error occurred: ".$calendardata);
+	outputErrorMessage("A database error occurred: " . $calendardata);
 }
 // If a number was returned, then the calendar does not exist or somehow too many records returned.
 elseif (is_int($calendardata)) {
@@ -116,8 +113,8 @@ if ($config['CombineRepeating'] == "Y" && $config['DataType'] == "HTML" && $conf
 	$query = $query." GROUP BY CutID";
 	
 	// Execute the query, and output an error message if one was caught.
-	if (DB::isError( $result = $database->query($query) ) ) {
-		outputErrorMessage("A database error occurred: ".DB::errorMessage($result));
+	if (is_string( $result = DBQuery($query) ) ) {
+		outputErrorMessage("A database error occurred: " . $result);
 	}
 	
 	$query = "SELECT e.calendarid, e.id, e.timebegin, e.timeend, e.title, e.wholedayevent, e.categoryid, e.location, r.startdate, r.enddate, year(r.startdate) as startdate_year, month(r.startdate) as startdate_month, day(r.startdate) as startdate_day, r.repeatdef";
@@ -149,8 +146,8 @@ else {
 }
 
 // Execute the query, and output an error message if one was caught.
-if (DB::isError( $result = $database->query($query) ) ) {
-	outputErrorMessage("A database error occurred: ".DB::errorMessage($result));
+if (is_string( $result = DBQuery($query) ) ) {
+	outputErrorMessage("A database error occurred: ". $result);
 }
 
 // ==========================================================

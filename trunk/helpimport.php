@@ -5,7 +5,6 @@ require_once('session_start.inc.php');
 
   if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
 	$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
-  $database = DBCONNECTION;
   helpwindow_header();
 ?>
 <H3><IMG alt="" border=0 height=16 src="images/nuvola/16x16/actions/help.png" width=16>
@@ -68,7 +67,7 @@ require_once('session_start.inc.php');
   </tr>
 <?php
   // read event categories from DB
-  $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
 
   // print list with categories and select the one read from the DB
   for ($i=0;$i<$result->numRows();$i++) {

@@ -14,8 +14,7 @@ require_once('session_start.inc.php');
   if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
   if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
 
-  $database = DBCONNECTION;
-  if (!viewauthorized($database)) { exit; }
+  if (!viewauthorized()) { exit; }
 
   Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"icalendar.ics\"");
   Header("Content-disposition: attachment; filename=icalendar.ics");
@@ -38,7 +37,7 @@ require_once('session_start.inc.php');
   if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
 
   $query.= " ORDER BY e.timebegin asc, e.wholedayevent desc";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 
   /* read first event if one exists */
   $ievent = 0;

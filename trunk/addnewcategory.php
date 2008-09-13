@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -23,19 +22,17 @@ require_once('session_start.inc.php');
   // check if name already exists
   $namealreadyexists = false;
   if (!empty($category['name'])) {
-    $result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."'" );
+    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."'" );
     if ( $result->numRows() > 0 ) { $namealreadyexists = true; }
   }
 
   if (isset($save) && !$namealreadyexists && !empty($category['name']) ) {
-    $result = DBQuery($database, "INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($category['name'])."')" );
+    $result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($category['name'])."')" );
     redirect2URL("manageeventcategories.php");
     exit;
   }
 
-  pageheader(lang('add_new_event_category'),
-             lang('add_new_event_category'),
-             "Update","",$database);
+  pageheader(lang('add_new_event_category'), "Update");
   contentsection_begin(lang('add_new_event_category'));
 ?>
 <br>
@@ -67,5 +64,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

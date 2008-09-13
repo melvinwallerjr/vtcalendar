@@ -12,8 +12,7 @@ require_once('session_start.inc.php');
 	  if (isset($_GET['id'])) { setVar($id,$_GET['id'],'searchkeywordid'); } else { unset($id); }
  }
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($cancel)) {
@@ -23,7 +22,7 @@ require_once('session_start.inc.php');
 
   $keywordexists = false;
   if (isset($save) && !empty($keyword) && !empty($featuretext) ) {
-    $result = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND keyword='".sqlescape($keyword)."'" );
+    $result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND keyword='".sqlescape($keyword)."'" );
 		if ( $result->numRows()>0 ) {
       if ($result->numRows()>1) {
 			  $keywordexists = true;
@@ -43,10 +42,10 @@ require_once('session_start.inc.php');
 
 		if (!$keywordexists) {
 			if ( isset ($id) ) { // edit, not new
-				$result = DBQuery($database, "UPDATE vtcal_searchfeatured SET keyword='".sqlescape(strtolower($keyword))."',featuretext='".sqlescape($featuretext)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+				$result = DBQuery("UPDATE vtcal_searchfeatured SET keyword='".sqlescape(strtolower($keyword))."',featuretext='".sqlescape($featuretext)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
 			}
 			else {
-				$result = DBQuery($database, "INSERT INTO vtcal_searchfeatured (calendarid,keyword,featuretext) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(strtolower($keyword))."','".sqlescape($featuretext)."')" );
+				$result = DBQuery("INSERT INTO vtcal_searchfeatured (calendarid,keyword,featuretext) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(strtolower($keyword))."','".sqlescape($featuretext)."')" );
 			}
 			redirect2URL("managefeaturedsearchkeywords.php");
 			exit;
@@ -54,21 +53,17 @@ require_once('session_start.inc.php');
 	}
 
   if ( isset($id) ) {
-    pageheader(lang('edit_featured_keyword'),
-               lang('edit_featured_keyword'),
-               "Update","",$database);
+    pageheader(lang('edit_featured_keyword'), "Update");
     contentsection_begin(lang('edit_featured_keyword'));
 		if ( !isset($check) ) {
-  		$result = DBQuery($database, "SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+  		$result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
       $searchkeyword = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		  $keyword = $searchkeyword['keyword'];
   		$featuretext = $searchkeyword['featuretext'];
 		}
 	}
 	else {
-    pageheader(lang('add_new_featured_keyword'),
-               lang('add_new_featured_keyword'),
-               "Update","",$database);
+    pageheader(lang('add_new_featured_keyword'), "Update");
     contentsection_begin(lang('add_new_featured_keyword'));
 	}
 ?>
@@ -118,5 +113,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

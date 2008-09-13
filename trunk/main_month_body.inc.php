@@ -47,7 +47,7 @@
 	// Filter the results by a keyword from the search form.
   if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
   $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
-  $result = DBQuery($database, $query ); 
+  $result = DBQuery($query ); 
 
   // Read first event if it exists.
   if ($ievent < $result->numRows()) {

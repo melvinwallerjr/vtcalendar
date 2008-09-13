@@ -14,8 +14,8 @@ require_once("content_modules.inc.php");
                 Open the database connection
 ============================================================ */
 
-define("DBCONNECTION", DBOpen());
-if (is_string(DBCONNECTION)) {
+$DBCONNECTION = DBOpen();
+if (is_string($DBCONNECTION)) {
 	include("dberror.php");
 	exit;
 }

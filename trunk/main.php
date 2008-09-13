@@ -41,9 +41,8 @@ How this script executes:
 	require_once('globalsettings.inc.php');
 	require_once('main_globalsettings.inc.php');
 	
-	// Open the database and verify that the user is authorized.
-	$database = DBCONNECTION;
-	if (!viewauthorized($database)) { exit; }
+	// Verify that the user is authorized.
+	if (!viewauthorized()) { exit; }
 
 	// Set the default body color.
 	$bodycolor = $_SESSION['MAINCOLOR'];
@@ -60,7 +59,7 @@ How this script executes:
 	}
 	
 	// read all categories from the DB in two arrays
-	$result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
+	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
 	$numcategories = $result->numRows();
 	for ($c=0; $c<$numcategories; $c++) {
 	  $categorydata = $result->fetchRow(DB_FETCHMODE_ASSOC, $c);
@@ -107,28 +106,28 @@ How this script executes:
 	
 	// Output the header HTML
 	if ( $view == "day" ) {
-		pageheader(lang('day_page_header').$basetitle,"","Day","",$database);
+		pageheader(lang('day_page_header').$basetitle, "Day");
 	}
 	elseif ( $view == "week" ) {
-		pageheader(lang('week_page_header').$basetitle,"","Week","",$database);
+		pageheader(lang('week_page_header').$basetitle, "Week");
 	}
 	elseif ( $view == "month" ) { 
-		pageheader(lang('month_page_header').$basetitle,"","Month","",$database);
+		pageheader(lang('month_page_header').$basetitle, "Month");
 	}
 	elseif ( $view == "event" ) { 
-		pageheader(lang('event_page_header').$basetitle,"","","",$database);
+		pageheader(lang('event_page_header').$basetitle, "");
 	}
 	elseif ( $view == "search" ) { 
-		pageheader(lang('search_page_header').$basetitle,"","Search","",$database);
+		pageheader(lang('search_page_header').$basetitle, "Search");
 	}
 	elseif ( $view == "searchresults" ) { 
-		pageheader(lang('searchresults_page_header').$basetitle,"","SearchResults","",$database);
+		pageheader(lang('searchresults_page_header').$basetitle, "SearchResults");
 	}
 	elseif ( $view == "subscribe" ) { 
-		pageheader(lang('subscribe_page_header').$basetitle,"","Subscribe","",$database);
+		pageheader(lang('subscribe_page_header').$basetitle, "Subscribe");
 	}
 	elseif ( $view == "filter" ) { 
-		pageheader(lang('filter_page_header').$basetitle,"","Filter","",$database);
+		pageheader(lang('filter_page_header').$basetitle, "Filter");
 	}
 
 // Output the calendar table.
@@ -155,5 +154,5 @@ elseif (COLUMNSIDE == "RIGHT") {
 
 <?php
 	require("footer.inc.php");
-	DBclose($database);
+	DBclose();
 ?>

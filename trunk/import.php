@@ -9,8 +9,7 @@ require_once('session_start.inc.php');
   if (isset($_GET['startimport'])) { setVar($startimport,$_GET['startimport'],'startimport'); } else { unset($startimport); }
 
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   
 	if (isset($cancel)) {
     redirect2URL("update.php");
@@ -171,16 +170,14 @@ function xmlerror_importevent($xml_parser) {
   feedback("XML error: ".xml_error_string(xml_get_error_code($xml_parser))." at line ".xml_get_current_line_number($xml_parser),FEEDBACKNEG);
 } // end: function xmlerror
 
-  pageheader(lang('import_events'),
-             lang('import_events'),
-             "Update","",$database);
+  pageheader(lang('import_events'), "Update");
   contentsection_begin(lang('import_events'));
   
   $showinputbox = 1;
   if (isset($importurl)) {
     if (checkurl($importurl)) {
       // get list of valid category-IDs
-			$result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+			$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
 			for($i=0; $i<$result->numRows(); $i++) {
   			$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			  $validcategory[$category['id']] = true;
@@ -204,7 +201,7 @@ function xmlerror_importevent($xml_parser) {
 			  if (!$error) {
 					if ($eventnr > 0) {
 						// determine sponsor name & URL
-						$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
+						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
 						$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 					
 						$id = getNewEventId();
@@ -216,9 +213,9 @@ function xmlerror_importevent($xml_parser) {
 							$id1++;
 							$eventid = $id1."000";
 							$event['id'] = $eventid;
-							insertintoevent($eventid,$event,$database);
+							insertintoevent($eventid,$event);
 							if ($_SESSION["AUTH_ADMIN"]) {
-								publicizeevent($eventid,$event,$database);
+								publicizeevent($eventid,$event);
 							}
 						}
 						$showinputbox = 0;
@@ -253,5 +250,5 @@ if (isset($importurl)) { echo $importurl; } ?>" size="60" maxlength="<?php echo 
   contentsection_end();
 
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

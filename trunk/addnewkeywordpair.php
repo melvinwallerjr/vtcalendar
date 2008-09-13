@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
@@ -19,14 +18,12 @@ require_once('session_start.inc.php');
   }
 
   if (isset($save) && !empty($keyword) && !empty($alternativekeyword) ) {
-    $result = DBQuery($database, "INSERT INTO vtcal_searchkeyword (calendarid,keyword,alternative) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(strtolower($keyword))."','".sqlescape(strtolower($alternativekeyword))."')" );
+    $result = DBQuery("INSERT INTO vtcal_searchkeyword (calendarid,keyword,alternative) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(strtolower($keyword))."','".sqlescape(strtolower($alternativekeyword))."')" );
     redirect2URL("managesearchkeywords.php");
     exit;
   }
 
-  pageheader(lang('add_new_keyword_pair'),
-             lang('add_new_keyword_pair'),
-             "Update","",$database);
+  pageheader(lang('add_new_keyword_pair'), "Update");
   contentsection_begin(lang('add_new_keyword_pair'));
 ?>
 <br>
@@ -74,5 +71,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

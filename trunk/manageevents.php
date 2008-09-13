@@ -3,12 +3,9 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('globalsettings.inc.php');
 
-$database = DBCONNECTION;
-if (!authorized($database)) { exit; }
+if (!authorized()) { exit; }
 
-pageheader(lang('manage_events'),
-				 lang('manage_events'),
-				 "Update","",$database);
+pageheader(lang('manage_events'), "Update");
 contentsection_begin(lang('manage_events'),true);
 
 $ievent = 0;
@@ -19,7 +16,7 @@ $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$
 $queryHeader = "SELECT e.calendarid = 'default' as isdefaultcal, e.calendarid as calendarid, e.id AS id,e.approved,e.rejectreason,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE ";
 $queryFooter.= "e.categoryid = c.id AND e.sponsorid = s.id AND e.sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY e.timebegin, e.wholedayevent DESC, e.id, isdefaultcal";
 /Removed from the query footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
-$result = DBQuery($database, $queryHeader.$queryFooter);
+$result = DBQuery($queryHeader.$queryFooter);
 ?>
 
 <p><a href="addevent.php"><?php echo lang('add_new_event'); ?></a>
@@ -29,7 +26,7 @@ if ($result->numRows() > 0 ) {
 	?>
 	<?php echo lang('or_manage_existing_events'); ?></p><?php
 	
-	$defaultcalendarname = getCalendarName($database, 'default');
+	$defaultcalendarname = getCalendarName('default');
 	
 	/*
 	
@@ -105,7 +102,7 @@ if ($result->numRows() > 0 ) {
 						if (!empty($event['repeatid'])) {
 							echo "<br>\n";
 							echo '<font color="#00AA00">';
-							readinrepeat($event['repeatid'],$event,$repeat,$database);
+							readinrepeat($event['repeatid'],$event,$repeat);
 							$repeatdef = repeatinput2repeatdef($event,$repeat);
 							printrecurrence($event['timebegin_year'],
 															$event['timebegin_month'],
@@ -164,6 +161,6 @@ if ($result->numRows() > 0 ) {
 
 contentsection_end();
 require("footer.inc.php");
-DBclose($database);
+DBclose();
 
 ?>

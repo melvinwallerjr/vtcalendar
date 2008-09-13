@@ -27,8 +27,7 @@ $categoryidlist = $_GET['categoryidlist'];
   if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
   if (isset($_GET['specificsponsor'])) { setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); } else { unset($specificsponsor); }
 			
-  $database = DBCONNECTION;
-  if (!viewauthorized($database)) { exit; }
+  if (!viewauthorized()) { exit; }
 
   if (isset($cancel)) {
     redirect2URL("update.php");
@@ -49,7 +48,7 @@ $categoryidlist = $_GET['categoryidlist'];
     // determine which sponsors to show
     if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
       // read sponsor name from DB
-      $result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+      $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
       $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
       $displayedsponsor = $s['name']; 
     }
@@ -134,7 +133,7 @@ $categoryidlist = $_GET['categoryidlist'];
     if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') or (e.description LIKE '%".sqlescape($keyword)."%'))"; }
     $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
     
-		$result = DBQuery($database, $query ); 
+		$result = DBQuery($query ); 
 
     if ($type == "rss") {
       echo '<?xml version="1.0"?>',"\n";
@@ -231,7 +230,7 @@ $categoryidlist = $_GET['categoryidlist'];
         if (!empty($event['repeatid'])) {
 //          $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['repeatid'])."'";
           $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
-					$repeatresult = DBQuery($database, $queryRepeat ); 
+					$repeatresult = DBQuery($queryRepeat ); 
           if ( $repeatresult->numRows () > 0 ) {
             $repeat = $repeatresult->fetchRow(DB_FETCHMODE_ASSOC,0);
           }
@@ -383,9 +382,7 @@ $categoryidlist = $_GET['categoryidlist'];
       while (!checkdate($timeend_month,$timeend_day,$timeend_year)) { $timeend_day--; };
     }
 
-    pageheader(lang('export_events'),
-               lang('export_events'),
-               "","",$database);
+    pageheader(lang('export_events'), "");
     contentsection_begin(lang('export_events'));
 ?>
 <a target="newWindow" onclick="new_window(this.href); return false" 
@@ -417,7 +414,7 @@ $categoryidlist = $_GET['categoryidlist'];
     <TD class="bodytext" valign="top">
       <SELECT name="categoryid" size="1">
 <?php
-$result = DBQuery($database, "SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
 
 // print list with categories from the DB
 echo "<OPTION ";
@@ -446,7 +443,7 @@ for ($i=0; $i<$result->numRows(); $i++) {
 <?php
   if (!empty($_SESSION["AUTH_SPONSORID"])) {
     // read sponsor name from DB
-    $result = DBQuery($database, "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+    $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
     $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     echo '<input type="radio" name="sponsortype" value="self"> ',htmlentities($s['name']),"<br>\n";
   }
@@ -556,5 +553,5 @@ for ($i=date("Y")-1; $i<=date("Y")+3; $i++) {
     require("footer.inc.php");
   }
   
-  DBclose($database);
+  DBclose();
 ?>

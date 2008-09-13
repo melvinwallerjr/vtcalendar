@@ -3,8 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
   require_once('globalsettings.inc.php');
 
-  $database = DBCONNECTION;
-  if (!authorized($database)) { exit; }
+  if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
@@ -26,7 +25,7 @@ require_once('session_start.inc.php');
   }
 
   // make sure the sponsor exists
-	$result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
 	if ( $result->numRows() != 1 ) {
 		redirect2URL("managesponsors.php");
 		exit;
@@ -37,22 +36,20 @@ require_once('session_start.inc.php');
 
   if (isset($save) ) {
     if ($deleteevents=="1") {
-		  $result = DBQuery($database, "DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
-		  $result = DBQuery($database, "DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
+		  $result = DBQuery("DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
+		  $result = DBQuery("DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
 		}
 		else {
-   		$result = DBQuery($database, "UPDATE vtcal_event SET sponsorid='".sqlescape($newsponsorid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
-   		$result = DBQuery($database, "UPDATE vtcal_event_public SET sponsorid='".sqlescape($newsponsorid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
+   		$result = DBQuery("UPDATE vtcal_event SET sponsorid='".sqlescape($newsponsorid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
+   		$result = DBQuery("UPDATE vtcal_event_public SET sponsorid='".sqlescape($newsponsorid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" );
 		}
-		$result = DBQuery($database, "DELETE FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
-    $result = DBQuery($database, "DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" ); 
+		$result = DBQuery("DELETE FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+    $result = DBQuery("DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($id)."'" ); 
     redirect2URL("managesponsors.php");
     exit;
   }
 
-  pageheader(lang('delete_sponsor'),
-             lang('delete_sponsor'),
-             "Update","",$database);
+  pageheader(lang('delete_sponsor'), "Update");
   contentsection_begin(lang('delete_sponsor'));
 ?>
 <p><font color="#ff0000"><b><?php echo lang('delete_sponsor_confirm'); ?> &quot;<b><?php echo $sponsor['name']; ?></b>&quot;</b></font></p>
@@ -62,7 +59,7 @@ require_once('session_start.inc.php');
 	<?php echo lang('reassign_all_events_to_sponsor'); ?>
   <select name="newsponsorid" size="1">
 <?php
-  $result = DBQuery($database, "SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id!='".sqlescape($id)."' ORDER BY name" ); 
+  $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id!='".sqlescape($id)."' ORDER BY name" ); 
 
   // print list with categories from the DB
   for ($i=0; $i<$result->numRows(); $i++) {
@@ -83,5 +80,5 @@ require_once('session_start.inc.php');
 <?php
   contentsection_end();
   require("footer.inc.php");
-DBclose($database);
+DBclose();
 ?>

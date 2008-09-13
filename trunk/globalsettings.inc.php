@@ -8,7 +8,6 @@ require_once('config.inc.php');
 require_once('inputvalidation.inc.php');
 require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');
-require_once("content_modules.inc.php");
 
 /* ============================================================
                 Open the database connection

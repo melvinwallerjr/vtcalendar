@@ -99,7 +99,14 @@ function Timezone2UTC($offset, $year, $month, $day, $hour, $min, $ampm) */
 require_once("functions-dates-generic.inc.php");
 
 
-/* Functions that modify events in the DB
+/* Functions that output the HTML for events:
+----------------------------------------------------
+function print_event($event, $linkfeatures=true)
+function adminButtons($eventORshowdate, $buttons, $size, $orientation) */
+require_once("functions-event-content.inc.php");
+
+
+/* Functions that modify events in the DB:
 ----------------------------------------------------
 function deletefromevent($eventid)
 function deletefromevent_public($eventid)

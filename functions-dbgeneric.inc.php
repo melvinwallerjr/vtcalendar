@@ -8,8 +8,6 @@ function DBopen() {
 		return $DBCONNECTION->getMessage();
 	}
 	
-	echo "<p>OPENED CONNECTION</p>";
-  
   return $DBCONNECTION;
 }
 

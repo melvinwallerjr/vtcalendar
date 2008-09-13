@@ -151,7 +151,7 @@ if (empty($event['sponsorid'])) {
 }
 
 // If the event is not repeating, make sure the end date is the same as the begin date.
-if ($repeat['mode'] == 0) {
+if ($repeat['mode'] == "0") {
   $event['timeend_year']=$event['timebegin_year'];
   $event['timeend_month']=$event['timebegin_month'];
   $event['timeend_day']=$event['timebegin_day'];
@@ -163,7 +163,7 @@ if ($repeat['mode'] > 0 && !empty($repeat['interval1'])) {
 }
 
 // if event is a "whole day event" than set time to 12am
-if ($event['wholedayevent']==1) {
+if (isset($event['wholedayevent']) && $event['wholedayevent']==1) {
   $event['timebegin_hour']=12;
   $event['timebegin_min']=0;
   $event['timebegin_ampm']="am";

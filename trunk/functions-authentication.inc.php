@@ -281,8 +281,9 @@ function authorized() {
   
   $authresult = false;
   
-  // Check the authenticity of the username/password, if they are set and are not different from the currently logged in user.
-	if ( isset($userid) && isset($password) && isset($_SESSION["AUTH_USERID"]) && $_SESSION["AUTH_USERID"] == $userid ) {
+  // Check the authenticity of the username/password, if the user is not logged in or is different from the current logged in user.
+	if ( isset($userid) && isset($password) && (!isset($_SESSION["AUTH_USERID"]) || $_SESSION["AUTH_USERID"] != $userid) ) {
+		
     // checking authentication of PID/password
 		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;
@@ -337,7 +338,7 @@ function authorized() {
 			
 			return TRUE;
 	  }
-	} // end: if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) )
+	}
 	
 	
 	// If the sponsor ID is not set, then we need to verify the user's access to this calendar...

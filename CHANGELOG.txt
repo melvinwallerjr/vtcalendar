@@ -1,3 +1,21 @@
+2.3.0 (released September 10, 2008)
+--------------------------------
+- Changed to use CSS to style the pages
+- Forced 'calendarid' in links to make sure calendar the right calendar is displayed when multiple calendars are being used by one person.
+- Added more LDAP options on config.inc.php.
+- "ROBOT" meta-tag added to header to so that spiders only index the event pages, and not the day/week/month views.
+- The page title (<title>) now includes specific information about the page. For example, when looking a day's events, it will read "Day: Wednesday, September 10, 2008" rather than just "Day". Events will include the event title.
+- Column with mini-calendar can now be toggled to appear on the right if desired.
+- Mini-calendar now uses AJAX-like calls to avoid refreshing the entire page when clicking the small << >> buttons next to the month name.
+- Duration of the event now appears with the start time in day/week view.
+- Events now fade to gray when their end-time has passed, or if the next day is reached in the case of "all day" events.
+- Added message to approval page that the event will also be submitted to default calendar (if applicable).
+- Major redesign to the page that displays when clicking the "Update" tab to make it more user-friendly.
+- Major redesign to the create/edit event page to make it more user-friendly.
+- When a new calendar is created, only one category is created named "General".
+- New weekday repeating event choices (e.g. every sunday).
+- For more detailed changes see CHANGELOG-DETAILED.txt
+
 2.2.2 (released May 24, 2005)
 --------------------------------
 - fixed bug [ 1207823 ] Nobody can login if *whole* calendar requires auth

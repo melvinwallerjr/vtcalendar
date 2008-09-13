@@ -126,5 +126,5 @@
 	require_once("functions-dates.inc.php");
 	require_once("functions-event-dates.inc.php");
 	require_once("functions-event-db.inc.php");
-	require_once("functions-content.inc.php);
+	require_once("functions-content.inc.php");
 ?>

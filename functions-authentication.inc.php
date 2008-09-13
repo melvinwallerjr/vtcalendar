@@ -19,6 +19,8 @@ function checkoldpassword(&$user,$userid) {
 function displaylogin($errormsg="") {
   global $lang;
   
+  logout();
+  
   // Force HTTPS is the server is not being accessed via localhost.
 	if ( $_SERVER['SERVER_ADDR'] != "127.0.0.1" ) {
 		$protocol = "http";

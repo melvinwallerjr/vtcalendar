@@ -15,7 +15,7 @@ $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$
 // Output list with events
 $queryHeader = "SELECT e.calendarid = 'default' as isdefaultcal, e.calendarid as calendarid, e.id AS id,e.approved,e.rejectreason,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE ";
 $queryFooter.= "e.categoryid = c.id AND e.sponsorid = s.id AND e.sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY e.timebegin, e.wholedayevent DESC, e.id, isdefaultcal";
-/Removed from the query footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
+//Removed from the query footer's 'WHERE' clause: AND e.timebegin >= '".$today['timestamp_daybegin']."'
 $result = DBQuery($queryHeader.$queryFooter);
 ?>
 

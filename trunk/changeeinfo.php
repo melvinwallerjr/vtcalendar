@@ -133,7 +133,7 @@ if (!empty($eventid)) {
   }
   
   // If the user is not the admin and not the sponsor, then redirect them away from this page.
-  if (empty($_SESSION["AUTH_ADMIN"]) || !isset($_SESSION["AUTH_SPONSORID"]) || $_SESSION["AUTH_SPONSORID"] != $e['sponsorid']) {
+  if (empty($_SESSION["AUTH_ADMIN"]) && (!isset($_SESSION["AUTH_SPONSORID"]) || $_SESSION["AUTH_SPONSORID"] != $e['sponsorid'])) {
        redirect2URL($httpreferer);
        exit;
   }

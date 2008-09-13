@@ -1,3 +1,17 @@
+TODO:
+- Should probably remove checking for HTTPS and just use
+  SECUREBASEURL for the action of any forms that need to be
+  secured. Search scripts for: _SERVER['HTTPS']
+- Add helpsignup.php link back to displaylogin() in functions.inc.php
+- Should displaylogin() output the error message in functions.inc.php?
+- Change _data files to _preheader just to make it easier to understand
+- A message should output when a keyword is being used in day/week/month view.
+  There is currently no way for a user to know its filtering.
+- $iday['css'] and $iday['color'] should be removed if not being used.
+
+OLD TODO:
+===========================
+
 FEATURES
 --------
 - don't allow calendar admins to lock themselves out from the calendar by restricting access

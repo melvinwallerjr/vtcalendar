@@ -112,6 +112,6 @@ require_once('session_start.inc.php');
 </form>
 <?php
   contentsection_end();
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

@@ -160,7 +160,7 @@ if ($result->numRows() > 0 ) {
 } // end: if ($result->numRows() > 0 )
 
 contentsection_end();
-require("footer.inc.php");
+pagefooter();
 DBclose();
 
 ?>

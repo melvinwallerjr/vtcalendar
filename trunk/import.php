@@ -249,6 +249,6 @@ if (isset($importurl)) { echo $importurl; } ?>" size="60" maxlength="<?php echo 
   } // end: if ($showinputbox)
   contentsection_end();
 
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

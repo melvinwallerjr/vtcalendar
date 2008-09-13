@@ -51,6 +51,6 @@ document.mainform.userid.focus();
 
 <?php
   contentsection_end();
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

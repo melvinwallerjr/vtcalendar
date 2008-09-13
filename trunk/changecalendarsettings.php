@@ -219,6 +219,6 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 </form>
 <?php 
   contentsection_end();
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

@@ -496,7 +496,7 @@ require_once('session_start.inc.php');
 		contentsection_end();
   } // end: ELSE of displaying the input form
 
-	require("footer.inc.php");
+	pagefooter();
 	DBclose();
 	
 function passeventtimevalues($event,$repeat) {

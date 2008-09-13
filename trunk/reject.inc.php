@@ -45,6 +45,6 @@
 <BR>
 <?php
   contentsection_end();
-	require("footer.inc.php");
+	pagefooter();
 DBclose();
 ?>

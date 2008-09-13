@@ -67,7 +67,7 @@ function displaylogin($errormsg="") {
 	<?php
   contentsection_end();
 
-  require("footer.inc.php");
+  pagefooter();
 } // end: function displaylogin
 
 // Display a list of sponsors that the user belongs to
@@ -113,7 +113,7 @@ function displaymultiplelogin($errorMessage="") {
 	</table><?php
   contentsection_end();
 
-  require("footer.inc.php");
+  pagefooter();
 } // end: function displaymultiplelogin
 
 function displaynotauthorized() {
@@ -127,7 +127,7 @@ function displaynotauthorized() {
 	<?php
   contentsection_end();
 
-  require("footer.inc.php");
+  pagefooter();
 } // end: Function displaynotauthorized
 
 

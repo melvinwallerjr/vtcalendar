@@ -42,6 +42,6 @@ require_once('session_start.inc.php');
   } // end: if ($result->numRows() > 0 )
 	
   contentsection_end();
-  require("footer.inc.php");
+  pagefooter();
 DBclose();
 ?>

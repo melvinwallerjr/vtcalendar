@@ -406,7 +406,7 @@ function repeatdefdisassembled2repeatlist($startyear,$startmonth,$startday,
       $dow = Day_of_Week($startmonth,$startday,$startyear);
       $weekfrom = Add_Delta_Days($startmonth,$startday,$startyear,-$dow);
 
-      $weekfromJD = JulianToJD($weekfrom[$month],$weekfrom[$day],$weekfrom[$year]);
+      $weekfromJD = JulianToJD($weekfrom['month'],$weekfrom['day'],$weekfrom['year']);
 
       // prepend a space to allow searching the string by testing "strpos(..) != 0"
       $frequencymodifier = " ".$frequencymodifier;

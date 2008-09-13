@@ -5,9 +5,9 @@ define("ALLOWINCLUDES", TRUE);
 // Include the necessary files.
 require_once('DB.php');
 require_once('config.inc.php');
-require_once('inputvalidation.inc.php');
 require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');
+require_once('constants.inc.php');
 
 /* ============================================================
                 Open the database connection
@@ -18,33 +18,6 @@ if (is_string($DBCONNECTION)) {
 	include("dberror.php");
 	exit;
 }
-
-/* ============================================================
-         Constants that define valid values for fields.
-============================================================ */
-
-define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
-//NOT USED define("BGCOLORNAVBARACTIVE","#993333");
-//NOT USED define("BGCOLORWEEKMONTHNAVBAR","#993333");
-//NOT USED define("BGCOLORDETAILSHEADER","#993333");
-define("MAXLENGTH_URL","100");
-define("MAXLENGTH_TITLE","75");
-define("MAXLENGTH_DESCRIPTION","5000");
-define("MAXLENGTH_LOCATION","100");
-define("MAXLENGTH_PRICE","100");
-define("MAXLENGTH_CONTACT_NAME","100");
-define("MAXLENGTH_CONTACT_PHONE","100");
-define("MAXLENGTH_CONTACT_EMAIL","100");
-define("MAXLENGTH_SPONSOR","50");
-define("FEEDBACKPOS","0");
-define("FEEDBACKNEG","1");
-
-/* ============================================================
-                   Current date and time
-============================================================ */
-
-define("NOW", date("Y-m-d H:i:s"));
-define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW));
 
 /* ============================================================
            Load the calendar preferences and logout

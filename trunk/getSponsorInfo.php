@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-require_once('globalsettings.inc.php');
+require_once('application.inc.php');
 
 if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
 if (isset($_GET['type'])) { $type = $_GET['type']; } else { unset($type); }

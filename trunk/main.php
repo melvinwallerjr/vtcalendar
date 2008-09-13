@@ -5,7 +5,7 @@ require_once('session_start.inc.php');
 
 How this script executes:
 
-1. Include globalsettings.inc.php
+1. Include application.inc.php
 	A. Includes config.inc.php
 		- Defines calendar configuration settings.
 	B. Determine if a new calendar ID was set.
@@ -38,7 +38,7 @@ How this script executes:
 
 7. Set the default body color, but set it to the 'today' color if only today is being viewed.
 */
-	require_once('globalsettings.inc.php');
+	require_once('application.inc.php');
 	require_once('main_globalsettings.inc.php');
 	
 	// Verify that the user is authorized.

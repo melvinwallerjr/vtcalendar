@@ -5,7 +5,7 @@
 	}
 	
   session_start();
-  require_once('globalsettings.inc.php');
+  require_once('application.inc.php');
   require_once('functions.inc.php');
 
 //  $serverpath = $GLOBALS["SCRIPT_URI"];

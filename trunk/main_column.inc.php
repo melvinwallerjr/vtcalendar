@@ -4,11 +4,7 @@
 <!-- Start Left Column -->
 <td id="CalLeftCol" valign="top" style="padding-<?php echo strtolower(COLUMNSIDE); ?>: 7px;">
 	<div id="LittleCalendarContainer">
-	<?php
-	displayMonthSelector();
-	
-	displayLittleCalendar($month, $view, $showdate, $queryStringExtension);
-	?>
+	<?php require("main_littlecalendar.php"); ?>
 	</div>
 	
 	<!-- Start Jump To Date -->

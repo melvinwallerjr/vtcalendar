@@ -116,7 +116,7 @@ else {
 	// Loop through all the events waiting for approval
   for ($i=0; $i<$result->numRows(); $i++) {
     $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-    disassemble_eventtime($event);
+    disassemble_timestamp($event);
 		
 		// Keep track of repeat IDs so we only output repeating events once.
   	if (!empty($event['repeatid']) ) { 

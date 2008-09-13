@@ -108,7 +108,7 @@ else {
 
 // print all events of one day
 while ($ievent < $result->numRows()) {
- 	  disassemble_eventtime($event);	
+ 	  disassemble_timestamp($event);	
     $event_timebegin_num = timestamp2timenumber($event['timebegin']);
     $event_timeend_num = timestamp2timenumber($event['timeend']);
 		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
@@ -132,7 +132,7 @@ while ($ievent < $result->numRows()) {
     //echo Month_to_Text_Abbreviation($event_timebegin['month'])," ",$event_timebegin['day'],", ",$event_timebegin['year'];
     echo "<br>";
     if ($event['wholedayevent']==0) {
-  	  disassemble_eventtime($event);	
+  	  disassemble_timestamp($event);	
 			echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
     }
     else {

@@ -157,7 +157,7 @@
 // prints one event in the format of the week view
 function print_week_event(&$event) {
 	global $day_end_h, $lang;
-  disassemble_eventtime($event);
+  disassemble_timestamp($event);
   $event_timebegin  = timestamp2datetime($event['timebegin']);
   $event_timeend    = timestamp2datetime($event['timeend']);
 

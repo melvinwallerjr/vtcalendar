@@ -8,7 +8,7 @@
   $result = DBQuery($query ); 
   $event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
-  disassemble_eventtime($event);
+  disassemble_timestamp($event);
   $event['css'] = datetoclass($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
   $event['color'] = datetocolor($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],$colorpast,$colortoday,$colorfuture);
 

@@ -170,7 +170,8 @@ function timenumber2timelabel($timenum) {
 	}
 }
 
-// returns the date&time in the ISO8601format: 20000211T235900 (used by vCalendar)
+// Returns a ISO 8601 date based on the passed year/month/day/hour/min/ampm.
+// This is primarily used by the vCalendar format.
 function datetime2ISO8601datetime($year,$month,$day,$hour,$min,$ampm) {
   $datetime = strtr(datetime2timestamp($year,$month,$day,$hour,$min,$ampm)," ","T");
   $datetime = str_replace("-","",$datetime);
@@ -179,7 +180,8 @@ function datetime2ISO8601datetime($year,$month,$day,$hour,$min,$ampm) {
   return $datetime;
 }
 
-// converts a vCalendar timestamp "20000211T235900" to a date/time format
+// Returns the year/month/day/hour/min/ampm for a ISO 8601 date
+// This is primarily used by the vCalendar format.
 function ISO8601datetime2datetime($ISO8601datetime) {
   $datetime['year']  = substr($ISO8601datetime,0,4);
   $datetime['month'] = substr($ISO8601datetime,4,2);
@@ -209,8 +211,8 @@ function ISO8601datetime2datetime($ISO8601datetime) {
   return $datetime;
 }
 
-/* construct event_timbegin(timeend)_month/day/year/hour/min/ampm from timestamp */
-function disassemble_eventtime(&$event) {
+// Assign the year/month/day/hour/min/ampm based on the events begin/end timestamps.
+function disassemble_timestamp(&$event) {
   $timebegin = timestamp2datetime($event['timebegin']);
   $event['timebegin_year']  = $timebegin['year'];
   $event['timebegin_month'] = $timebegin['month'];
@@ -237,9 +239,11 @@ function settimeenddate2timebegindate(&$event) {
   $event['timeend_day'] = $event['timebegin_day'];
 }
 
-// construct event timestamps "timebegin&timeend" from month/day/year/hour/min/ampm
-function assemble_eventtime(&$event) {
+// Assign timestamps (YYYY-MM-DD HH-MM-SS AMPM) for the events begin/end times
+function assemble_timestamp(&$event) {
   global $day_beg_h, $day_end_h, $use_ampm;
+  
+  // Assign the begin timestamp.
   $event['timebegin'] = datetime2timestamp(
                         $event['timebegin_year'],
                         $event['timebegin_month'],
@@ -248,7 +252,7 @@ function assemble_eventtime(&$event) {
                         $event['timebegin_min'],
                         $event['timebegin_ampm']);
 
-  // if event doesn't have an ending time, set it to the end of the day
+  // If event doesn't have an ending time, set it to the end of the day.
   if ($event['timeend_hour']==0) {
     $event['timeend_hour']=$day_end_h;
     $event['timeend_min']=59;
@@ -256,14 +260,14 @@ function assemble_eventtime(&$event) {
        $event['timeend_ampm']="pm";
   }
 
-  $event['timeend'] =   datetime2timestamp(
-                        $event['timeend_year'],
-                        $event['timeend_month'],
-                        $event['timeend_day'],
-                        $event['timeend_hour'],
-                        $event['timeend_min'],
-                        $event['timeend_ampm']);
-  return 0;
+	// Assign the end timestamp.
+  $event['timeend'] = datetime2timestamp(
+                      $event['timeend_year'],
+                      $event['timeend_month'],
+                      $event['timeend_day'],
+                      $event['timeend_hour'],
+                      $event['timeend_min'],
+                      $event['timeend_ampm']);
 }
 
 // returns a string like "5:00pm" from the input "5", "0", "pm"

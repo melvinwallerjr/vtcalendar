@@ -150,7 +150,7 @@ $categoryidlist = $_GET['categoryidlist'];
       echo "    <link>".$calendarurl."?calendarid=".$_SESSION["CALENDARID"]."</link>\n\n";
       for ($i=0; $i < $result->numRows(); $i++) {
         $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-        disassemble_eventtime($event);
+        disassemble_timestamp($event);
         echo "    <item>\n";
         echo "      <title>",text2xmltext($event['title']),"</title>\n";
         echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."</link>\n";
@@ -202,7 +202,7 @@ $categoryidlist = $_GET['categoryidlist'];
 <?php    
       for ($i=0; $i < $result->numRows(); $i++) {
         $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-        disassemble_eventtime($event);
+        disassemble_timestamp($event);
         echo "    <item rdf:about=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."\">\n";
         echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."</link>\n";
         echo "      <title>",text2xmltext($event['title']),"</title>\n";

@@ -72,9 +72,9 @@ function timestamp2timenumber($timestamp)
 function timenumber2timelabel($timenum)
 function datetime2ISO8601datetime($year,$month,$day,$hour,$min,$ampm)
 function ISO8601datetime2datetime($ISO8601datetime)
-function disassemble_eventtime(&$event)
+function disassemble_timestamp(&$event)
 function settimeenddate2timebegindate(&$event)
-function assemble_eventtime(&$event)
+function assemble_timestamp(&$event)
 function timestring($hour,$min,$ampm)
 function endingtime_specified(&$event) */
 require_once("functions-dates.inc.php");

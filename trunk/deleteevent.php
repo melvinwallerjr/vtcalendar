@@ -135,7 +135,7 @@ require_once('session_start.inc.php');
           readinrepeat($event['repeatid'],$event,$repeat);
         }
         else { $repeat['mode'] = 0; }
-        disassemble_eventtime($event);
+        disassemble_timestamp($event);
 
         print_event($event);  
 ?>

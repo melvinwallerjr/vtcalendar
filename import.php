@@ -1,8 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
-  require_once("xmlparser.inc.php");
+require_once('application.inc.php');
 
   if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_GET['importurl'])) { setVar($importurl,$_GET['importurl'],'importurl'); } else { unset($importurl); }

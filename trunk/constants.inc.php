@@ -65,4 +65,13 @@ define("constSponsor_nameMaxLength",100);
 // Special error messages for invalid input
 define("constCalendaridVALIDMESSAGE", '1 to '.constCalendaridMAXLENGTH.' characters (A-Z,a-z,0-9,-,.)');
 define("constCalendarnameVALIDMESSAGE", '1 to '.constCalendarnameMAXLENGTH.' characters (A-Z,a-z,0-9,-,.,&amp;,\',[space],[comma])');
+
+/* ============================================================
+             Constants used for XML processing
+============================================================ */
+
+define("DEFAULTXMLSTARTELEMENTHANDLER", "");
+define("DEFAULTXMLENDELEMENTHANDLER", "");
+define("DEFAULTXMLERRORHANDLER", "");
+define("FILEOPENERROR","2");
 ?>

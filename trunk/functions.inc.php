@@ -158,12 +158,14 @@ function emailaddressok($email)
 function sendemail($toName,$toAddress,$fromName,$fromAddress,$subject,$body) */
 require_once("functions-email.inc.php");
 
+
 /* Functions for validating input:
 ----------------------------------------------------
 function isValidInput($value, $type)
 function isDate($value)
 function isTime($value) */
 require_once("functions-inputvalidation.inc.php");
+
 
 /* Functions used to output the event input form and process data related to it.
 ----------------------------------------------------
@@ -178,8 +180,17 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 require("functions-inputdata-event.inc.php");
 
 
-/* Functions used to output the event input form and process data related to it.
+/* Functions used to output the event template form and process data related to it.
 ----------------------------------------------------
 function inputtemplatedata(&$event,$sponsorid,$check,$template_name) */
 require("functions-inputdata-template.inc.php");
+
+
+/* Functions used to process XML
+----------------------------------------------------
+function parsexml($xmlfile, $xmlstartelementhandler, $xmlendelementhandler, $xmldatahandler, $xmlerrorhandler)
+function xmlerror($xml_parser)
+function xmlstartelement($parser, $element, $attrs)
+function xmlendelement($parser, $element) */
+require("functions-xml.inc.php");
 ?>

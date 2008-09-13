@@ -1,228 +1,482 @@
 <?php
-// Create an ID for an event that is as unique as possible.
-function getNewEventId() {
-  $random = rand(0,999);
-  $id = time();
-  if ($random<100) {
-    if ($random<10) {
-      $id .= "0";
-    }
-    $id .= "0";
+/* Make sure the password meets standards for a new password (e.g. not the same as their old password */
+function checknewpassword(&$user) {
+  /* include more sophisticated constraints here */
+  if ($user['newpassword1']!=$user['newpassword2']) { return 1; }
+  elseif ((empty($user['newpassword1'])) || (strlen($user['newpassword1']) < 5)) { return 2; }
+  else { return 0; }
+}
+
+/* Verify the  user's old password in the database */
+function checkoldpassword(&$user,$userid) {
+  $result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
+  $data = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	return
+    ($data['password']!=crypt($user['oldpassword'],$data['password']));
+}
+
+// display login screen and errormsg (if exists)
+function displaylogin($errormsg="") {
+  global $lang;
+  
+  // Force HTTPS is the server is not being accessed via localhost.
+	if ( $_SERVER['SERVER_ADDR'] != "127.0.0.1" ) {
+		$protocol = "http";
+		if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
+		if ( BASEURL != SECUREBASEURL && $protocol."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] != SECUREBASEURL."update.php" ) {
+			redirect2URL(SECUREBASEURL."update.php?calendar=".$_SESSION["CALENDARID"]);
+		}
+	}
+
+  pageheader(lang('update_page_header'), "Update");
+  contentsection_begin(lang('login'));
+
+  if (!empty($errormsg)) {
+    echo "<BR>\n";
+    feedback($errormsg,1);
   }
-  return $id.$random;
-}
+	?>
+  <DIV>
+  <?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
+  <FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
+	<?php
+	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($GLOBALS["eventid"]),"\">\n"; }
+  if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($GLOBALS["httpreferer"]),"\">\n"; }
+	if (isset($GLOBALS["authsponsorid"])) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($GLOBALS["authsponsorid"]),"\">\n"; }
+	?>
+    <TABLE border="0" cellspacing="1" cellpadding="3">
+      <TR>
+        <TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
+        <TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
+      </TR>
+      <TR>
+        <TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
+        <TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
+      </TR>
+      <TR>
+        <TD class="inputbox">&nbsp;</TD>
+        <TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
+      </TR>
+    </TABLE>
+  </FORM>
+	<script language="JavaScript1.2"><!--
+	  document.loginform.login_userid.focus();
+	//--></script>
+	<?php if (file_exists("static-includes/loginform-post.txt")) { include('static-includes/loginform-post.txt'); } ?>
+  </DIV>
+	<?php
+  contentsection_end();
 
-// Used by the calendar admin scripts (e.g. update.php) to output small error messages.
-function feedback($msg,$type) {
-  echo '<span class="';
-	if ($type==0) { echo "feedbackpos"; } // positive feedback
-  if ($type==1) { echo "feedbackneg"; } // error message
-  echo '">';
-	echo $msg;
-  echo '</span><br>';
-}
+  require("footer.inc.php");
+} // end: function displaylogin
 
-// NOT USED
-function verifyCancelURL($httpreferer) {
-	if (empty($httpreferer)) {
-		$httpreferer = "update.php";
-	}
-  return $httpreferer;
-}
-
-// Used by the calendar admin scripts (e.g. update.php)
-// to fully redirect a visitor from one page to another
-function redirect2URL($url) {
-	if (empty($url)) {
-		$url = "update.php";
-	}
-	if (preg_match("/^[a-z]+:\/\//i", $url) == 0)
-	{
-		$url = SECUREBASEURL . $url;
-	}
-	header("HTTP/1.1 301 Moved Permanently");
-  header("Location: $url");
-  return TRUE;
-}
-
-// Get the complete URL that points to the current calendar.
-function getFullCalendarURL($calendarid) {
-  if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
-  $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/main.php?calendarid=".urlencode($calendarid);
-  return $calendarurl;
-}
-
-// Sends an email to a sponsor.
-function sendemail2sponsor($sponsorname,$sponsoremail,$subject,$body) {
-  $body.= "\n\n";
-  $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]." \n";
-  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
+// Display a list of sponsors that the user belongs to
+// so they can choose the one they wish to login as.
+function displaymultiplelogin($errorMessage="") {
+  pageheader(lang('login'), "Update");
   
-  sendemail($sponsorname,$sponsoremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
-}
-
-function sendemail2user($useremail,$subject,$body) {
-  $body.= "\n\n";
-  $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]."\n";
-  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
+  contentsection_begin(lang('choose_sponsor_role'));
   
-  sendemail($useremail,$useremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
-}
+  if (!empty($errorMessage)) {
+  	echo "<p>", htmlentities($errorMessage) ,"</p>";
+  } else {
+  	echo "<div>&nbsp;</div>";
+  }
+	?>
+	<table cellpadding="2" cellspacing="2" border="0">
+	<?php
+	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
+	if ($result->numRows() > 0) {
+    for ($i=0;$i < $result->numRows();$i++) {
+      $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+  
+	    // read sponsor name from DB
+	    $r = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'");
 
-// highlights all occurrences of the keyword in the text
-// case-insensitive
-function highlight_keyword($keyword, $text) {
-	$keyword = preg_quote($keyword);
-	$newtext = preg_replace('/'.$keyword.'/Usi','<span style="background-color:#ffff99">\\0</span>',$text);
-	return $newtext;
+      $sponsor = $r->fetchRow(DB_FETCHMODE_ASSOC,0);			
+			
+			echo "<tr><td>&nbsp;&nbsp;&nbsp;\n";
+			echo "<a href=\"".$_SERVER["PHP_SELF"]."?authsponsorid=".urlencode($authorization['sponsorid']);
+    	if (isset($GLOBALS["eventid"])) { 
+			  echo "&eventid=",urlencode($GLOBALS["eventid"]);
+			}
+      if (isset($GLOBALS["httpreferer"])) { 
+			  echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
+			}
+			echo "\">";
+			echo htmlentities($sponsor['name']);
+			echo "</a>";
+			echo "</td></tr>\n";
+		}
+	}
+	?>
+	</table><?php
+  contentsection_end();
+
+  require("footer.inc.php");
+} // end: function displaymultiplelogin
+
+function displaynotauthorized() {
+  pageheader(lang('login'), "Update");
+  contentsection_begin(lang('error_not_authorized'));
+	?>
+	<?php echo lang('error_not_authorized_message'); ?><br>
+	<br>
+	    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
+	<BR>
+	<?php
+  contentsection_end();
+
+  require("footer.inc.php");
+} // end: Function displaynotauthorized
+
+
+// Validate the username and password.
+function userauthenticated($userid,$password) {
+	if ( AUTH_DB ) {
+		$result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'"); 
+    if ($result->numRows() > 0) {
+			$u = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			if ( crypt($password,$u['password'])==$u['password'] ) {
+				$_SESSION["AUTH_TYPE"] = "DB";
+			  return true;
+			}
+		}
+	}
+	if ( AUTH_LDAP ) {
+		//$host = LDAP_HOST;
+		//$port = LDAP_PORT;
+		//$bindUser = LDAP_BIND_USER;
+		//$bindPassword = LDAP_BIND_PASSWORD;
+		//$pid = $userid;
+		//$credential = $password;
+		
+		// Create the base search filter using the specified userfield.
+		$searchFilter = '(' . LDAP_USERFIELD . '=' . $userid . ')';
+		
+		// If an additional search filter was specified, then append it to the userfield filter
+		if (LDAP_SEARCH_FILTER != '') {
+			$searchFilter = '(&' . $searchFilter . LDAP_SEARCH_FILTER . ')';
+		}
+		
+		// Make sure the userid and password are specified.
+		if (isset($userid) && $userid != '' && isset($password)) {
+		
+			$ldap = ldap_connect(LDAP_HOST, LDAP_PORT);
+			if (isset($ldap) && $ldap !== false) {
+			
+				// Bind to the LDAP as a specific user, if defined
+				if (LDAP_BIND_USER == '' || ldap_bind($ldap, LDAP_BIND_USER, LDAP_BIND_PASSWORD)) {
+				
+					// Search for users name to dn
+					$result = ldap_search($ldap, LDAP_BASE_DN, $searchFilter, array('dn'));
+					
+					if ($result) {
+						// Get a multi-dimentional array from the results
+						$entries = ldap_get_entries($ldap, $result);
+						
+						// Determine the distinguished name (dn) of the found username.
+						$principal = $entries[0]['dn'];
+						if (isset($principal)) {
+						
+							/* bind (or rebind) as the DN and the password that was supplied via the login form */
+							if (@ldap_bind($ldap, $principal, $password)) {
+								//print('LDAP Success');
+								$_SESSION["AUTH_TYPE"] = "LDAP";
+								return true;
+							} 
+							else {
+								//print('LDAP failure');
+								return "Password is incorrect. Please try again. (LDAP)";
+							}
+						}
+						else {
+							//print('User not found in LDAP');
+							return "User-ID not found. (LDAP)";
+						}
+						
+						// Clean up
+						ldap_free_result($result);
+						
+					}
+					else {
+						return "An error occured while searching the LDAP server for your username.";
+					}
+					ldap_close($ldap);
+				}
+				else {
+					return "Could not connect to the LDAP server due to an authentication problem.";
+				}
+			} 
+			else {
+				return "Could not connect to the login server. (LDAP)";
+			}
+		}
+	}
+	
+	if (AUTH_HTTP ) {
+		require_once("HTTP/Request.php");
+
+		$req =& new HTTP_Request(AUTH_HTTP_URL);
+		$req->setBasicAuth($userid, $password);
+		
+		$response = $req->sendRequest();
+		
+		if (PEAR::isError($response)) {
+			return "An error occurred while connecting to the login server. (HTTP)";
+		}
+		else {
+			if ($req->getResponseCode() == 200) {
+				$_SESSION["AUTH_TYPE"] = "HTTP";
+				
+				if (AUTH_HTTP_CACHE) {
+					$passhash = crypt($password);
+					$result = DBQuery( "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
+				}
+				
+				return true;
+			}
+			else {
+				if (AUTH_HTTP_CACHE) {
+					$result = DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
+					if ($result->numRows() > 0) {
+						$record = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+						$passhash = $record['PassHash'];
+						
+						if (crypt($password, $passhash) == $passhash) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	return false; // default rule
 }
 
 /**
- * Taken from phpBB 2.0.19 (from phpBB2/includes/bbcode.php)
+ * authorized() checks if the person is logged in and has authorization to view the calendar management pages (e.g. update.php)
  *
- * Rewritten by Nathan Codding - Feb 6, 2001.
- * - Goes through the given string, and replaces xxxx://yyyy with an HTML <a> tag linking
- * 	to that URL
- * - Goes through the given string, and replaces www.xxxx.yyyy[zzzz] with an HTML <a> tag linking
- * 	to http://www.xxxx.yyyy[/zzzz]
- * - Goes through the given string, and replaces xxxx@yyyy with an HTML mailto: tag linking
- *		to that email address
- * - Only matches these 2 patterns either after a space, or at the beginning of a line
- *
- * Notes: the email one might get annoying - it's easy to make it more restrictive, though.. maybe
- * have it require something like xxxx@yyyy.zzzz or such. We'll see.
+ * This is how the following function executes:
+ * 1. Grab the login username/password from _POST, if they exist.
+ * 2. 
  */
-function make_clickable($text)
-{
-	$text = preg_replace('#(script|about|applet|activex|chrome):#is', "\\1&#058;", $text);
-
-	// pad it with a space so we can match things at the start of the 1st line.
-	$ret = ' ' . $text;
-
-	// matches an "xxxx://yyyy" URL at the start of a line, or after a space.
-	// xxxx can only be alpha characters.
-	// yyyy is anything up to the first space, newline, comma, double quote or <
-	$ret = preg_replace("#(^|[\n ])([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $ret);
-
-	// matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing
-	// Must contain at least 2 dots. xxxx contains either alphanum, or "-"
-	// zzzz is optional.. will contain everything up to the first space, newline, 
-	// comma, double quote or <.
-	$ret = preg_replace("#(^|[\n ])((www|ftp)\.[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $ret);
-
-	// matches an email@domain type address at the start of a line, or after a space.
-	// Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
-	$ret = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $ret);
-
-	// Remove our padding..
-	$ret = substr($ret, 1);
-
-	return($ret);
-}
-
-// remove slashes from event fields
-function removeslashes(&$event) {
-	if (get_magic_quotes_gpc()) {
-	  $event['title']=stripslashes($event['title']);
-	  $event['description']=stripslashes($event['description']);
-	  $event['location']=stripslashes($event['location']);
-	  $event['price']=stripslashes($event['price']);
-	  $event['contact_name']=stripslashes($event['contact_name']);
-	  $event['contact_phone']=stripslashes($event['contact_phone']);
-	  $event['contact_email']=stripslashes($event['contact_email']);
-	  $event['url']=stripslashes($event['url']);
-	  $event['displayedsponsor']=stripslashes($event['displayedsponsor']);
-	  $event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
+function authorized() {
+	// Get sponsor related URL values
+  if (isset($_GET['authsponsorid'])) { setVar($authsponsorid,$_GET['authsponsorid'],'sponsorid'); } else { unset($authsponsorid); }
+  $changesponsorid = isset($_GET['changesponsorid']);
+  
+  // Get username/password POST values.
+  if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
+  	setVar($userid,strtolower($_POST['login_userid']),'userid');
+	  $password = $_POST['login_password'];
   }
-}
-
-/* Make sure a URL starts with a protocol */
-function checkURL($url) {
-  return
-    (empty($url) || 
-		 strtolower(substr($url,0,7))=="http://" ||
-		 strtolower(substr($url,0,8))=="https://"
-		 );
-}
-
-/* Check that a e-mail address is valid */
-function checkemail($email) {
-  return
-    ((!empty($email)) && (eregi("^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3}$",$email)));
-}
-
-// Run a sanity check on incoming request variables and set particular variables if checks are passed
-function setVar(&$var,$value,$type) {
-	// Since we are using the ISO-8859-1 we must handle characters from 127 to 159, which are invalid.
-	// These typically come from Microsoft word or from other Web sites.
-	$badchars = array(
-		chr(133), // ...
-		chr(145), // left single quote
-		chr(146), // right single quote
-		chr(147), // left double quote
-		chr(148), // right double quote
-		chr(149), // bullet
-		chr(150), // ndash
-		chr(151), // mdash
-		chr(153)  // trademark
-	);
-	$goodchar = array(
-		'...',    // ...
-		"'",      // left single quote
-		"'",      // right single quote
-		'"',      // left double quote
-		'"',      // right double quote
-		chr(183), // bullet (converted to middle dot)
-		'-',      // ndash
-		'-',      // mdash
-		'(TM)'    // trademark
-	);
-	$value = str_replace($badchars, $goodchar, $value);
+  else {
+  	unset($userid);
+  	unset($password);
+  }
+  
+  $authresult = false;
+  
+  // Check the authenticity of the username/password, if they are set and are not different from the currently logged in user.
+	if ( (!isset($_SESSION["AUTH_USERID"]) || $_SESSION["AUTH_USERID"] != $userid) && isset($userid) && isset($password) ) {
+    // checking authentication of PID/password
+		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
+			$_SESSION["AUTH_USERID"] = $userid;
+		}
+    else {
+		  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult);
+			return false;
+    }
+  }
+  
+  // Removed the current sponsor ID if we are changing the sponsor
+  if ($changesponsorid) {
+  	unset($_SESSION["AUTH_SPONSORID"]);
+  }
 	
-	// Remove all other characters from 127 to 159
-	$value = preg_replace("/[\x7F-\x9F]/","",$value);
-	
-	if (isset($value)) {
-	  // first, remove any escaping that may have happened if magic_quotes_gpc is set to ON in php.ini
-		if (get_magic_quotes_gpc()) {
-		  if (is_array($value)) {
-			  foreach ($value as $key=>$v) {
-				  $value[$key] = stripslashes($v);
-				}
-			}
-			else {
-			  $value = stripslashes($value);
-			}
+	// The user is already logged in, but wants to change his/her sponsor...
+  if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) ) {
+    
+    // Verify that the user does in fact belong to that sponsor group.
+  	$result = DBQuery( "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
+  	
+  	// If the user does not belong to the sponsor that he/she submitted...
+		if ($result->numRows() == 0) {
+			displaymultiplelogin(lang('error_bad_sponsorid'));
+			return FALSE;
 		}
 		
-	  if (isValidInput($value, $type)) {
-		  $var = $value;
-			return;
+		// Otherwise, assign the user to the requested sponsor.
+		else {
+			$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
+ 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authsponsorid);
+			
+			// determine if the sponsor is administrator for the calendar
+		  $_SESSION["AUTH_ADMIN"] = false;
+      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
+  		if ($result->numRows() > 0) {
+			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			  if ( $s["admin"]==1 ) {
+  			  $_SESSION["AUTH_ADMIN"] = true;
+	      }
+			}
+
+			// determine if the user is one of the main administrators
+		  $_SESSION["AUTH_MAINADMIN"] = false;
+      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+  		if ($result->numRows() > 0) {
+			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
+  			  $_SESSION["AUTH_MAINADMIN"] = true;
+	      }
+			}
+			
+			return TRUE;
+	  }
+	} // end: if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) )
+	
+	
+	// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
+  if ( isset($_SESSION["AUTH_USERID"]) && !isset($_SESSION["AUTH_SPONSORID"]) ) {
+  	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+  	
+  	// if the user does not have a sponsor for this calendar, then the user is not authorized.
+		if ($result->numRows() == 0) {
+		  displaynotauthorized();
+			return false;
+		}
+		
+		// The user has only access to one sponsor
+		elseif ($result->numRows() == 1) {
+		  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
+ 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authorization['sponsorid']);
+ 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
+
+			// determine if the sponsor is administrator for the calendar
+		  $_SESSION["AUTH_ADMIN"] = false;
+      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'" );
+  		if ($result->numRows() > 0) {
+			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			  if ( $s["admin"]==1 ) { 
+  			  $_SESSION["AUTH_ADMIN"] = true;
+	      }			
+			}
+
+			// determine if the user is one of the main administrators
+		  $_SESSION["AUTH_MAINADMIN"] = false;
+      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+  		if ($result->numRows() > 0) {
+			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
+  			  $_SESSION["AUTH_MAINADMIN"] = true;
+	      }			
+			}
+			
+			return true;
+		}
+		
+		// If the user belongs to more than one sponsor, then display the form to select a sponsor.
+		else {
+ 			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
+  		displaymultiplelogin();
+	  	return false;	
 		}
 	}
 	
-  // unless something is explicitly allowed unset the variable
-	$var = NULL;
-	return;
-}
+	// If the user is fully logged in...
+  if ( isset($_SESSION["AUTH_USERID"]) && isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORNAME"] ) {
+    return true;
+	}
+	
+	// Otherwise, show the login form.
+	else {
+	  displaylogin();
+		return false;
+	}
+} // end: Function authorized()
 
-// returns a string in a particular language
-function lang($sTextKey) {
-  if (isset($GLOBALS['lang'][$sTextKey])) {
-		return $GLOBALS['lang'][$sTextKey];
+/**
+ * viewauthorized() checks if a user is allowed to view the main calendar (main.php) or export data (export.php, icalendar.php).
+ * 
+ * This is how the viewauthorized function executes:
+ * 	1. If the userid and password are in the _POST, then set them (local scope only).
+ * 	2a. If the calendar does not require authentication to view, then set that the user is allowed to view.
+ * 	2b. If the userid and password is set...
+ * 		A. If the username and password combo is valid then verify that the user has access to the calendar.
+ * 		B. If the combo was bad or the user does not have access then output a message and set that the user is not allowed to view.
+ * 	2c. If the user is already logged in then they should have access, so set that the user is allowed to view.
+ * 	2d. Otherwise...
+ * 		A. If the user is not using SSL, redirect them.
+ * 		B. Show the login page.
+ */
+function viewauthorized() {
+  $authok = 0; // Default that view authorization is not allowed.
+  
+  if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
+	  $userid = $_POST['login_userid'];
+	  $password = $_POST['login_password'];
+	  $userid=strtolower($userid);
   }
-  else {
-    require('languages/en.inc.php');
-  	return $lang[$sTextKey];
-  }
-}
+	
+	// If the calendar does not require authorization...
+	if ( $_SESSION["VIEWAUTHREQUIRED"] == 0 ) {
+	  $authok = 1;
+	}
+  
+  // If it requires authorization,
+  // and the username/password were submitted via POST...
+	elseif (isset($userid) && isset($password)) {
+    $userid=strtolower($userid);
 
-// Formats a string so that it can be placed inside of a JavaScript string (e.g. document.write('');)
-function escapeJavaScriptString($string) {
-	return str_replace("\t", "\\t", str_replace("\r", "\\r", str_replace("\n", "\\n", str_replace("\"", "\\\"", str_replace("'", "\\'", str_replace("\\", "\\\\", $string))))));
+    // checking authentication
+		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
+			// checking authorization
+			$result = DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($userid)."'" );
+			if ($result->numRows() > 0) {
+  			$_SESSION["AUTH_USERID"] = $userid;
+				$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
+				$authok = 1;
+			}
+		}
+    
+    if (!$authok) {
+			// display login error message
+      displaylogin("Error! Your login failed. Please try again.");
+    }
+  }
+  
+  // If it requires authorization,
+  // and the username/password are stored in the session...
+  elseif ( isset($_SESSION["AUTH_USERID"]) && !empty($_SESSION["AUTH_USERID"]) ) {
+		$authok = 1;
+	}
+	
+	// Otherwise, make sure the user is using HTTPS and give them the login page.
+	else {
+		$protocol = "http";
+		$path = substr($_SERVER["PHP_SELF"],0,strrpos($_SERVER["PHP_SELF"],"/")+1);
+		$page = substr($_SERVER["PHP_SELF"],strrpos($_SERVER["PHP_SELF"],"/")+1);
+		if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
+		if ( BASEURL != SECUREBASEURL && 
+		    $protocol."://".$_SERVER["HTTP_HOST"].$path != SECUREBASEURL ) {
+			redirect2URL(SECUREBASEURL.$page."?calendar=".$_SESSION["CALENDARID"]);
+		}
+		
+    displaylogin();
+  }
+  
+  return $authok;
+} // end: function viewauthorized()
+
+function logout() {
+	unset($_SESSION["AUTH_USERID"]);
+	unset($_SESSION["AUTH_SPONSORID"]);
+	unset($_SESSION["AUTH_SPONSORNAME"]);
+	unset($_SESSION["AUTH_ADMIN"]);
+	unset($_COOKIE['CategoryFilter']);
+	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
 }
 ?>

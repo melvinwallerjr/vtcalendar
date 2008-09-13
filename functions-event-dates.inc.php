@@ -59,7 +59,7 @@ function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar) {
   $firstDay = WEEK_STARTING_DAY;
   echo <<<END
 <input type="hidden" name="popupCalendarDate" id="popupCalendarDate_$uniqueid" value="$month/$day/$year">
-<img src="images/nuvola/16x16/apps/date.png" width="16" height="16" id="showPopupCalendarImage_$uniqueid" 
+<img src="images/date.gif" width="16" height="16" id="showPopupCalendarImage_$uniqueid" 
 title="Date selector" border="0" align="baseline" style="cursor: pointer;" hspace="3">
 <script type="text/javascript"><!--
 function onSelectDate(cal) {

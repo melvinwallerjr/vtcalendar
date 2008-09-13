@@ -143,6 +143,9 @@
 						if ($EventHasPassed) {
 							$event['classExtension'] = "-Past";
 						}
+						else {
+							$event['classExtension'] = "";
+						}
 						
 	      	  // Output the event data.
 						echo '<p class="EventItem'.$event['classExtension'].'"><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';

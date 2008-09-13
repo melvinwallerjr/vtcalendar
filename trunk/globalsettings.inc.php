@@ -60,7 +60,7 @@ elseif (isset($_GET['calendar'])) {
 }
 
 // Unset the calendar ID if it is invalid.
-if (!isValidInput($calendarid,'calendarid')) {
+if (isset($calendarid) && !isValidInput($calendarid,'calendarid')) {
 	unset($calendarid);
 }
 

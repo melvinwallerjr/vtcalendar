@@ -672,7 +672,7 @@ function authorized() {
   $authresult = false;
   
   // Check the authenticity of the username/password, if they are set and are not different from the currently logged in user.
-	if ( isset($_SESSION["AUTH_USERID"]) && $_SESSION["AUTH_USERID"] != $userid && isset($userid) && isset($password) ) {
+	if ( (!isset($_SESSION["AUTH_USERID"]) || $_SESSION["AUTH_USERID"] != $userid) && isset($userid) && isset($password) ) {
     // checking authentication of PID/password
 		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;

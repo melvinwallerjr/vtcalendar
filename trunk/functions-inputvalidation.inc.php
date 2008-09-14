@@ -283,10 +283,13 @@ function isValidInput($value, $type) {
 	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,2000}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='view') {
-	  if ($value=='day' || $value=='week' || $value=='month' || $value=='search' || $value=='searchresults' || $value=='event' || $value=='subscribe' || $value=='filter') { return TRUE; }
+	  if ($value=='upcoming' || $value=='day' || $value=='week' || $value=='month' || $value=='search' || $value=='searchresults' || $value=='event' || $value=='subscribe' || $value=='filter') { return TRUE; }
 	}
 	elseif ($type=='wholedayevent') {
 	  if ($value=='0' || $value=='1') { return TRUE; }
+	}
+	elseif ($type=='page') {
+	  if (is_numeric($value) && $value >= 0) { return TRUE; }
 	}
 	
 	return FALSE;

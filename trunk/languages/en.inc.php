@@ -2,6 +2,7 @@
 $lang['encoding'] = 'ISO-8859-1';
 
 // ================================== public interface =====================================
+$lang['upcoming'] = 'Upcoming';
 $lang['day'] = 'Day';
 $lang['week'] = 'Week';
 $lang['month'] = 'Month';
@@ -74,8 +75,10 @@ $lang['previous_month'] = 'Previous Month';
 $lang['next_month'] = 'Next Month';
 
 //day view
+$lang['upcoming_page_header'] = 'Upcoming Events';
 $lang['day_page_header'] = 'Day';
-$lang['no_events'] = 'No events scheduled for this day.';
+$lang['no_events'] = 'No events were found for this day.';
+$lang['no_upcoming_events'] = 'No upcoming events were found.';
 $lang['all_day'] = 'All Day';
 
 //week view

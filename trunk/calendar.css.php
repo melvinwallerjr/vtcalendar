@@ -354,6 +354,37 @@ td.EventDetail-Label {
 	border-left: 5px solid <?php echo $CurrentEventLeftBorder; ?>;
 }
 
+#DayTable tr#FirstDateRow td.DateRow {
+	padding: 0;
+}
+
+#DayTable td.DateRow div#TodayDateRow {
+	background-color: #ffeb94;
+}
+
+#DayTable td.DateRow {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0;
+	padding-top: 8px;
+	/*border-bottom: 1px solid #999999;*/
+}
+
+#DayTable td.DateRow a {
+	/*color: #000066;*/
+	text-decoration: none;
+}
+
+#DayTable td.DateRow a:hover {
+	text-decoration: underline;
+	/*color: #0000FF;*/
+}
+
+#DayTable td.DateRow div {
+	padding: 8px;
+	background-color: #c6dbff;
+}
+
 #DayTable td.TimeColumn i, #DayTable td.TimeColumn-Past i {
 	font-style: normal;
 	font-size: 11px;

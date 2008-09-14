@@ -5,6 +5,8 @@ require_once('session_start.inc.php');
 
 How this script executes:
 
+NOTE: THIS IS OUT OF DATE.
+
 1. Include application.inc.php
 	A. Includes config.inc.php
 		- Defines calendar configuration settings.
@@ -105,7 +107,10 @@ How this script executes:
 	require("main_".$view."_data.inc.php");
 	
 	// Output the header HTML
-	if ( $view == "day" ) {
+	if ( $view == "upcoming" ) {
+		pageheader(lang('upcoming_page_header').$basetitle, "Upcoming");
+	}
+	elseif ( $view == "day" ) {
 		pageheader(lang('day_page_header').$basetitle, "Day");
 	}
 	elseif ( $view == "week" ) {

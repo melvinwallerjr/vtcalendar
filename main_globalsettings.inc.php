@@ -14,6 +14,7 @@ $today['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($today['month'],$today
 // Otherwise, unset $view.
 if (isset($_GET['view'])) { setVar($view,$_GET['view'],'view'); } else { 
   if (!empty($_SESSION['view'])) { $view = $_SESSION['view']; }
+  elseif (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { $view = "upcoming"; }
 	else { $view = "day"; } 
 }
 
@@ -36,6 +37,7 @@ if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } el
 if (isset($_GET['filtercategories'])) { setVar($filtercategories,$_GET['filtercategories'],'filtercategories'); } else { unset($filtercategories); }
 if (isset($_COOKIE['CategoryFilter'])) { setVar($CategoryFilter,$_COOKIE['CategoryFilter'],'CategoryFilter'); } else { unset($CategoryFilter); }
 if (isset($_GET['littlecal'])) { setVar($littlecal,$_GET['littlecal'],'littlecal'); } else { unset($littlecal); }
+if (isset($_GET['page'])) { setVar($page,$_GET['page'],'page'); } else { unset($page); }
 
 // Make sure the current view is allowed or possible.
 if ( $view == "month" && !$enableViewMonth ) { $view="week"; }

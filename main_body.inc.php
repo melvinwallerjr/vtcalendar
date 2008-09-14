@@ -1,5 +1,5 @@
 <?php // prohibits direct calling of include files
-			if (!defined("ALLOWINCLUDES")) { exit; } ?>
+if (!defined("ALLOWINCLUDES")) { exit; } ?>
 
 <!-- Start Body Column -->
 <td id="CalRightCol" width="100%" valign="top" <?php if ($IsTodayBodyColor) echo 'class="TodayHighlighted"'; ?>>

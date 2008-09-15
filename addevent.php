@@ -19,7 +19,7 @@ if (isset($_POST['cancel'])) {
 if (!isset($httpreferer)) { $httpreferer = $_SERVER["HTTP_REFERER"]; }
 
 // read sponsor name from DB
-$result =& DBQuery("SELECTx name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" );
+$result =& DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" );
 
 // Output an error message if the query failed.
 if (is_string($result)) {

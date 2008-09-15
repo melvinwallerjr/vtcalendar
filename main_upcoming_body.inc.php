@@ -162,7 +162,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 			// read next event if one exists
 			$ievent++;
 			if ($ievent < $result->numRows()) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
+				$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
 				$event_timebegin  = timestamp2datetime($event['timebegin']);
 				$event_timeend    = timestamp2datetime($event['timeend']);
 		    $event_timebegin_num = timestamp2timenumber($event['timebegin']);

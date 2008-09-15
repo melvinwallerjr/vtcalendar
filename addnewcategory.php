@@ -1,39 +1,39 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
+require_once('application.inc.php');
 
-  if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+if (!authorized()) { exit; }
+if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
-  if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-  if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-  if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-  if (isset($_POST['category'])) { 
-    if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } 
-	else { unset($category['name']); }
-  }
+if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
+if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
+if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
+if (isset($_POST['category'])) { 
+  if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } 
+else { unset($category['name']); }
+}
 
-  if (isset($cancel)) {
-    redirect2URL("manageeventcategories.php");
-    exit;
-  }
+if (isset($cancel)) {
+  redirect2URL("manageeventcategories.php");
+  exit;
+}
 
-  // check if name already exists
-  $namealreadyexists = false;
-  if (!empty($category['name'])) {
-    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."'" );
-    if ( $result->numRows() > 0 ) { $namealreadyexists = true; }
-  }
+// check if name already exists
+$namealreadyexists = false;
+if (!empty($category['name'])) {
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND name='".sqlescape($category['name'])."'" );
+  if ( $result->numRows() > 0 ) { $namealreadyexists = true; }
+}
 
-  if (isset($save) && !$namealreadyexists && !empty($category['name']) ) {
-    $result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($category['name'])."')" );
-    redirect2URL("manageeventcategories.php");
-    exit;
-  }
+if (isset($save) && !$namealreadyexists && !empty($category['name']) ) {
+  $result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($category['name'])."')" );
+  redirect2URL("manageeventcategories.php");
+  exit;
+}
 
-  pageheader(lang('add_new_event_category'), "Update");
-  contentsection_begin(lang('add_new_event_category'));
+pageheader(lang('add_new_event_category'), "Update");
+contentsection_begin(lang('add_new_event_category'));
 ?>
 <br>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

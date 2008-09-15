@@ -14,6 +14,7 @@ TODO:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
 - Free results by using $results->free()
+- Properly handle string returns from functions like DBQuery.
 
 
 OLD TODO:

@@ -47,4 +47,37 @@ function DBQuery($query) {
 	
 	return $result;
 }
+
+function DBErrorBox($message="") {
+	?>
+	<style type="text/css">
+	.ErrorTable {
+		background-color: #FFEAEB;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #A60004;
+	}
+	.ErrorTable td {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 13px;
+	}
+	.ErrorTable h1 {
+		margin: 0;
+		padding: 0;
+		font-size: 16px;
+	}
+	</style>
+	<table class="ErrorTable" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="padding: 8px;"><img src="images/warning_48w.gif" width="48" height="48"></td>
+		    <td style="padding: 8px;"><h1>Database Error:</h1>
+	    	<div>An error was encountered when attempting to access the database.<?php
+					if (!empty($message)) {
+						?><br><b>Error Message: <?php echo htmlentities($message); ?></b><?php
+					}
+					?></div></td>
+		</tr>
+	</table>
+	<?php
+}
 ?>

@@ -23,9 +23,10 @@ if (!isset($timeend) || $timeend=="today") {
 }
 
 $ievent = 0;
-// read all events for this week from the DB
+
 $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
 $query.= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id";
+
 if (!empty($timebegin)) { $query.= " AND e.timebegin >= '".sqlescape($timebegin)."'"; }
 if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }
 
@@ -45,9 +46,10 @@ if (!empty($keyword)) {
 	$keywords = split ( " ", $keyword );
 		
 	// read alternative keywords from database
-	$r = DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
-    for ($i=0; $i < $r->numRows(); $i++) {
-  		$searchkeyword = $r->fetchRow(DB_FETCHMODE_ASSOC,$i);
+	$r =& DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+	
+  for ($i=0; $i < $r->numRows(); $i++) {
+		$searchkeyword = $r->fetchRow(DB_FETCHMODE_ASSOC,$i);
 		$search_keyword[$i]=$searchkeyword['keyword'];
 		$search_alternative[$i]=$searchkeyword['alternative'];
 	}
@@ -83,12 +85,12 @@ if (!empty($keyword)) {
 						$kwalt = $search_alternative[$j];
 						$query.=" or (e.location LIKE '%".sqlescape($kw)."%') or (e.title LIKE '%".sqlescape($kwalt)."%') or (e.description LIKE '%".sqlescape($kwalt)."%') or (e.displayedsponsor LIKE '%".sqlescape($kwalt)."%') or (c.name LIKE '%".sqlescape($kwalt)."%')";
 					}
-				} // end: for ($j=0; $j<count($search_keyword); $j++) {
+				}
 		    }
 			$query.=")"; 
-		} // if ( !empty($kw) ) 
-	}	// for ($i=0; $i<count($keywords); $i++)
-} // end: if (!empty($keyword)) {
+		}
+	}
+}
 	
 $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
 $result = DBQuery($query );

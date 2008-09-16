@@ -8,11 +8,10 @@ function checknewpassword(&$user) {
 }
 
 /* Verify the  user's old password in the database */
-function checkoldpassword(&$user,$userid) {
-  $result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" ); 
-  $data = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	return
-    ($data['password']!=crypt($user['oldpassword'],$data['password']));
+function checkoldpassword(&$user, $userid) {
+  $result =& DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" );
+  $data =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	return ($data['password'] != crypt($user['oldpassword'], $data['password']));
 }
 
 // display login screen and errormsg (if exists)
@@ -87,7 +86,7 @@ function displaymultiplelogin($errorMessage="") {
 	?>
 	<table cellpadding="2" cellspacing="2" border="0">
 	<?php
-	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
+	$result =& DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
 	if ($result->numRows() > 0) {
     for ($i=0;$i < $result->numRows();$i++) {
       $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
@@ -133,26 +132,34 @@ function displaynotauthorized() {
 } // end: Function displaynotauthorized
 
 
-// Validate the username and password.
+/**
+	* Validate the username and password.
+	* 
+	* Returns true if the user was authenticated.
+	* Returns false if they were not authenticated.
+	* Returns a string if an error occurred.
+	*/
 function userauthenticated($userid,$password) {
+
+	// Check against the DB if it is allowed.
 	if ( AUTH_DB ) {
-		$result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'"); 
-    if ($result->numRows() > 0) {
-			$u = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			if ( crypt($password,$u['password'])==$u['password'] ) {
-				$_SESSION["AUTH_TYPE"] = "DB";
-			  return true;
+		$result =& DBQuery("SELECT password FROM vtcal_user WHERE id='".sqlescape($userid)."'"); 
+		if (is_string($result)) {
+			return "A database error was encountered: " . $result;
+		}
+		else {
+	    if ($result->numRows() > 0) {
+				$u =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+				if ( crypt($password, $u['password']) == $u['password'] ) {
+					$_SESSION["AUTH_TYPE"] = "DB";
+				  return true;
+				}
 			}
 		}
 	}
+	
+	// Check using LDAP if it is allowed.
 	if ( AUTH_LDAP ) {
-		//$host = LDAP_HOST;
-		//$port = LDAP_PORT;
-		//$bindUser = LDAP_BIND_USER;
-		//$bindPassword = LDAP_BIND_PASSWORD;
-		//$pid = $userid;
-		//$credential = $password;
-		
 		// Create the base search filter using the specified userfield.
 		$searchFilter = '(' . LDAP_USERFIELD . '=' . $userid . ')';
 		
@@ -216,6 +223,7 @@ function userauthenticated($userid,$password) {
 		}
 	}
 	
+	// Check using a HTTP request if it is allowed.
 	if (AUTH_HTTP ) {
 		require_once("HTTP/Request.php");
 
@@ -233,16 +241,19 @@ function userauthenticated($userid,$password) {
 				
 				if (AUTH_HTTP_CACHE) {
 					$passhash = crypt($password);
-					$result = DBQuery( "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
+					DBQuery( "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
 				}
 				
 				return true;
 			}
 			else {
 				if (AUTH_HTTP_CACHE) {
-					$result = DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
-					if ($result->numRows() > 0) {
-						$record = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+					$result =& DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
+					if (is_string($result)) {
+						return "A database error was encountered: " . $result;
+					}
+					elseif ($result->numRows() > 0) {
+						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 						$passhash = $record['PassHash'];
 						
 						if (crypt($password, $passhash) == $passhash) {
@@ -267,7 +278,6 @@ function userauthenticated($userid,$password) {
 function authorized() {
 	// Get sponsor related URL values
   if (isset($_GET['authsponsorid'])) { setVar($authsponsorid,$_GET['authsponsorid'],'sponsorid'); } else { unset($authsponsorid); }
-  $changesponsorid = isset($_GET['changesponsorid']);
   
   // Get username/password POST values.
   if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
@@ -281,12 +291,32 @@ function authorized() {
   
   $authresult = false;
   
-  // Check the authenticity of the username/password, if the user is not logged in or is different from the current logged in user.
-	if ( isset($userid) && isset($password) && (!isset($_SESSION["AUTH_USERID"]) || $_SESSION["AUTH_USERID"] != $userid) ) {
-		
-    // checking authentication of PID/password
+  // Log out the user if the user ID from the form is different than the logged in user.
+  if (isset($userid) && isset($_SESSION["AUTH_USERID"]) && $userid != $_SESSION["AUTH_USERID"]) {
+	  logout();
+  }
+  
+  // Attempt to authenticate the user if the user isn't already logged in.
+  if (isset($userid) && isset($password) && !isset($_SESSION["AUTH_USERID"])) {
 		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;
+			
+			// Determine if the user is an main admin
+      $result =& DBQuery("SELECT id FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+      if (is_string($result)) {
+			  displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
+				return false;
+      }
+      else {
+	  		if ($result->numRows() > 0) {
+				  $adminRecord =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
+				  // TODO: Why is this checked again, even though it is in the query?
+				  if ( $adminRecord["id"] == $_SESSION["AUTH_USERID"] ) { 
+	  			  $_SESSION["AUTH_MAINADMIN"] = true;
+		      }
+				}
+			}
+			
 		}
     else {
 		  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult);
@@ -295,97 +325,98 @@ function authorized() {
   }
   
   // Removed the current sponsor ID if we are changing the sponsor
-  if ($changesponsorid) {
+  if (isset($authsponsorid)) {
   	unset($_SESSION["AUTH_SPONSORID"]);
   }
-	
-	// The user is already logged in, but wants to change his/her sponsor...
-  if ( isset($_SESSION["AUTH_USERID"]) && isset($authsponsorid) ) {
-    
-    // Verify that the user does in fact belong to that sponsor group.
-  	$result = DBQuery( "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
-  	
-  	// If the user does not belong to the sponsor that he/she submitted...
-		if ($result->numRows() == 0) {
-			displaymultiplelogin(lang('error_bad_sponsorid'));
-			return FALSE;
-		}
-		
-		// Otherwise, assign the user to the requested sponsor.
-		else {
-			$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
- 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authsponsorid);
-			
-			// determine if the sponsor is administrator for the calendar
-		  $_SESSION["AUTH_ADMIN"] = false;
-      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
-  		if ($result->numRows() > 0) {
-			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			  if ( $s["admin"]==1 ) {
-  			  $_SESSION["AUTH_ADMIN"] = true;
-	      }
-			}
-
-			// determine if the user is one of the main administrators
-		  $_SESSION["AUTH_MAINADMIN"] = false;
-      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-  		if ($result->numRows() > 0) {
-			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
-  			  $_SESSION["AUTH_MAINADMIN"] = true;
-	      }
+  
+  // Continue processing if the user is logged in.
+  if (isset($_SESSION["AUTH_USERID"])) {
+  
+		// The user is already logged in, but wants to change his/her sponsor...
+	  if ( isset($authsponsorid) ) {
+	    
+	    // Verify that the user does in fact belong to that sponsor group.
+	  	$result = DBQuery( "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND sponsorid='".sqlescape($authsponsorid)."'" );
+	  	
+	  	// If the user does not belong to the sponsor that he/she submitted...
+			if ($result->numRows() == 0) {
+				displaymultiplelogin(lang('error_bad_sponsorid'));
+				return FALSE;
 			}
 			
-			return TRUE;
-	  }
-	}
+			// Otherwise, assign the user to the requested sponsor.
+			else {
+				$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
+	 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authsponsorid);
+				
+				// determine if the sponsor is administrator for the calendar
+			  $_SESSION["AUTH_ADMIN"] = false;
+	      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'" );
+	  		if ($result->numRows() > 0) {
+				  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+				  if ( $s["admin"]==1 ) {
+	  			  $_SESSION["AUTH_ADMIN"] = true;
+		      }
+				}
 	
-	
-	// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
-  if ( isset($_SESSION["AUTH_USERID"]) && !isset($_SESSION["AUTH_SPONSORID"]) ) {
-  	$result = DBQuery("SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-  	
-  	// if the user does not have a sponsor for this calendar, then the user is not authorized.
-		if ($result->numRows() == 0) {
-		  displaynotauthorized();
-			return false;
+				// determine if the user is one of the main administrators
+			  $_SESSION["AUTH_MAINADMIN"] = false;
+	      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+	  		if ($result->numRows() > 0) {
+				  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+				  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
+	  			  $_SESSION["AUTH_MAINADMIN"] = true;
+		      }
+				}
+				
+				return TRUE;
+		  }
 		}
 		
-		// The user has only access to one sponsor
-		elseif ($result->numRows() == 1) {
-		  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
- 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authorization['sponsorid']);
- 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
-
-			// determine if the sponsor is administrator for the calendar
-		  $_SESSION["AUTH_ADMIN"] = false;
-      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'" );
-  		if ($result->numRows() > 0) {
-			  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			  if ( $s["admin"]==1 ) { 
-  			  $_SESSION["AUTH_ADMIN"] = true;
-	      }			
-			}
-
-			// determine if the user is one of the main administrators
-		  $_SESSION["AUTH_MAINADMIN"] = false;
-      $result = DBQuery("SELECT * FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-  		if ($result->numRows() > 0) {
-			  $a = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			  if ( $a["id"]==$_SESSION["AUTH_USERID"] ) { 
-  			  $_SESSION["AUTH_MAINADMIN"] = true;
-	      }			
-			}
-			
-			return true;
-		}
+		// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
+	  if ( !isset($_SESSION["AUTH_SPONSORID"]) ) {
+	  	
+	  	$result =& DBQuery("SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
+	  	
+	  	// Display an error message if the query failed.
+	  	if (is_string($result)) {
+			  displaylogin("A database error was encountered: " . $result);
+				return false;
+	  	}
+	  	else {
+		  	// if the user does not have a sponsor for this calendar, then the user is not authorized.
+				if ($result->numRows() == 0) {
+				  displaynotauthorized();
+					return false;
+				}
+				
+				// The user has only access to one sponsor
+				elseif ($result->numRows() == 1) {
+				  $authorization =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+					$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
+		 			$_SESSION["AUTH_SPONSORNAME"] = getSponsorName($authorization['sponsorid']);
+		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
 		
-		// If the user belongs to more than one sponsor, then display the form to select a sponsor.
-		else {
- 			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
-  		displaymultiplelogin();
-	  	return false;	
+					// determine if the sponsor is administrator for the calendar
+				  $_SESSION["AUTH_ADMIN"] = false;
+		      $result = DBQuery("SELECT admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authorization['sponsorid'])."'" );
+		  		if ($result->numRows() > 0) {
+					  $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+					  if ( $s["admin"]==1 ) { 
+		  			  $_SESSION["AUTH_ADMIN"] = true;
+			      }			
+					}
+					
+					return true;
+				}
+				
+				// If the user belongs to more than one sponsor, then display the form to select a sponsor.
+				else {
+		 			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
+		  		displaymultiplelogin();
+			  	return false;	
+				}
+			}
 		}
 	}
 	

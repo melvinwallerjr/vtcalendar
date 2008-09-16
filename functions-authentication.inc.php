@@ -81,45 +81,52 @@ function displaymultiplelogin($errorMessage="") {
   } else {
   	echo "<div>&nbsp;</div>";
   }
-	?>
-	<table cellpadding="2" cellspacing="2" border="0">
-	<?php
 	
 	// Allow a main admin to become any sponsor.
 	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-		$query = "SELECT id, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
+		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY admin DESC, name";
 	}
   // Otherwise, check which sponsors the user can become.
 	else {
-		$query = "SELECT a.sponsorid as id, s.name FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
+		$query = "SELECT a.sponsorid as id, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'  ORDER BY s.admin DESC, s.name";
 	}
 	
 	$result =& DBQuery($query); //"SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
 	
 	if (is_string($result)) {
-		echo "ERROR MESSAGE";
+		echo $result;
 	}
 	else {
+		echo "<ul>";
+		$adminfound = false;
     for ($i = 0; $i < $result->numRows(); $i++) {
       $sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);			
 			
-			echo "<tr><td>&nbsp;&nbsp;&nbsp;\n";
-			echo "<a href=\"".$_SERVER["PHP_SELF"]."?authsponsorid=" . urlencode($sponsor['id']);
+			echo '<li><a href="' . $_SERVER["PHP_SELF"] . "?authsponsorid=" . urlencode($sponsor['id']);
     	if (isset($GLOBALS["eventid"])) { 
 			  echo "&eventid=",urlencode($GLOBALS["eventid"]);
 			}
       if (isset($GLOBALS["httpreferer"])) { 
 			  echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
 			}
-			echo "\">";
-			echo htmlentities($sponsor['name']);
-			echo "</a>";
-			echo "</td></tr>\n";
+			echo '">' . htmlentities($sponsor['name']) . "</a>";
+			
+			if ($sponsor['admin'] == 1) {
+				$adminfound = true;
+				echo " **";
+			}
+			
+			echo "</li>\n";
 		}
+		echo "</ul>";
+		
+		if ($adminfound) {
+			?><p>Note: The sponsor marked with a ** is the administrative sponsor of this calendar..</p><?php
+		}
+		
 		$result->free();
 	}
-	?>
-	</table><?php
+	
   contentsection_end();
 
   pagefooter();

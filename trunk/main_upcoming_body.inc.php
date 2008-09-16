@@ -27,7 +27,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 	}
 
   if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
-  $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC LIMIT 200";
+  $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC LIMIT " . MAX_UPCOMING_EVENTS;
   $result =& DBQuery($query );
   
   // Output an error message if $result is a string.
@@ -57,6 +57,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 		$previousDate = "";
 	  $previousWholeDay = false;
 	  $firstDaysEvent = true;
+	  $displayedFirstEvent = false;
 	  
 		// print all events of one day
 		while ($ievent < $result->numRows()) {
@@ -79,7 +80,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 					$eventDayTimeStamp = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],12,0,"am");
 		
 					?>
-						<tr <?php if ($ievent == 0) { echo 'id="FirstDateRow"'; } ?>>
+						<tr <?php if (!$displayedFirstEvent) { echo 'id="FirstDateRow"'; } ?>>
 							<td colspan="2" class="DateRow"><div <?php
 								if ( $todayTimeStamp == $eventDayTimeStamp ) {
 									echo 'id="TodayDateRow"';
@@ -157,6 +158,9 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 				
 				echo "</tr>\n";
 				// End of Event Row
+	    
+	    	// Mark that the first event has been displayed.
+	    	$displayedFirstEvent = true;
 			}
 	
 			// read next event if one exists

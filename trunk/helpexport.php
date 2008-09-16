@@ -22,7 +22,7 @@ require_once('session_start.inc.php');
   &lt;event&gt;
     &lt;eventid&gt;3454&lt;/eventid&gt;
     &lt;sponsorid&gt;uusa&lt;/sponsorid&gt;
-    &lt;inputsponsor&gt;University Unions & Student Activities&lt;/inputsponsor&gt;
+    &lt;inputsponsor&gt;University Unions &amp; Student Activities&lt;/inputsponsor&gt;
     &lt;displayedsponsor&gt;Graduate Student Assembly&lt;/displayedsponsor&gt;
     &lt;displayedsponsorurl&gt;http://gsa.uusa.vt.edu&lt;/displayedsponsorurl&gt;
     &lt;date&gt;2000-03-27&lt;/date&gt;

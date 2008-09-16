@@ -364,7 +364,7 @@ function authorized() {
 	  	
   		// Just verify that the sponsor does exist for main admins.
 	  	if ($_SESSION["AUTH_MAINADMIN"]) {
-	  		$query = "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'";
+	  		$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'";
 	  	}
 	    // Otherwise, verify that the user belongs to that sponsor group.
 	  	else {
@@ -386,7 +386,7 @@ function authorized() {
 	  			$record = $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 					$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
 		 			$_SESSION["AUTH_SPONSORNAME"] = $record['name'];
-			  	$_SESSION["AUTH_ADMIN"] = $_SESSION["AUTH_MAINADMIN"] || $record["admin"] == 1;
+			  	$_SESSION["AUTH_ADMIN"] = $record["admin"] == 1;
 	  		}
 		  	$result->free();
   		}
@@ -397,7 +397,7 @@ function authorized() {
 	  	
   		// Allow a main admin to become any sponsor.
 	  	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-	  		$query = "SELECT id, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
+	  		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
 	  	}
 	    // Otherwise, check which sponsors the user can become.
 	  	else {
@@ -429,7 +429,7 @@ function authorized() {
 					$_SESSION["AUTH_SPONSORID"]= $authorization['id'];
 		 			$_SESSION["AUTH_SPONSORNAME"] = $authorization['name'];
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
-		 			$_SESSION["AUTH_ADMIN"] = ($_SESSION["AUTH_MAINADMIN"] || $authorization["admin"] == 1);
+		 			$_SESSION["AUTH_ADMIN"] = $authorization["admin"] == 1;
 				}
 				
 				// If the user belongs to more than one sponsor, then display the form to select a sponsor.

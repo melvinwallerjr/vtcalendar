@@ -44,7 +44,7 @@ else {
 		    		for ($m = 1; $m <= 12; $m++) {
 		    			echo '<option value="' . $m . '"';
 		    			if ($month == $m) echo " SELECTED";
-		    			echo '>' . date("F", mktime(0, 0, 0, $m, 15, $year)) . '</option>';
+		    			echo '>' . Month_to_Text($m) . '</option>';
 		    		}
 		    		?>
 		   			</select></td>
@@ -53,7 +53,7 @@ else {
 		    		for ($y = 1990; $y <= date("Y") + 10; $y++) {
 		    			echo '<option';
 		    			if ($year == $y) echo " SELECTED";
-		    			echo '>' . date("Y", mktime(0, 0, 0, 1, 15, $y)) . '</option>';
+		    			echo '>' . $y . '</option>';
 		    		}
 		    		?>
 		        </select></td>

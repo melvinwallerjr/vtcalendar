@@ -57,6 +57,7 @@ function displaylogin($errormsg="") {
         <TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
       </TR>
     </TABLE>
+    <p><a href="helpsignup.php" target="newWindow" onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a></p>
   </FORM>
 	<script language="JavaScript1.2"><!--
 	  document.loginform.login_userid.focus();
@@ -136,12 +137,11 @@ function displaymultiplelogin($errorMessage="") {
 function displaynotauthorized() {
   pageheader(lang('login'), "Update");
   contentsection_begin(lang('error_not_authorized'));
-	?>
-	<?php echo lang('error_not_authorized_message'); ?><br>
+	
+	echo lang('error_not_authorized_message'); ?><br>
 	<br>
 	    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
-	<BR>
-	<?php
+	<BR><?php
   contentsection_end();
 
   pagefooter();

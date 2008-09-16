@@ -29,7 +29,7 @@
 								echo "(";
 								
 								if (isset($_SESSION["AUTH_SPONSORCOUNT"]) && $_SESSION["AUTH_SPONSORCOUNT"] > 1) {
-									echo '<a href="update.php?changesponsorid=y" title="Change Sponsor">',htmlentities($_SESSION["AUTH_SPONSORNAME"]),"</a>";
+									echo '<a href="update.php?authsponsorid=" title="Change Sponsor">',htmlentities($_SESSION["AUTH_SPONSORNAME"]),"</a>";
 								} else {
 									echo htmlentities($_SESSION["AUTH_SPONSORNAME"]);
 								}

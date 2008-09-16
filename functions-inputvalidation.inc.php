@@ -289,7 +289,7 @@ function isValidInput($value, $type) {
 	  if ($value=='0' || $value=='1') { return TRUE; }
 	}
 	elseif ($type=='page') {
-	  if (is_numeric($value) && $value >= 0) { return TRUE; }
+	  if (is_numeric($value) && $value > 0) { return TRUE; }
 	}
 	
 	return FALSE;

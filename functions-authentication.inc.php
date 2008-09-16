@@ -91,10 +91,11 @@ function displaymultiplelogin($errorMessage="") {
 		$query = "SELECT a.sponsorid as id, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'  ORDER BY s.admin DESC, s.name";
 	}
 	
-	$result =& DBQuery($query); //"SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($_SESSION["AUTH_USERID"])."'");
+	$result =& DBQuery($query);
 	
 	if (is_string($result)) {
-		echo $result;
+	  DBErrorBox($result);
+		$returnValue = false;
 	}
 	else {
 		echo "<ul>";
@@ -396,11 +397,11 @@ function authorized() {
 	  	
   		// Allow a main admin to become any sponsor.
 	  	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-	  		$query = "SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
+	  		$query = "SELECT id, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
 	  	}
 	    // Otherwise, check which sponsors the user can become.
 	  	else {
-	  		$query = "SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
+	  		$query = "SELECT s.id, a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
 	  	}
 	  	
 	  	$result =& DBQuery($query);
@@ -425,10 +426,10 @@ function authorized() {
 				// Assign the user's sponsor if only one record was found from the query.
 				elseif ($result->numRows() == 1) {
 				  $authorization =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-					$_SESSION["AUTH_SPONSORID"]= $authorization['sponsorid'];
+					$_SESSION["AUTH_SPONSORID"]= $authorization['id'];
 		 			$_SESSION["AUTH_SPONSORNAME"] = $authorization['name'];
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
-		 			$_SESSION["AUTH_ADMIN"] = ($_SESSION["AUTH_ADMIN"] || $authorization["admin"] == 1);
+		 			$_SESSION["AUTH_ADMIN"] = ($_SESSION["AUTH_MAINADMIN"] || $authorization["admin"] == 1);
 				}
 				
 				// If the user belongs to more than one sponsor, then display the form to select a sponsor.
@@ -519,13 +520,19 @@ function viewauthorized() {
   return $authok;
 } // end: function viewauthorized()
 
-function logout() {
-	unset($_SESSION["AUTH_USERID"]);
+// Only log the user out of a calendar
+function calendarlogout() {
 	unset($_SESSION["AUTH_SPONSORID"]);
 	unset($_SESSION["AUTH_SPONSORNAME"]);
 	unset($_SESSION["AUTH_ADMIN"]);
-	unset($_SESSION["AUTH_MAINADMIN"]);
 	unset($_COOKIE['CategoryFilter']);
 	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
+}
+
+// Completely logout the user.
+function logout() {
+	unset($_SESSION["AUTH_USERID"]);
+	unset($_SESSION["AUTH_MAINADMIN"]);
+	calendarlogout();
 }
 ?>

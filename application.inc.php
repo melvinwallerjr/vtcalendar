@@ -51,7 +51,7 @@ if (isset($calendarid)) {
   if (calendar_exists($calendarid)) { 
     $_SESSION["CALENDARID"] = $calendarid;
     setCalendarPreferences();
-		logout();
+		calendarlogout();
   }
 }
 

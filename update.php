@@ -130,7 +130,7 @@ if ($_SESSION["AUTH_ADMIN"]) {
 <?php
 if ( $_SESSION["AUTH_MAINADMIN"] ) {
 ?>
-	<td valign="top" style="border-left: 1px solid #666666;">
+	<td valign="top" style="border-left: 1px solid #666666; background-color: #FFEEEE;">
 		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666;"><?php echo lang('main_administrators_options'); ?>:&nbsp;</h2>
 		<dl style="margin-top: 0; padding-top: 2px;">
 			<dt><?php	if ( AUTH_DB ) { ?><A href="manageusers.php"><?php echo lang('manage_users'); ?></A> <?php echo AUTH_DB_NOTICE; ?><?php } ?></dt>

@@ -140,6 +140,8 @@ $lang['whole_calendar'] = 'whole calendar';
 
 // ================================== Login-protected interface =====================================
 
+$lang['dberror_generic'] = 'A database error was encountered';
+$lang['dberror_nosponsor'] = 'Error: The calendar does not seem to have any sponsors.';
 
 // Update interface
 $lang['choose_template'] = 'Choose template';
@@ -339,7 +341,7 @@ $lang['error_not_authorized'] = 'Error! Not authorized.';
 $lang['error_not_authorized_message'] = 'You are currently not authorized to update the calendar because you have not been assigned to an event sponsor.';
 $lang['error_bad_sponsorid'] = 'You do not belong to the sponsor that you selected. Please select a sponsor from the list below.';
 $lang['help_signup_link'] = 'Sign up with the calendar';
-$lang['login_failed'] = 'Login failed.';
+$lang['login_failed'] = 'Your login failed. Please try again.';
 $lang['help'] = 'Help';
 $lang['recurring'] = 'recurring';
 $lang['on_the'] = 'on the';

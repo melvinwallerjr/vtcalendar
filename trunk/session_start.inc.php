@@ -1,5 +1,11 @@
 <?php
-session_set_cookie_params(0, BASEPATH, BASEDOMAIN);
+if (defined("BASEPATH") && defined("BASEDOMAIN")) {
+	session_set_cookie_params(0, BASEPATH, BASEDOMAIN);
+}
+else {
+	session_set_cookie_params(0);
+}
+
 session_name("VTCAL");
 session_start();
 ?>

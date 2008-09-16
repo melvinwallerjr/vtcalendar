@@ -146,7 +146,7 @@ if ( $_SESSION["AUTH_MAINADMIN"] ) {
 		</dl>
 	</td>
 <?php
-} // end: if ( $_SESSION["AUTH_MAINADMIN"] )
+}
 ?>
 </tr>
 </table>

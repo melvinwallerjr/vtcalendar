@@ -85,11 +85,10 @@ else {
 	  </tr><?php
 	
 	// The initial row color.
-	$color = "#eeeeee";
+	$color = "#ffffff";
 	
 	for ($i=0; $i<$result->numRows(); $i++) {
 	  $calendar =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);
-		if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
 		
 		?><tr>
 	    <td bgcolor="<?php echo $color; ?>"><a href="main.php?calendarid=<?php echo urlencode($calendar['id']); ?>"><?php echo htmlentities($calendar['id']); ?></a></td>
@@ -110,6 +109,7 @@ else {
 	  }
 		?></td>
 	  </tr><?php
+		if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
 	}
 	  
 	?>		

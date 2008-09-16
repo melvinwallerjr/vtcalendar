@@ -173,8 +173,21 @@ while ($ievent < $result->numRows()) {
 	}
 } // end: while (...)
 	
-// keep search log
-$searchlogresult = DBQuery("INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(date("Y-m-d H:i:s", time()))."','".sqlescape($_SERVER['REMOTE_ADDR'])."','".sqlescape($result->numRows())."','".sqlescape($keyword)."')" );
+
+// keep search log of keywords
+DBQuery("INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(date("Y-m-d H:i:s", time()))."','".sqlescape($_SERVER['REMOTE_ADDR'])."','".sqlescape($result->numRows())."','".sqlescape($keyword)."')" );
+
+/*if (!empty($keyword)) {
+	$keywords = split (" ", $keyword);
+	for ($x = 0; $x < count($keywords); $x++) {
+		if (strlen($keywords[$x]) <= 25) {
+			DBquery(
+				"INSERT INTO vtcal_searchedkeywords (calendarid, keyword, searchdate, count)"
+				. " VALUES ('".sqlescape($_SESSION["CALENDARID"])."', '".sqlescape($keywords[$x])."', '" . date("Y-m-d") . "', 1)"
+				. " ON DUPLICATE KEY UPDATE count = count + 1");
+		}
+	}
+}*/
 ?>
 </table>
 </FORM>

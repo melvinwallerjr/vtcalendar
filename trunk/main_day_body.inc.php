@@ -36,6 +36,7 @@
 		if (!empty($_SESSION["AUTH_SPONSORID"])) {
 			?><div style="padding: 5px;"><?php adminButtons($showdate, array('new'), "normal", "horizontal"); ?></div><?php
 		}
+		
 		?><!-- Start Day Body --><table id="DayTable" width="100%" cellpadding="6" cellspacing="0" border="0"><?php
 	
 	  // read first event if one exists

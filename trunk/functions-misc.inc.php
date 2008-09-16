@@ -201,13 +201,13 @@ function setVar(&$var,$value,$type) {
 		
 	  if (isValidInput($value, $type)) {
 		  $var = $value;
-			return;
+			return true;
 		}
 	}
 	
   // unless something is explicitly allowed unset the variable
 	$var = NULL;
-	return;
+	return false;
 }
 
 // returns a string in a particular language

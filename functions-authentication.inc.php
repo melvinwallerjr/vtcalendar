@@ -181,53 +181,53 @@ function userauthenticated($userid, $password) {
 		}
 		
 		$ldap = ldap_connect(LDAP_HOST, LDAP_PORT);
-		if (isset($ldap) && $ldap !== false) {
 		
+		if (!isset($ldap) || $ldap === false) {
+			$returnValue = "Could not connect to the login server. (LDAP)";
+		}
+		else {
 			// Bind to the LDAP as a specific user, if defined
 			if (LDAP_BIND_USER == '' || ldap_bind($ldap, LDAP_BIND_USER, LDAP_BIND_PASSWORD)) {
 			
 				// Search for users name to dn
 				$result = ldap_search($ldap, LDAP_BASE_DN, $searchFilter, array('dn'));
 				
-				if ($result) {
+				if ($result === false) {
+					$returnValue = "An error occured while searching the LDAP server for your username.";
+				}
+				else {
 					// Get a multi-dimentional array from the results
 					$entries = ldap_get_entries($ldap, $result);
 					
-					// Determine the distinguished name (dn) of the found username.
-					$principal = $entries[0]['dn'];
-					if (isset($principal)) {
+					if ($entries === false) {
+						$returnValue = "An error occured while retrieving information for your username from the LDAP server.";
+					}
+					elseif ($entries['count'] == 0) {
+						$returnValue = "User-ID not found. (LDAP)";
+					}
+					else {
+						// Determine the distinguished name (dn) of the found username.
+						$principal = $entries[0]['dn'];
 					
 						/* bind (or rebind) as the DN and the password that was supplied via the login form */
 						if (@ldap_bind($ldap, $principal, $password)) {
-							//print('LDAP Success');
 							$_SESSION["AUTH_TYPE"] = "LDAP";
 							$returnValue = true;
 						} 
 						else {
-							//print('LDAP failure');
 							$returnValue = "Password is incorrect. Please try again. (LDAP)";
 						}
-					}
-					else {
-						//print('User not found in LDAP');
-						$returnValue = "User-ID not found. (LDAP)";
 					}
 					
 					// Clean up
 					ldap_free_result($result);
-					
 				}
-				else {
-					$returnValue = "An error occured while searching the LDAP server for your username.";
-				}
+				
 				ldap_close($ldap);
 			}
 			else {
 				$returnValue = "Could not connect to the LDAP server due to an authentication problem.";
 			}
-		} 
-		else {
-			$returnValue = "Could not connect to the login server. (LDAP)";
 		}
 	}
 	

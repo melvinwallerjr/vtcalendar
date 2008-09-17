@@ -152,7 +152,7 @@ function isValidUser($userid) {
 	}
 	
 	if ( AUTH_LDAP ) {
-	  // in the future have some code that checks against LDAP
+	  // TODO: Checks against the LDAP
 	  return preg_match(REGEXVALIDUSERID, $userid);
 	}
 

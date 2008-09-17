@@ -3,23 +3,7 @@ require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('application.inc.php');
 
-//  if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }
-//  if (isset($_POST['password'])) { setVar($password,$_POST['password'],'password'); } else { unset($password); }
-
-// the next if statement is just to avoid that it redirects when using in testing mode 
-if ( $_SERVER['HTTP_HOST'] != "localhost" ) {
-	$protocol = "http";
-	if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
-	if ( BASEURL != SECUREBASEURL && $protocol."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] != SECUREBASEURL."update.php" ) {
-		redirect2URL(SECUREBASEURL."update.php?calendar=".$_SESSION["CALENDARID"]);
-	}
-}
-
 if (!authorized()) { exit; }
-
-// read sponsor name from DB
-$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
-$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 pageheader(lang('update_calendar'), "Update");
 
@@ -79,12 +63,12 @@ if ( isset($fbid) ) {
 				<dd>Import an XML file that contains events as a batch.</dd>
 			</dl>
 		
-			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666; padding-top: 8px;"><?php echo htmlentities($sponsor['name']); ?> Options:&nbsp;</h2>
+			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666; padding-top: 8px;"><?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?> Options:&nbsp;</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
 				<dt><A href="changehomepage.php"><?php echo lang('change_homepage'); ?></A></dt>
-				<dd>Change the default homepage address for &quot;<?php echo htmlentities($sponsor['name']); ?>&quot;.</dd>
+				<dd>Change the default homepage address for &quot;<?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?>&quot;.</dd>
 				<dt><A href="changeemail.php"><?php echo lang('change_email'); ?></A></dt>
-				<dd>Change the default e-mail for &quot;<?php echo htmlentities($sponsor['name']); ?>&quot;.</dd>
+				<dd>Change the default e-mail for &quot;<?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?>&quot;.</dd>
 			</dl>
 		
 		<?php

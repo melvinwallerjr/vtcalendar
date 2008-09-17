@@ -17,15 +17,6 @@ function checkoldpassword(&$user, $userid) {
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg="") {
   global $lang;
-  
-  // Force HTTPS is the server is not being accessed via localhost.
-	if ( $_SERVER['SERVER_ADDR'] != "127.0.0.1" ) {
-		$protocol = "http";
-		if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
-		if ( BASEURL != SECUREBASEURL && $protocol."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] != SECUREBASEURL."update.php" ) {
-			redirect2URL(SECUREBASEURL."update.php?calendar=".$_SESSION["CALENDARID"]);
-		}
-	}
 
   pageheader(lang('update_page_header'), "Update");
   contentsection_begin(lang('login'));
@@ -289,26 +280,12 @@ function userauthenticated($userid, $password) {
 }
 
 /**
- * authorized() checks if the person is logged in and has authorization to view the calendar management pages (e.g. update.php)
+ * Authenticate the user. If successful, AUTH_USERID and AUTH_MAINADMIN are set.
  *
- * This is how the following function executes:
- * 1. Grab the login username/password from _POST, if they exist.
- * 2. 
+ * Returns true if successful; false or a string if unsuccessful. The string is the reason for failure.
  */
-function authorized() {
-	$returnValue = true;
+function logUserIn() {
 	
-	// Get sponsor related URL values
-  if (isset($_GET['authsponsorid'])) {
-  	setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
-  	if ($authsponsorid === NULL) unset($authsponsorid);
-		unset($_SESSION["AUTH_SPONSORNAME"]);
-  	unset($_SESSION["AUTH_SPONSORID"]);
-  }
-  else {
-  	unset($authsponsorid);
-  }
-  
   // Get username/password POST values.
   if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
   	setVar($userid, strtolower($_POST['login_userid']), 'userid');
@@ -324,40 +301,71 @@ function authorized() {
 	  logout();
   }
   
-  // Attempt to authenticate the user if the user isn't already logged in.
-  if (!isset($_SESSION["AUTH_USERID"])) {
-  
-  	if (isset($userid) && isset($password)) {
-  		
-	  	// Check the username/password.
-			if ( ($authresult = userauthenticated($userid,$password)) === true ) {
-				$_SESSION["AUTH_USERID"] = $userid;
-  
-				// Determine if the user is an main admin
-	      $result =& DBQuery("SELECT id FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-	      
-	      if (is_string($result)) {
-				  displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
-					$returnValue = false;
-	      }
-	      else {
-	 			  $_SESSION["AUTH_MAINADMIN"] = $result->numRows() > 0;
-				  $result->free();
-				}
-			}
-	    else {
-			  displaylogin(lang('login_failed') . "<br>Reason: " . $authresult);
-				$returnValue = false;
-	    }
-    }
-    else {
-		  displaylogin();
-			$returnValue = false;
-    }
+  // Return true if the user is already logged in.
+  if (isset($_SESSION["AUTH_USERID"])) {
+  	return true;
   }
   
-  // Continue processing if successful so far.
-  if ($returnValue === true) {
+  // Return false if the user isn't logged in but no credentials were provided.
+  elseif (!isset($userid) || !isset($password)) {
+  	return false;
+  }
+  
+  // Otherwise, attempt to authenticate the user with the supplied credentials
+  else {
+  
+  	// Check the username/password.
+  	$authresult = userauthenticated($userid, $password);
+  	
+  	// Mark the user as logged in if successfully authenticated.
+		if ( $authresult === true ) {
+			$_SESSION["AUTH_USERID"] = $userid;
+
+			// Determine if the user is an main admin
+      $result =& DBQuery("SELECT id FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+      
+      // Return an error message if the query failed.
+      if (is_string($result)) {
+			  return lang('login_failed') . "<br>Reason: A database error was encountered: " . $result;
+      }
+      else {
+ 			  $_SESSION["AUTH_MAINADMIN"] = $result->numRows() > 0;
+			  $result->free();
+			  return true;
+			}
+		}
+		
+		// Otherwise, return that the login attempt failed.
+    else {
+		  return lang('login_failed') . (is_string($authresult) ? "<br>" . $authresult : "");
+    }
+  }
+}
+
+/**
+ * Checks if the person is logged in and has authorization to view the calendar management pages (e.g. update.php)
+ */
+function authorized() {
+	$returnValue = true;
+	
+	// Get sponsor related URL values
+  if (isset($_GET['authsponsorid'])) {
+  	setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
+  	if ($authsponsorid === NULL) unset($authsponsorid);
+		unset($_SESSION["AUTH_SPONSORNAME"]);
+  	unset($_SESSION["AUTH_SPONSORID"]);
+  }
+  else {
+  	unset($authsponsorid);
+  }
+  
+  if ( ($authresult = logUserIn()) !== true ) {
+  	displaylogin( is_string($authresult) ? $authresult : "" );
+		$returnValue = false;
+  }
+  
+  // Continue processing if the user is logged in.
+  else {
   
 		// The user wants to set or change sponsor...
 	  if (isset($authsponsorid)) {
@@ -448,8 +456,9 @@ function authorized() {
 } // end: Function authorized()
 
 /**
- * viewauthorized() checks if a user is allowed to view the main calendar (main.php) or export data (export.php, icalendar.php).
+ * Checks if a user is allowed to view the main calendar (main.php) or export data (export.php, icalendar.php).
  * 
+ * TODO: Update this.
  * This is how the viewauthorized function executes:
  * 	1. If the userid and password are in the _POST, then set them (local scope only).
  * 	2a. If the calendar does not require authentication to view, then set that the user is allowed to view.
@@ -462,62 +471,43 @@ function authorized() {
  * 		B. Show the login page.
  */
 function viewauthorized() {
-  $authok = 0; // Default that view authorization is not allowed.
-  
-  if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
-	  $userid = $_POST['login_userid'];
-	  $password = $_POST['login_password'];
-	  $userid=strtolower($userid);
-  }
-	
-	// If the calendar does not require authorization...
-	if ( $_SESSION["VIEWAUTHREQUIRED"] == 0 ) {
-	  $authok = 1;
-	}
-  
-  // If it requires authorization,
-  // and the username/password were submitted via POST...
-	elseif (isset($userid) && isset($password)) {
-    $userid=strtolower($userid);
+	// Return true if the calendar does not require authorization.
+	if ( $_SESSION["VIEWAUTHREQUIRED"] == 0 ) return true;
 
-    // checking authentication
-		if ( ($authresult = userauthenticated($userid,$password)) === true ) {
-			// checking authorization
-			$result = DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND userid='".sqlescape($userid)."'" );
-			if ($result->numRows() > 0) {
-  			$_SESSION["AUTH_USERID"] = $userid;
-				$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
-				$authok = 1;
-			}
-		}
-    
-    if (!$authok) {
-			// display login error message
-      displaylogin($lang['login_failed']);
-    }
-  }
-  
-  // If it requires authorization,
-  // and the username/password are stored in the session...
-  elseif ( isset($_SESSION["AUTH_USERID"]) && !empty($_SESSION["AUTH_USERID"]) ) {
-		$authok = 1;
-	}
+	// Default that the user does not have access.
+	$returnValue = false;
 	
-	// Otherwise, make sure the user is using HTTPS and give them the login page.
-	else {
-		$protocol = "http";
-		$path = substr($_SERVER["PHP_SELF"],0,strrpos($_SERVER["PHP_SELF"],"/")+1);
-		$page = substr($_SERVER["PHP_SELF"],strrpos($_SERVER["PHP_SELF"],"/")+1);
-		if ( isset($_SERVER['HTTPS'])) { $protocol .= "s"; }
-		if ( BASEURL != SECUREBASEURL && 
-		    $protocol."://".$_SERVER["HTTP_HOST"].$path != SECUREBASEURL ) {
-			redirect2URL(SECUREBASEURL.$page."?calendar=".$_SESSION["CALENDARID"]);
-		}
-		
-    displaylogin();
+	// Make sure the user is logged in.
+  if ( ($authresult = logUserIn()) !== true ) {
+  	displaylogin( is_string($authresult) ? $authresult : "" );
   }
   
-  return $authok;
+  // Allow the user to view the calendar if they are already marked as having access.
+  elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION["CALENDARID"])) {
+		$returnValue = true;
+  }
+  
+  // Check if the user should be able to view the calendar.
+  else {
+			// checking authorization
+			$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION["CALENDARID"]) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
+			
+      if (is_string($result)) {
+			  displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
+      }
+      else {
+				if ($result->numRows() > 0) {
+					$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
+					$returnValue = true;
+				}
+				else {
+				  displaylogin(lang('login_failed'));
+				}
+				$result->free();
+			}
+  }
+	
+  return $returnValue;
 } // end: function viewauthorized()
 
 // Only log the user out of a calendar
@@ -525,6 +515,7 @@ function calendarlogout() {
 	unset($_SESSION["AUTH_SPONSORID"]);
 	unset($_SESSION["AUTH_SPONSORNAME"]);
 	unset($_SESSION["AUTH_ADMIN"]);
+	unset($_SESSION["CALENDAR_LOGIN"]);
 	unset($_COOKIE['CategoryFilter']);
 	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
 }

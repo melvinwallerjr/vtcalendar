@@ -6,11 +6,11 @@
 <table id="TopNaviTable" width="100%" border="0" cellpadding="3" cellspacing="0">
 	<tr>
 		<td class="TopNavi-ColorPadding">&nbsp;&nbsp;&nbsp;</td>
-		<td id="TopNavi-Logo" valign="bottom"><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=day&timebegin=today<?php echo $queryStringExtension; ?>"><img src="images/logo.gif" alt="" width="34" height="34" border="0"></a></td>
+		<td id="TopNavi-Logo" valign="bottom"><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=upcoming<?php echo $queryStringExtension; ?>"><img src="images/logo.gif" alt="" width="34" height="34" border="0"></a></td>
 		<td class="TopNavi-ColorPadding" width="100%" valign="bottom">
 			<table width="100%" border="0" cellpadding="6" cellspacing="0">
 				<tr>
-					<td id="NaviBar-EventName" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=day&timebegin=today<?php echo $queryStringExtension; ?>"><?php if (isset($_SESSION["TITLE"])) { echo $_SESSION["TITLE"]; } else { echo lang('calendar'); } ?></a></td>
+					<td id="NaviBar-EventName" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=upcoming<?php echo $queryStringExtension; ?>"><?php if (isset($_SESSION["TITLE"])) { echo $_SESSION["TITLE"]; } else { echo lang('calendar'); } ?></a></td>
 					<?php if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { ?>
 						<td valign="bottom" <?php if ($navbaractive=="Upcoming") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Upcoming") echo lang('upcoming'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=upcoming" >',lang('upcoming'),'</a>'; } ?></div></td>
 					<?php } ?>

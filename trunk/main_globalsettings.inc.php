@@ -59,9 +59,10 @@ if (!isset($sponsorid)) { $sponsorid="all"; }
 if (!isset($keyword)) { $keyword=""; }
 
 // Create a query string to be used when passing the categoryid/sponsorid/keyword to other pages.
-if (isset($categoryid) && $categoryid != 0) { $queryStringExtension.= "&categoryid=".urlencode($categoryid); }
-if (isset($sponsorid) && $sponsorid != "all") { $queryStringExtension.= "&sponsorid=".urlencode($sponsorid); }
-if (isset($keyword) && $keyword != "") { $queryStringExtension.= "&keyword=".urlencode($keyword); }
+$queryStringExtension = "";
+if (isset($categoryid) && $categoryid != 0) { $queryStringExtension .= "&categoryid=".urlencode($categoryid); }
+if (isset($sponsorid) && $sponsorid != "all") { $queryStringExtension .= "&sponsorid=".urlencode($sponsorid); }
+if (isset($keyword) && $keyword != "") { $queryStringExtension .= "&keyword=".urlencode($keyword); }
 
 // the week is specified by a single day, the whole week this day belongs to is displayed
 $showdate = timestamp2datetime($timebegin);

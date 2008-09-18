@@ -6,8 +6,11 @@
   // read all events for this week from the DB
   $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
 	$query.= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($showdate['timestamp_daybegin'])."' AND e.timeend <= '".sqlescape($showdate['timestamp_dayend'])."'";
+	
+	// Filter by sponsor ID if one was specified.
   if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
+	// Filter by categories if one or more were specified.
 	if ( isset($filtercategories) && count($filtercategories) > 0 ) {
 	  $query.= " AND (";
 		for($c=0; $c < count($filtercategories); $c++) {
@@ -19,8 +22,10 @@
 	else {
 	   if ($categoryid != 0) { $query.= " AND (e.categoryid='".sqlescape($categoryid)."')"; }
 	}
-
+	
+	// Filter by keyword if one was specified from the search form.
   if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
+  
   $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
   $result =& DBQuery($query );
   

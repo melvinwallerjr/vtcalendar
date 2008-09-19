@@ -9,7 +9,7 @@ require_once('session_start.inc.php');
 <?php echo lang('help_signup'); ?>
 </H3>
 <?php echo lang('help_signup_authorization'); ?>
-<a href="mailto:<?php echo htmlentities($_SESSION["ADMINEMAIL"]); ?>"><?php echo htmlentities($_SESSION["ADMINEMAIL"]); ?></a>.
+<a href="mailto:<?php echo htmlentities($_SESSION['CALENDAR_ADMINEMAIL']); ?>"><?php echo htmlentities($_SESSION['CALENDAR_ADMINEMAIL']); ?></a>.
 <?php echo lang('help_signup_contents'); ?>
 <?php
   helpwindow_footer();

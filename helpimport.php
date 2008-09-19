@@ -67,7 +67,7 @@ require_once('session_start.inc.php');
   </tr>
 <?php
   // read event categories from DB
-  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
   // print list with categories and select the one read from the DB
   for ($i=0;$i<$result->numRows();$i++) {

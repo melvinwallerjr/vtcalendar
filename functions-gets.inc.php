@@ -27,13 +27,13 @@ function calendar_exists($calendarid) {
 }
 
 function setCalendarPreferences() {
-	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
+	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 	$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	
-	$_SESSION["TITLE"] = $calendar['title'];
-	$_SESSION["NAME"] = $calendar['name'];
-	$_SESSION["HEADER"] = $calendar['header'];
-	$_SESSION["FOOTER"] = $calendar['footer'];
+	$_SESSION['CALENDAR_TITLE'] = $calendar['title'];
+	$_SESSION['CALENDAR_NAME'] = $calendar['name'];
+	$_SESSION['CALENDAR_HEADER'] = $calendar['header'];
+	$_SESSION['CALENDAR_FOOTER'] = $calendar['footer'];
 	$_SESSION["VIEWAUTHREQUIRED"] = $calendar['viewauthrequired'];
 	$_SESSION["FORWARDEVENTDEFAULT"] = $calendar['forwardeventdefault'];
 	
@@ -46,13 +46,13 @@ function setCalendarPreferences() {
 	$_SESSION["LINKCOLOR"] = $calendar['linkcolor'];		
 	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];
 	
-	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND admin='1'" ); 
+	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" ); 
 	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	$_SESSION["ADMINEMAIL"] = $sponsor['email'];
+	$_SESSION['CALENDAR_ADMINEMAIL'] = $sponsor['email'];
 }
 
 function getNumCategories() {
-  $result = DBQuery("SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+  $result = DBQuery("SELECT count(*) FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
   $r = $result->fetchRow(0);
   return $r[0];
 }
@@ -119,7 +119,7 @@ function getSponsorURL($sponsorid) {
 
 // Get the number of unapproved events for an entire calendar. */
 function num_unapprovedevents($repeatid) {
-  $result = DBQuery("SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
+  $result = DBQuery("SELECT id FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
   return $result->numRows();
 }
 

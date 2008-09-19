@@ -97,15 +97,15 @@ function validate ( myForm, id ) {
 			if (isset($oldview) && $oldview != "filter") {
 				echo htmlentities($oldview);
 			}
-			elseif (isset($_SESSION['VIEW']) {
-				echo $_SESSION['VIEW'];
+			elseif (isset($_SESSION['PREVIOUS_VIEW']) {
+				echo $_SESSION['PREVIOUS_VIEW'];
 			}
 			else {
 				echo "week";
 			}
 			
 			?>">
-			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION["CALENDARID"]); ?>">
+			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION['CALENDAR_ID']); ?>">
 		</form>
 		</table>
 		<br>

@@ -76,11 +76,11 @@ function displaymultiplelogin($errorMessage="") {
 	
 	// Allow a main admin to become any sponsor.
 	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY admin DESC, name";
+		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY admin DESC, name";
 	}
 	// Otherwise, check which sponsors the user can become.
 	else {
-		$query = "SELECT a.sponsorid as id, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'  ORDER BY s.admin DESC, s.name";
+		$query = "SELECT a.sponsorid as id, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'  ORDER BY s.admin DESC, s.name";
 	}
 	
 	$result =& DBQuery($query);
@@ -372,11 +372,11 @@ function authorized() {
 			
 			// Just verify that the sponsor does exist for main admins.
 			if ($_SESSION["AUTH_MAINADMIN"]) {
-				$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'";
+				$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($authsponsorid)."'";
 			}
 			// Otherwise, verify that the user belongs to that sponsor group.
 			else {
-				$query = "SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND a.sponsorid='".sqlescape($authsponsorid)."'";
+				$query = "SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND a.sponsorid='".sqlescape($authsponsorid)."'";
 			}
 			
 			$result =& DBQuery($query);
@@ -405,11 +405,11 @@ function authorized() {
 			
 			// Allow a main admin to become any sponsor.
 			if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-				$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
+				$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'";
 			}
 			// Otherwise, check which sponsors the user can become.
 			else {
-				$query = "SELECT s.id, a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
+				$query = "SELECT s.id, a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
 			}
 			
 			$result =& DBQuery($query);
@@ -483,21 +483,21 @@ function viewauthorized() {
 	}
 	
 	// Allow the user to view the calendar if they are already marked as having access.
-	elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION["CALENDARID"])) {
+	elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION['CALENDAR_ID'])) {
 		$returnValue = true;
 	}
 	
 	// Check if the user should be able to view the calendar.
 	else {
 			// checking authorization
-			$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION["CALENDARID"]) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
+			$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
 			
 			if (is_string($result)) {
 				displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
 			}
 			else {
 				if ($result->numRows() > 0) {
-					$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
+					$_SESSION["CALENDAR_LOGIN"] = $_SESSION['CALENDAR_ID'];
 					$returnValue = true;
 				}
 				else {

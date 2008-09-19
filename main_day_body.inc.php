@@ -5,7 +5,7 @@
   
   // read all events for this week from the DB
   $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
-	$query.= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($showdate['timestamp_daybegin'])."' AND e.timeend <= '".sqlescape($showdate['timestamp_dayend'])."'";
+	$query.= "WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($showdate['timestamp_daybegin'])."' AND e.timeend <= '".sqlescape($showdate['timestamp_dayend'])."'";
 	
 	// Filter by sponsor ID if one was specified.
   if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
@@ -111,7 +111,7 @@
 				echo ' class="DataColumn"'; }
 			
 			echo '><div class="EventLeftBar">';
-			echo '<b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+			echo '<b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 			echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 			echo '">',htmlentities($event['title']),"</a></b> ";
 			if ( !empty($event['location']) ) { echo " - ",htmlentities($event['location']); }
@@ -125,7 +125,7 @@
 				else {
 				  echo substr($event['description'],0,140);
 			    echo "... \n";
-	    		echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+	    		echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 					echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 					echo '">more</a>';
 	      }

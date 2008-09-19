@@ -10,7 +10,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
   // read all events for this week from the DB
 	// TODO: Should only show next 365 days worth of events.
   $query = "SELECT e.id AS eventid, e.timebegin, e.timeend, e.sponsorid, e.title, e.location, e.description, e.wholedayevent, e.categoryid, c.id, c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
-	$query.= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($todayTimeStamp)."'";
+	$query.= "WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($todayTimeStamp)."'";
 	
 	// Filter by sponsor ID if one was specified.
   if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
@@ -92,11 +92,11 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 							?>><?php
 							
 							if (!empty($_SESSION["AUTH_SPONSORID"])) {
-								echo '<a href="addevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&timebegin_year='.$event['timebegin_year']."&timebegin_month=".$event['timebegin_month']."&timebegin_day=".$event['timebegin_day']."\" title=\"",lang('add_new_event'),"\">";
+								echo '<a href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$event['timebegin_year']."&timebegin_month=".$event['timebegin_month']."&timebegin_day=".$event['timebegin_day']."\" title=\"",lang('add_new_event'),"\">";
 		    			  echo '<img style="padding-right: 4px;" src="images/new.gif" height="16" width="16" alt="',lang('add_new_event'),'" border="0" align="left"></a>';
 							}
 							
-							echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&timebegin=', urlencode($eventDayTimeStamp), $queryStringExtension ,'">';
+							echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin=', urlencode($eventDayTimeStamp), $queryStringExtension ,'">';
 							echo $formattedDateLabel;
 							
 							?></a></div></td>
@@ -133,7 +133,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 				
 				// Start Data Column
 				echo '<td width="98%" class="DataColumn"><div class="EventLeftBar">';
-				echo '<b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+				echo '<b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 				echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 				echo '">',htmlentities($event['title']),"</a></b> ";
 				if ( !empty($event['location']) ) { echo " - ",htmlentities($event['location']); }
@@ -147,7 +147,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 					else {
 					  echo substr($event['description'],0,140);
 				    echo "... \n";
-		    		echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+		    		echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 						echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 						echo '">more</a>';
 		      }

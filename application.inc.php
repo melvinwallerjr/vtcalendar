@@ -37,19 +37,19 @@ if (isset($calendarid) && !isValidInput($calendarid,'calendarid')) {
 }
 
 // Unset the calendar ID if it is already set in the session.
-if (isset($_SESSION["CALENDARID"]) && isset($calendarid) && $_SESSION["CALENDARID"] == $calendarid) {
+if (isset($_SESSION['CALENDAR_ID']) && isset($calendarid) && $_SESSION['CALENDAR_ID'] == $calendarid) {
 	unset($calendarid);
 }
 
 // Set a default calendar if one was not specified in the query string or session.
-if (!isset($_SESSION["CALENDARID"]) && !isset($calendarid)) {
+if (!isset($_SESSION['CALENDAR_ID']) && !isset($calendarid)) {
   $calendarid = "default";
 }
 
 // If the calendar ID was specified then load that calendar
 if (isset($calendarid)) { 
   if (calendar_exists($calendarid)) { 
-    $_SESSION["CALENDARID"] = $calendarid;
+    $_SESSION['CALENDAR_ID'] = $calendarid;
     setCalendarPreferences();
 		calendarlogout();
   }

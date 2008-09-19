@@ -30,7 +30,7 @@
     closedir($iCalDir);
   } // end: if ($caldir = opendir('calendars'))
 	else { 
-    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name" ); 
+    $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
 ?>
 <?php
     for ($i=0; $i<$result->numRows(); $i++) {
@@ -39,7 +39,7 @@
 ?>	
   <tr bgcolor="<?php echo $color; ?>">
     <td bgcolor="<?php echo $color; ?>"><?php echo $category['name']; ?></td>
-    <td bgcolor="<?php echo $color; ?>"><a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION["CALENDARID"]; ?>&type=ical&sponsortype=all&timebegin=today&categoryid=<?php echo $category['id']; ?>"><?php echo lang('subscribe'); ?></a> &nbsp; 
+    <td bgcolor="<?php echo $color; ?>"><a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION['CALENDAR_ID']; ?>&type=ical&sponsortype=all&timebegin=today&categoryid=<?php echo $category['id']; ?>"><?php echo lang('subscribe'); ?></a> &nbsp; 
 	<a href="<?php echo BASEURL; ?>export.php?type=ical&sponsortype=all&timebegin=today&categoryid=<?php echo $category['id']; ?>"><?php echo lang('download'); ?></a></td>
   </tr>
 <?php
@@ -50,8 +50,8 @@
 ?>
 </table>
 <br>
-&nbsp;<?php echo $_SESSION["NAME"]; ?> (<?php echo lang('whole_calendar'); ?>)&nbsp; 
-<a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION["CALENDARID"]; ?>&type=ical&sponsortype=all&timebegin=today"><?php echo lang('subscribe'); ?></a> &nbsp; 
+&nbsp;<?php echo $_SESSION['CALENDAR_NAME']; ?> (<?php echo lang('whole_calendar'); ?>)&nbsp; 
+<a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION['CALENDAR_ID']; ?>&type=ical&sponsortype=all&timebegin=today"><?php echo lang('subscribe'); ?></a> &nbsp; 
 <a href="<?php echo BASEURL; ?>export.php?type=ical&sponsortype=all&timebegin=today"><?php echo lang('download'); ?></a>
 	<br>
 	<br>

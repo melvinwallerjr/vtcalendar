@@ -9,7 +9,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_search_keywords'), "Update");
 	contentsection_begin(lang('manage_search_keywords'),true);
 
-  $result = DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY keyword" ); 
+  $result = DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY keyword" ); 
 ?>
 
 <p><?php echo lang('manage_search_keywords_message'); ?></p>

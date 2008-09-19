@@ -78,7 +78,7 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 	      
 	      // output the link to the week
 	      echo '<td class="LittleCalendar-Week" nowrap valign="top" align="left">';
-	      echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=week&amp;timebegin='.urlencode($weekstart['timestamp']).'">'.lang('lit_cal_week')."&gt;</a></td>\n";
+	      echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&amp;timebegin='.urlencode($weekstart['timestamp']).'">'.lang('lit_cal_week')."&gt;</a></td>\n";
 	      
 	      // output event info for every day
 	      for ($weekday = 0; $weekday <= 6; $weekday++) {
@@ -87,8 +87,6 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 	        //$iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
 	        //$iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 	        
-	        //$iday['css'] = datetoclass($iday['month'],$iday['day'],$iday['year']);
-	        //$iday['color'] = datetocolor($iday['month'],$iday['day'],$iday['year'],$colorpast,$colortoday,$colorfuture);
 	        echo '<td nowrap ';
 	        
           if ( $view == "day" || $view == "event" ) { 
@@ -125,7 +123,7 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 						echo 'class="LittleCal-'.$DayLinkClass.'" ';
 					}
 					// "&timeend=",urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm")),
-					echo 'href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&amp;timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")) . $queryStringExtension . '">';
+					echo 'href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&amp;timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")) . $queryStringExtension . '">';
 					echo $iday['day'];
 					echo '</a>';
 	        
@@ -154,7 +152,7 @@ function displayMonthSelector() {
 		<tr>
 			<!-- Left Arrow Button -->
 			<td align="left" valign="middle" width="17"><div id="LeftArrowButton"><a title="<?php echo lang('previous_month'); ?>" href="<?php
-			echo 'main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"));
+			echo 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"));
 			echo $queryStringExtension;
 			?>" onclick="return ChangeCalendar('Left','<?php
 			echo "main_littlecalendar.php?view=".$view;
@@ -168,7 +166,7 @@ function displayMonthSelector() {
 				    echo above_lit_cal_date_format (Month_to_Text($month['month']), $month['year']);
 				  }
 					else {
-				    echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=month&amp;timebegin=' . urlencode(datetime2timestamp($month['year'],$month['month'],$month['day'],12,0,"am"));
+				    echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=month&amp;timebegin=' . urlencode(datetime2timestamp($month['year'],$month['month'],$month['day'],12,0,"am"));
 				    echo $queryStringExtension;
 				    echo '">';
 				    echo above_lit_cal_date_format( Month_to_Text($month['month']), $month['year'] );
@@ -177,7 +175,7 @@ function displayMonthSelector() {
 				?></b></td>
 			<!-- Right Arrow Button -->
 			<td align="right" valign="middle" width="17"><div id="RightArrowButton"><a title="<?php echo lang('next_month'); ?>" href="<?php
-			echo 'main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($plus_one_month['year'],$plus_one_month['month'],$plus_one_month['day'],12,0,"am"));
+			echo 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($plus_one_month['year'],$plus_one_month['month'],$plus_one_month['day'],12,0,"am"));
 			echo $queryStringExtension;
 			?>" onclick="return ChangeCalendar('Right','<?php
 			echo "main_littlecalendar.php?view=".$view;

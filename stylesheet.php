@@ -30,25 +30,6 @@ require_once('session_start.inc.php');
 .eventtime {
 	FONT-SIZE: <?php if ($ie) { echo "x"; } ?>x-small;
 }
-.eventcategory {
-	FONT-SIZE: <?php if ($ie) { echo "x"; } ?>x-small;
-}
-.tabactive {
-	COLOR: <?php echo $_SESSION["TEXTCOLOR"]; ?>; 
-	BACKGROUND-COLOR: <?php echo $_SESSION["MAINCOLOR"]; ?>;
-}
-.tabinactive A {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.tabinactive A:visited {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.tabinactive A:hover {
-	COLOR: <?php echo $_SESSION["LINKCOLOR"]; ?>;
-}
-.tabinactive {
-	BACKGROUND-COLOR: <?php echo $_SESSION["GRIDCOLOR"]; ?>;
-}
 .announcement {
 	FONT-SIZE: medium;
 }*/
@@ -61,9 +42,6 @@ require_once('session_start.inc.php');
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
 	COLOR: #CC0000;
-}
-.example {
-  color: #999999;
 }
 code, pre {
    font-size: 10pt;

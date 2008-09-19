@@ -56,21 +56,21 @@ function getFullCalendarURL($calendarid) {
 function sendemail2sponsor($sponsorname,$sponsoremail,$subject,$body) {
   $body.= "\n\n";
   $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]." \n";
-  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
+  $body.= $_SESSION['CALENDAR_NAME']." \n";
+  $body.= getFullCalendarURL($_SESSION['CALENDAR_ID'])."\n";
+  $body.= $_SESSION['CALENDAR_ADMINEMAIL']."\n";
   
-  sendemail($sponsorname,$sponsoremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
+  sendemail($sponsorname,$sponsoremail,lang('calendar_administration'),$_SESSION['CALENDAR_ADMINEMAIL'],$subject,$body);
 }
 
 function sendemail2user($useremail,$subject,$body) {
   $body.= "\n\n";
   $body.= "----------------------------------------\n";
-  $body.= $_SESSION["NAME"]."\n";
-  $body.= getFullCalendarURL($_SESSION["CALENDARID"])."\n";
-  $body.= $_SESSION["ADMINEMAIL"]."\n";
+  $body.= $_SESSION['CALENDAR_NAME']."\n";
+  $body.= getFullCalendarURL($_SESSION['CALENDAR_ID'])."\n";
+  $body.= $_SESSION['CALENDAR_ADMINEMAIL']."\n";
   
-  sendemail($useremail,$useremail,lang('calendar_administration'),$_SESSION["ADMINEMAIL"],$subject,$body);
+  sendemail($useremail,$useremail,lang('calendar_administration'),$_SESSION['CALENDAR_ADMINEMAIL'],$subject,$body);
 }
 
 // highlights all occurrences of the keyword in the text

@@ -13,13 +13,13 @@ $today['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($today['month'],$today
 // If it is not set, then attempt to assign the session variable 'view' to $view.
 // Otherwise, unset $view.
 if (isset($_GET['view'])) { setVar($view,$_GET['view'],'view'); } else { 
-  if (!empty($_SESSION['view'])) { $view = $_SESSION['view']; }
+  if (!empty($_SESSION['PREVIOUS_VIEW'])) { $view = $_SESSION['PREVIOUS_VIEW']; }
   elseif (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { $view = "upcoming"; }
 	else { $view = "day"; } 
 }
 
 // Store the view in a session variable.
-$_SESSION['view'] = $view;
+$_SESSION['PREVIOUS_VIEW'] = $view;
 
 // If any of the following GET variables are set, then assign them to their respective variables.
 if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }

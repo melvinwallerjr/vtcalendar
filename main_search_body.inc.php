@@ -24,7 +24,7 @@
 ?>
 <br>
 <form method="get" action="main.php" name="searchform">
-	<input type="hidden" name="calendarid" value="<?php echo urlencode($_SESSION["CALENDARID"]); ?>">
+	<input type="hidden" name="calendarid" value="<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>">
   <input type="hidden" name="view" value="searchresults">
   <TABLE border="0" cellpadding="3" cellspacing="2">
     <TR>

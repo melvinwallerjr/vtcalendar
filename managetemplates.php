@@ -8,7 +8,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('manage_templates'), "Update");
 	contentsection_begin(lang('manage_templates'), true);
 
-  $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY name" ); 
+  $result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' ORDER BY name" ); 
 ?>
 <p><a href="addtemplate.php"><?php echo lang('add_new_template'); ?></a>
 <?php

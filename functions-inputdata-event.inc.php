@@ -15,7 +15,7 @@ function defaultevent(&$event,$sponsorid) {
   $event['timeend_ampm']="pm";
 
   // find sponsor name
-  $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
+  $result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
   $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   $event['sponsorid']=$sponsorid;
@@ -123,7 +123,7 @@ function checkevent(&$event,&$repeat) {
     ($event['categoryid']>=1) &&
     checkURL(urldecode($event['url'])) &&
     checkURL(urldecode($event['displayedsponsorurl'])) &&
-		($_SESSION['CALENDARID'] == "default" || !isset($event['showondefaultcal']) || $event['showondefaultcal']==0 || $event['showincategory']!=0);
+		($_SESSION['CALENDAR_ID'] == "default" || !isset($event['showondefaultcal']) || $event['showondefaultcal']==0 || $event['showincategory']!=0);
 }
 
 // shows the inputfields for the recurrence information
@@ -242,7 +242,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
   $defaultButtonPressed = isset($event['defaultdisplayedsponsor']) || isset($event['defaultdisplayedsponsorurl']) || isset($event['defaultallsponsor']);
 
   // read sponsor name from DB
-  //$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($sponsorid)."'" ); 
+  //$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
   //$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
   
 	// switch from "recurring event" to "repeat ..."
@@ -256,7 +256,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		
 		<?php
 		// Do not allow the date/time to be changed if we are logged into the default calendar and the current event is from a different calendar.
-		if ($_SESSION['CALENDARID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
+		if ($_SESSION['CALENDAR_ID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
 			passeventtimevalues($event, $repeat);
 			
 			// Output the basic date/time information.
@@ -486,7 +486,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	<?php
 	
   // read event categories from DB
-  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
   // print list with categories and select the one read from the DB
 
@@ -661,7 +661,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	      <strong><?php echo lang('sponsor'); ?>:</strong>
 	    </TD>
 	    <TD class="bodytext"><?php
-	    	if ($_SESSION['CALENDARID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
+	    	if ($_SESSION['CALENDAR_ID'] == "default" && isset($event['showondefaultcal']) && $event['showondefaultcal'] == '1' && (!isset($copy) || $copy != 1)) {
 	    		?><input type="hidden" id="selectedsponsorid" name="event[sponsorid]" value="<?php echo $event['sponsorid']; ?>">
 	    		<input type="hidden" name="event[showondefaultcal]" value="<?php echo $event['showondefaultcal']; ?>">
 	    		<input type="hidden" name="event[showincategory]" value="<?php echo $event['showincategory']; ?>"><?php
@@ -673,7 +673,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		      <SELECT id="selectedsponsorid" name="event[sponsorid]" size="1">
 						<?php
 						// read sponsors from DB
-						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 						
 						// print list with sponsors and select the one read from the DB
 						
@@ -742,7 +742,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
   </table>
   </div>
 <?php
-  if ( $_SESSION["CALENDARID"] != "default" && $inputrequired ) {
+  if ( $_SESSION['CALENDAR_ID'] != "default" && $inputrequired ) {
 	  $defaultcalendarname = getCalendarName('default');
 		?>
 		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
@@ -795,7 +795,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		</table>
 		</div>
 		<?php
-  } // end: if ( $_SESSION["CALENDARID"] != "default" )
+  } // end: if ( $_SESSION['CALENDAR_ID'] != "default" )
 ?>
 <INPUT type="hidden" name="check" value="1">
 <?php

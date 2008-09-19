@@ -52,7 +52,7 @@
 				  $showtodaylink = 1;
 				}
 				if ($showtodaylink) {
-			    echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&amp;timebegin=today" >';	
+			    echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&amp;timebegin=today" >';	
 				}
 			  echo "<b>";
 			
@@ -71,7 +71,7 @@
 	<tr>
 		<td><?php
 		  if ($view!='subscribe') {
-				echo'<a style="font-weight:bold"  href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=subscribe"><b>',lang('subscribe_download'),'</b></a>';
+				echo'<a style="font-weight:bold"  href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=subscribe"><b>',lang('subscribe_download'),'</b></a>';
 			}
 			else {
 			  echo '<b>',lang('subscribe_download'),'</b>';
@@ -86,7 +86,7 @@
 	<tr>
 	 	<td><?php
 		  if ($view!='filter') {
-				echo'    <b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=filter&oldview=' . urlencode($view) . '">',lang('filter_events'),'</a></b>';
+				echo'    <b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=filter&oldview=' . urlencode($view) . '">',lang('filter_events'),'</a></b>';
 			}
 			else {
 			  echo '<b>',lang('filter_events'),'</b>';

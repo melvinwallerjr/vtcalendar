@@ -37,14 +37,14 @@ function setCalendarPreferences() {
 	$_SESSION['CALENDAR_VIEWAUTHREQUIRED'] = $calendar['viewauthrequired'];
 	$_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'] = $calendar['forwardeventdefault'];
 	
-	$_SESSION["BGCOLOR"] = $calendar['bgcolor'];
+	/*$_SESSION["BGCOLOR"] = $calendar['bgcolor'];
 	$_SESSION["MAINCOLOR"] = $calendar['maincolor'];
 	$_SESSION["TODAYCOLOR"] = $calendar['todaycolor'];
 	$_SESSION["PASTCOLOR"] = $calendar['pastcolor'];		
 	$_SESSION["FUTURECOLOR"] = $calendar['futurecolor'];		
 	$_SESSION["TEXTCOLOR"] = $calendar['textcolor'];		
 	$_SESSION["LINKCOLOR"] = $calendar['linkcolor'];		
-	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];
+	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];*/
 	
 	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" ); 
 	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);

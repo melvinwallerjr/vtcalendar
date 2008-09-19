@@ -8,8 +8,8 @@ X A message should output when a keyword is being used in day/week/month view. T
 X $iday['css'] and $iday['color'] should be removed if not being used.
 - Check input validation constants in constants.inc.php to determine the correct values and merge the constants as necessary.
 - Check current database schema vs 2.2.2.
-- Determine what 'detailscaller' did and if they can be removed.
-- Why was the saveall button disabled?
+X Determine what 'detailscaller' did and if they can be removed.
+X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.2))
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
 - Free results by using $results->free()

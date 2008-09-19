@@ -29,15 +29,6 @@ contentsection_begin(lang('preview_event'));
 ?>
 <form method="post" action="changeeinfo.php">
 <p><input type="submit" name="savethis" value="<?php echo lang('save_changes'); ?>">
-<?php
-/*
-		if ($repeat['mode'] > 0 && !empty($event['repeatid'])) {
-			if (!recurrenceschanged($event['repeatid'],$repeat,$event)) {
-				echo '<input type="submit" name="saveall" value="Save changes for ALL recurrences"><BR><BR>';
-			}
-		}
-*/
-?>
 <input type="submit" name="edit" value="<?php echo lang('go_back_to_make_changes'); ?>"> &nbsp;&nbsp;&nbsp;
 <input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
 <p style="font-size: 18px; font-weight: bold; padding-bottom: 6px; margin-bottom: 0;"><?php

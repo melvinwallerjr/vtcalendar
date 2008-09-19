@@ -52,28 +52,19 @@ if (isset($eventid) && (!isset($copy) || $copy != 1)) {
   	// The event still has recurrences
     if (!empty($repeatlist)) {
     
-     	// Apply the changes to all recurrences
-      if (isset($saveall) || (isset($savethis) /* && recurrenceschanged($event['repeatid'],$repeat,$event) */)) {
-      	
-     	  // Delete the old events
-        repeatdeletefromevent($event['repeatid']);
+   	  // Delete the old events
+      repeatdeletefromevent($event['repeatid']);
 
-        // Insert the new recurrences
-        updaterepeat($event['repeatid'],$event,$repeat);
-        insertrecurrences($event['repeatid'],$event,$repeatlist);
-  	  }
-  	  
-  	  // Apply the changes only to one recurrence (recurrence pattern hasn't changed)
-      elseif (isset($savethis)) {
-        updateevent($eventid,$event);
-      }
+      // Insert the new recurrences
+      updaterepeat($event['repeatid'],$event,$repeat);
+      insertrecurrences($event['repeatid'],$event,$repeatlist);
     }
     
     // The event is now non-reocurring.
     else {
     
     	// Delete the event if it is a recurring event but has no real recurrences
-    	// TODO: Does this ever apply?
+    	// TODO: When does this apply?
       if ($repeat['mode']>=1 && $repeat['mode']<=2) {
         repeatdeletefromevent($event['repeatid']);
         deletefromrepeat($event['repeatid']);

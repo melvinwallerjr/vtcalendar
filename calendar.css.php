@@ -2,57 +2,129 @@
 require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('application.inc.php');
-header("Content-Type: text/css");	
+header("Content-Type: text/css");
 
-$BG = "#FFFFFF";
+/* ==============================================
+                 Generic Colors
+============================================== */
 
-$Font = "#000000";
-$Link = $_SESSION["LINKCOLOR"];
+$_SESSION['COLOR_BG'] = "#FFFFFF";
 
-$BodyColor = "#c3d9ff"; //$_SESSION["MAINCOLOR"]; //"#FF9900";
-$TodayColor = "#ffe993"; //$_SESSION["TODAYCOLOR"]; //"#FFCC66";
-$TodayLightColor = "#ffffcc"; //"#FFECC6";
+$_SESSION['COLOR_TITLE'] = "#000000";
+$_SESSION['COLOR_TEXT'] = "#000000";
+$_SESSION['COLOR_LINK'] = "#0000FF";
 
-$TabGrayed = "#CCCCCC";
-$TableHeader = "#DDDDDD";
+$_SESSION['COLOR_BODY'] = "#C3D9FF";
+$_SESSION['COLOR_TODAY'] = "#FFE993";
+$_SESSION['COLOR_TODAYLIGHT'] = "#FFFFCC";
 
-$FilterBGColor = "#ad2525";
-$FilterFontColor = "#FFFFFF";
+// Background color for navigation tabs that are not selected.
+$_SESSION['COLOR_TABGRAYED'] = "#CCCCCC";
 
-$PastEventFont = "#666666";
+// Background color for table column headers
+$_SESSION['COLOR_COLUMN_HEADER_BG'] = "#DDDDDD";
 
-$PastEventLeftBorder = "#CCCCCC";
-$PastEventDayLabelHoverBG = "#DDDDDD";
+// Faded color for past events
+$_SESSION['COLOR_FONT_FADED'] = "#666666";
 
-$CurrentEventLeftBorder = "#9292fb"; //$_SESSION["TODAYCOLOR"];
-$CurrentEventDayLabelHoverBG = "#ffd839"; //"#FF9900";
+// Faded color for past events
+$_SESSION['COLOR_BORDER'] = "#999999";
 
-$FutureEventLeftBorder = "#A7A7FB";
-$FutureEventDayLabelHoverBG = "#DDDDFF";
+/* ==============================================
+                 Filter Notice
+============================================== */
 
+// Filter and Search Keyword Notice Box
+$_SESSION['COLOR_FILTERNOTICE_BG'] = "#ad2525";
+$_SESSION['COLOR_FILTERNOTICE_FONT'] = "#FFFFFF";
+$_SESSION['COLOR_FILTERNOTICE_FONTFADED'] = "#FFBEBE";
+$_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] = "url(images/background-filter.gif)";
+
+/* ==============================================
+                   Event Bar
+============================================== */
+
+// Colored bars for event summaries
+$_SESSION['COLOR_EVENTBAR_PAST'] = "#CCCCCC";
+$_SESSION['COLOR_EVENTBAR_CURRENT'] = "#9292FB";
+$_SESSION['COLOR_EVENTBAR_FUTURE'] = "#A7A7FB";
+
+/* ==============================================
+                Month Day Labels
+============================================== */
+
+// Background colors that appear when the
+// mouse hovers over the day number in month view.
+$_SESSION['COLOR_MONTHDAYLABELS_PAST'] = "#DDDDDD";
+$_SESSION['COLOR_MONTHDAYLABELS_CURRENT'] = "#FFD839";
+$_SESSION['COLOR_MONTHDAYLABELS_FUTURE'] = "#DDDDFF";
+
+/* ==============================================
+                  Admin Buttons
+============================================== */
+
+// "New Event" Admin Button
 $NewBorder = "#999933";
 $NewBG = "#FFFFCC";
+
+// "Approve" Admin Button
 $ApproveBorder = "#339933";
 $ApproveBG = "#CCFFCC";
+
+// "Copy Event" Admin Button
 $CopyBorder = "#555599";
 $CopyBG = "#DDDDFF";
+
+// "Delete Event" Admin Button
 $DeleteBorder = "#995555";
 $DeleteBG = "#FFDDDD";
 
-$LittleCalendar_SelectedDay = "#CCCCCC";
-$LittleCalendar_NotMonth = "#999999";
+/* ==============================================
+              Month View Specific
+============================================== */
 
-$MonthDay_OtherMonth = "#EEEEEE";
+// Background color for cells in month view that
+// are not for the month currently being viewed.
+$_SESSION['COLOR_OTHERMONTH'] = "#EEEEEE";
 
+/* ==============================================
+                 Little Calendar
+============================================== */
+
+// Background color for days in the little calendar
+// that are being displayed in the main calendar
+$_SESSION['COLOR_LITTLECAL_HIGHLIGHT'] = "#CCCCCC";
+
+// Font color for days that are not part of the current month
+// being displayed in the little calendar.
+$_SESSION['COLOR_LITTLECAL_FONTFADED'] = "#999999";
+
+// A small line below the S/M/T/W/T/F/S row in the little calendar
+$_SESSION['COLOR_LITTLECAL_LINE'] = "#999999";
+
+/* ==============================================
+                  Date Selector
+============================================== */
+
+// The date selector's "GO" button in the column
+$_SESSION['COLOR_GOBTN_BG'] = "#FFCC66";
+$_SESSION['COLOR_GOBTN_BORDER'] = "#FFFFFF";
+
+//'
 ?>
+
+/*===================================
+        Calendar-Wide Styles
+===================================*/
+
 #CalendarBlock, #CalendarBlock td, #CalendarBlock p, #CalendarBlock h2 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color: <?php echo $Font; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 }
 
 #CalendarBlock a {
-	color: <?php echo $Link; ?>;
+	color: <?php echo $_SESSION['COLOR_LINK']; ?>;
 }
 
 /*===================================
@@ -60,18 +132,19 @@ $MonthDay_OtherMonth = "#EEEEEE";
 ===================================*/
 
 table#TopNaviTable {
-	border-bottom: 6px solid <?php echo $BodyColor; ?>;
+	border-bottom: 6px solid <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 table#TopNaviTable td {
 	padding: 0;
 }
 td.TopNavi-ColorPadding {
-	border-bottom: 8px solid <?php echo $BodyColor; ?>;
+	border-bottom: 8px solid <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 table#TopNaviTable td.TopNavi-ColorPadding td {
 	padding-top: 8px;
 }
-table#TopNaviTable td#NaviBar-EventName {
+table#TopNaviTable td#NaviBar-CalendarTitle {
+	color: <?php echo $_SESSION['COLOR_TITLE']; ?>
 	padding-bottom: 2px;
 	padding-left: 4px;
 	padding-right: 8px;
@@ -79,26 +152,24 @@ table#TopNaviTable td#NaviBar-EventName {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 18px;
 }
-table#TopNaviTable td#NaviBar-EventName a {
-	color: <?php echo $Font; ?>;
+table#TopNaviTable td#NaviBar-CalendarTitle a {
+	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 	text-decoration: none;
 }
 .NaviBar-Tab div {
 	margin-left: 2px;
 	margin-right: 2px;
-	/*border-left: 2px solid <?php echo $BG; ?>;
-	border-right: 2px solid <?php echo $BG; ?>;*/
 	font-weight: bold;
 	padding: 4px;
 	padding-left: 12px;
 	padding-right: 12px;
-	background-color: <?php echo $TabGrayed; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TABGRAYED']; ?>;
 }
 .NaviBar-Tab a {
 
 }
 #NaviBar-Selected div {
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 
 /*===================================
@@ -106,7 +177,7 @@ table#TopNaviTable td#NaviBar-EventName a {
 ===================================*/
 
 #CalendarTable {
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 
 #CalLeftCol {
@@ -139,11 +210,11 @@ table#TopNaviTable td#NaviBar-EventName a {
 
 div#LittleCalendar-Padding {
 	padding: 3px;
-	background-color: <?php echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 
 table#LittleCalendar {
-	background-color: <?php echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 
 table#LittleCalendar td {
@@ -157,27 +228,30 @@ table#LittleCalendar a {
 	padding: 3px;
 }
 
+/* A small line below the S/M/T/W/T/F/S row in the little calendar */
 table#LittleCalendar thead td {
-	border-bottom: 1px solid #999999;
+	border-bottom: 1px solid <?php echo $_SESSION['COLOR_LITTLECAL_LINE']; ?>;
 	padding: 3px;
 }
 
+/* The background color behind the days currently being displayed */
 table#LittleCalendar td.SelectedDay {
-	background-color: <?php echo $LittleCalendar_SelectedDay; ?>;
+	background-color: <?php echo $_SESSION['COLOR_LITTLECAL_HIGHLIGHT']; ?>;
 }
 
 td.LittleCalendar-DaySelected a.LittleCal-Today, a.LittleCal-TodayGrayedOut {
-	/*color: #000000 !important;*/
 	border-color: #FF9900;
 }
 
+/* A border around today on the little calendar */
 a.LittleCal-Today, a.LittleCal-TodayGrayedOut {
 	padding: 1px !important;
-	border: 2px solid #004a80<?php //echo $TodayColor; ?>;
+	border: 2px solid #004a80<?php //echo $_SESSION['COLOR_TODAY']; ?>;
 }
 
+/* Grayed out days that are not part of the current month */
 a.LittleCal-GrayedOut, a.LittleCal-TodayGrayedOut {
-	color: <?php echo $LittleCalendar_NotMonth; ?> !important;
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?> !important;
 }
 
 /* Other Left Column Stuff
@@ -188,15 +262,15 @@ table#JumpToDateSelector td {
 	padding-bottom: 14px;
 }
 input#JumpToDateSelector-Button {
-	background-color: #ffcc66<?php //echo $TodayColor; ?>;
-	border: 1px solid #FFFFFF<?php //echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_GOBTN_BG']; ?>;
+	border: 1px solid <?php echo $_SESSION['COLOR_GOBTN_BORDER']; ?>;
 }
 form#JumpToDateSelectorForm {
 	margin: 0; padding: 0;
 }
 
 td#CalLeftCol table#TodaysDate td {
-	background-color: <?php echo $TodayColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?>;
 	padding: 6px;
 }
 
@@ -210,16 +284,16 @@ td#CalLeftCol table#CategoryFilterLink td {
 
 td#CalRightCol {
 	padding: 0;
-	border-color: <?php echo $BodyColor; ?>;
+	border-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	border-left-style: solid;
 	border-left-width: 7px;
 	border-right-style: solid;
 	border-right-width: 7px;
-	background-color: <?php echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 
 td#CalRightCol.TodayHighlighted {
-	border-color: <?php echo $TodayColor; ?> !important;
+	border-color: <?php echo $_SESSION['COLOR_TODAY']; ?> !important;
 	border-bottom-style: solid;
 	border-bottom-width: 7px;
 }
@@ -229,28 +303,28 @@ td#CalRightCol.TodayHighlighted {
 
 table#FilterNotice td {
 	padding: 4px;
-	background-image: url(images/background-filter.gif);
-	background-color: <?php echo $FilterBGColor; ?>;
-	color: <?php echo $FilterFontColor; ?>;
+	background-image: <?php echo (empty($_SESSION['COLOR_FILTERNOTICE_BGIMAGE']) ? "transparent" : $_SESSION['COLOR_FILTERNOTICE_BGIMAGE']); ?>;
+	background-color: <?php echo $_SESSION['COLOR_FILTERNOTICE_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONT']; ?>;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
 table#FilterNotice a {
-	color: #ffbebe;
+	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONTFADED']; ?>;
 }
 table#FilterNotice a:hover {
-	color: #FFFFFF;
+	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONT']; ?>;
 }
 
 /*     Title & Navi
 --------------------------*/
 
 div#TitleAndNavi {
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 
 div#TitleAndNavi.TodayHighlighted {
-	background-color: <?php echo $TodayColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?>;
 }
 
 div#TitleAndNavi td {
@@ -284,7 +358,6 @@ td#NavPreviousNext td {
 	padding: 2px;
 	padding-top: 0;
 	padding-bottom: 0;
-	/*font-weight: bold;*/
 }
 td#NavPreviousNext b {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -303,7 +376,7 @@ td#CalendarContent {
 ===================================*/
 
 #EventTable {
-	background-color: <?php echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 
 #EventTable #EventLeftColumn {
@@ -312,7 +385,7 @@ td#CalendarContent {
 }
 #EventTable #EventRightColumn {
 	padding: 6px;
-	border-left: 4px solid <?php echo $CurrentEventLeftBorder; ?>;
+	border-left: 4px solid <?php echo $_SESSION['COLOR_EVENTBAR_CURRENT']; ?>;
 }
 div#EventTitle {
 	font-size: 18px;
@@ -326,12 +399,12 @@ table#EventDetail {
 	border-collapse: collapse;
 }
 table#EventDetail td {
-	border: 1px solid #999999;
+	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 	padding: 4px;
 	padding-right: 8px;
 }
 td.EventDetail-Label {
-	background-color: <?php echo $TableHeader; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 }
 
 /*===================================
@@ -352,7 +425,7 @@ td.EventDetail-Label {
 }
 #DayTable div.EventLeftBar {
 	padding-left: 5px;
-	border-left: 5px solid <?php echo $CurrentEventLeftBorder; ?>;
+	border-left: 5px solid <?php echo $_SESSION['COLOR_EVENTBAR_CURRENT']; ?>;
 }
 
 #DayTable tr#FirstDateRow td.DateRow {
@@ -368,17 +441,14 @@ td.EventDetail-Label {
 	font-weight: bold;
 	padding: 0;
 	padding-top: 8px;
-	/*border-bottom: 1px solid #999999;*/
 }
 
 #DayTable td.DateRow a {
-	/*color: #000066;*/
 	text-decoration: none;
 }
 
 #DayTable td.DateRow a:hover {
 	text-decoration: underline;
-	/*color: #0000FF;*/
 }
 
 #DayTable td.DateRow div {
@@ -400,14 +470,13 @@ td.EventDetail-Label {
 }
 
 #DayTable td.TimeColumn-Past, #DayTable td.DataColumn-Past {
-	color: <?php echo $PastEventFont; ?>;
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
 }
 #DayTable td.DataColumn-Past a {
-	color: <?php echo $PastEventFont; ?>;
-	/*font-weight: normal;*/
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
 }
 #DayTable td.DataColumn-Past div.EventLeftBar {
-	border-left-color: <?php echo $PastEventLeftBorder; ?>;
+	border-left-color: <?php echo $_SESSION['COLOR_EVENTBAR_PAST']; ?>;
 }
 
 /*===================================
@@ -420,7 +489,7 @@ td.EventDetail-Label {
 
 #WeekdayTable td {
 	padding: 4px;
-	border: 1px solid #999999;
+	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 }
 
 #WeekdayTable td td {
@@ -433,22 +502,18 @@ td.EventDetail-Label {
 --------------------------*/
 
 #WeekdayTable thead td {
-	background-color: <?php echo $TableHeader; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 }
 
 #WeekdayTable thead td.Weekday-Today {
-	background-color: <?php echo $TodayColor; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?> !important;
 }
 
 /*   Weekday Body Styles
 --------------------------*/
 
-#WeekdayTable tbody td.Weekday-Past {
-	/*background-color: #EEEEEE;*/
-}
-
 #WeekdayTable tbody td.Weekday-Today {
-	background-color: <?php echo $TodayLightColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TODAYLIGHT']; ?>;
 }
 
 #WeekdayTable tbody div.WeekEvent,
@@ -457,27 +522,26 @@ td.EventDetail-Label {
 	padding-bottom: 9px;
 }
 #WeekdayTable tbody div.WeekEvent-Past {
-	color: <?php echo $PastEventFont; ?>;
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Past a {
-	color: <?php echo $PastEventFont; ?>;
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Time {
 	font-size: 11px;
-	/*padding-left: 8px;*/
 }
 #WeekdayTable tbody div.WeekEvent-Title,
 #WeekdayTable tbody div.WeekEvent-Category {
-	border-left: 3px solid <?php echo $FutureEventLeftBorder; ?>;
+	border-left: 3px solid <?php echo $_SESSION['COLOR_EVENTBAR_FUTURE']; ?>;
 	padding-left: 3px;
 }
 #WeekdayTable tbody td.Weekday-Today div.WeekEvent-Title,
 #WeekdayTable tbody td.Weekday-Today div.WeekEvent-Category {
-	border-left-color: <?php echo $CurrentEventLeftBorder; ?>;
+	border-left-color: <?php echo $_SESSION['COLOR_EVENTBAR_CURRENT']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Title,
 #WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Category {
-	border-left-color: #DDDDDD;
+	border-left-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Title a {
 	text-decoration: none;
@@ -497,14 +561,14 @@ td.EventDetail-Label {
 
 #MonthTable {
 	border-collapse: collapse;
-	background-color: <?php echo $BG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 #MonthTable td {
 	border: 1px solid #AAAAAA;
 	padding: 0;
 }
 #MonthTable thead td {
-	background-color: <?php echo $TableHeader; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 	padding: 5px;
 }
 #MonthTable tbody td {
@@ -542,56 +606,38 @@ td.EventDetail-Label {
 /* Hover color for the 'day number'. */
 #MonthTable div.DayNumber a:hover,
 #MonthTable div.DayNumber a:focus {
-	background-color: <?php echo $FutureEventDayLabelHoverBG; ?>;
-}
-
-/* Background color for days that have past. */
-#MonthTable tbody td.MonthDay-Past {
-	/*background-color: #EEEEEE;*/
+	background-color: <?php echo $_SESSION['COLOR_MONTHDAYLABELS_FUTURE']; ?>;
 }
 
 /* Background color for today. */
 #MonthTable tbody td.MonthDay-Today {
-	background-color: <?php echo $TodayLightColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TODAYLIGHT']; ?>;
 }
 /* Background color for the 'day number' for today. */
 #MonthTable tbody td.MonthDay-Today div.DayNumber {
-	background-color: <?php echo $TodayColor; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?> !important;
 }
 
 /* Link color for the 'day number' and events of past days. */
 #MonthTable td.MonthDay-Past div.DayNumber a,
 #MonthTable p.EventItem-Past a {
-	color: <?php echo $PastEventFont; ?>;
+	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
 }
 
 /* Hover color for the 'day number' for past days. */
 #MonthTable td.MonthDay-Past div.DayNumber a:hover,
 #MonthTable td.MonthDay-Past div.DayNumber a:focus {
-	background-color: <?php echo $PastEventDayLabelHoverBG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_MONTHDAYLABELS_PAST']; ?>;
 }
 
 /* Hover color for the 'day number' for today. */
 #MonthTable td.MonthDay-Today div.DayNumber a:hover,
 #MonthTable td.MonthDay-Today div.DayNumber a:focus {
-	background-color: <?php echo $CurrentEventDayLabelHoverBG; ?>;
+	background-color: <?php echo $_SESSION['COLOR_MONTHDAYLABELS_CURRENT']; ?>;
 }
-/* Top border color for past events
-#MonthTable p.EventItem-Past {
-	border-top: 1px solid <?php echo $PastEventDayLabelHoverBG; ?>;
-} */
-/* Bold links for today's events.
-#MonthTable td.MonthDay-Today p.EventItem {
-	font-weight: bold;
-} */
-/* Top border color for today's events (regardless if the individual event has past)
-#MonthTable td.MonthDay-Today p.EventItem,
-#MonthTable td.MonthDay-Today p.EventItem-Past {
-	border-top: 1px solid <?php echo $CurrentEventDayLabelHoverBG; ?>;
-} */
 
 #MonthTable td.MonthDay-OtherMonth {
-	background-color: <?php echo $MonthDay_OtherMonth; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_OTHERMONTH']; ?> !important;
 }
 
 #MonthTable a {
@@ -606,7 +652,7 @@ td.EventDetail-Label {
 ===================================*/
 
 #PoweredBy td {
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	font-size: 11px;
 	padding-right: 16px;
 }
@@ -633,12 +679,12 @@ table#AdminButtons a {
 	text-align: center;
 	display: block;
 	padding: 5px;
-	color: <?php echo $Font; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 	font-weight: bold;
 	font-size: 13px;
 	text-decoration: none;
-	border: 1px solid #999999;
-	background-color: #DDDDDD;
+	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 	background-repeat: no-repeat;
 	background-position: center left;
 }
@@ -704,8 +750,7 @@ dd {
 }
 
 div#UpdateBlock {
-	background-color: <?php echo $BG; ?>;
-	/*border: 8px solid <?php echo $BodyColor; ?>;*/
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 	border-top-style: none;
 	border-top-width: 0;
 }
@@ -717,7 +762,7 @@ div#UpdateBlock h2 {
 }
 
 div#MenuButton {
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	padding-left: 8px;
 }
 div#MenuButton td {
@@ -729,13 +774,13 @@ div#MenuButton a {
 	padding: 6px;
 	display: block;
 	padding-left: 28px;
-	background-color: <?php echo $BodyColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	background-repeat: no-repeat;
 	background-position: center left;
 	background-image: url("images/arrow-doubleback.gif");
 }
 div#MenuButton a:hover, div#MenuButton a:focus {
-	background-color: <?php echo $TodayColor; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?>;
 }
 
 /* The following two styles are for manageevents.php */

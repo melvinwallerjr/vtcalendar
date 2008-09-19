@@ -44,28 +44,28 @@ function Day_of_Week($month,$day,$year) {
 
 /* converts 0..6 to Sun..Sat */
 function Day_of_Week_Abbreviation($dow) {
-         global $lang;
-	  if ($dow==0){
-                   return lang('sun');
-                } 
-                if ($dow==1){
-                   return lang('mon');
-                }
-                if ($dow==2){
-                   return lang('tue');
-                }
-                if ($dow==3){
-                   return lang('wed');
-                }
-                if ($dow==4){
-                   return lang('thu');
-                }
-                if ($dow==5){
-                   return lang('fri');
-                }
-                if ($dow==6){
-                  return lang('sat');
-                }
+				 global $lang;
+		if ($dow==0){
+									 return lang('sun');
+								} 
+								if ($dow==1){
+									 return lang('mon');
+								}
+								if ($dow==2){
+									 return lang('tue');
+								}
+								if ($dow==3){
+									 return lang('wed');
+								}
+								if ($dow==4){
+									 return lang('thu');
+								}
+								if ($dow==5){
+									 return lang('fri');
+								}
+								if ($dow==6){
+									return lang('sat');
+								}
 }
 
 /* calculates the difference in days between two dates */
@@ -94,43 +94,43 @@ function Add_Delta_Days($month,$day,$year,$delta) {
 
 /* converts 1..12 to January..December */
 function Month_to_Text($month) {
-           global $lang;
-           if ($month==1){
-              return lang('january');
-           }
-           if ($month==2){
-              return lang('february');
-           }
-           if ($month==3){
-              return lang('march');
-           }
-           if ($month==4){
-              return lang('april');
-           }
-           if ($month==5){
-              return lang('may');
-           }
-           if ($month==6){
-              return lang('june');
-           }
-           if ($month==7){
-              return lang('july');
-           }
-           if ($month==8){
-              return lang('august');
-           } 
-           if ($month==9){
-              return lang('september');
-           }
-           if ($month==10){
-              return lang('october');
-           }
-           if ($month==11){
-              return lang('november');
-           }
-           if ($month==12){
-              return lang('december');
-         }
+					 global $lang;
+					 if ($month==1){
+							return lang('january');
+					 }
+					 if ($month==2){
+							return lang('february');
+					 }
+					 if ($month==3){
+							return lang('march');
+					 }
+					 if ($month==4){
+							return lang('april');
+					 }
+					 if ($month==5){
+							return lang('may');
+					 }
+					 if ($month==6){
+							return lang('june');
+					 }
+					 if ($month==7){
+							return lang('july');
+					 }
+					 if ($month==8){
+							return lang('august');
+					 } 
+					 if ($month==9){
+							return lang('september');
+					 }
+					 if ($month==10){
+							return lang('october');
+					 }
+					 if ($month==11){
+							return lang('november');
+					 }
+					 if ($month==12){
+							return lang('december');
+				 }
 
 }
 
@@ -141,28 +141,28 @@ function Month_to_Text_Abbreviation($month) {
 
 /* converts 0..6 to Sunday..Saturday */
 Function Day_of_Week_to_Text($dow) {
-         global $lang;
-	  if ($dow==0){
-                   return lang('sunday');
-                } 
-                if ($dow==1){
-                   return lang('monday');
-                }
-                if ($dow==2){
-                   return lang('tuesday');
-                }
-                if ($dow==3){
-                   return lang('wednesday');
-                }
-                if ($dow==4){
-                   return lang('thursday');
-                }
-                if ($dow==5){
-                   return lang('friday');
-                }
-                if ($dow==6){
-                  return lang('saturday');
-                }
+				 global $lang;
+		if ($dow==0){
+									 return lang('sunday');
+								} 
+								if ($dow==1){
+									 return lang('monday');
+								}
+								if ($dow==2){
+									 return lang('tuesday');
+								}
+								if ($dow==3){
+									 return lang('wednesday');
+								}
+								if ($dow==4){
+									 return lang('thursday');
+								}
+								if ($dow==5){
+									 return lang('friday');
+								}
+								if ($dow==6){
+									return lang('saturday');
+								}
 
 }
 

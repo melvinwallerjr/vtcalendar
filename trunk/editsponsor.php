@@ -1,40 +1,40 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
+	require_once('application.inc.php');
 
-  if (!authorized()) { exit; }
-  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
+	if (!authorized()) { exit; }
+	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-  if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-  if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-  if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-  if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } 
+	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
+	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
+	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
+	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } 
 	else { 
-	  if (isset($_GET['id'])) { setVar($id,$_GET['id'],'sponsorid'); } 
+		if (isset($_GET['id'])) { setVar($id,$_GET['id'],'sponsorid'); } 
 		else { unset($id); }
 	}
-  if (isset($_POST['sponsor'])) { 
-    if (isset($_POST['sponsor']['name'])) { setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name'); } 
+	if (isset($_POST['sponsor'])) { 
+		if (isset($_POST['sponsor']['name'])) { setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name'); } 
 		else { unset($sponsor['name']); }
-    if (isset($_POST['sponsor']['email'])) { setVar($sponsor['email'],$_POST['sponsor']['email'],'email'); } 
+		if (isset($_POST['sponsor']['email'])) { setVar($sponsor['email'],$_POST['sponsor']['email'],'email'); } 
 		else { unset($sponsor['email']); }
-    if (isset($_POST['sponsor']['url'])) { setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url'); } 
+		if (isset($_POST['sponsor']['url'])) { setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url'); } 
 		else { unset($sponsor['url']); }
-    if (isset($_POST['sponsor']['admins'])) { setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins'); } 
+		if (isset($_POST['sponsor']['admins'])) { setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins'); } 
 		else { unset($sponsor['admins']); }
-  }
+	}
 
-  if (isset($cancel)) {
-    redirect2URL("managesponsors.php");
-    exit;
-  }
+	if (isset($cancel)) {
+		redirect2URL("managesponsors.php");
+		exit;
+	}
 
-  function checksponsor(&$sponsor) {
-    return (!empty($sponsor['name']) &&
-       	    !empty($sponsor['email']) &&
+	function checksponsor(&$sponsor) {
+		return (!empty($sponsor['name']) &&
+			 	    !empty($sponsor['email']) &&
 						checkURL($sponsor['url']));
-  }
+	}
 
 	function emailsponsoraccountchanged(&$sponsor) {
 		$subject = lang('email_account_updated_subject');
@@ -43,30 +43,30 @@ require_once('session_start.inc.php');
 		$body.= "   ".lang('email')." ".stripslashes($sponsor['email'])."\n";
 		$body.= "   ".lang('homepage')." ".stripslashes($sponsor['url'])."\n\n";
 
-    	if ( isset($_SERVER["HTTPS"]) ) { $body .= "https"; } else { $body .= "http"; } 
-        $body .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/update.php?calendarid=".$_SESSION['CALENDAR_ID']."\n\n";
+			if ( isset($_SERVER["HTTPS"]) ) { $body .= "https"; } else { $body .= "http"; } 
+				$body .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/update.php?calendarid=".$_SESSION['CALENDAR_ID']."\n\n";
 
 		$body.= lang('email_add_event_instructions');
 		sendemail2sponsor($sponsor['name'],$sponsor['email'],$subject,$body);
 	} // end: emailsponsoraccountchanged
 
-  $sponsorexists = false;
-  $addPIDError="";
-  if (isset($save) && checksponsor($sponsor) ) {
-    $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."'" );
+	$sponsorexists = false;
+	$addPIDError="";
+	if (isset($save) && checksponsor($sponsor) ) {
+		$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."'" );
 		if ( $result->numRows()>0 ) {
-      if ($result->numRows()>1) {
-			  $sponsorexists = true;
+			if ($result->numRows()>1) {
+				$sponsorexists = true;
 			}
 			else { // exactly one result
 				if ( isset ($id) ) {
-  				$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	  			if ( $s['id'] != $id ) {
-            $sponsorexists = true;
-			  	}
+					$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+					if ( $s['id'] != $id ) {
+						$sponsorexists = true;
+					}
 				}
 				else {
-				  $sponsorexists = true;
+					$sponsorexists = true;
 				}			
 			}
 		}
@@ -106,7 +106,7 @@ require_once('session_start.inc.php');
 				}
 			} // end: else: if ( empty($sponsor[admins]) )
 
-  		if (empty($addPIDError)) {    
+			if (empty($addPIDError)) {    
 				if ( isset ($id) ) { // edit, not new
 					$result = DBQuery("UPDATE vtcal_sponsor SET name='".sqlescape($sponsor['name'])."',email='".sqlescape($sponsor['email'])."',url='".sqlescape($sponsor['url'])."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id = '".sqlescape($id)."'" );
 	
@@ -136,20 +136,20 @@ require_once('session_start.inc.php');
 				redirect2URL("managesponsors.php");
 				exit;
 			} // end: if (empty($addPIDError))
-    } // end: if (!$sponsorexists) 
+		} // end: if (!$sponsorexists) 
 	}
 
-  if ( isset($id) ) {
-    pageheader(lang('edit_sponsor'), "Update");
-    contentsection_begin(lang('edit_sponsor'));
+	if ( isset($id) ) {
+		pageheader(lang('edit_sponsor'), "Update");
+		contentsection_begin(lang('edit_sponsor'));
 		if ( !isset($check) ) {
-  		$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
-      $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
+			$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		}
 	}
 	else {
-    pageheader(lang('add_new_sponsor'), "Update");
-    contentsection_begin(lang('add_new_sponsor'));
+		pageheader(lang('add_new_sponsor'), "Update");
+		contentsection_begin(lang('add_new_sponsor'));
 	}
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -161,12 +161,12 @@ if ($sponsor['admin']) {
 }
 ?>
 <TABLE border="0" cellpadding="2" cellspacing="0">
-  <TR>
-    <TD class="bodytext" valign="top">
-      <strong><?php echo lang('sponsor_name'); ?></strong>
-      <FONT color="#FF0000">*</FONT>
-    </TD>
-    <TD class="bodytext" valign="top">
+	<TR>
+		<TD class="bodytext" valign="top">
+			<strong><?php echo lang('sponsor_name'); ?></strong>
+			<FONT color="#FF0000">*</FONT>
+		</TD>
+		<TD class="bodytext" valign="top">
 <?php
 		if ( isset($check) ) {
 			if (empty($sponsor['name'])) {
@@ -177,73 +177,73 @@ if ($sponsor['admin']) {
 			}
 		}
 ?>
-      <INPUT type="text" size="50" name="sponsor[name]" maxlength=<?php echo constSponsor_nameMaxLength; ?>  value="<?php
-    if ( isset($check) ) { $sponsor['name']=stripslashes($sponsor['name']); }
-    if ( isset($sponsor['name']) ) { echo HTMLSpecialChars($sponsor['name']); }
+			<INPUT type="text" size="50" name="sponsor[name]" maxlength=<?php echo constSponsor_nameMaxLength; ?>  value="<?php
+		if ( isset($check) ) { $sponsor['name']=stripslashes($sponsor['name']); }
+		if ( isset($sponsor['name']) ) { echo HTMLSpecialChars($sponsor['name']); }
 ?>"> <I><?php echo lang('sponsor_name_example'); ?></I><BR>
-    </TD>
-  </TR>
-  <TR>
-    <TD class="bodytext" valign="top">
-      <strong><?php echo lang('email'); ?></strong>
-      <FONT color="#FF0000">*</FONT>
-    </TD>
-    <TD class="bodytext" valign="top">
+		</TD>
+	</TR>
+	<TR>
+		<TD class="bodytext" valign="top">
+			<strong><?php echo lang('email'); ?></strong>
+			<FONT color="#FF0000">*</FONT>
+		</TD>
+		<TD class="bodytext" valign="top">
 <?php
-  if (isset($check) && (empty($sponsor['email']))) {
-    feedback(lang('choose_email'),1);
-  }
+	if (isset($check) && (empty($sponsor['email']))) {
+		feedback(lang('choose_email'),1);
+	}
 ?>
-      <INPUT type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
-  if ( isset($check) ) { $sponsor['email']=stripslashes($sponsor['email']); }
-  if ( isset($sponsor['email'])) { echo HTMLSpecialChars($sponsor['email']); }
+			<INPUT type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+	if ( isset($check) ) { $sponsor['email']=stripslashes($sponsor['email']); }
+	if ( isset($sponsor['email'])) { echo HTMLSpecialChars($sponsor['email']); }
 ?>">
-      <I><?php echo lang('email_example'); ?></I><BR>
-    </TD>
-  </TR>
-  <TR>
-    <TD class="bodytext" valign="top">
-      <strong><?php echo lang('homepage'); ?></strong>
-    </TD>
-    <TD class="bodytext" valign="top">
+			<I><?php echo lang('email_example'); ?></I><BR>
+		</TD>
+	</TR>
+	<TR>
+		<TD class="bodytext" valign="top">
+			<strong><?php echo lang('homepage'); ?></strong>
+		</TD>
+		<TD class="bodytext" valign="top">
 <?php
-  if ( isset($check) && !checkURL($sponsor['url']) ) {
-    feedback(lang('url_invalid'),1);
-  }
+	if ( isset($check) && !checkURL($sponsor['url']) ) {
+		feedback(lang('url_invalid'),1);
+	}
 ?>
-      <INPUT type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
-  if ( isset($check) ) { $sponsor['url']=stripslashes($sponsor['url']); }
-  if ( isset($sponsor['url']) ) { echo HTMLSpecialChars($sponsor['url']); }
+			<INPUT type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
+	if ( isset($check) ) { $sponsor['url']=stripslashes($sponsor['url']); }
+	if ( isset($sponsor['url']) ) { echo HTMLSpecialChars($sponsor['url']); }
 ?>">
-      <I><?php echo lang('url_example'); ?></I><BR>
-    </TD>
-  </TR>
-  <TR>
-    <TD class="bodytext" valign="top">
-      <strong><?php
+			<I><?php echo lang('url_example'); ?></I><BR>
+		</TD>
+	</TR>
+	<TR>
+		<TD class="bodytext" valign="top">
+			<strong><?php
 				if ($sponsor['admin']) {
 					echo lang('administrative_members');
 				} else {
 					echo lang('sponsor_members');
 				}
 			?></strong>
-    </TD>
-    <TD class="bodytext" valign="top">
+		</TD>
+		<TD class="bodytext" valign="top">
 <?php
-  if (!empty($addPIDError)) {    
-    feedback($addPIDError,1);
-  }
+	if (!empty($addPIDError)) {    
+		feedback($addPIDError,1);
+	}
 ?>
 		<textarea name="sponsor[admins]" cols="40" rows="3" wrap="virtual"><?php
 		if ( isset($sponsor['admins']) ) {
-		  echo $sponsor['admins'];
+			echo $sponsor['admins'];
 		}
 		elseif ( isset($id) ) {
-		  $query = "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND sponsorid='".sqlescape($id)."' ORDER BY userid";
-      $result = DBQuery($query ); 
+			$query = "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND sponsorid='".sqlescape($id)."' ORDER BY userid";
+			$result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {
-			  $authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+				$authorization = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 				if ($i>0) { echo ","; }
 				echo $authorization['userid'];
 				$i++;
@@ -251,20 +251,20 @@ if ($sponsor['admin']) {
 		}
 		?></textarea><br>
 		<i><?php echo lang('administrative_members_example'); ?></i>
-    </TD>
-  </TR>
+		</TD>
+	</TR>
 </TABLE>
 	<input type="hidden" name="check" value="1">
 <?php
-  if ( isset ($id) ) { echo '<input type="hidden" name="id" value="',$id,'">'; }
+	if ( isset ($id) ) { echo '<input type="hidden" name="id" value="',$id,'">'; }
 ?>
 	<BR>
-  <BR>
-  <INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-  <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<BR>
+	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
-  contentsection_end();
-  pagefooter();
+	contentsection_end();
+	pagefooter();
 DBclose();
 ?>

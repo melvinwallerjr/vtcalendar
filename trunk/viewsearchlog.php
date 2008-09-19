@@ -27,20 +27,20 @@ contentsection_begin(lang('view_search_log'),true);
 
 <form method="get" action="viewsearchlog.php">
 	<table  border="0" cellspacing="0" cellpadding="2">
-    	<tr>
-    		<td>View entries from</td>
-    		<td><input type="textbox" name="rangestart" value="<?php echo date("n/j/Y", $rangestart) ?>" size="10"></td>
-    		<td>to</td>
-    		<td><input type="textbox" name="rangestart" value="<?php echo date("n/j/Y", $rangeend) ?>" size="10"></td>
-    		<td><input type="submit" value="Show"></td>
-    		<td> (m/d/yyyy)</td>
-   		</tr>
-    	</table>
+			<tr>
+				<td>View entries from</td>
+				<td><input type="textbox" name="rangestart" value="<?php echo date("n/j/Y", $rangestart) ?>" size="10"></td>
+				<td>to</td>
+				<td><input type="textbox" name="rangestart" value="<?php echo date("n/j/Y", $rangeend) ?>" size="10"></td>
+				<td><input type="submit" value="Show"></td>
+				<td> (m/d/yyyy)</td>
+	 		</tr>
+			</table>
 </form>
 
 <?php
 $result =& DBQuery("SELECT * FROM vtcal_searchlog WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND time >= '" . $rangestartTimestamp . "' AND time <= '" . $rangeendTimestamp . "' ORDER BY time DESC"); 
-  
+	
 if (is_string($result)) {
 	DBErrorBox($result);
 }

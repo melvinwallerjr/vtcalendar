@@ -65,44 +65,44 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 		<!-- Start Calendar Body -->
 		<tbody>
 		<?php 
-	  // print 6 lines for the weeks
-	  for ($iweek=1; $iweek<=6; $iweek++) {
-	    // first day of the week
-	    $weekstart = Add_Delta_Days($monthstart['month'],$monthstart['day'],$monthstart['year'],($iweek-1)*7);
-	    $weekstart['timestamp'] = datetime2timestamp($weekstart['year'],$weekstart['month'],$weekstart['day'],12,0,"am");
-	    
-	    // print the 5th and the 6th week only if the days are still in this month
-	    if (($iweek < 5) || ($weekstart['month'] == $month['month'])) {
-	      echo "<tr>\n";
-	      
-	      // output the link to the week
-	      echo '<td class="LittleCalendar-Week" nowrap valign="top" align="left">';
-	      echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&amp;timebegin='.urlencode($weekstart['timestamp']).'">'.lang('lit_cal_week')."&gt;</a></td>\n";
-	      
-	      // output event info for every day
-	      for ($weekday = 0; $weekday <= 6; $weekday++) {
-	        // calculate the appropriate day for the cell of the calendar
-	        $iday = Add_Delta_Days($monthstart['month'],$monthstart['day'],$monthstart['year'],($iweek-1)*7+$weekday);
-	        //$iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
-	        //$iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
-	        
-	        echo '<td nowrap ';
-	        
-          if ( $view == "day" || $view == "event" ) { 
-    				if ( $iday['day']==$showdate['day'] && $iday['month']==$showdate['month'] && $iday['year']==$showdate['year']) {
-  						echo 'class="SelectedDay" ';
+		// print 6 lines for the weeks
+		for ($iweek=1; $iweek<=6; $iweek++) {
+			// first day of the week
+			$weekstart = Add_Delta_Days($monthstart['month'],$monthstart['day'],$monthstart['year'],($iweek-1)*7);
+			$weekstart['timestamp'] = datetime2timestamp($weekstart['year'],$weekstart['month'],$weekstart['day'],12,0,"am");
+			
+			// print the 5th and the 6th week only if the days are still in this month
+			if (($iweek < 5) || ($weekstart['month'] == $month['month'])) {
+				echo "<tr>\n";
+				
+				// output the link to the week
+				echo '<td class="LittleCalendar-Week" nowrap valign="top" align="left">';
+				echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&amp;timebegin='.urlencode($weekstart['timestamp']).'">'.lang('lit_cal_week')."&gt;</a></td>\n";
+				
+				// output event info for every day
+				for ($weekday = 0; $weekday <= 6; $weekday++) {
+					// calculate the appropriate day for the cell of the calendar
+					$iday = Add_Delta_Days($monthstart['month'],$monthstart['day'],$monthstart['year'],($iweek-1)*7+$weekday);
+					//$iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
+					//$iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
+					
+					echo '<td nowrap ';
+					
+					if ( $view == "day" || $view == "event" ) { 
+						if ( $iday['day']==$showdate['day'] && $iday['month']==$showdate['month'] && $iday['year']==$showdate['year']) {
+							echo 'class="SelectedDay" ';
 						}
 					} 
 					else if ( $view == "week" ) { 
-            $datediff1 = Delta_Days($weekfrom['month'],$weekfrom['day'],$weekfrom['year'],$iday['month'],$iday['day'],$iday['year']);				
-            $datediff2 = Delta_Days($iday['month'],$iday['day'],$iday['year'],$weekto['month'],$weekto['day'],$weekto['year']);
+						$datediff1 = Delta_Days($weekfrom['month'],$weekfrom['day'],$weekfrom['year'],$iday['month'],$iday['day'],$iday['year']);				
+						$datediff2 = Delta_Days($iday['month'],$iday['day'],$iday['year'],$weekto['month'],$weekto['day'],$weekto['year']);
 						if ( $datediff1 >= 0 && $datediff2 >= 0 ) {
-  						echo 'class="SelectedDay" ';
+							echo 'class="SelectedDay" ';
 						}
 					}
 					else if ( $view == "month" ) { 
-					  if ($iday['month']==$showdate['month'] && $iday['year']==$showdate['year']) {
-  						echo 'class="SelectedDay" ';
+						if ($iday['month']==$showdate['month'] && $iday['year']==$showdate['year']) {
+							echo 'class="SelectedDay" ';
 						}
 					}
 					
@@ -110,7 +110,7 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 					
 					echo '<a ';
 					if ( $iday['day']==$today['day'] && $iday['month']==$today['month'] && $iday['year']==$today['year']) {
-  					$DayLinkClass = "Today";
+						$DayLinkClass = "Today";
 					}
 					else {
 						$DayLinkClass = "";
@@ -125,12 +125,12 @@ function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) 
 					echo 'href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&amp;timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")) . $queryStringExtension . '">';
 					echo $iday['day'];
 					echo '</a>';
-	        
+					
 					echo "</td>\n";
-	      } // end: for ($weekday = 0; $weekday <= 6; $weekday++)
-	      echo "</tr>\n";
-	    } // end: if (($iweek < 5) || ($weekstart[month] == $month[month])
-	  } // end: for ($iweek=1; $iweek<=6; $iweek++)
+				} // end: for ($weekday = 0; $weekday <= 6; $weekday++)
+				echo "</tr>\n";
+			} // end: if (($iweek < 5) || ($weekstart[month] == $month[month])
+		} // end: for ($iweek=1; $iweek<=6; $iweek++)
 		?>
 		</tbody>
 		<!-- End Calendar Body -->
@@ -161,15 +161,15 @@ function displayMonthSelector() {
 			?>');"><b>&laquo;</b></a></div><div id="LeftArrowButtonDisabled" style="color:#999999; display: none;"><b>&laquo;</b></div></td>
 			<!-- Date Label -->
 			<td align="center" nowrap valign="middle"><b><?php
-				  if ( ($view == "month" && $showdate['month'] == $month['month'] && $showdate['year'] == $month['year'] ) || !$enableViewMonth ) {
-				    echo above_lit_cal_date_format (Month_to_Text($month['month']), $month['year']);
-				  }
+					if ( ($view == "month" && $showdate['month'] == $month['month'] && $showdate['year'] == $month['year'] ) || !$enableViewMonth ) {
+						echo above_lit_cal_date_format (Month_to_Text($month['month']), $month['year']);
+					}
 					else {
-				    echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=month&amp;timebegin=' . urlencode(datetime2timestamp($month['year'],$month['month'],$month['day'],12,0,"am"));
-				    echo $queryStringExtension;
-				    echo '">';
-				    echo above_lit_cal_date_format( Month_to_Text($month['month']), $month['year'] );
-				    echo "</a>";
+						echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=month&amp;timebegin=' . urlencode(datetime2timestamp($month['year'],$month['month'],$month['day'],12,0,"am"));
+						echo $queryStringExtension;
+						echo '">';
+						echo above_lit_cal_date_format( Month_to_Text($month['month']), $month['year'] );
+						echo "</a>";
 					}
 				?></b></td>
 			<!-- Right Arrow Button -->

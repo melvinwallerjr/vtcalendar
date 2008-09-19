@@ -31,15 +31,15 @@ if (!empty($timebegin)) { $query.= " AND e.timebegin >= '".sqlescape($timebegin)
 if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }
 
 if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
-  $query.= " AND (";
+	$query.= " AND (";
 	for($c=0; $c < count($CategoryFilter); $c++) {
-	  if ($c > 0) { $query.=" OR "; }
-	  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
-    }
+		if ($c > 0) { $query.=" OR "; }
+		$query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
+		}
 	$query.= ")";
 }
 else {
-   if (isset($categoryid) && $categoryid != 0) { $query.= " AND (e.categoryid='".sqlescape($categoryid)."')"; }
+	 if (isset($categoryid) && $categoryid != 0) { $query.= " AND (e.categoryid='".sqlescape($categoryid)."')"; }
 }
 
 if (!empty($keyword)) {
@@ -48,7 +48,7 @@ if (!empty($keyword)) {
 	// read alternative keywords from database
 	$r =& DBQuery("SELECT * FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 	
-  for ($i=0; $i < $r->numRows(); $i++) {
+	for ($i=0; $i < $r->numRows(); $i++) {
 		$searchkeyword = $r->fetchRow(DB_FETCHMODE_ASSOC,$i);
 		$search_keyword[$i]=$searchkeyword['keyword'];
 		$search_alternative[$i]=$searchkeyword['alternative'];
@@ -56,23 +56,23 @@ if (!empty($keyword)) {
 
 	// read featured keywords from database
 	$featuredresult = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
-    for ($i=0; $i < $featuredresult->numRows(); $i++) {
-  		$feature = $featuredresult->fetchRow(DB_FETCHMODE_ASSOC,$i);
+		for ($i=0; $i < $featuredresult->numRows(); $i++) {
+			$feature = $featuredresult->fetchRow(DB_FETCHMODE_ASSOC,$i);
 		$search_featured[$feature['keyword']]=$feature['featuretext'];
 	}
 		 		
 	for ($i=0; $i<count($keywords); $i++) {
 		$kw = strtolower($keywords[$i]);
 		if ( !empty($kw) ) {
-		  // print featured text if exists
+			// print featured text if exists
 			if ( isset($search_featured) && array_key_exists ($kw, $search_featured) ) {
-			  	echo "<tr valign=\"top\">\n  <td colspan=\"3\">\n";
+					echo "<tr valign=\"top\">\n  <td colspan=\"3\">\n";
 				echo '<table border="1" cellspacing="0" cellpadding="0" width="100%"><tr><td >';
 				echo '<table border="1" cellspacing="2" cellpadding="5" width="100%"><tr><td bgcolor="#ffffff">';
 				echo str_replace("\r", "<br>", make_clickable(htmlentities($search_featured[$kw])));
 				echo '</td></tr></table>';
 				echo '</td></tr></table>';
-			  	echo "<br></td>\n</tr>\n";
+					echo "<br></td>\n</tr>\n";
 			}
 			
 			$query.= " and (";
@@ -86,7 +86,7 @@ if (!empty($keyword)) {
 						$query.=" or (e.location LIKE '%".sqlescape($kw)."%') or (e.title LIKE '%".sqlescape($kwalt)."%') or (e.description LIKE '%".sqlescape($kwalt)."%') or (e.displayedsponsor LIKE '%".sqlescape($kwalt)."%') or (c.name LIKE '%".sqlescape($kwalt)."%')";
 					}
 				}
-		    }
+				}
 			$query.=")"; 
 		}
 	}
@@ -102,17 +102,17 @@ if ($ievent < $result->numRows()) {
 }
 else {
 ?>
-        <tr valign="top">
-          <td colspan="3"><span class="announcement">&nbsp;&nbsp;<?php echo lang('no_events_found'); ?>.</span></td>
-        </tr>
+				<tr valign="top">
+					<td colspan="3"><span class="announcement">&nbsp;&nbsp;<?php echo lang('no_events_found'); ?>.</span></td>
+				</tr>
 <?php	
 } // end: else: if ($ievent < $result->numRows())
 
 // print all events of one day
 while ($ievent < $result->numRows()) {
  	  disassemble_timestamp($event);	
-    $event_timebegin_num = timestamp2timenumber($event['timebegin']);
-    $event_timeend_num = timestamp2timenumber($event['timeend']);
+		$event_timebegin_num = timestamp2timenumber($event['timebegin']);
+		$event_timeend_num = timestamp2timenumber($event['timeend']);
 		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
 		$timediff = $event_timeend_num - $event_timebegin_num;
 		$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
@@ -122,29 +122,29 @@ while ($ievent < $result->numRows()) {
 	// print event
 	echo '        <tr valign="top" class="BorderTop">',"\n";
 	echo '          <td width="1%" align="right" valign="top" nowrap';
-  if ( $EventHasPassed ) {
-	  echo ' class="TimeColumn-Past"'; }
+	if ( $EventHasPassed ) {
+		echo ' class="TimeColumn-Past"'; }
 	else {
 		echo ' class="TimeColumn"'; }
 	echo '>',"\n";
 	echo '          	';
-    echo searchresult_date_format($event_timebegin['day'],Day_of_Week_to_Text(Day_of_Week($event_timebegin['month'],$event_timebegin['day'],$event_timebegin['year'])),Month_to_Text($event_timebegin['month']),$event_timebegin['year']);
+		echo searchresult_date_format($event_timebegin['day'],Day_of_Week_to_Text(Day_of_Week($event_timebegin['month'],$event_timebegin['day'],$event_timebegin['year'])),Month_to_Text($event_timebegin['month']),$event_timebegin['year']);
 
-    //echo Day_of_Week_Abbreviation(Day_of_Week($event_timebegin['month'],$event_timebegin['day'],$event_timebegin['year'])),", ";
-    //echo Month_to_Text_Abbreviation($event_timebegin['month'])," ",$event_timebegin['day'],", ",$event_timebegin['year'];
-    echo "<br>";
-    if ($event['wholedayevent']==0) {
-  	  disassemble_timestamp($event);	
+		//echo Day_of_Week_Abbreviation(Day_of_Week($event_timebegin['month'],$event_timebegin['day'],$event_timebegin['year'])),", ";
+		//echo Month_to_Text_Abbreviation($event_timebegin['month'])," ",$event_timebegin['day'],", ",$event_timebegin['year'];
+		echo "<br>";
+		if ($event['wholedayevent']==0) {
+			disassemble_timestamp($event);	
 			echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-    }
-    else {
-        if (isset($previousWholeDay) && !$previousWholeDay ) { echo 'All day'; }
-        $previousWholeDay = true;
+		}
+		else {
+				if (isset($previousWholeDay) && !$previousWholeDay ) { echo 'All day'; }
+				$previousWholeDay = true;
 	}
 	echo '</td>',"\n";
 	echo '<td width="98%"';
-  if ( $EventHasPassed ) {
-	  echo ' class="DataColumn-Past"'; }
+	if ( $EventHasPassed ) {
+		echo ' class="DataColumn-Past"'; }
 	else {
 		echo ' class="DataColumn"'; }
 	echo '><div class="EventLeftBar"><b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';

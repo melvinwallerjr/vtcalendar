@@ -32,8 +32,8 @@ contentsection_begin(lang('preview_event'));
 <input type="submit" name="edit" value="<?php echo lang('go_back_to_make_changes'); ?>"> &nbsp;&nbsp;&nbsp;
 <input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
 <p style="font-size: 18px; font-weight: bold; padding-bottom: 6px; margin-bottom: 0;"><?php
-  echo Day_of_Week_to_Text(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'])),", ";
-  echo Month_to_Text($event['timebegin_month'])," ",$event['timebegin_day'],", ",$event['timebegin_year'];
+	echo Day_of_Week_to_Text(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'])),", ";
+	echo Month_to_Text($event['timebegin_month'])," ",$event['timebegin_day'],", ",$event['timebegin_year'];
 ?></p>
 
 <table border="0" cellpadding="0" cellspacing="0"><tr><td style="border: 1px solid #666666;"><?php
@@ -56,9 +56,9 @@ if ($repeat['mode'] > 0) {
 	echo lang('recurring_event'),": ";
 	$repeatdef = repeatinput2repeatdef($event,$repeat);
 	printrecurrence($event['timebegin_year'],
-									$event['timebegin_month'],
-									$event['timebegin_day'],
-									$repeatdef);
+		$event['timebegin_month'],
+		$event['timebegin_day'],
+		$repeatdef);
 	echo "<BR>";
 	$repeatlist = producerepeatlist($event,$repeat);
 	printrecurrencedetails($repeatlist);

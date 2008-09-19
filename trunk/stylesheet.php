@@ -18,5 +18,5 @@ else { $ie = 0; }
 	COLOR: #CC0000;
 }
 code, pre {
-   font-size: 10pt;
+	 font-size: 10pt;
 }

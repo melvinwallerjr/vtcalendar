@@ -10,12 +10,12 @@ if (is_string($result)) {
 else {
 	// read first event if one exists
 	if ($result->numRows()>0) {
-	  $event['calendarid'] = $_SESSION['CALENDAR_ID'];
-	  $event['id'] = $eventid;
-	  
-	  if ((isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"]==$event['sponsorid']) || !empty($_SESSION['AUTH_ISCALENDARADMIN'])) {
-	  	?><div style="padding: 5px;"><?php adminButtons($event, array('update','copy','delete'), "normal", "horizontal"); ?></div><?php
-	  }
+		$event['calendarid'] = $_SESSION['CALENDAR_ID'];
+		$event['id'] = $eventid;
+		
+		if ((isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"]==$event['sponsorid']) || !empty($_SESSION['AUTH_ISCALENDARADMIN'])) {
+			?><div style="padding: 5px;"><?php adminButtons($event, array('update','copy','delete'), "normal", "horizontal"); ?></div><?php
+		}
 		print_event($event);    
 	}
 }

@@ -1,21 +1,21 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
+	require_once('application.inc.php');
 
-  if (!authorized()) { exit; }
-  if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
+	if (!authorized()) { exit; }
+	if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
 
-  if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
-  if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }
-  if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }
+	if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
+	if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }
+	if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }
 
 
-  if ( isset($edit) ) {
-	  redirect2URL("changeuserinfo.php?chooseuser=1&userid=".$userid); exit;
+	if ( isset($edit) ) {
+		redirect2URL("changeuserinfo.php?chooseuser=1&userid=".$userid); exit;
 	}
-  elseif ( isset($delete) ) {
-    redirect2URL("deleteuser.php?userid=".$userid); exit;
+	elseif ( isset($delete) ) {
+		redirect2URL("deleteuser.php?userid=".$userid); exit;
 	}
  
 	pageheader(lang('manage_users'), "Update");
@@ -26,18 +26,18 @@ require_once('session_start.inc.php');
 <p><a href="changeuserinfo.php"><?php echo lang('add_new_user'); ?></a> <?php echo lang('or_modify_existing_user'); ?></p>
 
 <?php
-  $numLines = 15;
+	$numLines = 15;
 ?>
 <select name="userid" size="<?php echo $numLines; ?>" style="width:200px">
 <?php
-  $result = DBQuery("SELECT * FROM vtcal_user ORDER BY id" ); 
+	$result = DBQuery("SELECT * FROM vtcal_user ORDER BY id" ); 
 
-  for ($i=0; $i<$result->numRows(); $i++) {
-    $user = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+	for ($i=0; $i<$result->numRows(); $i++) {
+		$user = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 ?>	
-  <option value="<?php echo $user['id']; ?>"><?php echo $user['id']; ?></option>
+	<option value="<?php echo $user['id']; ?>"><?php echo $user['id']; ?></option>
 <?php
-  } // end: for ($i=0; $i<$result->numRows(); $i++)
+	} // end: for ($i=0; $i<$result->numRows(); $i++)
 ?>	
 </select><br>
 <input type="submit" name="edit" value="<?php echo lang('button_edit'); ?>">
@@ -50,7 +50,7 @@ document.mainform.userid.focus();
 //--></script>
 
 <?php
-  contentsection_end();
-  pagefooter();
+	contentsection_end();
+	pagefooter();
 DBclose();
 ?>

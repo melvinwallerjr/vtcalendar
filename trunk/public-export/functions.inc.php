@@ -478,103 +478,103 @@ function FormatDuration($format, $seconds) {
 function createRepeatString($startdate, $enddate, $startyear, $startmonth, $startday, $repeatdef, $config) {
 	$ReturnString = "";
 	
-  if (!empty($repeatdef)) {
-    repeatdefdisassemble($repeatdef,$frequency,$interval,$frequencymodifier,$endyear,$endmonth,$endday);
-    
-    if ($frequency=="MP") {
-      list($frequencymodifiernumber,$frequencymodifierday) = getfirstslice($frequencymodifier);
-      
-      $ReturnString = $ReturnString. ucfirst(lang('on_the')).' ';
+	if (!empty($repeatdef)) {
+		repeatdefdisassemble($repeatdef,$frequency,$interval,$frequencymodifier,$endyear,$endmonth,$endday);
+		
+		if ($frequency=="MP") {
+			list($frequencymodifiernumber,$frequencymodifierday) = getfirstslice($frequencymodifier);
+			
+			$ReturnString = $ReturnString. ucfirst(lang('on_the')).' ';
 
-      if ($frequencymodifiernumber[1]=="-") { $ReturnString = $ReturnString. lang('last'); }
-      else {
+			if ($frequencymodifiernumber[1]=="-") { $ReturnString = $ReturnString. lang('last'); }
+			else {
 				if ($frequencymodifiernumber=="1+") { $ReturnString = $ReturnString. lang('first'); }
-        elseif ($frequencymodifiernumber=="2+") { $ReturnString = $ReturnString. lang('second'); }
-        elseif ($frequencymodifiernumber=="3+") { $ReturnString = $ReturnString. lang('third'); }
-        elseif ($frequencymodifiernumber=="4+") { $ReturnString = $ReturnString. lang('fourth'); }
-      }
-      
-      $ReturnString = $ReturnString. " ";
-      
-      if ($frequencymodifierday=="SU") { $ReturnString = $ReturnString. lang('sunday'); }
-      elseif ($frequencymodifierday=="MO") { $ReturnString = $ReturnString. lang('mon'); }
-      elseif ($frequencymodifierday=="TU") { $ReturnString = $ReturnString. lang('tue'); }
-      elseif ($frequencymodifierday=="WE") { $ReturnString = $ReturnString. lang('wed'); }
-      elseif ($frequencymodifierday=="TH") { $ReturnString = $ReturnString. lang('thu'); }
-      elseif ($frequencymodifierday=="FR") { $ReturnString = $ReturnString. lang('fri'); }
-      elseif ($frequencymodifierday=="SA") { $ReturnString = $ReturnString. lang('sat'); }
+				elseif ($frequencymodifiernumber=="2+") { $ReturnString = $ReturnString. lang('second'); }
+				elseif ($frequencymodifiernumber=="3+") { $ReturnString = $ReturnString. lang('third'); }
+				elseif ($frequencymodifiernumber=="4+") { $ReturnString = $ReturnString. lang('fourth'); }
+			}
+			
+			$ReturnString = $ReturnString. " ";
+			
+			if ($frequencymodifierday=="SU") { $ReturnString = $ReturnString. lang('sunday'); }
+			elseif ($frequencymodifierday=="MO") { $ReturnString = $ReturnString. lang('mon'); }
+			elseif ($frequencymodifierday=="TU") { $ReturnString = $ReturnString. lang('tue'); }
+			elseif ($frequencymodifierday=="WE") { $ReturnString = $ReturnString. lang('wed'); }
+			elseif ($frequencymodifierday=="TH") { $ReturnString = $ReturnString. lang('thu'); }
+			elseif ($frequencymodifierday=="FR") { $ReturnString = $ReturnString. lang('fri'); }
+			elseif ($frequencymodifierday=="SA") { $ReturnString = $ReturnString. lang('sat'); }
 
-      $ReturnString = $ReturnString. ' '.lang('of_the_month_every').' ';
+			$ReturnString = $ReturnString. ' '.lang('of_the_month_every').' ';
 
-      if ($interval==1) { $ReturnString = $ReturnString. lang("month"); }
-      elseif ($interval==2) { $ReturnString = $ReturnString. lang("other_month"); }
-      elseif ($interval>=3 && $interval<=6) { $ReturnString = $ReturnString. $interval.' '.lang('months'); }
-      elseif ($interval==12) { $ReturnString = $ReturnString. lang("year"); }
+			if ($interval==1) { $ReturnString = $ReturnString. lang("month"); }
+			elseif ($interval==2) { $ReturnString = $ReturnString. lang("other_month"); }
+			elseif ($interval>=3 && $interval<=6) { $ReturnString = $ReturnString. $interval.' '.lang('months'); }
+			elseif ($interval==12) { $ReturnString = $ReturnString. lang("year"); }
 
-    } // end: if ($frequency=="MP")
-    else {
-      if ($interval==1) { $ReturnString = $ReturnString. ucfirst(lang("every")); }
-      elseif ($interval==2) { $ReturnString = $ReturnString. ucfirst(lang("every_other")); }
-      elseif ($interval==3) { $ReturnString = $ReturnString. ucfirst(lang("every_third")); }
-      elseif ($interval==4) { $ReturnString = $ReturnString. ucfirst(lang("every_fourth")); }
-      $ReturnString = $ReturnString. ' ';
+		} // end: if ($frequency=="MP")
+		else {
+			if ($interval==1) { $ReturnString = $ReturnString. ucfirst(lang("every")); }
+			elseif ($interval==2) { $ReturnString = $ReturnString. ucfirst(lang("every_other")); }
+			elseif ($interval==3) { $ReturnString = $ReturnString. ucfirst(lang("every_third")); }
+			elseif ($interval==4) { $ReturnString = $ReturnString. ucfirst(lang("every_fourth")); }
+			$ReturnString = $ReturnString. ' ';
 
-      if ($frequency=="D") { $ReturnString = $ReturnString. strtolower(lang("day")); }
-      elseif ($frequency=="M") { $ReturnString = $ReturnString. strtolower(lang("month")); }
-      elseif ($frequency=="Y") { $ReturnString = $ReturnString. strtolower(lang("year")); }
-      elseif ($frequency=="W") {
-        $ReturnString = $ReturnString. " ";
-        if (empty($frequencymodifier)) { $ReturnString = $ReturnString. strtolower(lang("week")); }
-        else {
-          $frequencymodifier = " ".$frequencymodifier;
-				  $comma = 0;
-				  if (strpos($frequencymodifier,"SU")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("sun");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"MO")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("mon");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"TU")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("tue");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"WE")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("wed");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"TH")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("thu");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"FR")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("fri");
-			            $comma=1;
-				  }
-				  if (strpos($frequencymodifier,"SA")!=0) {
-				    if ($comma) { $ReturnString = $ReturnString. ", "; }
-				    $ReturnString = $ReturnString. lang("sat");
-			            $comma=1;
-				  }
+			if ($frequency=="D") { $ReturnString = $ReturnString. strtolower(lang("day")); }
+			elseif ($frequency=="M") { $ReturnString = $ReturnString. strtolower(lang("month")); }
+			elseif ($frequency=="Y") { $ReturnString = $ReturnString. strtolower(lang("year")); }
+			elseif ($frequency=="W") {
+				$ReturnString = $ReturnString. " ";
+				if (empty($frequencymodifier)) { $ReturnString = $ReturnString. strtolower(lang("week")); }
+				else {
+					$frequencymodifier = " ".$frequencymodifier;
+					$comma = 0;
+					if (strpos($frequencymodifier,"SU")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("sun");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"MO")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("mon");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"TU")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("tue");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"WE")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("wed");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"TH")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("thu");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"FR")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("fri");
+									$comma=1;
+					}
+					if (strpos($frequencymodifier,"SA")!=0) {
+						if ($comma) { $ReturnString = $ReturnString. ", "; }
+						$ReturnString = $ReturnString. lang("sat");
+									$comma=1;
+					}
 				} // end: else: if (empty($frequencymodifier))
-      } // end: elseif ($frequency=="W")
-    } // end: else: if ($frequency=="MP")
+			} // end: elseif ($frequency=="W")
+		} // end: else: if ($frequency=="MP")
 
-    $ReturnString = $ReturnString. ' from '. FormatDate($config['DateFormat'], mktime(0,0,0,$startmonth, $startday, $startyear)); //dbtime2tick($startdate)); //Encode_Date_US($startmonth,$startday,$startyear);
-    $ReturnString = $ReturnString. ' through '. FormatDate($config['DateFormat'], mktime(0,0,0,$endmonth, $endday, $endyear)); //Encode_Date_US($endmonth,$endday,$endyear);
+		$ReturnString = $ReturnString. ' from '. FormatDate($config['DateFormat'], mktime(0,0,0,$startmonth, $startday, $startyear)); //dbtime2tick($startdate)); //Encode_Date_US($startmonth,$startday,$startyear);
+		$ReturnString = $ReturnString. ' through '. FormatDate($config['DateFormat'], mktime(0,0,0,$endmonth, $endday, $endyear)); //Encode_Date_US($endmonth,$endday,$endyear);
 
-  } // end: if (!empty($repeatdef))
-  else {
-    $ReturnString = $ReturnString. lang('no_recurrences_defined');
-  }
-  
-  return $ReturnString;
+	} // end: if (!empty($repeatdef))
+	else {
+		$ReturnString = $ReturnString. lang('no_recurrences_defined');
+	}
+	
+	return $ReturnString;
 }
 ?>

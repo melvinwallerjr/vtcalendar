@@ -29,15 +29,15 @@ contentsection_begin(lang('searched_keywords'),true);
 ?>
 <form method="get" action="viewsearchedkeywords.php">
 	<table  border="0" cellspacing="0" cellpadding="2">
-    	<tr>
-    		<td>Report Range:</td>
-    		<td><input type="textbox" name="rangestart" value="<?php echo $rangestart ?>" size="10"></td>
-    		<td>to</td>
-    		<td><input type="textbox" name="rangestart" value="<?php echo $rangeend ?>" size="10"></td>
-    		<td><input type="submit" value="Show"></td>
-    		<td> (yyyy-mm-dd)</td>
-   		</tr>
-    	</table>
+			<tr>
+				<td>Report Range:</td>
+				<td><input type="textbox" name="rangestart" value="<?php echo $rangestart ?>" size="10"></td>
+				<td>to</td>
+				<td><input type="textbox" name="rangestart" value="<?php echo $rangeend ?>" size="10"></td>
+				<td><input type="submit" value="Show"></td>
+				<td> (yyyy-mm-dd)</td>
+	 		</tr>
+			</table>
 </form>
 <?php
 

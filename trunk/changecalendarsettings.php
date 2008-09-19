@@ -22,16 +22,16 @@ if (isset($_POST['futurecolor'])) { setVar($futurecolor,$_POST['futurecolor'],'c
 if (isset($_POST['textcolor'])) { setVar($textcolor,$_POST['textcolor'],'color'); } else { unset($textcolor); }
 if (isset($_POST['linkcolor'])) { setVar($linkcolor,$_POST['linkcolor'],'color'); } else { unset($linkcolor); }
 if (isset($_POST['gridcolor'])) { setVar($gridcolor,$_POST['gridcolor'],'color'); } else { unset($gridcolor); }
-   
+	 
 if (isset($cancel)) {
 redirect2URL("update.php");
 exit;
 };
 
 if (!(isset($title) && isset($header) && isset($footer) && 
-	  isset($bgcolor) && isset($maincolor) && isset($todaycolor) && 
-	  isset($pastcolor) && isset($futurecolor) && isset($textcolor) && isset($linkcolor) && isset($gridcolor) &&
-      isset($viewauthrequired))) { //(re-)read from database
+		isset($bgcolor) && isset($maincolor) && isset($todaycolor) && 
+		isset($pastcolor) && isset($futurecolor) && isset($textcolor) && isset($linkcolor) && isset($gridcolor) &&
+			isset($viewauthrequired))) { //(re-)read from database
 	$title = $_SESSION['CALENDAR_TITLE'];	
 	$header = $_SESSION['CALENDAR_HEADER'];	
 	$footer = $_SESSION['CALENDAR_FOOTER'];	
@@ -126,22 +126,22 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 
 <p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 
-  <b><?php echo lang('calendar_title'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_text'); ?></font><br>
-  <input type="text" name="title" maxlength="<?php echo $constCalendarTitleMAXLENGTH; ?>" size="30" value="<?php 
+	<b><?php echo lang('calendar_title'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_text'); ?></font><br>
+	<input type="text" name="title" maxlength="<?php echo $constCalendarTitleMAXLENGTH; ?>" size="30" value="<?php 
 	echo htmlentities($title);
 	?>"><br>
-  <br>
+	<br>
 
-  <b><?php echo lang('header_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
-  <textarea name="header" wrap="physical" cols="70" rows="10"><?php 
+	<b><?php echo lang('header_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
+	<textarea name="header" wrap="physical" cols="70" rows="10"><?php 
 	echo htmlentities($header);
 	?></textarea><br>
-  <br>
+	<br>
 
-  <b><?php echo lang('footer_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
-  <textarea name="footer" wrap="physical" cols="70" rows="10"><?php
+	<b><?php echo lang('footer_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
+	<textarea name="footer" wrap="physical" cols="70" rows="10"><?php
 	echo htmlentities($footer);
-  ?></textarea>
+	?></textarea>
 
 <!--<p>Note: Changing colors on the calendar is currently disabled.</p>-->
 <input type="hidden" name="bgcolor" value="<?php echo $bgcolor; ?>">
@@ -155,56 +155,56 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 
 
 <?php
-  if ( $_SESSION['CALENDAR_ID'] != "default" ) {
+	if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 ?>
 <?php
-  $result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
-  $c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-  $defaultcalendarname = $c['name'];
+	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
+	$c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	$defaultcalendarname = $c['name'];
 ?>
 <br>
-  <table border="0">
-    <tr align="left" valign="top">
-      <td><input type="checkbox" name="forwardeventdefault" id="forwardeventdefault" value="1"<?php if ($forwardeventdefault=="1") { echo " checked"; } ?>></td>
-      <td><strong><label for="forwardeventdefault">By default also display events on the <?php echo $defaultcalendarname ?></label></strong> <br>
-        (Sponsors can still disable this on a per-event basis)</td>
-    </tr>
-  </table>
+	<table border="0">
+		<tr align="left" valign="top">
+			<td><input type="checkbox" name="forwardeventdefault" id="forwardeventdefault" value="1"<?php if ($forwardeventdefault=="1") { echo " checked"; } ?>></td>
+			<td><strong><label for="forwardeventdefault">By default also display events on the <?php echo $defaultcalendarname ?></label></strong> <br>
+				(Sponsors can still disable this on a per-event basis)</td>
+		</tr>
+	</table>
 <?php
-  } // end: if ( $_SESSION['CALENDAR_ID'] != "default" ) {
+	} // end: if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 ?>
  <br>
 <br>
 
-    <b><?php echo lang('login_required_for_viewing'); ?></b>
+		<b><?php echo lang('login_required_for_viewing'); ?></b>
 </p>
 <table border="0" cellpadding="3" cellspacing="3">
 <tr>
-  <td align="right"><input type="radio" name="viewauthrequired" value="0"<?php 
+	<td align="right"><input type="radio" name="viewauthrequired" value="0"<?php 
 	if ( $viewauthrequired == 0 ) { echo " checked"; }
 	?>></td>
-  <td align="left"><?php echo lang('no_login_required'); ?><br></td>
+	<td align="left"><?php echo lang('no_login_required'); ?><br></td>
 </tr>
 <tr>
-  <td align="right" valign="top"><input type="radio" name="viewauthrequired" value="1"<?php 
+	<td align="right" valign="top"><input type="radio" name="viewauthrequired" value="1"<?php 
 	if ( $viewauthrequired != 0 ) { echo " checked"; }
 	?>></td>
-  <td align="left"><?php echo lang('login_required_user_ids'); ?>:<br>
+	<td align="left"><?php echo lang('login_required_user_ids'); ?>:<br>
 <?php
-  if (!empty($addPIDError)) {    
-    feedback($addPIDError,1);
-  }
+	if (!empty($addPIDError)) {    
+		feedback($addPIDError,1);
+	}
 ?>
 		<textarea name="users" cols="40" rows="6" wrap="virtual"><?php
 		if ( isset($users) ) {
-		  echo $users;
+			echo $users;
 		}
 		else {
-		  $query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
-      $result = DBQuery($query ); 
+			$query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
+			$result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {
-			  $viewauth = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+				$viewauth = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 				if ($i>0) { echo ","; }
 				echo $viewauth['userid'];
 				$i++;
@@ -218,7 +218,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 <p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 </form>
 <?php 
-  contentsection_end();
-  pagefooter();
+	contentsection_end();
+	pagefooter();
 DBclose();
 ?>

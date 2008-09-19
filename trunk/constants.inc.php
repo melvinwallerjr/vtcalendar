@@ -3,7 +3,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
 
 /* ============================================================
          Constants that define valid values for fields.
-         TODO: Merge with section later in this file.
+				 TODO: Merge with section later in this file.
 ============================================================ */
 
 define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");

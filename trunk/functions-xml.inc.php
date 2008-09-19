@@ -35,8 +35,8 @@ function parsexml($xmlfile, $xmlstartelementhandler, $xmlendelementhandler, $xml
 // default error handler
 function xmlerror($xml_parser) {
 	sprintf("XML error: %s at line %d",
-					xml_error_string(xml_get_error_code($xml_parser)),
-					xml_get_current_line_number($xml_parser));
+		xml_error_string(xml_get_error_code($xml_parser)),
+		xml_get_current_line_number($xml_parser));
 } // end: function xmlerror
 
 // XML parser element handler for start element

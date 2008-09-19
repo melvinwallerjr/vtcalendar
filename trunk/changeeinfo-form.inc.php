@@ -62,7 +62,7 @@ if (isset($eventid) && (!isset($check) || $check != 1)) {
 		readinrepeat($event['repeatid'],$event,$repeat);
 	}
 	else { $repeat['mode'] = 0; }
-  //$sponsorid = $event[sponsorid];
+	//$sponsorid = $event[sponsorid];
 }
 
 contentsection_begin(lang('input_event_information'));
@@ -86,7 +86,7 @@ contentsection_end();
 function inputeventbuttons($httpreferer) {
 	?>
 	<p><INPUT type="submit" name="preview" value="<?php echo lang('preview_event'); ?>">
-  <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>"  onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
+	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>"  onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
 	<?php
 }
 ?>

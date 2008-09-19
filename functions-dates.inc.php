@@ -1,40 +1,4 @@
 <?php
-// NEEDS TO BE REMOVED
-// determines a background color according to the day
-function datetocolor($month,$day,$year,$colorpast,$colortoday,$colorfuture) {
-  $datediff = Delta_Days($month,$day,$year,date("m"),date("d"),date("Y"));
-
-  if ($datediff > 0) {
-    $color=$colorpast;
-  }
-  elseif ($datediff < 0) {
-    $color=$colorfuture;
-  }
-  else {
-    $color=$colortoday;
-  }
-
-  return $color;
-}
-
-// NEEDS TO BE REMOVED
-// determines the CSS class (past, today, future) according to the day
-function datetoclass($month,$day,$year) {
-  $datediff = Delta_Days($month,$day,$year,date("m"),date("d"),date("Y"));
-
-  if ($datediff > 0) {
-    $class="past";
-  }
-  elseif ($datediff < 0) {
-    $class="future";
-  }
-  else {
-    $class="today";
-  }
-
-  return $class;
-}
-
 // NOT USED
 function printeventdate(&$event) {
   $event_timebegin_month = $event['timebegin_month'];

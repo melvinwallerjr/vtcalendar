@@ -10,7 +10,6 @@ displayLittleCalendar($month, $view, $showdate, $queryStringExtension);
 function displayLittleCalendar($month, $view, $showdate, $queryStringExtension) {
 	global $week_start;
 	global $day_beg_h, $day_end_h;
-	global $colorpast, $colortoday, $colorfuture;
 	
 	$today = Decode_Date_US(date("m/d/Y"));
 	

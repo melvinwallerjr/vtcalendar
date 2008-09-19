@@ -60,8 +60,6 @@ require_once("functions-gets.inc.php");
 
 /* VTCalendar specific date/time conversions and formatting:
 ----------------------------------------------------
-function datetocolor($month,$day,$year,$colorpast,$colortoday,$colorfuture)
-function datetoclass($month,$day,$year)
 function printeventdate(&$event)
 function printeventtime(&$event)
 function yearmonth2timestamp($year,$month)

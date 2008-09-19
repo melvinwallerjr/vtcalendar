@@ -56,14 +56,6 @@ if (isset($calendarid)) {
 }
 
 /* ============================================================
-                        Define colors
-============================================================ */
-
-$colorpast = $_SESSION["PASTCOLOR"];
-$colortoday  = $_SESSION["TODAYCOLOR"];
-$colorfuture = $_SESSION["FUTURECOLOR"];
-
-/* ============================================================
                   Fixes for slow browsers
 ============================================================ */
 if ( $_SERVER["HTTP_USER_AGENT"] == "Mozilla/4.0 (compatible; MSIE 5.22; Mac_PowerPC)" ) {

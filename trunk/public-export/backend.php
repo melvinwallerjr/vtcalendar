@@ -168,7 +168,7 @@ Header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
 if ( isset($config['LinkFilter'])) {
 	$Filters = split(",", $config['LinkFilter']);
 	for ($i = 0; $i < count($Filters); $i++) {
-		$config['LinkFilterQueryString'] = $config['LinkFilterQueryString']."&filtercategories%5B%5D=".$Filters[$i];
+		$config['LinkFilterQueryString'] = $config['LinkFilterQueryString']."&categoryfilter%5B%5D=".$Filters[$i];
 	}
 }
 

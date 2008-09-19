@@ -1,7 +1,7 @@
 <?php
 // Defines a single function that outputs the page header:
 function pageheader($title, $navbaractive) {
-	global $enableViewMonth, $timebegin;
+	global $enableViewMonth, $timebegin, $queryStringExtension, $view;
 	
 	?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 	<html>

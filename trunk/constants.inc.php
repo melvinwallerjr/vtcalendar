@@ -6,6 +6,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
          TODO: Merge with section later in this file.
 ============================================================ */
 
+define("MAX_SESSION_CALENDAR_NAMES", 100);
 define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
 //NOT USED define("BGCOLORNAVBARACTIVE","#993333");
 //NOT USED define("BGCOLORWEEKMONTHNAVBAR","#993333");
@@ -35,8 +36,9 @@ define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW));
 
 // Regular Expressions that validate text input
 define("constValidTextCharFullRegEx",'\s\x20-\x7E\xA0-\xFF'); // Includes all valid ISO-8859-1 characters
-define("constValidTextCharWithoutSpacesRegEx",'\w~!@#\$%^&*\(\)\-+=\{\}\[\]\|\\\:";\'<>?,.\/'.chr(188).chr(189).chr(190)); //188-190 are 1/4, 1/2, 3/4 respectively
-define("constValidTextCharWithSpacesRegEx",'\s'.constValidTextCharWithoutSpacesRegEx);
+define("constValidTextCharWithoutSpacesRegEx",'\w~!@#\$%^&*\(\)\-+=\{\}\[\]\|\\\:";\'<>?,.\/'.chr(188).chr(189).chr(190)); //188, 189, 190 are 1/4, 1/2, 3/4 respectively
+define("constValidTextCharWithSpacesRegEx",' '.constValidTextCharWithoutSpacesRegEx);
+define("constValidTextCharWithWhitespaceRegEx",'\s'.constValidTextCharWithoutSpacesRegEx);
 
 define("constPasswordMaxLength",20);
 define("constPasswordRegEx", '/^['.constValidTextCharWithoutSpacesRegEx.']{1,'.constPasswordMaxLength.'}$/');

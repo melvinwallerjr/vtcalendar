@@ -10,11 +10,11 @@
   if ($sponsorid != "all") { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
 	// Filter by category filters if necessary
-	if ( isset($filtercategories) && count($filtercategories) > 0 ) {
+	if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
 	  $query.= " AND (";
-		for($c=0; $c < count($filtercategories); $c++) {
+		for($c=0; $c < count($CategoryFilter); $c++) {
 		  if ($c > 0) { $query.=" OR "; }
-		  $query.= "(e.categoryid='".sqlescape($filtercategories[$c])."')";
+		  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
     }
 		$query.= ")";
 	}

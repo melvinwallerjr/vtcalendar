@@ -34,8 +34,7 @@ if (isset($_GET['timeend_day'])) { setVar($timeend_day,$_GET['timeend_day'],'tim
 if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
 if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
 if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
-if (isset($_GET['filtercategories'])) { setVar($filtercategories,$_GET['filtercategories'],'filtercategories'); } else { unset($filtercategories); }
-if (isset($_COOKIE['CategoryFilter'])) { setVar($CategoryFilter,$_COOKIE['CategoryFilter'],'CategoryFilter'); } else { unset($CategoryFilter); }
+if (isset($_GET['categoryfilter'])) { setVar($CategoryFilter,$_GET['categoryfilter'],'categoryfilter'); } else { unset($CategoryFilter); }
 if (isset($_GET['littlecal'])) { setVar($littlecal,$_GET['littlecal'],'littlecal'); } else { unset($littlecal); }
 if (isset($_GET['page'])) { setVar($page,$_GET['page'],'page'); } else { unset($page); }
 
@@ -62,7 +61,7 @@ if (!isset($keyword)) { $keyword=""; }
 $queryStringExtension = "";
 if (isset($categoryid) && $categoryid != 0) { $queryStringExtension .= "&categoryid=".urlencode($categoryid); }
 if (isset($sponsorid) && $sponsorid != "all") { $queryStringExtension .= "&sponsorid=".urlencode($sponsorid); }
-if (isset($keyword) && $keyword != "") { $queryStringExtension .= "&keyword=".urlencode($keyword); }
+if (!empty($keyword)) { $queryStringExtension .= "&keyword=".urlencode($keyword); }
 
 // the week is specified by a single day, the whole week this day belongs to is displayed
 $showdate = timestamp2datetime($timebegin);

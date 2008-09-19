@@ -33,7 +33,6 @@ function pageheader($title, $navbaractive) {
 		<link href="stylesheet.php" rel="stylesheet" type="text/css">
 		<link href="calendar.css.php" rel="stylesheet" type="text/css" media="screen">
 		<link href="print.css" rel="stylesheet" type="text/css" media="print">
-		<link href="navi-top-gold.css" rel="stylesheet" type="text/css">
 		<!--[if lte IE 6]><style>
 		#RightColumn #MonthTable div.DayNumber a { height: 1em; }
 		</style><![endif]-->
@@ -52,7 +51,7 @@ function pageheader($title, $navbaractive) {
 			<td class="TopNavi-ColorPadding" width="100%" valign="bottom">
 				<table width="100%" border="0" cellpadding="6" cellspacing="0">
 					<tr>
-						<td id="NaviBar-EventName" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><?php if (isset($_SESSION['CALENDAR_TITLE'])) { echo $_SESSION['CALENDAR_TITLE']; } else { echo lang('calendar'); } ?></a></td>
+						<td id="NaviBar-CalendarTitle" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><?php if (isset($_SESSION['CALENDAR_TITLE'])) { echo $_SESSION['CALENDAR_TITLE']; } else { echo lang('calendar'); } ?></a></td>
 						<?php if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { ?>
 							<td valign="bottom" <?php if ($navbaractive=="Upcoming") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Upcoming") echo lang('upcoming'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=upcoming" >',lang('upcoming'),'</a>'; } ?></div></td>
 						<?php } ?>

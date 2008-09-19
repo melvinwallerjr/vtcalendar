@@ -9,7 +9,6 @@
   $event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   disassemble_timestamp($event);
-  $event['color'] = datetocolor($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],$colorpast,$colortoday,$colorfuture);
 
   echo '<SPAN class="bodytext">';
   if (!empty($event['repeatid'])) {

@@ -7,9 +7,6 @@ require_once('main_globalsettings.inc.php');
 // Verify that the user is authorized.
 if (!viewauthorized()) { exit; }
 
-// Set the default body color.
-$bodycolor = $_SESSION['MAINCOLOR'];
-	
 // By default, do not show the "today" color.
 $IsTodayBodyColor = 0;
 	
@@ -17,7 +14,6 @@ $IsTodayBodyColor = 0;
 if ( $view == "day" ) { 
 	if ( $showdate['day'] == $today['day'] && $showdate['month'] == $today['month'] && $showdate['year'] == $today['year']) {
 		$IsTodayBodyColor = 1;
-		$bodycolor = $colortoday; 
 	}
 }
 
@@ -159,6 +155,13 @@ elseif (COLUMNSIDE == "RIGHT") {
 <table id="PoweredBy" width="100%" border="0" cellpadding="4" cellspacing="0"><tr><td align="right"><!--Powered by univCal <?php if (file_exists("VERSION.txt")) { include('VERSION.txt'); } ?>. --> Based on <a href="http://vtcalendar.sourceforge.net/" target="_blank">VTCalendar</a></td></tr></table>
 
 <?php
+
+ob_start();
+var_dump($_SESSION);
+$output = ob_get_contents();
+ob_end_clean();
+echo "<pre>".htmlentities($output)."</pre>";
+
 pagefooter();
 DBclose();
 ?>

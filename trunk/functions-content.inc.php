@@ -38,7 +38,7 @@ function pageheader($title, $navbaractive) {
 		#RightColumn #MonthTable div.DayNumber a { height: 1em; }
 		</style><![endif]-->
 	</head>
-	<body bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
+	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
 	
 	<!-- Start Calendar Header --><?php echo $_SESSION['CALENDAR_HEADER']; ?><!-- End Calendar Header -->
 
@@ -143,20 +143,21 @@ function helpwindow_header() {
 		<title><?php echo lang('help'); ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta content="en-us" http-equiv=language>
+		<link href="calendar.css.php" rel="stylesheet" type="text/css">
 		<link href="stylesheet.php" rel="stylesheet" type="text/css">
 	</head>
-	<body bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" onLoad="this.window.focus()">
+	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" onLoad="this.window.focus()">
 		<br>
 		<table border="0" cellPadding="5" cellSpacing="0">
 			<tr>
-			<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
+			<td>&nbsp;</td>
 			<td bgcolor="#eeeeee"><?php
 } // end: function helpwindow_header
 	
 // Outputs the footer HTML code for a pop-up help window. See helpwindow_header() as well.
 function helpwindow_footer() {
   ?></td>
-				<td bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>">&nbsp;</td>
+				<td>&nbsp;</td>
 			</tr>
 		</table>
 		<br>

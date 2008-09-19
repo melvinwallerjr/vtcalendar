@@ -86,8 +86,6 @@ else {
     $iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
     $iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 		
-    $iday['color'] = datetocolor($iday['month'],$iday['day'],$iday['year'],$colorpast,$colortoday,$colorfuture);
-    
 		echo '<td';
 		
 	  if ($datediff > 0) {
@@ -99,7 +97,6 @@ else {
 	  
 		echo ' valign="top">';
 		
-    $event['color'] = $iday['color'];
 		$event['classExtension'] = "";
 
     // print all events of one day
@@ -132,7 +129,6 @@ else {
         $event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
         $event_timebegin  = timestamp2datetime($event['timebegin']);
         $event_timeend    = timestamp2datetime($event['timeend']);
-        $event['color'] = $iday['color'];
 				$event['classExtension'] = "";
       }
     } // end: while (...)

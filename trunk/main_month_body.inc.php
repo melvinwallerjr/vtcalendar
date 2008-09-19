@@ -84,9 +84,6 @@
 	        $iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
 	        $iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 					
-					// Determine the day's CSS class and color.
-	        $iday['color'] = datetocolor($iday['month'],$iday['day'],$iday['year'],$colorpast,$colortoday,$colorfuture);
-	        
 	        // Determine the number of days between the day and the current date.
 	        $datediff = Delta_Days($iday['month'],$iday['day'],$iday['year'],date("m"),date("d"),date("Y"));
 	        
@@ -167,7 +164,6 @@
 	            $event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
 	            $event_timebegin  = timestamp2datetime($event['timebegin']);
 	            $event_timeend    = timestamp2datetime($event['timeend']);
-	            $event['color'] = $iday['color'];
 	          }
 	        }
 	        

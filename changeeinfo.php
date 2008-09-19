@@ -94,9 +94,6 @@ if (!isset($httpreferer)) {
   }
 }
 
-// TODO: Should be removed?
-if (isset($detailscaller)) { $httpreferer .= "&detailscaller=$detailscaller"; }
-
 // Redirect the user back if cancel was pressed.
 if (isset($cancel)) {
   redirect2URL($httpreferer);

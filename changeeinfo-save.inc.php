@@ -111,7 +111,6 @@ if (isset($eventid) && (!isset($copy) || $copy != 1)) {
 	}
   else {
     $target = $httpreferer;
-    if (isset($detailscaller)) { $target .= "&detailscaller=".$detailscaller; }
     redirect2URL($target);
 		exit;
   }
@@ -158,7 +157,6 @@ else {
 	}
   else {
     $target = $httpreferer;
-    if (isset($detailscaller)) { $target .= "&detailscaller=".$detailscaller; }
     redirect2URL($target);
 		exit;
   }

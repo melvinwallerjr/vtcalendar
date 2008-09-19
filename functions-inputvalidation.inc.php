@@ -84,9 +84,6 @@ function isValidInput($value, $type) {
 	elseif ($type=='description') {
 	  if (preg_match('/^['.constValidTextCharFullRegEx.']{1,'.constDescriptionMaxLength.'}$/',$value)) { return TRUE; }
 	}
-	elseif ($type=='detailscaller') {
-	  if ($value=='0' || $value=='1') { return TRUE; }
-	}
 	elseif ($type=='displayedsponsor') {
 	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constDisplayedsponsorMaxLength.'}$/',$value)) { return TRUE; }
 	}

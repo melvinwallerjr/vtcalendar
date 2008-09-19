@@ -34,8 +34,8 @@ function setCalendarPreferences() {
 	$_SESSION['CALENDAR_NAME'] = $calendar['name'];
 	$_SESSION['CALENDAR_HEADER'] = $calendar['header'];
 	$_SESSION['CALENDAR_FOOTER'] = $calendar['footer'];
-	$_SESSION["VIEWAUTHREQUIRED"] = $calendar['viewauthrequired'];
-	$_SESSION["FORWARDEVENTDEFAULT"] = $calendar['forwardeventdefault'];
+	$_SESSION['CALENDAR_VIEWAUTHREQUIRED'] = $calendar['viewauthrequired'];
+	$_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'] = $calendar['forwardeventdefault'];
 	
 	$_SESSION["BGCOLOR"] = $calendar['bgcolor'];
 	$_SESSION["MAINCOLOR"] = $calendar['maincolor'];

@@ -40,7 +40,7 @@ global $eventlist,$event,$eventnr,
 
   // construct timestamps from the info $date, $timebegin, $timeend
   $event['sponsorid'] = $_SESSION['AUTH_SPONSORID'];
-	if ($_SESSION["AUTH_ADMIN"]) { $event['approved'] = 1; }
+	if ($_SESSION['AUTH_ISCALENDARADMIN']) { $event['approved'] = 1; }
 	else { $event['approved'] = 0; }
   $event['rejectreason'] = "";
   $event['repeatid'] = "";
@@ -213,7 +213,7 @@ function xmlerror_importevent($xml_parser) {
 							$eventid = $id1."000";
 							$event['id'] = $eventid;
 							insertintoevent($eventid,$event);
-							if ($_SESSION["AUTH_ADMIN"]) {
+							if ($_SESSION['AUTH_ISCALENDARADMIN']) {
 								publicizeevent($eventid,$event);
 							}
 						}

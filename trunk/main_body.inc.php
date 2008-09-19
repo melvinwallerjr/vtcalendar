@@ -4,13 +4,23 @@ if (!defined("ALLOWINCLUDES")) { exit; } ?>
 <!-- Start Body Column -->
 <td id="CalRightCol" width="100%" valign="top" <?php if ($IsTodayBodyColor) echo 'class="TodayHighlighted"'; ?>>
 	
-	<!-- Start Filter Notice -->
+	<!-- Start Filter and Search Keyword Notice -->
 	<?php
-		if ($view == "upcoming" || $view == "day" || $view == "week" || $view == "month" || $view == "search" || $view == "searchresults") {
-			if (isset($CategoryFilter)) {
-				?><table id="FilterNotice" width="100%" border="0" cellpadding="4" cellspacing="0">
-				<tr>
-					<td><b><?php echo lang('showing_filtered_events'); ?></b> <a href="main.php?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?>&view=filter&oldview=<?php echo urlencode($view); ?>">(<?php 
+		if (($view == "upcoming" || $view == "day" || $view == "week" || $view == "month" || $view == "search" || $view == "searchresults") && (isset($CategoryFilter) || (!empty($keyword) && $view != "search" && $view != "searchresults"))) {
+			?><table id="FilterNotice" width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+				<td><b><?php echo lang('showing_filtered_events'); ?>:</b><?php
+				
+				if (!empty($keyword)) {
+					?> <a href="">&quot;<?php echo htmlentities($keyword); ?>&quot;</a><?php
+				}
+				
+				if (!empty($keyword) && isset($CategoryFilter)) {
+					echo " &amp; ";
+				}
+				
+				if (isset($CategoryFilter)) {
+					?> <a href="main.php?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?>&view=filter&oldview=<?php echo urlencode($view); ?>">(<?php 
 					
 					// The list of categories that will be outputted.
 					$activecategories = "";
@@ -31,13 +41,15 @@ if (!defined("ALLOWINCLUDES")) { exit; } ?>
 					// Output the list of categories.
 					echo $activecategories;
 					
-					?>)</a></td>
-				</tr>
-				</table><?php
-			}
+					?>)</a><?php
+				}
+				
+				?></td>
+			</tr>
+			</table><?php
 		}
 	?>
-	<!-- End Filter Notice -->
+	<!-- End Filter and Search Keyword Notice -->
 	
 	<!-- Start Date/Title and Next/Prev Navi -->
 	<div id="TitleAndNavi" <?php if ($IsTodayBodyColor) echo 'class="TodayHighlighted"'; ?>>

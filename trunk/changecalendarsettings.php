@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
 require_once('application.inc.php');
 
 if (!authorized()) { exit; }
-if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
 if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
 if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
@@ -35,8 +35,8 @@ if (!(isset($title) && isset($header) && isset($footer) &&
 	$title = $_SESSION['CALENDAR_TITLE'];	
 	$header = $_SESSION['CALENDAR_HEADER'];	
 	$footer = $_SESSION['CALENDAR_FOOTER'];	
-	$viewauthrequired	= $_SESSION["VIEWAUTHREQUIRED"];
-	$forwardeventdefault = $_SESSION["FORWARDEVENTDEFAULT"];
+	$viewauthrequired	= $_SESSION['CALENDAR_VIEWAUTHREQUIRED'];
+	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];
 
 	$bgcolor = $_SESSION["BGCOLOR"];	
 	$maincolor = $_SESSION["MAINCOLOR"];

@@ -75,7 +75,7 @@ function displaymultiplelogin($errorMessage="") {
 	}
 	
 	// Allow a main admin to become any sponsor.
-	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
+	if (isset($_SESSION['AUTH_ISMAINADMIN']) && $_SESSION['AUTH_ISMAINADMIN']) {
 		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY admin DESC, name";
 	}
 	// Otherwise, check which sponsors the user can become.
@@ -162,7 +162,7 @@ function userauthenticated($userid, $password) {
 			if ($result->numRows() > 0) {
 				$userRecord =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 				if ( crypt($password, $userRecord['password']) == $userRecord['password'] ) {
-					$_SESSION["AUTH_TYPE"] = "DB";
+					$_SESSION['AUTH_LOGINSOURCE'] = "DB";
 					$returnValue = true;
 				}
 			}
@@ -211,7 +211,7 @@ function userauthenticated($userid, $password) {
 					
 						/* bind (or rebind) as the DN and the password that was supplied via the login form */
 						if (@ldap_bind($ldap, $principal, $password)) {
-							$_SESSION["AUTH_TYPE"] = "LDAP";
+							$_SESSION['AUTH_LOGINSOURCE'] = "LDAP";
 							$returnValue = true;
 						} 
 						else {
@@ -245,7 +245,7 @@ function userauthenticated($userid, $password) {
 		}
 		else {
 			if ($req->getResponseCode() == 200) {
-				$_SESSION["AUTH_TYPE"] = "HTTP";
+				$_SESSION['AUTH_LOGINSOURCE'] = "HTTP";
 				
 				if (AUTH_HTTP_CACHE) {
 					$passhash = crypt($password);
@@ -329,7 +329,7 @@ function logUserIn() {
 				return lang('login_failed') . "<br>Reason: A database error was encountered: " . $result;
 			}
 			else {
- 			  $_SESSION["AUTH_MAINADMIN"] = $result->numRows() > 0;
+ 			  $_SESSION['AUTH_ISMAINADMIN'] = $result->numRows() > 0;
 				$result->free();
 				return true;
 			}
@@ -371,7 +371,7 @@ function authorized() {
 		if (isset($authsponsorid)) {
 			
 			// Just verify that the sponsor does exist for main admins.
-			if ($_SESSION["AUTH_MAINADMIN"]) {
+			if ($_SESSION['AUTH_ISMAINADMIN']) {
 				$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($authsponsorid)."'";
 			}
 			// Otherwise, verify that the user belongs to that sponsor group.
@@ -394,7 +394,7 @@ function authorized() {
 					$record = $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 					$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
 		 			$_SESSION["AUTH_SPONSORNAME"] = $record['name'];
-					$_SESSION["AUTH_ADMIN"] = $record["admin"] == 1;
+					$_SESSION['AUTH_ISCALENDARADMIN'] = $record["admin"] == 1;
 				}
 				$result->free();
 			}
@@ -404,7 +404,7 @@ function authorized() {
 		elseif (!isset($_SESSION["AUTH_SPONSORID"])) {
 			
 			// Allow a main admin to become any sponsor.
-			if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
+			if (isset($_SESSION['AUTH_ISMAINADMIN']) && $_SESSION['AUTH_ISMAINADMIN']) {
 				$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'";
 			}
 			// Otherwise, check which sponsors the user can become.
@@ -422,7 +422,7 @@ function authorized() {
 			else {
 				// If the user does not have a sponsor for this calendar, then the user is not authorized or there are no sponsors (!).
 				if ($result->numRows() == 0) {
-					if ($_SESSION["AUTH_MAINADMIN"]) {
+					if ($_SESSION['AUTH_ISMAINADMIN']) {
 						displaylogin($lang['dberror_nosponsor']);
 					}
 					else {
@@ -437,7 +437,7 @@ function authorized() {
 					$_SESSION["AUTH_SPONSORID"]= $authorization['id'];
 		 			$_SESSION["AUTH_SPONSORNAME"] = $authorization['name'];
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
-		 			$_SESSION["AUTH_ADMIN"] = $authorization["admin"] == 1;
+		 			$_SESSION['AUTH_ISCALENDARADMIN'] = $authorization["admin"] == 1;
 				}
 				
 				// If the user belongs to more than one sponsor, then display the form to select a sponsor.
@@ -472,7 +472,7 @@ function authorized() {
  */
 function viewauthorized() {
 	// Return true if the calendar does not require authorization.
-	if ( $_SESSION["VIEWAUTHREQUIRED"] == 0 ) return true;
+	if ( $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0 ) return true;
 
 	// Default that the user does not have access.
 	$returnValue = false;
@@ -483,7 +483,7 @@ function viewauthorized() {
 	}
 	
 	// Allow the user to view the calendar if they are already marked as having access.
-	elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION['CALENDAR_ID'])) {
+	elseif ($_SESSION['AUTH_ISMAINADMIN'] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION['CALENDAR_ID'])) {
 		$returnValue = true;
 	}
 	
@@ -514,7 +514,7 @@ function viewauthorized() {
 function calendarlogout() {
 	unset($_SESSION['AUTH_SPONSORID']);
 	unset($_SESSION['AUTH_SPONSORNAME']);
-	unset($_SESSION['AUTH_ADMIN']);
+	unset($_SESSION['AUTH_ISCALENDARADMIN']);
 	unset($_SESSION['CALENDAR_LOGIN']);
 	unset($_SESSION['CATEGORY_NAMES']);
 	unset($_SESSION['CATEGORY_FILTER']);
@@ -524,8 +524,8 @@ function calendarlogout() {
 // Completely logout the user.
 function logout() {
 	unset($_SESSION['AUTH_USERID']);
-	unset($_SESSION['AUTH_MAINADMIN']);
-	unset($_SESSION['AUTH_TYPE']);
+	unset($_SESSION['AUTH_ISMAINADMIN']);
+	unset($_SESSION['AUTH_LOGINSOURCE']);
 	calendarlogout();
 }
 ?>

@@ -1,41 +1,41 @@
 <?php
-  if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+	if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
-  $ievent = 0;
-  
-  // read all events for this week from the DB
-  $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
+	$ievent = 0;
+	
+	// read all events for this week from the DB
+	$query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
 	$query.= "WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($showdate['timestamp_daybegin'])."' AND e.timeend <= '".sqlescape($showdate['timestamp_dayend'])."'";
 	
 	// Filter by sponsor ID if one was specified.
-  if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
+	if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
 	// Filter by categories if one or more were specified.
 	if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
-	  $query.= " AND (";
+		$query.= " AND (";
 		for($c=0; $c < count($CategoryFilter); $c++) {
-		  if ($c > 0) { $query.=" OR "; }
-		  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
-    }
+			if ($c > 0) { $query.=" OR "; }
+			$query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
+		}
 		$query.= ")";
 	}
 	else {
-	   if ($categoryid != 0) { $query.= " AND (e.categoryid='".sqlescape($categoryid)."')"; }
+		 if ($categoryid != 0) { $query.= " AND (e.categoryid='".sqlescape($categoryid)."')"; }
 	}
 	
 	// Filter by keyword if one was specified from the search form.
-  if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
-  
-  $query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
-  $result =& DBQuery($query );
-  
-  // Output an error message if $result is a string.
-  if (is_string($result)) {
-  	DBErrorBox($result);
-  }
-  
-  // Otherwise, the query was successful.
-  else {
+	if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') OR (e.description LIKE '%".sqlescape($keyword)."%'))"; }
+	
+	$query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
+	$result =& DBQuery($query );
+	
+	// Output an error message if $result is a string.
+	if (is_string($result)) {
+		DBErrorBox($result);
+	}
+	
+	// Otherwise, the query was successful.
+	else {
 	
 		// Admin controls
 		if (!empty($_SESSION["AUTH_SPONSORID"])) {
@@ -44,22 +44,22 @@
 		
 		?><!-- Start Day Body --><table id="DayTable" width="100%" cellpadding="6" cellspacing="0" border="0"><?php
 	
-	  // read first event if one exists
-	  if ($ievent < $result->numRows()) {
-	    $event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
-	    $event_timebegin  = timestamp2datetime($event['timebegin']);
-	    $event_timeend    = timestamp2datetime($event['timeend']);
-	    $event_timebegin_num = timestamp2timenumber($event['timebegin']);
-	    $event_timeend_num = timestamp2timenumber($event['timeend']);
-	  }
+		// read first event if one exists
+		if ($ievent < $result->numRows()) {
+			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
+			$event_timebegin  = timestamp2datetime($event['timebegin']);
+			$event_timeend    = timestamp2datetime($event['timeend']);
+			$event_timebegin_num = timestamp2timenumber($event['timebegin']);
+			$event_timeend_num = timestamp2timenumber($event['timeend']);
+		}
 		else { ?>
-	    <tr>
-	      <td colspan="3" class="NoAnnouncement" valign="top"><?php echo lang('no_events');?></td>
-	    </tr><?php
+			<tr>
+				<td colspan="3" class="NoAnnouncement" valign="top"><?php echo lang('no_events');?></td>
+			</tr><?php
 		} // end: else: if ($ievent < $result->numRows())
 	
-	  $previousWholeDay = false;
-	  
+		$previousWholeDay = false;
+		
 		// print all events of one day
 		while ($ievent < $result->numRows()) {
 			// print event
@@ -79,25 +79,25 @@
 			
 			// Start of Time Column
 			echo '<td width="1%" align="right" valign="top" nowrap"';
-	    if ( $EventHasPassed ) {
-			  echo ' class="TimeColumn-Past"'; }
+			if ( $EventHasPassed ) {
+				echo ' class="TimeColumn-Past"'; }
 			else {
 				echo ' class="TimeColumn"'; }
 			echo ">&nbsp;";
 			
 			// Time of the Event
-	    if ($event['wholedayevent']==0) {
+			if ($event['wholedayevent']==0) {
 				echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
 				if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
-				  echo "<br><i>";
-				  echo timenumber2timelabel($event_timeend_num - $event_timebegin_num);
-				  echo "</i>";
+					echo "<br><i>";
+					echo timenumber2timelabel($event_timeend_num - $event_timebegin_num);
+					echo "</i>";
 				}
-	    }
-	    // "All Day" marker
+			}
+			// "All Day" marker
 			else {
-			  if (!$previousWholeDay ) { echo lang('all_day'); }
-	      $previousWholeDay = true;
+				if (!$previousWholeDay ) { echo lang('all_day'); }
+				$previousWholeDay = true;
 			}
 			
 			// End of Time Column
@@ -105,8 +105,8 @@
 			
 			// Start Data Column
 			echo '<td width="98%"';
-	    if ( $EventHasPassed ) {
-			  echo ' class="DataColumn-Past"'; }
+			if ( $EventHasPassed ) {
+				echo ' class="DataColumn-Past"'; }
 			else {
 				echo ' class="DataColumn"'; }
 			
@@ -120,19 +120,19 @@
 			
 			if (!empty($event['description'])) {
 				if (strlen($event['description']) < 140 ) {
-				  echo htmlentities($event['description']);
+					echo htmlentities($event['description']);
 				} 
 				else {
-				  echo substr($event['description'],0,140);
-			    echo "... \n";
-	    		echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+					echo substr($event['description'],0,140);
+					echo "... \n";
+					echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 					echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 					echo '">more</a>';
-	      }
-			  echo " \n";
+				}
+				echo " \n";
 			}
 			else {
-	  		echo "<br>\n";
+				echo "<br>\n";
 			}
 			echo "</div></td>\n";
 			// End Data Column
@@ -146,8 +146,8 @@
 				$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
 				$event_timebegin  = timestamp2datetime($event['timebegin']);
 				$event_timeend    = timestamp2datetime($event['timeend']);
-		    $event_timebegin_num = timestamp2timenumber($event['timebegin']);
-		    $event_timeend_num = timestamp2timenumber($event['timeend']);
+				$event_timebegin_num = timestamp2timenumber($event['timebegin']);
+				$event_timeend_num = timestamp2timenumber($event['timeend']);
 			}
 		} // end: while (...)
 	?></table><!-- End Day Body --><?php

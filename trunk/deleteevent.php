@@ -60,7 +60,7 @@ require_once('session_start.inc.php');
   
   // Check that the user is an admin or the sponsor for the event to be deleted.
   if (!(
-	    !empty($_SESSION["AUTH_ADMIN"]) ||
+	    !empty($_SESSION['AUTH_ISCALENDARADMIN']) ||
 	    (isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"] == $e['sponsorid'])
 	   )) {
    redirect2URL($httpreferer);

@@ -6,7 +6,6 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
          TODO: Merge with section later in this file.
 ============================================================ */
 
-define("MAX_SESSION_CALENDAR_NAMES", 100);
 define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
 //NOT USED define("BGCOLORNAVBARACTIVE","#993333");
 //NOT USED define("BGCOLORWEEKMONTHNAVBAR","#993333");

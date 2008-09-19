@@ -35,14 +35,14 @@ if (empty($_SESSION['CATEGORY_NAMES'])) {
 		$numcategories = $result->numRows();
 		
 		// Setup a variable to hold the data to store in the session variable.
-		if ($numcategories <= MAX_SESSION_CALENDAR_NAMES)
+		if ($numcategories <= MAX_CACHESIZE_CATEGORYNAME)
 			$sessiondata = "";
 		
 		// Loop through all the categories for this calendar.
 		for ($c=0; $c < $numcategories; $c++) {
 			$categorydata =& $result->fetchRow(DB_FETCHMODE_ASSOC, $c);
 			
-			if ($numcategories <= MAX_SESSION_CALENDAR_NAMES) {
+			if ($numcategories <= MAX_CACHESIZE_CATEGORYNAME) {
 				if ($c > 0) $sessiondata .= "\n";
 				
 				$sessiondata .= $categorydata['id'] . "\t" . $categorydata['name'];
@@ -53,7 +53,7 @@ if (empty($_SESSION['CATEGORY_NAMES'])) {
 		}
 		
 		// Set the session data to a session variable.
-		if ($numcategories <= MAX_SESSION_CALENDAR_NAMES)
+		if ($numcategories <= MAX_CACHESIZE_CATEGORYNAME)
 			$_SESSION['CATEGORY_NAMES'] = $sessiondata;
 	}
 }

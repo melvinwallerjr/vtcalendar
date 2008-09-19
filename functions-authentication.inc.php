@@ -518,12 +518,14 @@ function calendarlogout() {
 	unset($_SESSION['CALENDAR_LOGIN']);
 	unset($_SESSION['CATEGORY_NAMES']);
 	unset($_SESSION['CATEGORY_FILTER']);
+	unset($_SESSION['AUTH_SPONSORCOUNT']);
 }
 
 // Completely logout the user.
 function logout() {
 	unset($_SESSION['AUTH_USERID']);
 	unset($_SESSION['AUTH_MAINADMIN']);
+	unset($_SESSION['AUTH_TYPE']);
 	calendarlogout();
 }
 ?>

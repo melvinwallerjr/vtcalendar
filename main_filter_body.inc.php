@@ -92,7 +92,19 @@ function validate ( myForm, id ) {
 					<input type="submit" value="&nbsp;&nbsp;<?php echo lang('apply_filter'); ?>&nbsp;&nbsp;">&nbsp;
 				</td>
 			</tr>
-			<input type="hidden" name="view" value="week">
+			<input type="hidden" name="view" value="<?php
+			
+			if (isset($oldview) && $oldview != "filter") {
+				echo htmlentities($oldview);
+			}
+			elseif (SHOW_UPCOMING_TAB) {
+				echo "upcoming";
+			}
+			else {
+				echo "week";
+			}
+			
+			?>">
 			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION["CALENDARID"]); ?>">
 		</form>
 		</table>

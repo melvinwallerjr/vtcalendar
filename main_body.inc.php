@@ -10,7 +10,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } ?>
 			if (isset($CategoryFilter)) {
 				?><table id="FilterNotice" width="100%" border="0" cellpadding="4" cellspacing="0">
 				<tr>
-					<td><b><?php echo lang('showing_filtered_events'); ?></b> <a href="main.php?calendarid=<?php echo $_SESSION["CALENDARID"]; ?>&view=filter">(<?php 
+					<td><b><?php echo lang('showing_filtered_events'); ?></b> <a href="main.php?calendarid=<?php echo $_SESSION["CALENDARID"]; ?>&view=filter&oldview=<?php echo urlencode($view); ?>">(<?php 
 					
 					// The list of categories that will be outputted.
 					$activecategories = "";

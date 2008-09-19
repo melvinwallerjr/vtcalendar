@@ -86,7 +86,7 @@
 	<tr>
 	 	<td><?php
 		  if ($view!='filter') {
-				echo'    <b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=filter">',lang('filter_events'),'</a></b>';
+				echo'    <b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=filter&oldview=' . urlencode($view) . '">',lang('filter_events'),'</a></b>';
 			}
 			else {
 			  echo '<b>',lang('filter_events'),'</b>';

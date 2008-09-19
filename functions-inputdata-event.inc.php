@@ -643,7 +643,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
   </table>
   </div>
 	<?php
-  if (!$_SESSION["AUTH_ADMIN"]) {
+  if (!$_SESSION['AUTH_ISCALENDARADMIN']) {
   	// Not actually submitted since it has no "name" attribute. The point of this is to allow the "Restore default" buttons to work properly.
   	?><input type="hidden" id="selectedsponsorid" value="<?php echo $event['sponsorid']; ?>"><?php
   }
@@ -695,7 +695,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		</table>
 		</div>
 		<?php
-  } // end: if ($_SESSION["AUTH_ADMIN"])
+  } // end: if ($_SESSION['AUTH_ISCALENDARADMIN'])
 	?>
 	
 	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
@@ -754,7 +754,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		<tr>
 			<td valign="top"><input type="checkbox" name="event[showondefaultcal]" value="1"<?php 
 	  		if ( (isset($event['showondefaultcal']) && $event['showondefaultcal']=="1") ||
-				     (!isset($event['showondefaultcal']) && $_SESSION["FORWARDEVENTDEFAULT"]=="1")
+				     (!isset($event['showondefaultcal']) && $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT']=="1")
 				) { echo " checked"; }
 	      ?>></td>
 	    <td valign="top"><b>Yes</b>,&nbsp;</td>

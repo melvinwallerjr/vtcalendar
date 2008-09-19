@@ -18,12 +18,12 @@ if (isset($_GET['fbparam'])) { $fbparam = $_GET['fbparam']; } else { unset($fbpa
 if ( isset($fbid) ) {
 	$startHTML = '<div style="padding: 8px; border-bottom: 1px solid #666666; background-color: #FFFFCC;">';
 	$endHTML = '</div>';
-	if ($fbid=="eaddsuccess" && !$_SESSION["AUTH_ADMIN"]) {
+	if ($fbid=="eaddsuccess" && !$_SESSION['AUTH_ISCALENDARADMIN']) {
 		echo $startHTML;
 		feedback(lang('new_event_submitted_notice')." ".stripslashes(urldecode("\"$fbparam\"")),0);
 		echo $endHTML;
 	}
-	elseif ($fbid=="eupdatesuccess" && !$_SESSION["AUTH_ADMIN"] ) {
+	elseif ($fbid=="eupdatesuccess" && !$_SESSION['AUTH_ISCALENDARADMIN'] ) {
 		echo $startHTML;
 		feedback(lang('updated_event_submitted_notice')." ".stripslashes(urldecode("\"$fbparam\"")),0);
 		echo $endHTML;
@@ -72,7 +72,7 @@ if ( isset($fbid) ) {
 			</dl>
 		
 		<?php
-		if ( $_SESSION["AUTH_TYPE"] == "DB" && strlen($_SESSION["AUTH_USERID"]) > strlen(AUTH_DB_USER_PREFIX) && substr($_SESSION["AUTH_USERID"],0,strlen(AUTH_DB_USER_PREFIX)) == AUTH_DB_USER_PREFIX ) {
+		if ( $_SESSION['AUTH_LOGINSOURCE'] == "DB" && strlen($_SESSION["AUTH_USERID"]) > strlen(AUTH_DB_USER_PREFIX) && substr($_SESSION["AUTH_USERID"],0,strlen(AUTH_DB_USER_PREFIX)) == AUTH_DB_USER_PREFIX ) {
 			?>
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666; padding-top: 8px;">User <?php echo $_SESSION["AUTH_USERID"]; ?>'s Options:&nbsp;</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
@@ -85,7 +85,7 @@ if ( isset($fbid) ) {
 	</td>
 	<!-- End Sponsor Level Column -->
 <?php
-if ($_SESSION["AUTH_ADMIN"]) {
+if ($_SESSION['AUTH_ISCALENDARADMIN']) {
 ?>
 	<td valign="top" style="border-left: 1px solid #666666; background-color: #EEEEEE;">
 	  <h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666;">Calendar Options:&nbsp;</h2>
@@ -109,10 +109,10 @@ if ($_SESSION["AUTH_ADMIN"]) {
 		</dl>
 	</td>
 <?php
-} // end: if ($_SESSION["AUTH_ADMIN"])
+} // end: if ($_SESSION['AUTH_ISCALENDARADMIN'])
 ?>
 <?php
-if ( $_SESSION["AUTH_MAINADMIN"] ) {
+if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 ?>
 	<td valign="top" style="border-left: 1px solid #666666; background-color: #FFEEEE;">
 		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666;"><?php echo lang('main_administrators_options'); ?>:&nbsp;</h2>

@@ -14,7 +14,7 @@ require_once('session_start.inc.php');
   if (isset($_POST['deleteevents'])) { setVar($deleteevents,$_POST['deleteevents'],'deleteevents'); } else { unset($deleteevents); }
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
   if (isset($cancel)) {
     redirect2URL("manageeventcategories.php");

@@ -9,7 +9,7 @@ $lang['dberror_nototals'] = 'Note: Event totals could not be calculated due to a
 $lang['dberror_noupcomingtotals'] = 'Note: Upcoming event totals could not be calculated due to a database error';
 
 if (!authorized()) { exit; }
-if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
+if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
 
 pageheader(lang('manage_calendars'), "Update");
 contentsection_begin(lang('manage_calendars'),true);

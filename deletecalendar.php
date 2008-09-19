@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
   require_once('application.inc.php');
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_MAINADMIN"] ) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
 
   if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }

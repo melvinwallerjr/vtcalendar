@@ -3,7 +3,7 @@ X Add helpsignup.php link back to displaylogin() in functions.inc.php
 X Should probably remove checking for HTTPS and just use
   SECUREBASEURL for the action of any forms that need to be
   secured. Search scripts for: _SERVER['HTTPS']
-- Filters need to work on upcoming events view.
+X Filters need to work on upcoming events view.
 - A message should output when a keyword is being used in day/week/month view. There is currently no way for a user to know its filtering.
 - $iday['css'] and $iday['color'] should be removed if not being used.
 - Check input validation constants in constants.inc.php to determine the correct values and merge the constants as necessary.

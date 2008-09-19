@@ -97,7 +97,7 @@ function validate ( myForm, id ) {
 			if (isset($oldview) && $oldview != "filter") {
 				echo htmlentities($oldview);
 			}
-			elseif (isset($_SESSION['PREVIOUS_VIEW']) {
+			elseif (isset($_SESSION['PREVIOUS_VIEW'])) {
 				echo $_SESSION['PREVIOUS_VIEW'];
 			}
 			else {

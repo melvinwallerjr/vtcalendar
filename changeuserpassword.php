@@ -5,7 +5,7 @@ require_once('session_start.inc.php');
   
   if (!authorized()) { exit; }
   
-  if (!($_SESSION["AUTH_TYPE"] == "DB")) {
+  if (!($_SESSION['AUTH_LOGINSOURCE'] == "DB")) {
   	redirect2URL("update.php");
   }
 

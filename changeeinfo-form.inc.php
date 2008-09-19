@@ -78,7 +78,7 @@ inputeventdata($event,$event['sponsorid'],1,$check,1,$repeat,$copy);
 echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
 if (isset($eventid)) { echo "<INPUT type=\"hidden\" name=\"eventid\" value=\"",$event['id'],"\">\n"; }
 echo '<INPUT type="hidden" name="event[repeatid]" value="', isset($event['repeatid']) ? HTMLSpecialChars($event['repeatid']) : "" ,"\">\n";
-if (!$_SESSION["AUTH_ADMIN"]) { echo "<INPUT type=\"hidden\" name=\"event[sponsorid]\" value=\"",$event['sponsorid'],"\">\n"; }
+if (!$_SESSION['AUTH_ISCALENDARADMIN']) { echo "<INPUT type=\"hidden\" name=\"event[sponsorid]\" value=\"",$event['sponsorid'],"\">\n"; }
 if (isset($copy)) { echo "<INPUT type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n"; }
 
 inputeventbuttons($httpreferer);

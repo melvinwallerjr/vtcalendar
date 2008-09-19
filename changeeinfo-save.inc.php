@@ -95,7 +95,7 @@ if (isset($eventid) && (!isset($copy) || $copy != 1)) {
   }
 
   // Whatever the "admin" edits gets approved right away
-  if ($_SESSION["AUTH_ADMIN"]) {
+  if ($_SESSION['AUTH_ISCALENDARADMIN']) {
     if (!empty($event['repeatid'])) {
     	repeatpublicizeevent($eventid,$event);
     }
@@ -146,7 +146,7 @@ else {
   $event['id'] = $eventid;
 
   // Whatever the "admin" edits gets approved right away
-  if ($_SESSION["AUTH_ADMIN"]) {
+  if ($_SESSION['AUTH_ISCALENDARADMIN']) {
   	if (!empty($event['repeatid'])) { repeatpublicizeevent($eventid,$event); }
     else { publicizeevent($eventid,$event); }
   }

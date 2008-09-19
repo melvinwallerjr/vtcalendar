@@ -7,7 +7,7 @@ require_once('session_start.inc.php');
   if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
   if (isset($cancel)) {
     redirect2URL("viewsearchlog.php");

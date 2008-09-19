@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
   require_once('application.inc.php');
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_MAINADMIN"]) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISMAINADMIN']) { exit; } // additional security
 
 	pageheader(lang('manage_main_admins'), "Update");
 	contentsection_begin(lang('manage_main_admins'),true);

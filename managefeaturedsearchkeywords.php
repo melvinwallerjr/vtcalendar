@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
   require_once('application.inc.php');
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
  
 	pageheader(lang('manage_featured_search_keywords'), "Update");
 	contentsection_begin(lang('manage_featured_search_keywords'),true);

@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
   require_once('application.inc.php');
 
   if (!authorized()) { exit; }
-  if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
+  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
   if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
   if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }

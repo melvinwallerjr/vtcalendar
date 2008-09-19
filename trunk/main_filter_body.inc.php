@@ -9,9 +9,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
 		function validate ( myForm, id )
 */
 	
-?><table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#FFFFFF">
-<tr valign="top">
-	<td>
+?>
 <script language="JavaScript" type="text/javascript"><!--
 function checkAll(myForm, id, state) {
 	// determine if ALL of the checkboxes is checked
@@ -108,8 +106,3 @@ function validate ( myForm, id ) {
 			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION['CALENDAR_ID']); ?>">
 		</form>
 		</table>
-		<br>
-		<br>
-	</td>
-</tr>
-</table>

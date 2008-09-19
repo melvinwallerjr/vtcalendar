@@ -58,26 +58,34 @@ require_once('session_start.inc.php');
 <br>
 <strong><?php echo lang('help_export_categoryid_intro'); ?></strong><br>
 <br>
-<table border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<th><?php echo lang('help_categoryid_index'); ?></th>
-		<th><?php echo lang('help_categoryid_name'); ?></th>
-	</tr>
 <?php
-	// read event categories from DB
-	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
+// read event categories from DB
+$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
-	// print list with categories and select the one read from the DB
-	for ($i=0;$i<$result->numRows();$i++) {
-		$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-		echo "  <tr>\n";
-		echo "    <td>",$category['id'],"</td>";
-		echo "    <td>",$category['name'],"</td>";
-		echo "  </tr>";
-	}
-?>
-</table>
-<br>
-<?php
+if (is_string($result)) {
+	DBErrorBox($result); 
+}
+else {
+	?>
+	<table border="1" cellspacing="0" cellpadding="5">
+		<tr>
+			<th><?php echo lang('help_categoryid_index'); ?></th>
+			<th><?php echo lang('help_categoryid_name'); ?></th>
+		</tr>
+	<?php
+	
+		// print list with categories and select the one read from the DB
+		for ($i=0;$i<$result->numRows();$i++) {
+			$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			echo "  <tr>\n";
+			echo "    <td>",$category['id'],"</td>";
+			echo "    <td>",$category['name'],"</td>";
+			echo "  </tr>";
+		}
+	?>
+	</table>
+	<br>
+	<?php
+}
 	helpwindow_footer();
 ?>

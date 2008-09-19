@@ -18,9 +18,14 @@ require_once('session_start.inc.php');
 	}
 
 	if (isset($save) && !empty($keyword) && !empty($alternativekeyword) ) {
-		$result = DBQuery("INSERT INTO vtcal_searchkeyword (calendarid,keyword,alternative) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape(strtolower($keyword))."','".sqlescape(strtolower($alternativekeyword))."')" );
-		redirect2URL("managesearchkeywords.php");
-		exit;
+		$result =& DBQuery("INSERT INTO vtcal_searchkeyword (calendarid,keyword,alternative) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape(strtolower($keyword))."','".sqlescape(strtolower($alternativekeyword))."')" );
+		if (is_string($result)) {
+				DBErrorBox($result); exit;
+		}
+		else {
+			redirect2URL("managesearchkeywords.php");
+			exit;
+		}
 	}
 
 	pageheader(lang('add_new_keyword_pair'), "Update");

@@ -22,14 +22,24 @@ if (isset($cancel)) {
 // check if name already exists
 $namealreadyexists = false;
 if (!empty($category['name'])) {
-	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($category['name'])."'" );
-	if ( $result->numRows() > 0 ) { $namealreadyexists = true; }
+	$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($category['name'])."'" );
+	if (is_string($result)) {
+		DBErrorBox($result); exit;
+	}
+	else {
+		$namealreadyexists = $result->numRows() > 0;
+	}
 }
 
 if (isset($save) && !$namealreadyexists && !empty($category['name']) ) {
-	$result = DBQuery("INSERT INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($category['name'])."')" );
-	redirect2URL("manageeventcategories.php");
-	exit;
+	$result =& DBQuery("INSERTX INTO vtcal_category (calendarid,name) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($category['name'])."')" );
+	if (is_string($result)) {
+			DBErrorBox($result); exit;
+	}
+	else {
+		redirect2URL("manageeventcategories.php");
+		exit;
+	}
 }
 
 pageheader(lang('add_new_event_category'), "Update");

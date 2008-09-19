@@ -16,6 +16,27 @@ X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.
 - Properly handle string returns from functions like DBQuery.
 - Change _data files to _preheader just to make it easier to understand
 
+Add colors to vtcal_colors for new CSS:
+	MainColor
+	FadedTabColor
+	TodayColor
+	
+	LinkColor
+	VisitedLinkColor
+	FadedLinkColor
+	
+	TextColor
+	FadedColor
+	
+	Event_UpcomingColor
+	Event_FadedColor
+	Event_DividerColor
+	
+	Table_HeadCellBGColor
+	Table_HeadCellTextColor
+	Table_BorderColor
+	Table_TodayFadedBGColor
+
 
 OLD TODO:
 ===========================

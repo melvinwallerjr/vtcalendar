@@ -48,8 +48,9 @@ require_once('application.inc.php');
 	} // end if: if (isset($check))
 	else { // read template from DB
 		if ($templateid > 0) {
-			$result = DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($templateid)."'" ); 
-			$event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			$result =& DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($templateid)."'" ); 
+			if (is_string($result)) { DBErrorBox($result); exit; }
+			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 			$template_name = $event['name'];
 		}

@@ -95,17 +95,22 @@ if ( isset($save) ) {
 		// save the settings to database
 		if ( $viewauthrequired != 0 ) { $viewauthrequired = 1; }
 		if ( $forwardeventdefault!="1" ) { $forwardeventdefault = "0"; }
-		$result = DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',
+		$result =& DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',
 bgcolor='".sqlescape($bgcolor)."',maincolor='".sqlescape($maincolor)."',todaycolor='".sqlescape($todaycolor)."',
 pastcolor='".sqlescape($pastcolor)."',futurecolor='".sqlescape($futurecolor)."',textcolor='".sqlescape($textcolor)."',
 linkcolor='".sqlescape($linkcolor)."',gridcolor='".sqlescape($gridcolor)."',
 viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."' 
 WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 		
+		if (is_string($result)) { DBErrorBox($result); exit; }
+		
 		// substitute existing auth info with the new one
-		$result = DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+		$result =& DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+		if (is_string($result)) { DBErrorBox($result); exit; }
+		
 		for ($i=0; $i<count($pidsAdded); $i++) {
-			$result = DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($pidsAdded[$i])."')" );
+			$result =& DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($pidsAdded[$i])."')" );
+			if (is_string($result)) { DBErrorBox($result); exit; }
 		}
 		
 		setCalendarPreferences();
@@ -116,8 +121,9 @@ WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 }
 
 // read sponsor name from DB
-$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
-$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+$result =& DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+if (is_string($result)) { DBErrorBox($result); exit; }
+$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 pageheader(lang('change_header_footer_colors_auth'), "Update");
 contentsection_begin(lang('change_header_footer_colors_auth'));
@@ -152,26 +158,26 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 <input type="hidden" name="pastcolor" value="<?php echo $pastcolor; ?>">
 <input type="hidden" name="todaycolor" value="<?php echo $todaycolor; ?>">
 <input type="hidden" name="futurecolor" value="<?php echo $futurecolor; ?>">
+<?php
 
-
-<?php
-	if ( $_SESSION['CALENDAR_ID'] != "default" ) {
-?>
-<?php
-	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
-	$c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	$defaultcalendarname = $c['name'];
-?>
-<br>
-	<table border="0">
-		<tr align="left" valign="top">
-			<td><input type="checkbox" name="forwardeventdefault" id="forwardeventdefault" value="1"<?php if ($forwardeventdefault=="1") { echo " checked"; } ?>></td>
-			<td><strong><label for="forwardeventdefault">By default also display events on the <?php echo $defaultcalendarname ?></label></strong> <br>
-				(Sponsors can still disable this on a per-event basis)</td>
-		</tr>
-	</table>
-<?php
-	} // end: if ( $_SESSION['CALENDAR_ID'] != "default" ) {
+if ( $_SESSION['CALENDAR_ID'] != "default" ) {
+	$result =& DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
+	if (is_string($result)) {
+		DBErrorBox($result);
+	}
+	else {
+		$c =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+		$defaultcalendarname = $c['name'];
+		?><br>
+		<table border="0">
+			<tr align="left" valign="top">
+				<td><input type="checkbox" name="forwardeventdefault" id="forwardeventdefault" value="1"<?php if ($forwardeventdefault=="1") { echo " checked"; } ?>></td>
+				<td><strong><label for="forwardeventdefault">By default also display events on the <?php echo $defaultcalendarname ?></label></strong> <br>
+					(Sponsors can still disable this on a per-event basis)</td>
+			</tr>
+		</table><?php
+	}
+}
 ?>
  <br>
 <br>
@@ -194,24 +200,30 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 	if (!empty($addPIDError)) {    
 		feedback($addPIDError,1);
 	}
-?>
-		<textarea name="users" cols="40" rows="6" wrap="virtual"><?php
-		if ( isset($users) ) {
-			echo $users;
+
+	if ( isset($users) ) {
+		echo $users;
+	}
+	else {
+		$query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
+		$result =& DBQuery($query ); 
+		if (is_string($result)) {
+			DBErrorBox($result);
 		}
 		else {
-			$query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
-			$result = DBQuery($query ); 
+			?><textarea name="users" cols="40" rows="6" wrap="virtual"><?php
 			$i = 0;
 			while ($i < $result->numRows()) {
-				$viewauth = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+				$viewauth =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 				if ($i>0) { echo ","; }
 				echo $viewauth['userid'];
 				$i++;
 			}
+			?></textarea><br><?php
 		}
-		?></textarea><br>
-		<i><?php echo lang('separate_user_ids_with_comma'); ?></i>
+	}
+		
+		?><i><?php echo lang('separate_user_ids_with_comma'); ?></i>
 	</td>
 </tr>
 </table>

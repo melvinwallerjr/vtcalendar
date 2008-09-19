@@ -1,11 +1,11 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-	require_once('application.inc.php');
+require_once('application.inc.php');
 
-	if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
-	$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
-	helpwindow_header();
+if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
+$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
+helpwindow_header();
 ?>
 <H3><IMG alt="" border=0 height=16 src="images/nuvola/16x16/actions/help.png" width=16>
 <?php echo lang('help_import'); ?>
@@ -59,26 +59,35 @@ require_once('session_start.inc.php');
 </pre>
 <hr size="1">
 <br>
-<?php echo lang('help_import_data_format_intro'); ?>
-<table border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<th><?php echo lang('help_categoryid_index'); ?></th>
-		<th><?php echo lang('help_categoryid_name'); ?></th>
-	</tr>
-<?php
-	// read event categories from DB
-	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
+<?php echo lang('help_import_data_format_intro');
 
-	// print list with categories and select the one read from the DB
-	for ($i=0;$i<$result->numRows();$i++) {
-		$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-		echo "  <tr>\n";
-		echo "    <td>",$category['id'],"</td>";
-		echo "    <td>",$category['name'],"</td>";
-		echo "  </tr>";
-	}
+// read event categories from DB
+$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" );
+if (is_string($result)) {
+	DBErrorBox($result); 
+}
+else {
+	?>
+	<table border="1" cellspacing="0" cellpadding="5">
+		<tr>
+			<th><?php echo lang('help_categoryid_index'); ?></th>
+			<th><?php echo lang('help_categoryid_name'); ?></th>
+		</tr>
+	<?php
+	
+		// print list with categories and select the one read from the DB
+		for ($i=0;$i<$result->numRows();$i++) {
+			$category =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			echo "  <tr>\n";
+			echo "    <td>",$category['id'],"</td>";
+			echo "    <td>",$category['name'],"</td>";
+			echo "  </tr>";
+		}
+	?>
+	</table>
+	<?php
+}
 ?>
-</table>
 </li>            
 </ul>
 <?php echo lang('help_import_data_format'); ?>

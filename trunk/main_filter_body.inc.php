@@ -97,8 +97,8 @@ function validate ( myForm, id ) {
 			if (isset($oldview) && $oldview != "filter") {
 				echo htmlentities($oldview);
 			}
-			elseif (SHOW_UPCOMING_TAB) {
-				echo "upcoming";
+			elseif (isset($_SESSION['VIEW']) {
+				echo $_SESSION['VIEW'];
 			}
 			else {
 				echo "week";

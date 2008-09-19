@@ -76,7 +76,6 @@ else {
 	//echo lang('no_recurrences_defined');
 }
 
-if (isset($detailscaller)) { echo "<INPUT type=\"hidden\" name=\"detailscaller\" value=\"",$detailscaller,"\">\n"; }
 passeventvalues($event,$event['sponsorid'],$repeat); // add the common input fields
 
 ?><INPUT type="hidden" name="check" value="1"><?php

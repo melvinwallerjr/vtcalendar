@@ -21,7 +21,6 @@ require_once('session_start.inc.php');
 		  unset($eventid); 
 		}
 	}
-  if (isset($_POST['detailscaller'])) { setVar($detailscaller,$_POST['detailscaller'],'detailscaller'); } else { unset($detailscaller); }
 
   if (!authorized()) { exit; }
 
@@ -33,7 +32,6 @@ require_once('session_start.inc.php');
 	  	$httpreferer = $_SERVER["HTTP_REFERER"];
 	  }
   }
-  if (isset($detailscaller)) { $httpreferer .= "&detailscaller=$detailscaller"; }
 
   // check that the event exists.
   $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
@@ -122,7 +120,6 @@ require_once('session_start.inc.php');
 <FORM method="post" action="deleteevent.php">
 <?php
     echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
-    if (isset($detailscaller)) { echo "<INPUT type=\"hidden\" name=\"detailscaller\" value=\"$detailscaller\">\n"; }
 
     if (isset($check)) { // ask for delete confirmation
       $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.contact_name,e.contact_email,e.contact_phone,e.price,e.url,e.displayedsponsor,e.displayedsponsorurl,e.wholedayevent,e.repeatid,e.categoryid,c.id,c.name AS category_name FROM vtcal_event e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.id='".sqlescape($eventid)."'";

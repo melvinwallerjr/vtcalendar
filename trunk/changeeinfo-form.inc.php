@@ -70,9 +70,6 @@ contentsection_begin(lang('input_event_information'));
 echo "<form name=\"inputevent\" method=\"post\" action=\"changeeinfo.php\">\n";
 inputeventbuttons($httpreferer);
 
-if (isset($detailscaller)) { 
-	echo "<INPUT type=\"hidden\" name=\"detailscaller\" value=\"",$detailscaller,"\">\n"; 
-}
 if (!isset($check)) { $check = 0; }
 inputeventdata($event,$event['sponsorid'],1,$check,1,$repeat,$copy);
 echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";

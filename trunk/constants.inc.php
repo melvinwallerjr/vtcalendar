@@ -43,7 +43,7 @@ define("constPasswordMaxLength",20);
 define("constPasswordRegEx", '/^['.constValidTextCharWithoutSpacesRegEx.']{1,'.constPasswordMaxLength.'}$/');
 
 // Max length of input
-define("constCalendaridMAXLENGTH",20);
+define("constCalendaridMAXLENGTH",50);
 define("constCalendarnameMAXLENGTH",100);
 define("constCalendarTitleMAXLENGTH",50);
 define("constKeywordMaxLength",100);

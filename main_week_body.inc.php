@@ -7,11 +7,11 @@ $ievent = 0;
 $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($weekfrom['timestamp'])."' AND e.timeend <= '".sqlescape($weekto['timestamp'])."'";
 if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
-if ( isset($filtercategories) && count($filtercategories) > 0 ) {
+if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
   $query.= " AND (";
-	for($c=0; $c < count($filtercategories); $c++) {
+	for($c=0; $c < count($CategoryFilter); $c++) {
 	  if ($c > 0) { $query.=" OR "; }
-	  $query.= "(e.categoryid='".sqlescape($filtercategories[$c])."')";
+	  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
   }
 	$query.= ")";
 }

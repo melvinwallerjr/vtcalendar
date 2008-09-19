@@ -16,11 +16,11 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
   if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
 	// Filter by categories if one or more were specified.
-	if ( isset($filtercategories) && count($filtercategories) > 0 ) {
+	if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
 	  $query.= " AND (";
-		for($c=0; $c < count($filtercategories); $c++) {
+		for($c=0; $c < count($CategoryFilter); $c++) {
 		  if ($c > 0) { $query.=" OR "; }
-		  $query.= "(e.categoryid='".sqlescape($filtercategories[$c])."')";
+		  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
     }
 		$query.= ")";
 	}

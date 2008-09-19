@@ -30,11 +30,11 @@ $query.= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.cale
 if (!empty($timebegin)) { $query.= " AND e.timebegin >= '".sqlescape($timebegin)."'"; }
 if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }
 
-if ( isset($filtercategories) && count($filtercategories) > 0 ) {
+if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
   $query.= " AND (";
-	for($c=0; $c < count($filtercategories); $c++) {
+	for($c=0; $c < count($CategoryFilter); $c++) {
 	  if ($c > 0) { $query.=" OR "; }
-	  $query.= "(e.categoryid='".sqlescape($filtercategories[$c])."')";
+	  $query.= "(e.categoryid='".sqlescape($CategoryFilter[$c])."')";
     }
 	$query.= ")";
 }

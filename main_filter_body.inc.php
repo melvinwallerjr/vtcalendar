@@ -1,6 +1,6 @@
 <?php
-  if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-  
+if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+	
 /*
 1. Outputs the body for the filter view.
 
@@ -8,43 +8,43 @@
 		function checkAll(myForm, id, state)
 		function validate ( myForm, id )
 */
-  
+	
 ?><table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#FFFFFF">
 <tr valign="top">
 	<td>
 <script language="JavaScript" type="text/javascript"><!--
 function checkAll(myForm, id, state) {
-  // determine if ALL of the checkboxes is checked
-  b = new Boolean( true );
-  for (var cnt=0; cnt < myForm.elements.length; cnt++) {
-    var ckb = myForm.elements[cnt];
-    if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
-      if (ckb.checked == false) { b = false; }
-    }
-  }
+	// determine if ALL of the checkboxes is checked
+	b = new Boolean( true );
+	for (var cnt=0; cnt < myForm.elements.length; cnt++) {
+		var ckb = myForm.elements[cnt];
+		if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
+			if (ckb.checked == false) { b = false; }
+		}
+	}
 
-  for (var cnt=0; cnt < myForm.elements.length; cnt++) {
-    var ckb = myForm.elements[cnt];
-    if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
-      if ( b == true ) { ckb.checked = false; }
-      else { ckb.checked = true; };
-    }
-  }
+	for (var cnt=0; cnt < myForm.elements.length; cnt++) {
+		var ckb = myForm.elements[cnt];
+		if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
+			if ( b == true ) { ckb.checked = false; }
+			else { ckb.checked = true; };
+		}
+	}
 }
 
 function validate ( myForm, id ) {
-  b = new Boolean( false );
-  for (var cnt=0; cnt < myForm.elements.length; cnt++) {
-    var ckb = myForm.elements[cnt];
-    if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
-      if (ckb.checked == true) { b = true; break; }
-    }
-  }
-  if ( b == false ) {
-    alert ( "Please select one or more categories before clicking the button." );
-    return false;
-  }
-  return true;
+	b = new Boolean( false );
+	for (var cnt=0; cnt < myForm.elements.length; cnt++) {
+		var ckb = myForm.elements[cnt];
+		if (ckb.type == "checkbox" && ckb.name.indexOf(id) == 0) {
+			if (ckb.checked == true) { b = true; break; }
+		}
+	}
+	if ( b == false ) {
+		alert ( "Please select one or more categories before clicking the button." );
+		return false;
+	}
+	return true;
 }
 //--></script>
 	<table border="0" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF">
@@ -56,29 +56,29 @@ function validate ( myForm, id ) {
 		</tr>
 		<tr valign="top">
 			<td colspan="4" align="left" nowrap>
-				<a href="javascript:checkAll(document.categorylist,'filtercategories',true);"><?php echo lang('select_unselect'); ?></a>
+				<a href="javascript:checkAll(document.categorylist,'categoryfilter',true);"><?php echo lang('select_unselect'); ?></a>
 			</td>
 			</tr>
 			<tr valign="top">
 				<td align="left" nowrap>
 <?php
+	if (isset($CategoryFilter)) {
+		// Create a list of category filter keys
+		$CategoryFilterKeys = array_flip($CategoryFilter);
+	}
+	
 	$percolumn = ceil($numcategories / 3);
 	for ($c=0; $c<$numcategories; $c++) {
 		// determine if the current category has been selected previously
-		if ( isset($categoryfilter) ) {
-          $categoryselected = array_key_exists( $categories_id[$c], $categoryfilter );
-		}
-		else {
-		  $categoryselected = true;
-		}
+		$categoryselected = !isset($CategoryFilterKeys) || array_key_exists($categories_id[$c], $CategoryFilterKeys);
 		
 		if ($c > 0 && $c % $percolumn == 0) {
-				echo "</td>\n";
-				echo "<td align=\"left\" nowrap>\n";
+			echo "</td>\n";
+			echo "<td align=\"left\" nowrap>\n";
 		}
-		echo '<input type="checkbox" name="filtercategories[]" id="category',$c,'" value="'.$categories_id[$c].'"';
-			if ( $categoryselected || count($filtercategories)==0 ) {
-			  echo " checked";
+		echo '<input type="checkbox" name="categoryfilter[]" id="category',$c,'" value="'.$categories_id[$c].'"';
+			if ( $categoryselected || count($CategoryFilter)==0 ) {
+				echo " checked";
 			}
 			echo ">\n";
 		echo '<label for="category',$c,'">',htmlentities($categories_name[$c]),"</label><br>\n";
@@ -88,7 +88,7 @@ function validate ( myForm, id ) {
 			</tr>
 			<tr valign="top">
 				<td colspan="3" align="left" valign="top">
-			  	<br>
+					<br>
 					<input type="submit" value="&nbsp;&nbsp;<?php echo lang('apply_filter'); ?>&nbsp;&nbsp;">&nbsp;
 				</td>
 			</tr>
@@ -96,8 +96,8 @@ function validate ( myForm, id ) {
 			<input type="hidden" name="calendar" value="<?php echo htmlentities($_SESSION["CALENDARID"]); ?>">
 		</form>
 		</table>
-  	<br>
-	  <br>
+		<br>
+		<br>
 	</td>
 </tr>
 </table>

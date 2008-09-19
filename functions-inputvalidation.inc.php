@@ -18,15 +18,6 @@ function isValidInput($value, $type) {
 	elseif ($type=='calendarFooter') { // needs refinement
 	  return TRUE;
 	}
-	elseif ($type=='CategoryFilter') { // e.g. "3,7,5"
-	  if (strlen($value) > 1000) { return FALSE; }
-		$categoryids = split(",",$value);
-		if (count($categoryids)==0) { return TRUE; }
-		foreach($categoryids as $categoryid) {
-		  if (!isValidInput($categoryid, 'categoryid')) { return FALSE; }
-		}
-		return TRUE;
-	}
 	elseif ($type=='calendarHeader') { // needs refinement
 	  return TRUE;
 	}
@@ -34,7 +25,7 @@ function isValidInput($value, $type) {
 	  if (preg_match('/^[A-Z0-9\-\.]{1,'.constCalendaridMAXLENGTH.'}$/i',$value)) { return TRUE; }
 	}
 	elseif ($type=='calendarTitle') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constCalendarTitleMAXLENGTH.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constCalendarTitleMAXLENGTH.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='cancel') {
 	  if (!empty($value)) { return TRUE; }
@@ -61,13 +52,13 @@ function isValidInput($value, $type) {
 	  if (preg_match('/^#[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='contact_name') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constContact_nameMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constContact_nameMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='contact_phone') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constContact_phoneMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constContact_phoneMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='contact_email') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constEmailMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constEmailMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='copy') {
 	  if (!empty($value)) { return TRUE; }
@@ -97,7 +88,7 @@ function isValidInput($value, $type) {
 	  if ($value=='0' || $value=='1') { return TRUE; }
 	}
 	elseif ($type=='displayedsponsor') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constDisplayedsponsorMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constDisplayedsponsorMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='duration') {
 	  if ($value=='1' || $value='2' || $value='3') { return TRUE; }
@@ -106,7 +97,7 @@ function isValidInput($value, $type) {
 	  if (strlen($value) > 1) { return TRUE; }
 	}
 	elseif ($type=='email') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constEmailMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constEmailMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='eventid') { // e.g. "1064818293904-0017"
 	  if (preg_match('/^[0-9]{13}$/',$value) || preg_match('/^[0-9]{13}-[0-9]{4}$/',$value)) { return TRUE; }
@@ -124,14 +115,29 @@ function isValidInput($value, $type) {
 	elseif ($type=='featuretext') { // needs refinement
 	  return TRUE;
 	}
-	elseif ($type=='filtercategories') { // Array of category ids, e.g. [0]=>5, [1]=>7, [2]=>12
-		if (!is_array($value)) { return FALSE; }
-	  if (count($value)==0) { return TRUE; }
-		if (count($value) > 1000) { return FALSE; }
-		foreach ($value as $categoryid) {
-		  if (!isValidInput($categoryid, 'categoryid')) { return FALSE; }
+	elseif ($type=='categoryfilter') { // Array of category ids, e.g. [0]=>5, [1]=>7, [2]=>12
+		if (is_string($value)) {
+		  if (strlen($value) > 1000) { return FALSE; }
+			$categoryids = split(",",$value);
+			if (count($categoryids)==0) { return TRUE; }
+			foreach($categoryids as $categoryid) {
+			  if (!isValidInput($categoryid, 'categoryid')) { return FALSE; }
+			}
+			return TRUE;
 		}
-		return TRUE;
+		
+		elseif (is_array($value)) {
+		  if (count($value)==0) { return TRUE; }
+			if (count($value) > 1000) { return FALSE; }
+			foreach ($value as $categoryid) {
+			  if (!isValidInput($categoryid, 'categoryid')) { return FALSE; }
+			}
+			return TRUE;
+		}
+		
+		else {
+			return false;
+		}
 	}
 	elseif ($type=='forwardeventdefault') {
 	  if ($value=='1') { return TRUE; }
@@ -150,7 +156,7 @@ function isValidInput($value, $type) {
 	  if (strlen($value)<500) { return TRUE; }
 	}
 	elseif ($type=='importurl') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constImporturlMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constImporturlMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='interval1') {
 	  if ($value=='every' || $value=='everyother' || $value=='everythird' || $value=='everyfourth') { return TRUE; }
@@ -159,10 +165,10 @@ function isValidInput($value, $type) {
 	  if ($value=='month' || $value=='2months' || $value=='3months' || $value=='4months' || $value=='6months' || $value=='year') { return TRUE; }
 	}
 	elseif ($type=='keyword') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constKeywordMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constKeywordMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='location') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constLocationMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constLocationMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='mode') { // repeat['mode']
 	  if (is_numeric($value) && $value>=0 && $value<=10) { return TRUE; }
@@ -174,7 +180,7 @@ function isValidInput($value, $type) {
 	  if (!empty($value)) { return TRUE; }
 	}
 	elseif ($type=='price') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constPriceMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constPriceMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='rangedays') {
 	  if (is_numeric($value) && $value>=1 && $value<=100000) { return TRUE; }
@@ -189,7 +195,7 @@ function isValidInput($value, $type) {
 	  if (!empty($value)) { return TRUE; }
 	}
 	elseif ($type=='rejectreason') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,500}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,500}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='repeatid') { // e.g. "1064818293904"
 	  if (preg_match('/^[0-9]{13}$/',$value)) { return TRUE; }
@@ -213,7 +219,7 @@ function isValidInput($value, $type) {
 	  if ($value=='0' || $value='1') { return TRUE; }
 	}
 	elseif ($type=='specificsponsor') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constSpecificsponsorMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constSpecificsponsorMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='sponsorid') {
 	  if ($value=='all' || (is_numeric($value) && $value>=1 && $value<=100000)) { return TRUE; }
@@ -222,16 +228,16 @@ function isValidInput($value, $type) {
 	  if ($value=='all' || $value='self' || $value='specific') { return TRUE; }
 	}
 	elseif ($type=='sponsor_admins') { // needs refinement, allow newlines
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,500}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,500}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='sponsor_email') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,100}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,100}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='sponsor_name') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,100}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,100}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='sponsor_url') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constUrlMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constUrlMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='startimport') {
 	  if (!empty($value)) { return TRUE; }
@@ -240,7 +246,7 @@ function isValidInput($value, $type) {
 	  if (is_numeric($value) && $value>=0 && $value<=100000) { return TRUE; }
 	}
 	elseif ($type=='template_name') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constTemplate_nameMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constTemplate_nameMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='timebegin' || $type=='timeend' || $type=='littlecal') { // e.g. "2004-05-26 00:00:00" or "today"
 	  if ($value=='today' || $value=='now') { return TRUE; }
@@ -274,13 +280,13 @@ function isValidInput($value, $type) {
 	  if ($value=='0' || $value=='1') { return TRUE; }
 	}
 	elseif ($type=='url') {
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constUrlMaxLength.'}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constUrlMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='userid') {
 	  if (preg_match(REGEXVALIDUSERID,$value)) { return TRUE; }
 	}
 	elseif ($type=='users') { // needs refinement, allow newlines
-	  if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,2000}$/',$value)) { return TRUE; }
+	  if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,2000}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='view') {
 	  if ($value=='upcoming' || $value=='day' || $value=='week' || $value=='month' || $value=='search' || $value=='searchresults' || $value=='event' || $value=='subscribe' || $value=='filter') { return TRUE; }

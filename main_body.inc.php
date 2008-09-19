@@ -6,29 +6,36 @@ if (!defined("ALLOWINCLUDES")) { exit; } ?>
 	
 	<!-- Start Filter Notice -->
 	<?php
-	  if ( $view == "day" || $view == "week" || $view == "month" || 
-	       $view == "search" || $view == "searchresults"
-	  	 ) { 
-		  if (isset($filtercategories)) { ?>
-				<table id="FilterNotice" width="100%" border="0" cellpadding="4" cellspacing="0">
+		if ($view == "upcoming" || $view == "day" || $view == "week" || $view == "month" || $view == "search" || $view == "searchresults") {
+			if (isset($CategoryFilter)) {
+				?><table id="FilterNotice" width="100%" border="0" cellpadding="4" cellspacing="0">
 				<tr>
 					<td><b><?php echo lang('showing_filtered_events'); ?></b> <a href="main.php?calendarid=<?php echo $_SESSION["CALENDARID"]; ?>&view=filter">(<?php 
+					
+					// The list of categories that will be outputted.
 					$activecategories = "";
-					for ($c=0; $c<$numcategories; $c++) {
-						// determine if the current category has been selected previously
-				    $categoryselected = array_key_exists( $categories_id[$c], $categoryfilter );
-						if ( $categoryselected || count($filtercategories)==0 ) {
-						  if (!empty($activecategories)) { $activecategories.=", "; }
-							$activecategories .= $categories_name[$c];
-				    }
-				  }		
-					if (strlen($activecategories) > 70) { $activecategories = substr($activecategories,0,70)."..."; }
+					
+					// Create a lookup for getting the array index by category ID.
+					$CategoryIdFlip = array_flip($categories_id);
+					
+					for ($i = 0; $i < count($CategoryFilter) && strlen($activecategories) <= 70; $i++) {
+						if (isset($CategoryIdFlip[$CategoryFilter[$i]])) {
+							if ($i > 0) $activecategories .= ", ";
+							$activecategories .= $categories_name[$CategoryIdFlip[$CategoryFilter[$i]]];
+						}
+					}
+					
+					// Add an elipse if the output got too long.
+					if (strlen($activecategories) > 70) $activecategories .= ", ...";
+					
+					// Output the list of categories.
 					echo $activecategories;
+					
 					?>)</a></td>
 				</tr>
 				</table><?php
-	    }
-	  }
+			}
+		}
 	?>
 	<!-- End Filter Notice -->
 	

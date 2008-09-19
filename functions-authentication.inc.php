@@ -1,84 +1,84 @@
 <?php
 /* Make sure the password meets standards for a new password (e.g. not the same as their old password */
 function checknewpassword(&$user) {
-  /* include more sophisticated constraints here */
-  if ($user['newpassword1']!=$user['newpassword2']) { return 1; }
-  elseif ((empty($user['newpassword1'])) || (strlen($user['newpassword1']) < 5)) { return 2; }
-  else { return 0; }
+	/* TODO: Include more sophisticated constraints */
+	if ($user['newpassword1']!=$user['newpassword2']) { return 1; }
+	elseif ((empty($user['newpassword1'])) || (strlen($user['newpassword1']) < 5)) { return 2; }
+	else { return 0; }
 }
 
 /* Verify the  user's old password in the database */
 function checkoldpassword(&$user, $userid) {
-  $result =& DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" );
-  $data =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	$result =& DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($userid)."'" );
+	$data =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	return ($data['password'] != crypt($user['oldpassword'], $data['password']));
 }
 
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg="") {
-  global $lang;
+	global $lang;
 
-  pageheader(lang('update_page_header'), "Update");
-  contentsection_begin(lang('login'));
+	pageheader(lang('update_page_header'), "Update");
+	contentsection_begin(lang('login'));
 
-  if (!empty($errormsg)) {
-    echo "<BR>\n";
-    feedback($errormsg,1);
-  }
+	if (!empty($errormsg)) {
+		echo "<BR>\n";
+		feedback($errormsg,1);
+	}
 	?>
-  <DIV>
-  <?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
-  <FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
+	<DIV>
+	<?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
+	<FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
 	<?php
 	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($GLOBALS["eventid"]),"\">\n"; }
-  if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($GLOBALS["httpreferer"]),"\">\n"; }
+	if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($GLOBALS["httpreferer"]),"\">\n"; }
 	if (isset($GLOBALS["authsponsorid"])) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($GLOBALS["authsponsorid"]),"\">\n"; }
 	?>
-    <TABLE border="0" cellspacing="1" cellpadding="3">
-      <TR>
-        <TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
-        <TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
-      </TR>
-      <TR>
-        <TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
-        <TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
-      </TR>
-      <TR>
-        <TD class="inputbox">&nbsp;</TD>
-        <TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
-      </TR>
-    </TABLE>
-    <p><a href="helpsignup.php" target="newWindow" onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a></p>
-  </FORM>
+		<TABLE border="0" cellspacing="1" cellpadding="3">
+			<TR>
+				<TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
+				<TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
+			</TR>
+			<TR>
+				<TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
+				<TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
+			</TR>
+			<TR>
+				<TD class="inputbox">&nbsp;</TD>
+				<TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
+			</TR>
+		</TABLE>
+		<p><a href="helpsignup.php" target="newWindow" onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a></p>
+	</FORM>
 	<script language="JavaScript1.2"><!--
-	  document.loginform.login_userid.focus();
+		document.loginform.login_userid.focus();
 	//--></script>
 	<?php if (file_exists("static-includes/loginform-post.txt")) { include('static-includes/loginform-post.txt'); } ?>
-  </DIV>
+	</DIV>
 	<?php
-  contentsection_end();
+	contentsection_end();
 
-  pagefooter();
+	pagefooter();
 } // end: function displaylogin
 
 // Display a list of sponsors that the user belongs to
 // so they can choose the one they wish to login as.
 function displaymultiplelogin($errorMessage="") {
-  pageheader(lang('login'), "Update");
-  
-  contentsection_begin(lang('choose_sponsor_role'));
-  
-  if (!empty($errorMessage)) {
-  	echo "<p>", htmlentities($errorMessage) ,"</p>";
-  } else {
-  	echo "<div>&nbsp;</div>";
-  }
+	pageheader(lang('login'), "Update");
+	
+	contentsection_begin(lang('choose_sponsor_role'));
+	
+	if (!empty($errorMessage)) {
+		echo "<p>", htmlentities($errorMessage) ,"</p>";
+	} else {
+		echo "<div>&nbsp;</div>";
+	}
 	
 	// Allow a main admin to become any sponsor.
 	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
 		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY admin DESC, name";
 	}
-  // Otherwise, check which sponsors the user can become.
+	// Otherwise, check which sponsors the user can become.
 	else {
 		$query = "SELECT a.sponsorid as id, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'  ORDER BY s.admin DESC, s.name";
 	}
@@ -86,21 +86,21 @@ function displaymultiplelogin($errorMessage="") {
 	$result =& DBQuery($query);
 	
 	if (is_string($result)) {
-	  DBErrorBox($result);
+		DBErrorBox($result);
 		$returnValue = false;
 	}
 	else {
 		echo "<ul>";
 		$adminfound = false;
-    for ($i = 0; $i < $result->numRows(); $i++) {
-      $sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);			
+		for ($i = 0; $i < $result->numRows(); $i++) {
+			$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);			
 			
 			echo '<li><a href="' . $_SERVER["PHP_SELF"] . "?authsponsorid=" . urlencode($sponsor['id']);
-    	if (isset($GLOBALS["eventid"])) { 
-			  echo "&eventid=",urlencode($GLOBALS["eventid"]);
+			if (isset($GLOBALS["eventid"])) { 
+				echo "&eventid=",urlencode($GLOBALS["eventid"]);
 			}
-      if (isset($GLOBALS["httpreferer"])) { 
-			  echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
+			if (isset($GLOBALS["httpreferer"])) { 
+				echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
 			}
 			echo '">' . htmlentities($sponsor['name']) . "</a>";
 			
@@ -120,22 +120,22 @@ function displaymultiplelogin($errorMessage="") {
 		$result->free();
 	}
 	
-  contentsection_end();
+	contentsection_end();
 
-  pagefooter();
+	pagefooter();
 } // end: function displaymultiplelogin
 
 function displaynotauthorized() {
-  pageheader(lang('login'), "Update");
-  contentsection_begin(lang('error_not_authorized'));
+	pageheader(lang('login'), "Update");
+	contentsection_begin(lang('error_not_authorized'));
 	
 	echo lang('error_not_authorized_message'); ?><br>
 	<br>
-	    <a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
+			<a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
 	<BR><?php
-  contentsection_end();
+	contentsection_end();
 
-  pagefooter();
+	pagefooter();
 } // end: Function displaynotauthorized
 
 
@@ -159,11 +159,11 @@ function userauthenticated($userid, $password) {
 			$returnValue = $lang['dberror_generic'] . ": " . $result;
 		}
 		else {
-	    if ($result->numRows() > 0) {
+			if ($result->numRows() > 0) {
 				$userRecord =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 				if ( crypt($password, $userRecord['password']) == $userRecord['password'] ) {
 					$_SESSION["AUTH_TYPE"] = "DB";
-				  $returnValue = true;
+					$returnValue = true;
 				}
 			}
 			$result->free();
@@ -286,60 +286,60 @@ function userauthenticated($userid, $password) {
  */
 function logUserIn() {
 	
-  // Get username/password POST values.
-  if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
-  	setVar($userid, strtolower($_POST['login_userid']), 'userid');
-	  $password = $_POST['login_password'];
-  }
-  else {
-  	unset($userid);
-  	unset($password);
-  }
-  
-  // Log out the user if the user ID submitted is different than the currently logged in user.
-  if (isset($userid) && isset($_SESSION["AUTH_USERID"]) && $userid != $_SESSION["AUTH_USERID"]) {
-	  logout();
-  }
-  
-  // Return true if the user is already logged in.
-  if (isset($_SESSION["AUTH_USERID"])) {
-  	return true;
-  }
-  
-  // Return false if the user isn't logged in but no credentials were provided.
-  elseif (!isset($userid) || !isset($password)) {
-  	return false;
-  }
-  
-  // Otherwise, attempt to authenticate the user with the supplied credentials
-  else {
-  
-  	// Check the username/password.
-  	$authresult = userauthenticated($userid, $password);
-  	
-  	// Mark the user as logged in if successfully authenticated.
+	// Get username/password POST values.
+	if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
+		setVar($userid, strtolower($_POST['login_userid']), 'userid');
+		$password = $_POST['login_password'];
+	}
+	else {
+		unset($userid);
+		unset($password);
+	}
+	
+	// Log out the user if the user ID submitted is different than the currently logged in user.
+	if (isset($userid) && isset($_SESSION["AUTH_USERID"]) && $userid != $_SESSION["AUTH_USERID"]) {
+		logout();
+	}
+	
+	// Return true if the user is already logged in.
+	if (isset($_SESSION["AUTH_USERID"])) {
+		return true;
+	}
+	
+	// Return false if the user isn't logged in but no credentials were provided.
+	elseif (!isset($userid) || !isset($password)) {
+		return false;
+	}
+	
+	// Otherwise, attempt to authenticate the user with the supplied credentials
+	else {
+	
+		// Check the username/password.
+		$authresult = userauthenticated($userid, $password);
+		
+		// Mark the user as logged in if successfully authenticated.
 		if ( $authresult === true ) {
 			$_SESSION["AUTH_USERID"] = $userid;
 
 			// Determine if the user is an main admin
-      $result =& DBQuery("SELECT id FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
-      
-      // Return an error message if the query failed.
-      if (is_string($result)) {
-			  return lang('login_failed') . "<br>Reason: A database error was encountered: " . $result;
-      }
-      else {
+			$result =& DBQuery("SELECT id FROM vtcal_adminuser WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" );
+			
+			// Return an error message if the query failed.
+			if (is_string($result)) {
+				return lang('login_failed') . "<br>Reason: A database error was encountered: " . $result;
+			}
+			else {
  			  $_SESSION["AUTH_MAINADMIN"] = $result->numRows() > 0;
-			  $result->free();
-			  return true;
+				$result->free();
+				return true;
 			}
 		}
 		
 		// Otherwise, return that the login attempt failed.
-    else {
-		  return lang('login_failed') . (is_string($authresult) ? "<br>" . $authresult : "");
-    }
-  }
+		else {
+			return lang('login_failed') . (is_string($authresult) ? "<br>" . $authresult : "");
+		}
+	}
 }
 
 /**
@@ -349,91 +349,91 @@ function authorized() {
 	$returnValue = true;
 	
 	// Get sponsor related URL values
-  if (isset($_GET['authsponsorid'])) {
-  	setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
-  	if ($authsponsorid === NULL) unset($authsponsorid);
+	if (isset($_GET['authsponsorid'])) {
+		setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
+		if ($authsponsorid === NULL) unset($authsponsorid);
 		unset($_SESSION["AUTH_SPONSORNAME"]);
-  	unset($_SESSION["AUTH_SPONSORID"]);
-  }
-  else {
-  	unset($authsponsorid);
-  }
-  
-  if ( ($authresult = logUserIn()) !== true ) {
-  	displaylogin( is_string($authresult) ? $authresult : "" );
+		unset($_SESSION["AUTH_SPONSORID"]);
+	}
+	else {
+		unset($authsponsorid);
+	}
+	
+	if ( ($authresult = logUserIn()) !== true ) {
+		displaylogin( is_string($authresult) ? $authresult : "" );
 		$returnValue = false;
-  }
-  
-  // Continue processing if the user is logged in.
-  else {
-  
+	}
+	
+	// Continue processing if the user is logged in.
+	else {
+	
 		// The user wants to set or change sponsor...
-	  if (isset($authsponsorid)) {
-	  	
-  		// Just verify that the sponsor does exist for main admins.
-	  	if ($_SESSION["AUTH_MAINADMIN"]) {
-	  		$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'";
-	  	}
-	    // Otherwise, verify that the user belongs to that sponsor group.
-	  	else {
-	  		$query = "SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND a.sponsorid='".sqlescape($authsponsorid)."'";
-	  	}
-	  	
-  		$result =& DBQuery($query);
-	  	
-  		if (is_string($result)) {
-			  displaylogin($lang['dberror_generic'] . ": " . $result);
+		if (isset($authsponsorid)) {
+			
+			// Just verify that the sponsor does exist for main admins.
+			if ($_SESSION["AUTH_MAINADMIN"]) {
+				$query = "SELECT admin, name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($authsponsorid)."'";
+			}
+			// Otherwise, verify that the user belongs to that sponsor group.
+			else {
+				$query = "SELECT a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."' AND a.sponsorid='".sqlescape($authsponsorid)."'";
+			}
+			
+			$result =& DBQuery($query);
+			
+			if (is_string($result)) {
+				displaylogin($lang['dberror_generic'] . ": " . $result);
 				$returnValue = false;
-  		}
-  		else {
-	  		if ($result->numRows() != 1) {
+			}
+			else {
+				if ($result->numRows() != 1) {
 					displaymultiplelogin(lang('error_bad_sponsorid'));
 					$returnValue = false;
-	  		}
-	  		else {
-	  			$record = $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
+				}
+				else {
+					$record = $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 					$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
 		 			$_SESSION["AUTH_SPONSORNAME"] = $record['name'];
-			  	$_SESSION["AUTH_ADMIN"] = $record["admin"] == 1;
-	  		}
-		  	$result->free();
-  		}
+					$_SESSION["AUTH_ADMIN"] = $record["admin"] == 1;
+				}
+				$result->free();
+			}
 		}
 		
 		// If the sponsor ID is not set, then we need to verify the user's access to this calendar...
-	  elseif (!isset($_SESSION["AUTH_SPONSORID"])) {
-	  	
-  		// Allow a main admin to become any sponsor.
-	  	if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
-	  		$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
-	  	}
-	    // Otherwise, check which sponsors the user can become.
-	  	else {
-	  		$query = "SELECT s.id, a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
-	  	}
-	  	
-	  	$result =& DBQuery($query);
-	  	
-	  	// Display an error message if the query failed.
-	  	if (is_string($result)) {
-			  displaylogin($lang['dberror_generic'] . ": " . $result);
+		elseif (!isset($_SESSION["AUTH_SPONSORID"])) {
+			
+			// Allow a main admin to become any sponsor.
+			if (isset($_SESSION["AUTH_MAINADMIN"]) && $_SESSION["AUTH_MAINADMIN"]) {
+				$query = "SELECT id, name, admin FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'";
+			}
+			// Otherwise, check which sponsors the user can become.
+			else {
+				$query = "SELECT s.id, a.sponsorid, s.name, s.admin FROM vtcal_auth a LEFT JOIN vtcal_sponsor s ON a.calendarid = s.calendarid AND a.sponsorid = s.id WHERE a.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND a.userid='".sqlescape($_SESSION["AUTH_USERID"])."'";
+			}
+			
+			$result =& DBQuery($query);
+			
+			// Display an error message if the query failed.
+			if (is_string($result)) {
+				displaylogin($lang['dberror_generic'] . ": " . $result);
 				$returnValue = false;
-	  	}
-	  	else {
-		  	// If the user does not have a sponsor for this calendar, then the user is not authorized or there are no sponsors (!).
+			}
+			else {
+				// If the user does not have a sponsor for this calendar, then the user is not authorized or there are no sponsors (!).
 				if ($result->numRows() == 0) {
 					if ($_SESSION["AUTH_MAINADMIN"]) {
-					  displaylogin($lang['dberror_nosponsor']);
+						displaylogin($lang['dberror_nosponsor']);
 					}
 					else {
-					  displaynotauthorized();
+						displaynotauthorized();
 					}
 					$returnValue = false;
 				}
 				
 				// Assign the user's sponsor if only one record was found from the query.
 				elseif ($result->numRows() == 1) {
-				  $authorization =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+					$authorization =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 					$_SESSION["AUTH_SPONSORID"]= $authorization['id'];
 		 			$_SESSION["AUTH_SPONSORNAME"] = $authorization['name'];
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
@@ -443,8 +443,8 @@ function authorized() {
 				// If the user belongs to more than one sponsor, then display the form to select a sponsor.
 				else {
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = $result->numRows();
-		  		displaymultiplelogin();
-			  	$returnValue = false;	
+					displaymultiplelogin();
+					$returnValue = false;	
 				}
 				
 				$result->free();
@@ -478,52 +478,52 @@ function viewauthorized() {
 	$returnValue = false;
 	
 	// Make sure the user is logged in.
-  if ( ($authresult = logUserIn()) !== true ) {
-  	displaylogin( is_string($authresult) ? $authresult : "" );
-  }
-  
-  // Allow the user to view the calendar if they are already marked as having access.
-  elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION["CALENDARID"])) {
+	if ( ($authresult = logUserIn()) !== true ) {
+		displaylogin( is_string($authresult) ? $authresult : "" );
+	}
+	
+	// Allow the user to view the calendar if they are already marked as having access.
+	elseif ($_SESSION["AUTH_MAINADMIN"] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION["CALENDARID"])) {
 		$returnValue = true;
-  }
-  
-  // Check if the user should be able to view the calendar.
-  else {
+	}
+	
+	// Check if the user should be able to view the calendar.
+	else {
 			// checking authorization
 			$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION["CALENDARID"]) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
 			
-      if (is_string($result)) {
-			  displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
-      }
-      else {
+			if (is_string($result)) {
+				displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
+			}
+			else {
 				if ($result->numRows() > 0) {
 					$_SESSION["CALENDAR_LOGIN"] = $_SESSION["CALENDARID"];
 					$returnValue = true;
 				}
 				else {
-				  displaylogin(lang('login_failed'));
+					displaylogin(lang('login_failed'));
 				}
 				$result->free();
 			}
-  }
+	}
 	
-  return $returnValue;
+	return $returnValue;
 } // end: function viewauthorized()
 
 // Only log the user out of a calendar
 function calendarlogout() {
-	unset($_SESSION["AUTH_SPONSORID"]);
-	unset($_SESSION["AUTH_SPONSORNAME"]);
-	unset($_SESSION["AUTH_ADMIN"]);
-	unset($_SESSION["CALENDAR_LOGIN"]);
-	unset($_COOKIE['CategoryFilter']);
-	setcookie ("CategoryFilter", "", time()-(3600*24), BASEPATH, BASEDOMAIN); // delete filter cookie
+	unset($_SESSION['AUTH_SPONSORID']);
+	unset($_SESSION['AUTH_SPONSORNAME']);
+	unset($_SESSION['AUTH_ADMIN']);
+	unset($_SESSION['CALENDAR_LOGIN']);
+	unset($_SESSION['CATEGORY_NAMES']);
+	unset($_SESSION['CATEGORY_FILTER']);
 }
 
 // Completely logout the user.
 function logout() {
-	unset($_SESSION["AUTH_USERID"]);
-	unset($_SESSION["AUTH_MAINADMIN"]);
+	unset($_SESSION['AUTH_USERID']);
+	unset($_SESSION['AUTH_MAINADMIN']);
 	calendarlogout();
 }
 ?>

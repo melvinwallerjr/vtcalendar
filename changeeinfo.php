@@ -177,7 +177,7 @@ if (isset($event['defaultdisplayedsponsorurl']) || isset($event['defaultallspons
 }
 
 // Save event into DB (if it is valid).
-if ((isset($savethis) || isset($saveall)) && $eventvalid) {
+if (isset($savethis) && $eventvalid) {
 	require("changeeinfo-save.inc.php");
 }
 
@@ -238,21 +238,4 @@ function passeventvalues($event,$sponsorid,$repeat) {
 	echo '<INPUT type="hidden" name="event[showondefaultcal]" value="',HTMLSpecialChars($event['showondefaultcal']),"\">\n";
   echo '<INPUT type="hidden" name="event[showincategory]" value="',HTMLSpecialChars($event['showincategory']),"\">\n";
 } // end: function passeventvalues
-
-// test if the recurrence info was changed, return true if it was
-// not used because changing only one instance of a recurring event was too error-prone
-/*
-function recurrenceschanged($repeatid,&$repeat,&$event) {
-  $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
-  $repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
-
-  $query = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($repeatid)."'";
-  $result = DBQuery($query ); 
-  $r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-
-  return ($r['repeatdef']!=$repeat['repeatdef']) ||
-         (substr($r['startdate'],0,10)!=substr($repeat['startdate'],0,10)) ||
-         (substr($r['enddate'],0,10)!=substr($repeat['enddate'],0,10));
-} // end: function recurrenceschanged
-*/
 ?>

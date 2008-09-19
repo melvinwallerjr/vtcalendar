@@ -36,6 +36,7 @@ if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid
 if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
 if (isset($_GET['categoryfilter'])) { setVar($CategoryFilter,$_GET['categoryfilter'],'categoryfilter'); } else { unset($CategoryFilter); }
 if (isset($_GET['littlecal'])) { setVar($littlecal,$_GET['littlecal'],'littlecal'); } else { unset($littlecal); }
+if (isset($_GET['oldview'])) { setVar($oldview,$_GET['oldview'],'view'); } else { unset($oldview); }
 if (isset($_GET['page'])) { setVar($page,$_GET['page'],'page'); } else { unset($page); }
 
 // Make sure the current view is allowed or possible.

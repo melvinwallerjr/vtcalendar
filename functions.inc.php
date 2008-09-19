@@ -24,7 +24,7 @@ require_once("functions-misc.inc.php");
 function DBopen()
 function DBclose()
 function DBQuery($query) */
-require_once("functions-dbgeneric.inc.php");
+require_once("functions-db-generic.inc.php");
 
 
 /* Functions that handle authentication:
@@ -55,7 +55,7 @@ function getSponsorURL($sponsorid)
 function num_unapprovedevents($repeatid)
 function userExistsInDB($userid)
 function isValidUser($userid) */
-require_once("functions-gets.inc.php");
+require_once("functions-db-gets.inc.php");
 
 
 /* VTCalendar specific date/time conversions and formatting:

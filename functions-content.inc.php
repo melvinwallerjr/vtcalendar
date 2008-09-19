@@ -107,7 +107,7 @@ function pagefooter() {
 	<?php echo $_SESSION['CALENDAR_FOOTER']; ?>
 	<!-- End Calendar Footer -->
 
-  </body>
+	</body>
 	</html>
 	<?php
 }
@@ -123,8 +123,8 @@ function contentsection_begin($headertext="", $showBackToMenuButton=false) {
 	
 	?><div id="UpdateBlock"><div style="border: 1px solid #666666; padding: 8px;"><?php
 	
-  if (!empty($headertext)) {
-    echo "<h2>".htmlentities($headertext).":</h2>";
+	if (!empty($headertext)) {
+		echo "<h2>".htmlentities($headertext).":</h2>";
 	}
 }
 
@@ -156,7 +156,7 @@ function helpwindow_header() {
 	
 // Outputs the footer HTML code for a pop-up help window. See helpwindow_header() as well.
 function helpwindow_footer() {
-  ?></td>
+	?></td>
 				<td>&nbsp;</td>
 			</tr>
 		</table>

@@ -96,8 +96,8 @@ define("USE_AMPM", TRUE);
 
 // escapes a value to make it safe for a SQL query
 function sqlescape($value) {
-  if (preg_match("/^pgsql/",DATABASE)) {
-	  return pg_escape_string($value);
+	if (preg_match("/^pgsql/",DATABASE)) {
+		return pg_escape_string($value);
 	}
 	else {
 		return mysql_escape_string($value);
@@ -108,83 +108,83 @@ function sqlescape($value) {
  
 // formats date output for date title in day and event view
 function day_view_date_format($date,$dow,$month, $year) {
-  // US format
-  return $dow.", ".$month." ".$date.", ".$year;
-  // Latvian format
-  // return $dow.", ".$date.". ".$month.", ".$year;
+	// US format
+	return $dow.", ".$month." ".$date.", ".$year;
+	// Latvian format
+	// return $dow.", ".$date.". ".$month.", ".$year;
 }
 
 // formats date output for datetitle in week view
 function week_view_date_format($date_from, $month_from, $year_from, $date_to, $month_to, $year_to) {
-  // US format
-  $date_str = $month_from . " " . $date_from; 
-  if ($year_from != $year_to) {
-     $date_str.=", ".$year_from;
-  }
-  $date_str.=" - ";
-  if($month_from != $month_to){
-     $date_str .= $month_to . " ";
-  }
-  $date_str .= $date_to . ", " . $year_to; 
-  return  $date_str;
+	// US format
+	$date_str = $month_from . " " . $date_from; 
+	if ($year_from != $year_to) {
+		 $date_str.=", ".$year_from;
+	}
+	$date_str.=" - ";
+	if($month_from != $month_to){
+		 $date_str .= $month_to . " ";
+	}
+	$date_str .= $date_to . ", " . $year_to; 
+	return  $date_str;
 
-  // Latvian format
+	// Latvian format
 /*
-  $date_str=$date_from.". "; // "13. "
-  if($month_from != $month_to){
-     $date_str.=strtolower($month_from);   //"13. janvaris"
-  }
-  if( $year_from != $year_to){
-     $date_str.=", ".$year_from; //  "13. janvaris, 2003"
-  }
-  $date_str.=" - ";
-  $date_str.=$date_to.". ".strtolower($month_to).", ".$year_to;   
-  return  $date_str;
+	$date_str=$date_from.". "; // "13. "
+	if($month_from != $month_to){
+		 $date_str.=strtolower($month_from);   //"13. janvaris"
+	}
+	if( $year_from != $year_to){
+		 $date_str.=", ".$year_from; //  "13. janvaris, 2003"
+	}
+	$date_str.=" - ";
+	$date_str.=$date_to.". ".strtolower($month_to).", ".$year_to;   
+	return  $date_str;
 */  
 }
 
 // formats date output for date title in month view
 function month_view_date_format($month, $year) {
-  // US format
-  return $month." ".$year;
-  
-  // Latvian format
-  // return $month.", ".$year;
+	// US format
+	return $month." ".$year;
+	
+	// Latvian format
+	// return $month.", ".$year;
 }
 
 // formats date output for date above little calendar (month browsing link)
 function above_lit_cal_date_format($month, $year) {
-  // US format
-  return substr($month,0,3)." ".$year;
+	// US format
+	return substr($month,0,3)." ".$year;
 
-  // Latvian format
-  // return substr($month,0,3).", ".$year;
+	// Latvian format
+	// return substr($month,0,3).", ".$year;
 }
 
 // formats date output for todays date under little calendar
 function today_is_date_format($date, $dow, $month, $year) {
-  // US format
-  return substr($dow,0,3).", ".substr($month,0,3)." ".ltrim($date,"0").", ".$year;
+	// US format
+	return substr($dow,0,3).", ".substr($month,0,3)." ".ltrim($date,"0").", ".$year;
 
-  // Latvian format
-  // return $dow.", ".$date.". ".strtolower($month).", ".$year;
+	// Latvian format
+	// return $dow.", ".$date.". ".strtolower($month).", ".$year;
 }
 
 // formats date for weeks view day's header
 function week_header_date_format($date, $month){
-  // US format
-  return substr($month,0,3)." ".$date;
-  
-  // Latvian format
-  // return $date.". ".strtolower(substr($month,0,3));
+	// US format
+	return substr($month,0,3)." ".$date;
+	
+	// Latvian format
+	// return $date.". ".strtolower(substr($month,0,3));
 }
 
 // formats date for searchresult in found items list
 function searchresult_date_format($date, $dow, $month, $year) {
-  // US format
-  return substr($dow,0,3).", ".substr($month,0,3)." ".$date.", ".$year;
+	// US format
+	return substr($dow,0,3).", ".substr($month,0,3)." ".$date.", ".$year;
 
-  // Latvian format
-  // return $dow.", ".$date.". ".strtolower(substr($month,0,3)).", ".$year;
+	// Latvian format
+	// return $dow.", ".$date.". ".strtolower(substr($month,0,3)).", ".$year;
 }
 ?>

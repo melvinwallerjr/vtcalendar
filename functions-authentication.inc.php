@@ -16,7 +16,7 @@ function checkoldpassword(&$user, $userid) {
 
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg="") {
-	global $lang;
+	global $lang, $eventid, $httpreferer, $authsponsorid;
 
 	pageheader(lang('update_page_header'), "Update");
 	contentsection_begin(lang('login'));
@@ -30,9 +30,9 @@ function displaylogin($errormsg="") {
 	<?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
 	<FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
 	<?php
-	if (isset($GLOBALS["eventid"])) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($GLOBALS["eventid"]),"\">\n"; }
-	if (isset($GLOBALS["httpreferer"])) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($GLOBALS["httpreferer"]),"\">\n"; }
-	if (isset($GLOBALS["authsponsorid"])) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($GLOBALS["authsponsorid"]),"\">\n"; }
+	if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($eventid),"\">\n"; }
+	if (isset($httpreferer)) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($httpreferer),"\">\n"; }
+	if (isset($authsponsorid)) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($authsponsorid),"\">\n"; }
 	?>
 		<TABLE border="0" cellspacing="1" cellpadding="3">
 			<TR>
@@ -64,6 +64,8 @@ function displaylogin($errormsg="") {
 // Display a list of sponsors that the user belongs to
 // so they can choose the one they wish to login as.
 function displaymultiplelogin($errorMessage="") {
+	global $lang, $eventid, $httpreferer, $authsponsorid;
+	
 	pageheader(lang('login'), "Update");
 	
 	contentsection_begin(lang('choose_sponsor_role'));
@@ -96,11 +98,11 @@ function displaymultiplelogin($errorMessage="") {
 			$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);			
 			
 			echo '<li><a href="' . $_SERVER["PHP_SELF"] . "?authsponsorid=" . urlencode($sponsor['id']);
-			if (isset($GLOBALS["eventid"])) { 
-				echo "&eventid=",urlencode($GLOBALS["eventid"]);
+			if (isset($eventid)) { 
+				echo "&eventid=",urlencode($eventid);
 			}
-			if (isset($GLOBALS["httpreferer"])) { 
-				echo "&httpreferer=",urlencode($GLOBALS["httpreferer"]); 
+			if (isset($httpreferer)) { 
+				echo "&httpreferer=",urlencode($httpreferer); 
 			}
 			echo '">' . htmlentities($sponsor['name']) . "</a>";
 			

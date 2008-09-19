@@ -19,9 +19,9 @@ function emailaddressok($email) {
 function sendemail($toName,$toAddress,$fromName,$fromAddress,$subject,$body) {
 	if (emailaddressok($toAddress)) {
 		mail($toName." <".$toAddress.">", 
-				 trim($subject), 
-				 trim($body), 
-				 "From: ".$fromName." <".$fromAddress.">\nContent-type: text/plain; charset=us-ascii");
+			trim($subject), 
+			trim($body), 
+			"From: ".$fromName." <".$fromAddress.">\nContent-type: text/plain; charset=us-ascii");
 		return 1;
 	}
 	else {

@@ -2,88 +2,88 @@
 function print_event($event, $linkfeatures=true) {
 	global $lang, $day_end_h;
 	?>
-  <table id="EventTable" width="100%" border="0" cellpadding="6" cellspacing="0">
+	<table id="EventTable" width="100%" border="0" cellpadding="6" cellspacing="0">
 		<tr>
 			<!-- Start Left Column -->
-      <td id="EventLeftColumn" valign="top" align="center" nopwrap><b>
+			<td id="EventLeftColumn" valign="top" align="center" nopwrap><b>
 				<?php 
 					if ($event['wholedayevent']==0) {
 						echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
 						if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
-						  echo "<br>",lang('to'),"<br>";
-						  echo timestring($event['timeend_hour'],$event['timeend_min'],$event['timeend_ampm']);
+							echo "<br>",lang('to'),"<br>";
+							echo timestring($event['timeend_hour'],$event['timeend_min'],$event['timeend_ampm']);
 						}
-			    }
+					}
 					else {
-					  echo lang('all_day'),"\n";
+						echo lang('all_day'),"\n";
 					}
 				?></b></td>
 			
 			<!-- Start Right Column -->
-      <td id="EventRightColumn" width="100%" valign="top">
-      	<div id="EventTitle"><b><?php echo htmlentities($event['title']); ?></b></div>
-      	<div id="EventCategory">(<?php echo htmlentities($event['category_name']); ?>)</div>
+			<td id="EventRightColumn" width="100%" valign="top">
+				<div id="EventTitle"><b><?php echo htmlentities($event['title']); ?></b></div>
+				<div id="EventCategory">(<?php echo htmlentities($event['category_name']); ?>)</div>
 				<?php 
-			  if (!empty($event['description'])) {
+				if (!empty($event['description'])) {
 					?><p id="EventDescription"><?php echo str_replace("\r", "<br>", make_clickable(htmlentities($event['description']))); ?></p><?php
-			  }
-			  if (!empty($event['url']) && $event['url'] != "http://") {
+				}
+				if (!empty($event['url']) && $event['url'] != "http://") {
 					?><div id="EventURL"><a href="<?php echo htmlentities($event['url']),"\">",lang('more_information');?></a></div><?php
-			  } // end: if (!empty($event['url'])) {
+				} // end: if (!empty($event['url'])) {
 				?>
 				
-	      <div id="EventDetailPadding"><table id="EventDetail" border="0" cellpadding="6" cellspacing="0"><?php 
-	      	
-				  if (!empty($event['location'])) {
+				<div id="EventDetailPadding"><table id="EventDetail" border="0" cellpadding="6" cellspacing="0"><?php 
+					
+					if (!empty($event['location'])) {
 						?>
-		        <tr> 
-		          <td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('location'); ?>:</strong></td>
-		          <td><?php echo htmlentities($event['location']); ?></td>
-		        </tr>
+						<tr> 
+							<td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('location'); ?>:</strong></td>
+							<td><?php echo htmlentities($event['location']); ?></td>
+						</tr>
 						<?php
-				  } // end: if (!empty($event['location'])) {
-				  
-				  if (!empty($event['price'])) {
+					} // end: if (!empty($event['location'])) {
+					
+					if (!empty($event['price'])) {
 						?>
-		        <tr> 
-		          <td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('price'); ?>:</strong></td>
-		          <td><?php echo htmlentities($event['price']); ?></td>
-		        </tr>
+						<tr> 
+							<td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('price'); ?>:</strong></td>
+							<td><?php echo htmlentities($event['price']); ?></td>
+						</tr>
 						<?php
 					} // end: if (!empty($event['price'])) {
 					
 					if (!empty($event['displayedsponsor'])) {
 						?>
-		        <tr> 
-		          <td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('sponsor'); ?>:</strong></td>
-		          <td><?php 
-						    if (!empty($event['displayedsponsorurl'])) {
-								  echo '<a href="',$event['displayedsponsorurl'],'">';
+						<tr> 
+							<td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('sponsor'); ?>:</strong></td>
+							<td><?php 
+								if (!empty($event['displayedsponsorurl'])) {
+									echo '<a href="',$event['displayedsponsorurl'],'">';
 									echo htmlentities($event['displayedsponsor']);
 									echo "</a>";
 								}
 								else {
-								  echo htmlentities($event['displayedsponsor']);
+									echo htmlentities($event['displayedsponsor']);
 								}
 							?></td>
-		        </tr>
+						</tr>
 						<?php
 					} // end: if (!empty($event['displayedsponsor'])) {
 					
 					if (!empty($event['contact_name']) ||
-					    !empty($event['contact_email']) ||
+							!empty($event['contact_email']) ||
 							!empty($event['contact_phone']) )
 					{
 						?>
-		        <tr> 
-		          <td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('contact'); ?>:</strong></td>
-		          <td><?php
+						<tr> 
+							<td class="EventDetail-Label" align="left" valign="top" nowrap><strong><?php echo lang('contact'); ?>:</strong></td>
+							<td><?php
 								if (!empty($event['contact_name']) )
 									{ echo htmlentities($event['contact_name']),"<br>"; }
 								if (!empty($event['contact_email']) )
 								{ 
-								  echo '<img src="images/email.gif" width="20" height="20" alt="',lang('email'),'" align="absmiddle">';
-								  echo " <a href=\"mailto:",htmlentities($event['contact_email']),"\">",htmlentities($event['contact_email']),"</a><br>";
+									echo '<img src="images/email.gif" width="20" height="20" alt="',lang('email'),'" align="absmiddle">';
+									echo " <a href=\"mailto:",htmlentities($event['contact_email']),"\">",htmlentities($event['contact_email']),"</a><br>";
 								}
 								if (!empty($event['contact_phone']) )
 								{ 
@@ -91,7 +91,7 @@ function print_event($event, $linkfeatures=true) {
 									echo htmlentities($event['contact_phone']),"<br>";
 								} 
 							?></td>
-		        </tr>
+						</tr>
 						<?php
 					} // end: if (...)
 					?>
@@ -102,21 +102,21 @@ function print_event($event, $linkfeatures=true) {
 					?>
 					<div id="iCalendarLink">
 							<?php
-						  if (!empty($event['id'])) {
+							if (!empty($event['id'])) {
 								?>						
 								<a 
-						      href="icalendar.php?eventid=<?php echo $event['id']; ?>"><img 
-						      src="images/vcalendar.gif" width="20" height="20" border="0" align="absmiddle"></a>
-						    <a href="icalendar.php?eventid=<?php echo $event['id']; ?>"><?php echo lang('copy_event_to_pda'); ?></a>
+									href="icalendar.php?eventid=<?php echo $event['id']; ?>"><img 
+									src="images/vcalendar.gif" width="20" height="20" border="0" align="absmiddle"></a>
+								<a href="icalendar.php?eventid=<?php echo $event['id']; ?>"><?php echo lang('copy_event_to_pda'); ?></a>
 								<?php
-						  } // end: if (!empty($event['id']))
+							} // end: if (!empty($event['id']))
 							?>
 					</div>
 					<?php
 				} ?>
 			</td>
-    </tr>
-  </table>
+		</tr>
+	</table>
 <?php		
 } // end: Function print_event
 

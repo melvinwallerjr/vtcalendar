@@ -197,9 +197,9 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 	<ol class="listpadding">
 		<li>View your <a href="http://www.howard.edu/calendar/documents/allcalendars.htm" target="_blank">departmental calendar</a> normally in your Web browser.<br>
 			In the Web address, it will say something like <font face="Courier New, Courier, mono">calendar/main.php?calendarid=<b><font color="#CC0000">mycal</font></b>&amp;view=week</font></li>
-	    <li>Highlight and copy the part of the Web address after the <font face="Courier New, Courier, mono">calendarid=</font> but before any ampersands (&amp;).<br>
-	    	In the example in step 1, the calendar ID would be &quot;mycal&quot;.</li>
-	    <li>Paste the calendar ID into the box below.</li>
+			<li>Highlight and copy the part of the Web address after the <font face="Courier New, Courier, mono">calendarid=</font> but before any ampersands (&amp;).<br>
+				In the example in step 1, the calendar ID would be &quot;mycal&quot;.</li>
+			<li>Paste the calendar ID into the box below.</li>
 	</ol>
 	<p><input name="calendarid" type="text" id="calendarid" size="40" value="<?php echo $_GET['calendarid']; ?>"> <font color="#CC0000">* Required</font></p>
 </blockquote>
@@ -312,15 +312,15 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 <blockquote>
 	<p>XXXX</p>
 	<table border="0" cellspacing="1" cellpadding="0">
-    	<tr>
-    		<td><input name="combinerepeating" id="combinerepeating_yes" type="radio" value="yes" <?php if ($config['CombineRepeating'] == "Y") echo "checked"; ?>></td>
-    		<td><label for="combinerepeating_yes">Combine Occurrences</label></td>
-    		</tr>
-    	<tr>
-    		<td><input name="combinerepeating" id="combinerepeating_no" type="radio" value="no" <?php if ($config['CombineRepeating'] == "N") echo "checked"; ?>></td>
-    		<td><label for="combinerepeating_no">List All Occurrences</label></td>
-    		</tr>
-  	</table>
+			<tr>
+				<td><input name="combinerepeating" id="combinerepeating_yes" type="radio" value="yes" <?php if ($config['CombineRepeating'] == "Y") echo "checked"; ?>></td>
+				<td><label for="combinerepeating_yes">Combine Occurrences</label></td>
+				</tr>
+			<tr>
+				<td><input name="combinerepeating" id="combinerepeating_no" type="radio" value="no" <?php if ($config['CombineRepeating'] == "N") echo "checked"; ?>></td>
+				<td><label for="combinerepeating_no">List All Occurrences</label></td>
+				</tr>
+		</table>
 </blockquote>
 
 </td></tr></table></div>
@@ -336,15 +336,15 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 		This can be done if you have a limited amount of space on your web site.</p>
 	<p><i>Note:</i> It is recommended to show the date and time. </p>
 	<table border="0" cellspacing="1" cellpadding="0">
-    	<tr>
-    		<td><input name="showdatetime" id="showdatetime_yes" type="radio" value="yes" <?php if ($config['ShowDateTime'] == "Y") echo "checked"; ?>></td>
-    		<td><label for="showdatetime_yes">Show</label></td>
-    		</tr>
-    	<tr>
-    		<td><input name="showdatetime" id="showdatetime_no" type="radio" value="no" <?php if ($config['ShowDateTime'] == "N") echo "checked"; ?>></td>
-    		<td><label for="showdatetime_no">Hide</label></td>
-    		</tr>
-  	</table>
+			<tr>
+				<td><input name="showdatetime" id="showdatetime_yes" type="radio" value="yes" <?php if ($config['ShowDateTime'] == "Y") echo "checked"; ?>></td>
+				<td><label for="showdatetime_yes">Show</label></td>
+				</tr>
+			<tr>
+				<td><input name="showdatetime" id="showdatetime_no" type="radio" value="no" <?php if ($config['ShowDateTime'] == "N") echo "checked"; ?>></td>
+				<td><label for="showdatetime_no">Hide</label></td>
+				</tr>
+		</table>
 </blockquote>
 
 <p><b>Show Location: </b></p>
@@ -352,15 +352,15 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 	<p>You may show or hide the location in the returned events.<br>
 		This can be done if you have a limited amount of space on your web site.</p>
 	<table border="0" cellspacing="1" cellpadding="0">
-  	<tr>
-  		<td><input name="showlocation" id="showlocation_yes" type="radio" value="yes" <?php if ($config['ShowLocation'] == "Y") echo "checked"; ?>></td>
-  		<td><label for="showlocation_yes">Show</label></td>
-  		</tr>
-  	<tr>
-  		<td><input name="showlocation" id="showlocation_no" type="radio" value="no" <?php if ($config['ShowLocation'] == "N") echo "checked"; ?>></td>
-  		<td><label for="showlocation_no">Hide</label></td>
-  		</tr>
-  	</table>
+		<tr>
+			<td><input name="showlocation" id="showlocation_yes" type="radio" value="yes" <?php if ($config['ShowLocation'] == "Y") echo "checked"; ?>></td>
+			<td><label for="showlocation_yes">Show</label></td>
+			</tr>
+		<tr>
+			<td><input name="showlocation" id="showlocation_no" type="radio" value="no" <?php if ($config['ShowLocation'] == "N") echo "checked"; ?>></td>
+			<td><label for="showlocation_no">Hide</label></td>
+			</tr>
+		</table>
 </blockquote>
 
 <p><b>Show &quot;All Day&quot;:</b></p>
@@ -368,15 +368,15 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 	<p>If an event is all day (aka: it does not have a start time) you may show or hide the &quot;All Day&quot; text. This helps to keep the event listing clean if you have a lot of events that are all day.</p>
 	<p><i>Note:</i> It is recommended to show &quot;All Day&quot;. </p>
 	<table border="0" cellspacing="1" cellpadding="0">
-    	<tr>
-    		<td><input name="showallday" id="showallday_yes" type="radio" value="yes" <?php if ($config['ShowAllDay'] == "Y") echo "checked"; ?>></td>
-    		<td><label for="showallday_yes">Show</label></td>
-    		</tr>
-    	<tr>
-    		<td><input name="showallday" id="showallday_no" type="radio" value="no" <?php if ($config['ShowAllDay'] == "N") echo "checked"; ?>></td>
-    		<td><label for="showallday_no">Hide</label></td>
-    		</tr>
-  	</table>
+			<tr>
+				<td><input name="showallday" id="showallday_yes" type="radio" value="yes" <?php if ($config['ShowAllDay'] == "Y") echo "checked"; ?>></td>
+				<td><label for="showallday_yes">Show</label></td>
+				</tr>
+			<tr>
+				<td><input name="showallday" id="showallday_no" type="radio" value="no" <?php if ($config['ShowAllDay'] == "N") echo "checked"; ?>></td>
+				<td><label for="showallday_no">Hide</label></td>
+				</tr>
+		</table>
 </blockquote>
 
 <p><b>Maximum Characters for the Title:</b></p>
@@ -421,30 +421,30 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 <p><b>Type of Data Returned:</b></p>
 <blockquote>
 <table border="0" cellspacing="1" cellpadding="0">
-    	<tr>
-    		<td><input name="datatype" id="datatype_HTML" type="radio" value="HTML" <?php if ($config['DataType'] == "HTML") echo "checked"; ?>></td>
-    		<td><label for="datatype_HTML">HTML</label></td>
-    		</tr>
-    	<tr>
-    		<td><input name="datatype" id="datatype_XML" type="radio" value="XML" <?php if ($config['DataType'] == "XML") echo "checked"; ?>></td>
-    		<td><label for="datatype_XML">XML (only for advanced users)</label></td>
-    		</tr>
-    	</table>
+			<tr>
+				<td><input name="datatype" id="datatype_HTML" type="radio" value="HTML" <?php if ($config['DataType'] == "HTML") echo "checked"; ?>></td>
+				<td><label for="datatype_HTML">HTML</label></td>
+				</tr>
+			<tr>
+				<td><input name="datatype" id="datatype_XML" type="radio" value="XML" <?php if ($config['DataType'] == "XML") echo "checked"; ?>></td>
+				<td><label for="datatype_XML">XML (only for advanced users)</label></td>
+				</tr>
+			</table>
 </blockquote>
 
 <p><b>Use JavaScript:</b></p>
 <blockquote>
 	<p><i>Note:</i> This only applies if you have selected HTML as the 'Type of Data Returned'.</p>
 	<table border="0" cellspacing="1" cellpadding="0">
-  	<tr>
-  		<td><input name="javascript" id="javascript_yes" type="radio" value="yes" <?php if ($config['JavaScript'] == "Y") echo "checked"; ?>></td>
-  		<td><label for="javascript_yes">Yes (recommended)</label></td>
-  		</tr>
-  	<tr>
-  		<td><input name="javascript" id="javascript_no" type="radio" value="no" <?php if ($config['JavaScript'] == "N") echo "checked"; ?>></td>
-  		<td><label for="javascript_no">No</label></td>
-  		</tr>
-  	</table>
+		<tr>
+			<td><input name="javascript" id="javascript_yes" type="radio" value="yes" <?php if ($config['JavaScript'] == "Y") echo "checked"; ?>></td>
+			<td><label for="javascript_yes">Yes (recommended)</label></td>
+			</tr>
+		<tr>
+			<td><input name="javascript" id="javascript_no" type="radio" value="no" <?php if ($config['JavaScript'] == "N") echo "checked"; ?>></td>
+			<td><label for="javascript_no">No</label></td>
+			</tr>
+		</table>
 </blockquote>
 
 </td></tr></table></div>

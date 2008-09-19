@@ -2,19 +2,19 @@
 // Returns a DB connection to the database, or a string that represents an error message.
 function DBopen() {
 	global $DBCONNECTION;
-  $DBCONNECTION = DB::connect( DATABASE );
-  
+	$DBCONNECTION = DB::connect( DATABASE );
+	
 	if (DB::isError($DBCONNECTION)) {
 		return $DBCONNECTION->getMessage();
 	}
 	
-  return $DBCONNECTION;
+	return $DBCONNECTION;
 }
 
 // closes a DB connection to the database
 function DBclose() {
 	global $DBCONNECTION;
-  $DBCONNECTION->disconnect();
+	$DBCONNECTION->disconnect();
 }
 
 // Runs a query against the database connection.
@@ -70,8 +70,8 @@ function DBErrorBox($message="") {
 	<table class="ErrorTable" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
 			<td style="padding: 8px;"><img src="images/warning_48w.gif" width="48" height="48"></td>
-		    <td style="padding: 8px;"><h1>Database Error:</h1>
-	    	<div>An error was encountered when attempting to access the database.<?php
+				<td style="padding: 8px;"><h1>Database Error:</h1>
+				<div>An error was encountered when attempting to access the database.<?php
 					if (!empty($message)) {
 						?><br><b>Error Message: <?php echo htmlentities($message); ?></b><?php
 					}

@@ -43,23 +43,23 @@
 	<tr>
 		<td><?php echo lang('today_is'); ?><br>
 			<?php
-			  $showtodaylink = 0;
-			  if ( !($view=="day" && 
-				       $showdate['year']==$today['year'] &&
-				       $showdate['month']==$today['month'] &&
-				       $showdate['day']==$today['day'] 
+				$showtodaylink = 0;
+				if ( !($view=="day" && 
+							 $showdate['year']==$today['year'] &&
+							 $showdate['month']==$today['month'] &&
+							 $showdate['day']==$today['day'] 
 							 ) ) {
-				  $showtodaylink = 1;
+					$showtodaylink = 1;
 				}
 				if ($showtodaylink) {
-			    echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&amp;timebegin=today" >';	
+					echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&amp;timebegin=today" >';	
 				}
-			  echo "<b>";
+				echo "<b>";
 			
 			echo today_is_date_format($today['day'], Day_of_Week_to_Text(Day_of_Week($today['month'],$today['day'],$today['year'])),Month_to_Text($today['month']),$today['year']);
-			  echo "</b>";
+				echo "</b>";
 				if ($showtodaylink) {
-			    echo "</a>";
+					echo "</a>";
 				}
 		?></td>
 	</tr>
@@ -70,11 +70,11 @@
 	<table id="SubscribeLink" width="100%" border="0" cellpadding="3" cellspacing="0">
 	<tr>
 		<td><?php
-		  if ($view!='subscribe') {
+			if ($view!='subscribe') {
 				echo'<a style="font-weight:bold"  href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=subscribe"><b>',lang('subscribe_download'),'</b></a>';
 			}
 			else {
-			  echo '<b>',lang('subscribe_download'),'</b>';
+				echo '<b>',lang('subscribe_download'),'</b>';
 			}
 		?></td>
 	</tr>
@@ -85,11 +85,11 @@
 	<table id="CategoryFilterLink" width="100%" border="0" cellpadding="3" cellspacing="0">
 	<tr>
 	 	<td><?php
-		  if ($view!='filter') {
+			if ($view!='filter') {
 				echo'    <b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=filter&oldview=' . urlencode($view) . '">',lang('filter_events'),'</a></b>';
 			}
 			else {
-			  echo '<b>',lang('filter_events'),'</b>';
+				echo '<b>',lang('filter_events'),'</b>';
 			}
 		?></td>
  	</tr>

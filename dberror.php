@@ -27,8 +27,8 @@
 <table class="ErrorTable" border="0" align="center" cellpadding="0" cellspacing="0">
 	<tr>
 		<td style="padding: 8px;"><img src="images/warning_48w.gif" width="48" height="48"></td>
-	    <td style="padding: 8px;"><h1>Database Error:</h1>
-    	<div>An error was encountered when attempting to connect to the database.<?php
+			<td style="padding: 8px;"><h1>Database Error:</h1>
+			<div>An error was encountered when attempting to connect to the database.<?php
 				if (isset($DBCONNECTION) && is_string($DBCONNECTION)) {
 					?><br><b><?php echo htmlentities($DBCONNECTION); ?></b><?php
 				}

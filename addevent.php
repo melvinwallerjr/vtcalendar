@@ -12,8 +12,8 @@ if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_
 if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
 
 if (isset($_POST['cancel'])) {
-  redirect2URL("update.php");
-  exit;
+	redirect2URL("update.php");
+	exit;
 };
 
 if (!isset($httpreferer)) { $httpreferer = $_SERVER["HTTP_REFERER"]; }
@@ -23,9 +23,9 @@ $result =& DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqles
 
 // Output an error message if the query failed.
 if (is_string($result)) {
-  pageheader(lang('choose_template'), "");
-  contentsection_begin(lang('choose_template'));
-  DBErrorBox("Could not read sponsor name from DB: ".$result);
+	pageheader(lang('choose_template'), "");
+	contentsection_begin(lang('choose_template'));
+	DBErrorBox("Could not read sponsor name from DB: ".$result);
 	contentsection_end();
 	pagefooter();
 	DBclose();
@@ -39,9 +39,9 @@ $result =& DBQuery("SELECT * FROM vtcal_template WHERE calendarid='".sqlescape($
 
 // Output an error message if the query failed.
 if (is_string($result)) {
-  pageheader(lang('choose_template'), "");
-  contentsection_begin(lang('choose_template'));
-  DBErrorBox("Could not test if template already exists: ".$result);
+	pageheader(lang('choose_template'), "");
+	contentsection_begin(lang('choose_template'));
+	DBErrorBox("Could not test if template already exists: ".$result);
 	contentsection_end();
 	pagefooter();
 	DBclose();
@@ -49,15 +49,15 @@ if (is_string($result)) {
 }
 
 if ($result->numRows() == 0) {
-  // reroute to input page
-  $url = "changeeinfo.php?calendarid=".urlencode($_SESSION['CALENDAR_ID']);
+	// reroute to input page
+	$url = "changeeinfo.php?calendarid=".urlencode($_SESSION['CALENDAR_ID']);
 
-  // if addevent was called by clicking on the icons in week or month view provide the date info
-  if (isset($timebegin_year)) {
-    $url.="&templateid=0&timebegin_year=".$timebegin_year."&timebegin_month=".$timebegin_month."&timebegin_day=".$timebegin_day;
-  }
-  redirect2URL($url);
-  exit;
+	// if addevent was called by clicking on the icons in week or month view provide the date info
+	if (isset($timebegin_year)) {
+		$url.="&templateid=0&timebegin_year=".$timebegin_year."&timebegin_month=".$timebegin_month."&timebegin_day=".$timebegin_day;
+	}
+	redirect2URL($url);
+	exit;
 }
 
 // print page header
@@ -77,27 +77,27 @@ else {
 	<BR>
 	<FORM method="post" action="changeeinfo.php">
 		<?php
-	  echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
+		echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
 		?>
-	  <SELECT name="templateid" size="6">
-	    <OPTION selected value="0">----- <?php echo lang('blank'); ?> -----</OPTION>
+		<SELECT name="templateid" size="6">
+			<OPTION selected value="0">----- <?php echo lang('blank'); ?> -----</OPTION>
 		<?php
-	  for ($i=0; $i<$result->numRows(); $i++) {
-	    $template =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-	    echo "<OPTION value=\"",htmlentities($template['id']),"\">",htmlentities($template['name']),"</OPTION>\n";
-	  }
+		for ($i=0; $i<$result->numRows(); $i++) {
+			$template =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			echo "<OPTION value=\"",htmlentities($template['id']),"\">",htmlentities($template['name']),"</OPTION>\n";
+		}
 		?>
-	  </SELECT>
-	  <BR>
-	  <BR>
-	  <INPUT type="submit" name="choosetemplate" value="<?php echo lang('ok_button_text'); ?>">
-	  <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+		</SELECT>
+		<BR>
+		<BR>
+		<INPUT type="submit" name="choosetemplate" value="<?php echo lang('ok_button_text'); ?>">
+		<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 		<?php
-	  // forward date info, if the page was called with date info appended
-	  // can later be done with PHP session management
-	  if (isset($timebegin_year)) { echo "<INPUT type=\"hidden\" name=\"timebegin_year\" value=\"",$timebegin_year,"\">"; }
-	  if (isset($timebegin_month)) { echo "<INPUT type=\"hidden\" name=\"timebegin_month\" value=\"",$timebegin_month,"\">"; }
-	  if (isset($timebegin_day)) { echo "<INPUT type=\"hidden\" name=\"timebegin_day\" value=\"",$timebegin_day,"\">"; }
+		// forward date info, if the page was called with date info appended
+		// can later be done with PHP session management
+		if (isset($timebegin_year)) { echo "<INPUT type=\"hidden\" name=\"timebegin_year\" value=\"",$timebegin_year,"\">"; }
+		if (isset($timebegin_month)) { echo "<INPUT type=\"hidden\" name=\"timebegin_month\" value=\"",$timebegin_month,"\">"; }
+		if (isset($timebegin_day)) { echo "<INPUT type=\"hidden\" name=\"timebegin_day\" value=\"",$timebegin_day,"\">"; }
 		?>
 	</FORM>
 	<?php

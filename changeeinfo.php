@@ -13,7 +13,7 @@ if (isset($_POST['savethis'])) { setVar($savethis, $_POST['savethis'],'savethis'
 if (isset($_POST['edit'])) { setVar($edit, $_POST['edit'],'edit'); } else { unset($edit); }
 if (isset($_POST['eventid'])) { setVar($eventid, $_POST['eventid'],'eventid'); }
 else { 
-  if (isset($_GET['eventid'])) { setVar($eventid, $_GET['eventid'],'eventid'); } 
+	if (isset($_GET['eventid'])) { setVar($eventid, $_GET['eventid'],'eventid'); } 
 	else {
 		unset($eventid); 
 	}
@@ -40,7 +40,7 @@ if (isset($_POST['repeat'])) {
 	if (isset($_POST['repeat']['frequency2modifier2'])) { setVar($repeat['frequency2modifier2'], $_POST['repeat']['frequency2modifier2'],'frequency2modifier2'); } else { unset($repeat['frequency2modifier2']); }
 }
 else {
-  unset($repeat);
+	unset($repeat);
 }
 
 // The data about the event.
@@ -78,7 +78,7 @@ if (isset($_POST['event'])) {
 	if (isset($_POST['event']['defaultdisplayedsponsorurl'])) { $event['defaultdisplayedsponsorurl'] = true; } else { unset($event['defaultdisplayedsponsorurl']); }
 }
 else {
-  unset($event);	
+	unset($event);	
 }
 
 // Check that the user is authorized.
@@ -90,31 +90,31 @@ if (!isset($httpreferer)) {
 		$httpreferer = "update.php";
 	}
 	else {
-  	$httpreferer = $_SERVER["HTTP_REFERER"];
-  }
+		$httpreferer = $_SERVER["HTTP_REFERER"];
+	}
 }
 
 // Redirect the user back if cancel was pressed.
 if (isset($cancel)) {
-  redirect2URL($httpreferer);
-  exit;
+	redirect2URL($httpreferer);
+	exit;
 };
 
 // Check that the event ID is valid, if one was passed.
 if (!empty($eventid)) {
-  $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
-  $result = DBQuery($query );
-  
-  // Check that the record exists in "vtcal_event".
-  if ($result->numRows() > 0) {
-  	  $e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-  }
-  
-  // If it doesn't, check that it exists in "vtcal_event_public"
-  else {
-  	$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
+	$query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
+	$result = DBQuery($query );
+	
+	// Check that the record exists in "vtcal_event".
+	if ($result->numRows() > 0) {
+			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	}
+	
+	// If it doesn't, check that it exists in "vtcal_event_public"
+	else {
+		$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
 		$result = DBQuery($query ); 
-  	
+		
 		// If the event exists in "event_public", then insert it into "event" since it is missing...
 		if ($result->numRows() > 0) {
 			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -123,16 +123,16 @@ if (!empty($eventid)) {
 		
 		// Otherwise, the event does not exist at all.
 		else {
-	    redirect2URL($httpreferer);
-	    exit;
+			redirect2URL($httpreferer);
+			exit;
 		}
-  }
-  
-  // If the user is not the admin and not the sponsor, then redirect them away from this page.
-  if (empty($_SESSION['AUTH_ISCALENDARADMIN']) && (!isset($_SESSION["AUTH_SPONSORID"]) || $_SESSION["AUTH_SPONSORID"] != $e['sponsorid'])) {
-       redirect2URL($httpreferer);
-       exit;
-  }
+	}
+	
+	// If the user is not the admin and not the sponsor, then redirect them away from this page.
+	if (empty($_SESSION['AUTH_ISCALENDARADMIN']) && (!isset($_SESSION["AUTH_SPONSORID"]) || $_SESSION["AUTH_SPONSORID"] != $e['sponsorid'])) {
+			 redirect2URL($httpreferer);
+			 exit;
+	}
 }
 
 // Include the eventid with the submitted event data.
@@ -143,14 +143,14 @@ $eventvalid = checkevent($event, $repeat);
 
 // Override the passed sponsorid with the user's sponsor ID to avoid potential tampering with the values.
 if (empty($event['sponsorid'])) {
-  $event['sponsorid']=$_SESSION["AUTH_SPONSORID"];
+	$event['sponsorid']=$_SESSION["AUTH_SPONSORID"];
 }
 
 // If the event is not repeating, make sure the end date is the same as the begin date.
 if ($repeat['mode'] == "0") {
-  $event['timeend_year']=$event['timebegin_year'];
-  $event['timeend_month']=$event['timebegin_month'];
-  $event['timeend_day']=$event['timebegin_day'];
+	$event['timeend_year']=$event['timebegin_year'];
+	$event['timeend_month']=$event['timebegin_month'];
+	$event['timeend_day']=$event['timebegin_day'];
 }
 
 // Otherwise, set up the repeating data.
@@ -160,20 +160,20 @@ if ($repeat['mode'] > 0 && !empty($repeat['interval1'])) {
 
 // if event is a "whole day event" than set time to 12am
 if (isset($event['wholedayevent']) && $event['wholedayevent']==1) {
-  $event['timebegin_hour']=12;
-  $event['timebegin_min']=0;
-  $event['timebegin_ampm']="am";
-  $event['timeend_hour']=11;
-  $event['timeend_min']=59;
-  $event['timeend_ampm']="pm";
+	$event['timebegin_hour']=12;
+	$event['timebegin_min']=0;
+	$event['timebegin_ampm']="am";
+	$event['timeend_hour']=11;
+	$event['timeend_min']=59;
+	$event['timeend_ampm']="pm";
 }
 
 // Reset the sponsor name/URL if the buttons were pressed.
 if (isset($event['defaultdisplayedsponsor']) || isset($event['defaultallsponsor'])) {
-  $event['displayedsponsor']=getSponsorName($event['sponsorid']);
+	$event['displayedsponsor']=getSponsorName($event['sponsorid']);
 }
 if (isset($event['defaultdisplayedsponsorurl']) || isset($event['defaultallsponsor'])) {
-  $event['displayedsponsorurl']=getSponsorURL($event['sponsorid']);
+	$event['displayedsponsorurl']=getSponsorURL($event['sponsorid']);
 }
 
 // Save event into DB (if it is valid).
@@ -195,47 +195,47 @@ pagefooter();
 DBclose();
 	
 function passeventtimevalues($event,$repeat) {
-  echo '<INPUT type="hidden" name="event[timebegin_year]" value="',HTMLSpecialChars($event['timebegin_year']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timebegin_month]" value="',HTMLSpecialChars($event['timebegin_month']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timebegin_day]" value="',HTMLSpecialChars($event['timebegin_day']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timebegin_hour]" value="',HTMLSpecialChars($event['timebegin_hour']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timebegin_min]" value="',HTMLSpecialChars($event['timebegin_min']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timebegin_ampm]" value="',HTMLSpecialChars($event['timebegin_ampm']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_year]" value="',HTMLSpecialChars($event['timeend_year']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_month]" value="',HTMLSpecialChars($event['timeend_month']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_day]" value="',HTMLSpecialChars($event['timeend_day']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_hour]" value="',HTMLSpecialChars($event['timeend_hour']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_min]" value="',HTMLSpecialChars($event['timeend_min']),"\">\n";
-  echo '<INPUT type="hidden" name="event[timeend_ampm]" value="',HTMLSpecialChars($event['timeend_ampm']),"\">\n";
-  if (!empty($event['repeatid'])) {
+	echo '<INPUT type="hidden" name="event[timebegin_year]" value="',HTMLSpecialChars($event['timebegin_year']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timebegin_month]" value="',HTMLSpecialChars($event['timebegin_month']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timebegin_day]" value="',HTMLSpecialChars($event['timebegin_day']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timebegin_hour]" value="',HTMLSpecialChars($event['timebegin_hour']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timebegin_min]" value="',HTMLSpecialChars($event['timebegin_min']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timebegin_ampm]" value="',HTMLSpecialChars($event['timebegin_ampm']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_year]" value="',HTMLSpecialChars($event['timeend_year']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_month]" value="',HTMLSpecialChars($event['timeend_month']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_day]" value="',HTMLSpecialChars($event['timeend_day']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_hour]" value="',HTMLSpecialChars($event['timeend_hour']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_min]" value="',HTMLSpecialChars($event['timeend_min']),"\">\n";
+	echo '<INPUT type="hidden" name="event[timeend_ampm]" value="',HTMLSpecialChars($event['timeend_ampm']),"\">\n";
+	if (!empty($event['repeatid'])) {
 		echo '<INPUT type="hidden" name="event[repeatid]" value="',$event['repeatid'],"\">\n";
 	}
 	echo '<INPUT type="hidden" name="repeat[mode]" value="',HTMLSpecialChars($repeat['mode']),'">',"\n";
-  if (!empty($repeat['interval1'])) { echo '<INPUT type="hidden" name="repeat[interval1]" value="',$repeat['interval1'],'">',"\n"; }
+	if (!empty($repeat['interval1'])) { echo '<INPUT type="hidden" name="repeat[interval1]" value="',$repeat['interval1'],'">',"\n"; }
  	if (!empty($repeat['frequency1'])) { echo '<INPUT type="hidden" name="repeat[frequency1]" value="',$repeat['frequency1'],'">',"\n"; }
-  if (!empty($repeat['interval2'])) { echo '<INPUT type="hidden" name="repeat[interval2]" value="',$repeat['interval2'],'">',"\n"; }
-  if (!empty($repeat['frequency2modifier1'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier1]" value="',$repeat['frequency2modifier1'],'">',"\n"; }
-  if (!empty($repeat['frequency2modifier2'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier2]" value="',$repeat['frequency2modifier2'],'">',"\n"; }
+	if (!empty($repeat['interval2'])) { echo '<INPUT type="hidden" name="repeat[interval2]" value="',$repeat['interval2'],'">',"\n"; }
+	if (!empty($repeat['frequency2modifier1'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier1]" value="',$repeat['frequency2modifier1'],'">',"\n"; }
+	if (!empty($repeat['frequency2modifier2'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier2]" value="',$repeat['frequency2modifier2'],'">',"\n"; }
 }
 
 function passeventvalues($event,$sponsorid,$repeat) {
-  // pass the values
+	// pass the values
 //  echo '<INPUT type="hidden" name="event[rejectreason]" value="',HTMLSpecialChars($event['rejectreason']),"\">\n";
 	passeventtimevalues($event,$repeat);
-  echo '<INPUT type="hidden" name="event[sponsorid]" value="',HTMLSpecialChars($event['sponsorid']),"\">\n";
-  echo '<INPUT type="hidden" name="event[title]" value="',HTMLSpecialChars($event['title']),"\">\n";
-  echo '<INPUT type="hidden" name="event[wholedayevent]" value="',HTMLSpecialChars($event['wholedayevent']),"\">\n";
-  echo '<INPUT type="hidden" name="event[categoryid]" value="',HTMLSpecialChars($event['categoryid']),"\">\n";
-  echo '<INPUT type="hidden" name="event[description]" value="',HTMLSpecialChars($event['description']),"\">\n";
-  echo '<INPUT type="hidden" name="event[location]" value="',HTMLSpecialChars($event['location']),"\">\n";
-  echo '<INPUT type="hidden" name="event[price]" value="',HTMLSpecialChars($event['price']),"\">\n";
-  echo '<INPUT type="hidden" name="event[contact_name]" value="',HTMLSpecialChars($event['contact_name']),"\">\n";
-  echo '<INPUT type="hidden" name="event[contact_phone]" value="',HTMLSpecialChars($event['contact_phone']),"\">\n";
-  echo '<INPUT type="hidden" name="event[contact_email]" value="',HTMLSpecialChars($event['contact_email']),"\">\n";
-  echo '<INPUT type="hidden" name="event[url]" value="',HTMLSpecialChars($event['url']),"\">\n";
-  echo '<INPUT type="hidden" name="event[displayedsponsor]" value="',HTMLSpecialChars($event['displayedsponsor']),"\">\n";
-  echo '<INPUT type="hidden" name="event[displayedsponsorurl]" value="',HTMLSpecialChars($event['displayedsponsorurl']),"\">\n";
+	echo '<INPUT type="hidden" name="event[sponsorid]" value="',HTMLSpecialChars($event['sponsorid']),"\">\n";
+	echo '<INPUT type="hidden" name="event[title]" value="',HTMLSpecialChars($event['title']),"\">\n";
+	echo '<INPUT type="hidden" name="event[wholedayevent]" value="',HTMLSpecialChars($event['wholedayevent']),"\">\n";
+	echo '<INPUT type="hidden" name="event[categoryid]" value="',HTMLSpecialChars($event['categoryid']),"\">\n";
+	echo '<INPUT type="hidden" name="event[description]" value="',HTMLSpecialChars($event['description']),"\">\n";
+	echo '<INPUT type="hidden" name="event[location]" value="',HTMLSpecialChars($event['location']),"\">\n";
+	echo '<INPUT type="hidden" name="event[price]" value="',HTMLSpecialChars($event['price']),"\">\n";
+	echo '<INPUT type="hidden" name="event[contact_name]" value="',HTMLSpecialChars($event['contact_name']),"\">\n";
+	echo '<INPUT type="hidden" name="event[contact_phone]" value="',HTMLSpecialChars($event['contact_phone']),"\">\n";
+	echo '<INPUT type="hidden" name="event[contact_email]" value="',HTMLSpecialChars($event['contact_email']),"\">\n";
+	echo '<INPUT type="hidden" name="event[url]" value="',HTMLSpecialChars($event['url']),"\">\n";
+	echo '<INPUT type="hidden" name="event[displayedsponsor]" value="',HTMLSpecialChars($event['displayedsponsor']),"\">\n";
+	echo '<INPUT type="hidden" name="event[displayedsponsorurl]" value="',HTMLSpecialChars($event['displayedsponsorurl']),"\">\n";
 	echo '<INPUT type="hidden" name="event[showondefaultcal]" value="',HTMLSpecialChars($event['showondefaultcal']),"\">\n";
-  echo '<INPUT type="hidden" name="event[showincategory]" value="',HTMLSpecialChars($event['showincategory']),"\">\n";
+	echo '<INPUT type="hidden" name="event[showincategory]" value="',HTMLSpecialChars($event['showincategory']),"\">\n";
 } // end: function passeventvalues
 ?>

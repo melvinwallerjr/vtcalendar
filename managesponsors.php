@@ -1,24 +1,24 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-  require_once('application.inc.php');
+	require_once('application.inc.php');
 
-  if (!authorized()) { exit; }
-  if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
+	if (!authorized()) { exit; }
+	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-  if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
-  if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }
-  if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } else { unset($id); }
+	if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
+	if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }
+	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } else { unset($id); }
 
-  if ( isset($edit) ) {
-	  redirect2URL("editsponsor.php?id=".$id); exit;
+	if ( isset($edit) ) {
+		redirect2URL("editsponsor.php?id=".$id); exit;
 	}
-  elseif ( isset($delete) ) {
-    $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" ); 
-    $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-    
+	elseif ( isset($delete) ) {
+		$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" ); 
+		$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+		
 		if ( $sponsor['admin'] == 0 ) {
-	    redirect2URL("deletesponsor.php?id=".$id);
+			redirect2URL("deletesponsor.php?id=".$id);
 		}
 		else {
 			$errorMessage = "You cannot delete the administrative sponsor for this calendar.";
@@ -35,18 +35,18 @@ require_once('session_start.inc.php');
 		echo '<p><b><font color="#CC0000">'.$errorMessage.'</font></b></p>';
 	}
 	
-  $numLines = 15;
+	$numLines = 15;
 ?>
 <select name="id" size="<?php echo $numLines; ?>">
 <?php
-  $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
+	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
 
-  for ($i=0; $i<$result->numRows(); $i++) {
-    $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+	for ($i=0; $i<$result->numRows(); $i++) {
+		$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 ?>	
-  <option value="<?php echo htmlentities($sponsor['id']); ?>"><?php echo htmlentities($sponsor['name']); ?><?php if ($sponsor['admin']) { echo ' **'; } ?></option>
+	<option value="<?php echo htmlentities($sponsor['id']); ?>"><?php echo htmlentities($sponsor['name']); ?><?php if ($sponsor['admin']) { echo ' **'; } ?></option>
 <?php
-  } // end: for ($i=0; $i<$result->numRows(); $i++)
+	} // end: for ($i=0; $i<$result->numRows(); $i++)
 ?>	
 </select><br>
 <input type="submit" name="edit" value="<?php echo lang('button_edit'); ?>">
@@ -59,7 +59,7 @@ document.mainform.id.focus();
 //--></script>
 
 <?php
-  contentsection_end();
-  pagefooter();
+	contentsection_end();
+	pagefooter();
 DBclose();
 ?>

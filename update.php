@@ -88,7 +88,7 @@ if ( isset($fbid) ) {
 if ($_SESSION['AUTH_ISCALENDARADMIN']) {
 ?>
 	<td valign="top" style="border-left: 1px solid #666666; background-color: #EEEEEE;">
-	  <h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666;">Calendar Options:&nbsp;</h2>
+		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid #666666;">Calendar Options:&nbsp;</h2>
 		<dl style="margin-top: 0; padding-top: 2px;">
 			<dt><a href="approval.php"><?php echo lang('approve_reject_event_updates'); ?></a></dt>
 			<dd style="padding-bottom: 8px;">Approve, edit or deny events that have been submitted by sponsors for this calendar.</dd>
@@ -136,6 +136,6 @@ if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 </table>
 </div></div>
 <?php
-  pagefooter();
+	pagefooter();
 DBclose();
 ?>

@@ -12,19 +12,19 @@ if (!isset($sponsorid)) {
 	echo "INVALID_SPONSOR_ID:", $_GET['sponsorid'];
 }
 else {
-  $result = DBQuery("SELECT * FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" ); 
-  
-  if ($result->numRows() == 0) {
-  	echo "SPONSOR_ID_NOTFOUND:", $_GET['sponsorid'];
-  }
-  else {
-	  $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-	  if ($type == "name") {
-	  	echo $sponsor['name'];
-	  }
-	  elseif ($type == "url") {
-	  	echo $sponsor['url'];
-	  }
-  }
+	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" ); 
+	
+	if ($result->numRows() == 0) {
+		echo "SPONSOR_ID_NOTFOUND:", $_GET['sponsorid'];
+	}
+	else {
+		$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+		if ($type == "name") {
+			echo $sponsor['name'];
+		}
+		elseif ($type == "url") {
+			echo $sponsor['url'];
+		}
+	}
 }
 ?>

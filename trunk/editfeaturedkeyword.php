@@ -22,7 +22,7 @@ require_once('session_start.inc.php');
 
   $keywordexists = false;
   if (isset($save) && !empty($keyword) && !empty($featuretext) ) {
-    $result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND keyword='".sqlescape($keyword)."'" );
+    $result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND keyword='".sqlescape($keyword)."'" );
 		if ( $result->numRows()>0 ) {
       if ($result->numRows()>1) {
 			  $keywordexists = true;
@@ -42,10 +42,10 @@ require_once('session_start.inc.php');
 
 		if (!$keywordexists) {
 			if ( isset ($id) ) { // edit, not new
-				$result = DBQuery("UPDATE vtcal_searchfeatured SET keyword='".sqlescape(strtolower($keyword))."',featuretext='".sqlescape($featuretext)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+				$result = DBQuery("UPDATE vtcal_searchfeatured SET keyword='".sqlescape(strtolower($keyword))."',featuretext='".sqlescape($featuretext)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
 			}
 			else {
-				$result = DBQuery("INSERT INTO vtcal_searchfeatured (calendarid,keyword,featuretext) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape(strtolower($keyword))."','".sqlescape($featuretext)."')" );
+				$result = DBQuery("INSERT INTO vtcal_searchfeatured (calendarid,keyword,featuretext) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape(strtolower($keyword))."','".sqlescape($featuretext)."')" );
 			}
 			redirect2URL("managefeaturedsearchkeywords.php");
 			exit;
@@ -56,7 +56,7 @@ require_once('session_start.inc.php');
     pageheader(lang('edit_featured_keyword'), "Update");
     contentsection_begin(lang('edit_featured_keyword'));
 		if ( !isset($check) ) {
-  		$result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'" );
+  		$result = DBQuery("SELECT * FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
       $searchkeyword = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		  $keyword = $searchkeyword['keyword'];
   		$featuretext = $searchkeyword['featuretext'];

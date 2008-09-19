@@ -4,7 +4,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
 $ievent = 0;
 
 // read all events for this week from the DB
-$query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($weekfrom['timestamp'])."' AND e.timeend <= '".sqlescape($weekto['timestamp'])."'";
+$query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($weekfrom['timestamp'])."' AND e.timeend <= '".sqlescape($weekto['timestamp'])."'";
 if ($sponsorid != "all")  { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
 
 if ( isset($CategoryFilter) && count($CategoryFilter) > 0 ) {
@@ -51,10 +51,10 @@ else {
     echo "<div><b>";
     echo Day_of_Week_to_Text(($weekday+$week_start)%7); // use modulus 7 as week can begin with Sunday or Monday
     echo "<br>\n";
-    echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")), $queryStringExtension ,'">' . week_header_date_format($iday['day'],Month_to_Text($iday['month']),0,3) . "</a></b></div>";
+    echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")), $queryStringExtension ,'">' . week_header_date_format($iday['day'],Month_to_Text($iday['month']),0,3) . "</a></b></div>";
 
     if (!empty($_SESSION["AUTH_SPONSORID"])) { // display "add event" icon
-			echo '<div style="padding-top: 3px;"><a href="addevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
+			echo '<div style="padding-top: 3px;"><a href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
       echo '<img src="images/new.gif" height="16" width="16" alt="',lang('add_new_event'),'" border="0"></a></div>';
     }
 
@@ -86,7 +86,6 @@ else {
     $iday['timebegin'] = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],0,0,"am");
     $iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 		
-    $iday['css'] = datetoclass($iday['month'],$iday['day'],$iday['year']);
     $iday['color'] = datetocolor($iday['month'],$iday['day'],$iday['year'],$colorpast,$colortoday,$colorfuture);
     
 		echo '<td';
@@ -100,7 +99,6 @@ else {
 	  
 		echo ' valign="top">';
 		
-    $event['css'] = $iday['css'];
     $event['color'] = $iday['color'];
 		$event['classExtension'] = "";
 
@@ -134,7 +132,6 @@ else {
         $event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
         $event_timebegin  = timestamp2datetime($event['timebegin']);
         $event_timeend    = timestamp2datetime($event['timeend']);
-        $event['css'] = $iday['css'];
         $event['color'] = $iday['color'];
 				$event['classExtension'] = "";
       }
@@ -185,7 +182,7 @@ function print_week_event(&$event) {
   echo '</div>';
 	
 	echo '<div class="WeekEvent-Title"><b>';
-  echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+  echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 	echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 	echo $queryStringExtension, '">';
   echo htmlentities($event['title']);

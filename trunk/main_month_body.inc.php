@@ -4,7 +4,7 @@
   $ievent = 0;
   // Create base query to retrieve all events for this month
   $query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.wholedayevent,e.categoryid,c.id,c.name AS category_name FROM vtcal_event_public e, vtcal_category c ";
-	$query .= "WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($monthstart['timestamp'])."' AND e.timeend <= '".sqlescape($monthend['timestamp'])."'";
+	$query .= "WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.timebegin >= '".sqlescape($monthstart['timestamp'])."' AND e.timeend <= '".sqlescape($monthend['timestamp'])."'";
 	
 	// Filter by sponsor if necessary
   if ($sponsorid != "all") { $query.= " AND (e.sponsorid='".sqlescape($sponsorid)."')"; }
@@ -85,7 +85,6 @@
 	        $iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 					
 					// Determine the day's CSS class and color.
-	        $iday['css'] = datetoclass($iday['month'],$iday['day'],$iday['year']);
 	        $iday['color'] = datetocolor($iday['month'],$iday['day'],$iday['year'],$colorpast,$colortoday,$colorfuture);
 	        
 	        // Determine the number of days between the day and the current date.
@@ -120,12 +119,12 @@
 						
 						// Display an "add event" icon
 						if (!empty($_SESSION["AUTH_SPONSORID"])) {
-		          echo '<td><a style="font-size: 11px;" href="addevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
+		          echo '<td><a style="font-size: 11px;" href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
 		          echo '<img src="images/new.gif" height="16" width="16" title="',lang('add_new_event'),'" alt="',lang('add_new_event'),'" border="0">';
 		          echo '</a></td>';
 		        }
 		        
-						echo '<td width="100%"><div class="DayNumber"><b><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&timebegin=',urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")),$queryStringExtension,'">';
+						echo '<td width="100%"><div class="DayNumber"><b><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin=',urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")),$queryStringExtension,'">';
 						echo $iday['day'];
 						echo "</a></b></div></td>";
 						echo "</tr></table>";
@@ -156,7 +155,7 @@
 							}
 							
 		      	  // Output the event data.
-							echo '<p class="EventItem'.$event['classExtension'].'"><a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=event&eventid=',$event['eventid'],'&timebegin=';
+							echo '<p class="EventItem'.$event['classExtension'].'"><a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=event&eventid=',$event['eventid'],'&timebegin=';
 							echo urlencode(datetime2timestamp($event_timebegin['year'],$event_timebegin['month'],$event_timebegin['day'],12,0,"am"));
 							echo '">',htmlentities($event['title']),'</a></p>';
 							
@@ -168,7 +167,6 @@
 	            $event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
 	            $event_timebegin  = timestamp2datetime($event['timebegin']);
 	            $event_timeend    = timestamp2datetime($event['timeend']);
-	            $event['css'] = $iday['css'];
 	            $event['color'] = $iday['color'];
 	          }
 	        }

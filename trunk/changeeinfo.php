@@ -105,7 +105,7 @@ if (isset($cancel)) {
 
 // Check that the event ID is valid, if one was passed.
 if (!empty($eventid)) {
-  $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
+  $query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
   $result = DBQuery($query );
   
   // Check that the record exists in "vtcal_event".
@@ -115,7 +115,7 @@ if (!empty($eventid)) {
   
   // If it doesn't, check that it exists in "vtcal_event_public"
   else {
-  	$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
+  	$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
 		$result = DBQuery($query ); 
   	
 		// If the event exists in "event_public", then insert it into "event" since it is missing...
@@ -249,7 +249,7 @@ function recurrenceschanged($repeatid,&$repeat,&$event) {
   $repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
   $repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
 
-  $query = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($repeatid)."'";
+  $query = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($repeatid)."'";
   $result = DBQuery($query ); 
   $r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 

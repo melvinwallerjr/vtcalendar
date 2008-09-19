@@ -48,7 +48,7 @@ $categoryidlist = $_GET['categoryidlist'];
     // determine which sponsors to show
     if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
       // read sponsor name from DB
-      $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+      $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
       $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
       $displayedsponsor = $s['name']; 
     }
@@ -97,7 +97,7 @@ $categoryidlist = $_GET['categoryidlist'];
     if (!isset($categoryid)) { $categoryid=0; }
     if (!isset($keyword)) { $keyword=""; }
 
-    $query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
+    $query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 
     if (!empty($eventid))  { $query.= " AND e.id='".sqlescape($eventid)."'"; }
     if (!empty($timebegin)) { 
@@ -139,7 +139,7 @@ $categoryidlist = $_GET['categoryidlist'];
       echo '<?xml version="1.0"?>',"\n";
       echo '<rss version="0.91">',"\n";
       echo "<channel>\n";
-      echo "    <title>".$_SESSION["TITLE"]."</title>\n";
+      echo "    <title>".$_SESSION['CALENDAR_TITLE']."</title>\n";
       if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
       else { $day = substr($timebegin,8,2); }
       if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
@@ -147,13 +147,13 @@ $categoryidlist = $_GET['categoryidlist'];
       $date = $month."/".$day."/".substr($timebegin,0,4);
       echo "    <description>".$date."</description>\n";
 
-      echo "    <link>".$calendarurl."?calendarid=".$_SESSION["CALENDARID"]."</link>\n\n";
+      echo "    <link>".$calendarurl."?calendarid=".$_SESSION['CALENDAR_ID']."</link>\n\n";
       for ($i=0; $i < $result->numRows(); $i++) {
         $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
         disassemble_timestamp($event);
         echo "    <item>\n";
         echo "      <title>",text2xmltext($event['title']),"</title>\n";
-        echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."</link>\n";
+        echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
         echo "      <description>";
         if ($event['wholedayevent']==0) {
           echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']), ": ";
@@ -177,8 +177,8 @@ $categoryidlist = $_GET['categoryidlist'];
          xmlns:dc="http://purl.org/dc/elements/1.1/"
          xmlns="http://purl.org/rss/1.0/">
 
-<channel rdf:about="<?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION["CALENDARID"]; ?>">
-  <link><?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION["CALENDARID"]; ?></link>
+<channel rdf:about="<?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?>">
+  <link><?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?></link>
 <?php
   if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
   else { $day = substr($timebegin,8,2); }
@@ -187,13 +187,13 @@ $categoryidlist = $_GET['categoryidlist'];
   $date = $month."/".$day."/".substr($timebegin,0,4);
 ?>
   <description><?php echo $date; ?></description>
-  <title><?php echo $_SESSION["TITLE"]; ?></title>
+  <title><?php echo $_SESSION['CALENDAR_TITLE']; ?></title>
   <items>
     <rdf:Seq>
 <?php
   for ($i=0; $i < $result->numRows(); $i++) {
     $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-    echo "      <rdf:li resource=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."\"/>\n";
+    echo "      <rdf:li resource=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."\"/>\n";
   }
 ?>
     </rdf:Seq>
@@ -203,8 +203,8 @@ $categoryidlist = $_GET['categoryidlist'];
       for ($i=0; $i < $result->numRows(); $i++) {
         $event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
         disassemble_timestamp($event);
-        echo "    <item rdf:about=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."\">\n";
-        echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION["CALENDARID"]."&amp;eventid=".$event['id']."</link>\n";
+        echo "    <item rdf:about=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."\">\n";
+        echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
         echo "      <title>",text2xmltext($event['title']),"</title>\n";
         echo "      <description>";
         if ($event['wholedayevent']==0) {
@@ -228,7 +228,7 @@ $categoryidlist = $_GET['categoryidlist'];
         unset($repeat);
         // read in repeatid if necessary
         if (!empty($event['repeatid'])) {
-//          $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['repeatid'])."'";
+//          $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['repeatid'])."'";
           $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
 					$repeatresult = DBQuery($queryRepeat ); 
           if ( $repeatresult->numRows () > 0 ) {
@@ -285,7 +285,7 @@ $categoryidlist = $_GET['categoryidlist'];
 				}
 			}
 			else {
-			  $icalname = str_replace(array(" ","-","/"),"_",$_SESSION["NAME"]);
+			  $icalname = str_replace(array(" ","-","/"),"_",$_SESSION['CALENDAR_NAME']);
 			}
       Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"".$icalname.".ics\"");
       Header("Content-disposition: attachment; filename=".$icalname.".ics");
@@ -414,7 +414,7 @@ $categoryidlist = $_GET['categoryidlist'];
     <TD class="bodytext" valign="top">
       <SELECT name="categoryid" size="1">
 <?php
-$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 
 // print list with categories from the DB
 echo "<OPTION ";
@@ -443,7 +443,7 @@ for ($i=0; $i<$result->numRows(); $i++) {
 <?php
   if (!empty($_SESSION["AUTH_SPONSORID"])) {
     // read sponsor name from DB
-    $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+    $result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
     $s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
     echo '<input type="radio" name="sponsortype" value="self"> ',htmlentities($s['name']),"<br>\n";
   }

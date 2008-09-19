@@ -10,7 +10,7 @@ if (is_string($result)) {
 else {
 	// read first event if one exists
 	if ($result->numRows()>0) {
-	  $event['calendarid'] = $_SESSION["CALENDARID"];
+	  $event['calendarid'] = $_SESSION['CALENDAR_ID'];
 	  $event['id'] = $eventid;
 	  
 	  if ((isset($_SESSION["AUTH_SPONSORID"]) && $_SESSION["AUTH_SPONSORID"]==$event['sponsorid']) || !empty($_SESSION["AUTH_ADMIN"])) {

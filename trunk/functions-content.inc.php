@@ -40,7 +40,7 @@ function pageheader($title, $navbaractive) {
 	</head>
 	<body bgcolor="<?php echo $_SESSION["BGCOLOR"]; ?>" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
 	
-	<!-- Start Calendar Header --><?php echo $_SESSION["HEADER"]; ?><!-- End Calendar Header -->
+	<!-- Start Calendar Header --><?php echo $_SESSION['CALENDAR_HEADER']; ?><!-- End Calendar Header -->
 
 	<div id="CalendarBlock">
 	
@@ -48,20 +48,20 @@ function pageheader($title, $navbaractive) {
 	<table id="TopNaviTable" width="100%" border="0" cellpadding="3" cellspacing="0">
 		<tr>
 			<td class="TopNavi-ColorPadding">&nbsp;&nbsp;&nbsp;</td>
-			<td id="TopNavi-Logo" valign="bottom"><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><img src="images/logo.gif" alt="" width="34" height="34" border="0"></a></td>
+			<td id="TopNavi-Logo" valign="bottom"><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><img src="images/logo.gif" alt="" width="34" height="34" border="0"></a></td>
 			<td class="TopNavi-ColorPadding" width="100%" valign="bottom">
 				<table width="100%" border="0" cellpadding="6" cellspacing="0">
 					<tr>
-						<td id="NaviBar-EventName" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION["CALENDARID"]);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><?php if (isset($_SESSION["TITLE"])) { echo $_SESSION["TITLE"]; } else { echo lang('calendar'); } ?></a></td>
+						<td id="NaviBar-EventName" valign="bottom" nowrap><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']);?>&view=<?php if (SHOW_UPCOMING_TAB) echo "upcoming"; else echo "day"; echo $queryStringExtension; ?>"><?php if (isset($_SESSION['CALENDAR_TITLE'])) { echo $_SESSION['CALENDAR_TITLE']; } else { echo lang('calendar'); } ?></a></td>
 						<?php if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { ?>
-							<td valign="bottom" <?php if ($navbaractive=="Upcoming") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Upcoming") echo lang('upcoming'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=upcoming" >',lang('upcoming'),'</a>'; } ?></div></td>
+							<td valign="bottom" <?php if ($navbaractive=="Upcoming") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Upcoming") echo lang('upcoming'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=upcoming" >',lang('upcoming'),'</a>'; } ?></div></td>
 						<?php } ?>
-						<td valign="bottom" <?php if ($navbaractive=="Day") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Day") echo lang('day'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=day&timebegin='.urlencode($timebegin).$queryStringExtension.'" >',lang('day'),'</a>'; } ?></div></td>
-						<td valign="bottom" <?php if ($navbaractive=="Week") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Week") echo lang('week'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=week&timebegin='.urlencode($timebegin).$queryStringExtension.'" >',lang('week'),'</a>'; } ?></div></td>
+						<td valign="bottom" <?php if ($navbaractive=="Day") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Day") echo lang('day'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin='.urlencode($timebegin).$queryStringExtension.'" >',lang('day'),'</a>'; } ?></div></td>
+						<td valign="bottom" <?php if ($navbaractive=="Week") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Week") echo lang('week'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&timebegin='.urlencode($timebegin).$queryStringExtension.'" >',lang('week'),'</a>'; } ?></div></td>
 						<?php if ($enableViewMonth) { ?>
-							<td valign="bottom" <?php if ($navbaractive=="Month") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Month") echo lang('month'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=month&timebegin='.urlencode($timebegin).$queryStringExtension.'">',lang('month'),'</a>'; } ?></div></td>
+							<td valign="bottom" <?php if ($navbaractive=="Month") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Month") echo lang('month'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=month&timebegin='.urlencode($timebegin).$queryStringExtension.'">',lang('month'),'</a>'; } ?></div></td>
 						<?php } ?>
-						<td valign="bottom" <?php if ($navbaractive=="Search" || $navbaractive=="SearchResults") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Search") echo lang('search'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=search">',lang('search'),'</a>'; } ?></div></td>
+						<td valign="bottom" <?php if ($navbaractive=="Search" || $navbaractive=="SearchResults") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><?php if ($navbaractive=="Search") echo lang('search'); else { echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=search">',lang('search'),'</a>'; } ?></div></td>
 						<?php 
 						
 							if (!empty($_SESSION["AUTH_USERID"])) {
@@ -104,7 +104,7 @@ function pagefooter() {
 	?></div>
 
 	<!-- Start Calendar Footer -->
-	<?php echo $_SESSION["FOOTER"]; ?>
+	<?php echo $_SESSION['CALENDAR_FOOTER']; ?>
 	<!-- End Calendar Footer -->
 
   </body>

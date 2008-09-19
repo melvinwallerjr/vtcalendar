@@ -11,7 +11,7 @@ require_once('session_start.inc.php');
 <?php echo lang('help_export'); ?>
 </H3>
 <?php echo lang('help_export_intro'); ?>
-  &quot;<?php echo $calendarurl; ?>export.php?calendar=<?php echo $_SESSION["CALENDARID"]; ?>&amp;type=xml&amp;timebegin=2000-03-17&amp;timeend=2000-05-20</a>&quot;.</li>
+  &quot;<?php echo $calendarurl; ?>export.php?calendar=<?php echo $_SESSION['CALENDAR_ID']; ?>&amp;type=xml&amp;timebegin=2000-03-17&amp;timeend=2000-05-20</a>&quot;.</li>
 </ul>
 <?php echo lang('help_export_formats'); ?>
 <?php echo lang('help_export_xmlformat_example'); ?> 
@@ -65,7 +65,7 @@ require_once('session_start.inc.php');
   </tr>
 <?php
   // read event categories from DB
-  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY name ASC" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
   // print list with categories and select the one read from the DB
   for ($i=0;$i<$result->numRows();$i++) {

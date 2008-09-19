@@ -32,9 +32,9 @@ if (!(isset($title) && isset($header) && isset($footer) &&
 	  isset($bgcolor) && isset($maincolor) && isset($todaycolor) && 
 	  isset($pastcolor) && isset($futurecolor) && isset($textcolor) && isset($linkcolor) && isset($gridcolor) &&
       isset($viewauthrequired))) { //(re-)read from database
-	$title = $_SESSION["TITLE"];	
-	$header = $_SESSION["HEADER"];	
-	$footer = $_SESSION["FOOTER"];	
+	$title = $_SESSION['CALENDAR_TITLE'];	
+	$header = $_SESSION['CALENDAR_HEADER'];	
+	$footer = $_SESSION['CALENDAR_FOOTER'];	
 	$viewauthrequired	= $_SESSION["VIEWAUTHREQUIRED"];
 	$forwardeventdefault = $_SESSION["FORWARDEVENTDEFAULT"];
 
@@ -100,12 +100,12 @@ bgcolor='".sqlescape($bgcolor)."',maincolor='".sqlescape($maincolor)."',todaycol
 pastcolor='".sqlescape($pastcolor)."',futurecolor='".sqlescape($futurecolor)."',textcolor='".sqlescape($textcolor)."',
 linkcolor='".sqlescape($linkcolor)."',gridcolor='".sqlescape($gridcolor)."',
 viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."' 
-WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 		
 		// substitute existing auth info with the new one
-		$result = DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+		$result = DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 		for ($i=0; $i<count($pidsAdded); $i++) {
-			$result = DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION["CALENDARID"])."','".sqlescape($pidsAdded[$i])."')" );
+			$result = DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($pidsAdded[$i])."')" );
 		}
 		
 		setCalendarPreferences();
@@ -116,7 +116,7 @@ WHERE id='".sqlescape($_SESSION["CALENDARID"])."'" );
 }
 
 // read sponsor name from DB
-$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
 $sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 pageheader(lang('change_header_footer_colors_auth'), "Update");
@@ -155,7 +155,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 
 
 <?php
-  if ( $_SESSION["CALENDARID"] != "default" ) {
+  if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 ?>
 <?php
   $result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
@@ -171,7 +171,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
     </tr>
   </table>
 <?php
-  } // end: if ( $_SESSION["CALENDARID"] != "default" ) {
+  } // end: if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 ?>
  <br>
 <br>
@@ -200,7 +200,7 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 		  echo $users;
 		}
 		else {
-		  $query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' ORDER BY userid";
+		  $query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
       $result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {

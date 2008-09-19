@@ -1,8 +1,8 @@
 <?php
   if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
-  $previous_href = 'main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=week&timebegin='.urlencode(datetime2timestamp($minus_one_week['year'],$minus_one_week['month'],$minus_one_week['day'],12,0,"am")).$queryStringExtension;
-  $next_href = 'main.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&view=week&timebegin='.urlencode(datetime2timestamp($plus_one_week['year'],$plus_one_week['month'],$plus_one_week['day'],12,0,"am")).$queryStringExtension;
+  $previous_href = 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&timebegin='.urlencode(datetime2timestamp($minus_one_week['year'],$minus_one_week['month'],$minus_one_week['day'],12,0,"am")).$queryStringExtension;
+  $next_href = 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=week&timebegin='.urlencode(datetime2timestamp($plus_one_week['year'],$plus_one_week['month'],$plus_one_week['day'],12,0,"am")).$queryStringExtension;
 ?>
 <table border="0" cellspacing="0" cellpadding="1">
   <tr>

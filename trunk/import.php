@@ -176,7 +176,7 @@ function xmlerror_importevent($xml_parser) {
   if (isset($importurl)) {
     if (checkurl($importurl)) {
       // get list of valid category-IDs
-			$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" ); 
+			$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 			for($i=0; $i<$result->numRows(); $i++) {
   			$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			  $validcategory[$category['id']] = true;
@@ -200,7 +200,7 @@ function xmlerror_importevent($xml_parser) {
 			  if (!$error) {
 					if ($eventnr > 0) {
 						// determine sponsor name & URL
-						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
+						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
 						$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 					
 						$id = getNewEventId();

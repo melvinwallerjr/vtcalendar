@@ -8,7 +8,7 @@ require_once('session_start.inc.php');
   if (!authorized()) { exit; }
   if (!$_SESSION["AUTH_ADMIN"]) { exit; } // additional security
 
-	$query = "DELETE FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($id)."'";
+	$query = "DELETE FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'";
 	$result = DBQuery($query );
   redirect2URL("managefeaturedsearchkeywords.php");
   exit;

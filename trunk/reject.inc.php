@@ -4,12 +4,11 @@
   pageheader(lang('reject_event_update'), "Update");
   contentsection_begin(lang('reject_event_update'));
 
-  $query = "SELECT e.id AS id,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND s.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid=c.id AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
+  $query = "SELECT e.id AS id,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND s.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid=c.id AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
   $result = DBQuery($query ); 
   $event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
   disassemble_timestamp($event);
-  $event['css'] = datetoclass($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
   $event['color'] = datetocolor($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],$colorpast,$colortoday,$colorfuture);
 
   echo '<SPAN class="bodytext">';

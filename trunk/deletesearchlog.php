@@ -15,7 +15,7 @@ require_once('session_start.inc.php');
   }
 
   if (isset($save) ) {
-	  $result = DBQuery("DELETE FROM vtcal_searchlog WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."'" );
+	  $result = DBQuery("DELETE FROM vtcal_searchlog WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
     redirect2URL("viewsearchlog.php");
     exit;
   }

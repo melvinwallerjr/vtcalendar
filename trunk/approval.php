@@ -25,7 +25,7 @@ if (isset($approveallevents)) {
 	for ($i = 0; $i < count($eventids); $i++) {
 		$eventid = $eventids[$i];
 		if (!empty($eventid)) {
-			$result = DBQuery("SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" );
+			$result = DBQuery("SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
 			$event = $result->fetchRow(DB_FETCHMODE_ASSOC);
 			if ($event["approved"]==0) {
 				//eventaddslashes($event);
@@ -45,7 +45,7 @@ if (isset($approveallevents)) {
 // Approve a single event.
 elseif (isset($eventid)) {
   // check if event is marked as "submitted" (to avoid multiple approvals/rejections)
-  $query = "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'";
+  $query = "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
 	$result = DBQuery($query ); 
   $event = $result->fetchRow(DB_FETCHMODE_ASSOC);
 
@@ -60,12 +60,12 @@ elseif (isset($eventid)) {
       repeatpublicizeevent($eventid,$event);
     }
     elseif (isset($rejectconfirmedthis)) {
-      $result = DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($eventid)."'" );
+      $result = DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
       sendrejectionemail($eventid);
     }
     elseif (isset($rejectconfirmedall)) {
       // determine repeatid
-      $result = DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND approved=0 AND repeatid='".sqlescape($event['repeatid'])."'" ); 
+      $result = DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND approved=0 AND repeatid='".sqlescape($event['repeatid'])."'" ); 
       sendrejectionemail($eventid);
     }
     // ask for confirmation, reason for rejection
@@ -85,7 +85,7 @@ contentsection_begin(lang('approve_reject_event_updates'),true);
 // print list with events
 $query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory";
 $query.= " FROM vtcal_event e, vtcal_category c, vtcal_sponsor s";
-$query.= " WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND c.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.categoryid = c.id AND e.sponsorid = s.id AND e.approved = 0";
+$query.= " WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id AND e.approved = 0";
 $query.= " ORDER BY e.timebegin asc, e.wholedayevent DESC";
 $result = DBQuery($query ); 
 
@@ -152,7 +152,7 @@ else {
 			}
 			
 			// Note that the event will also be submitted to the default calendar.
-			if ($_SESSION['CALENDARID'] != "default" && $event['showondefaultcal'] == 1) {
+			if ($_SESSION['CALENDAR_ID'] != "default" && $event['showondefaultcal'] == 1) {
 				echo "<br>\n",'<font color="#CC0000"><b>Note:</b> This event will also be submitted to the &quot;'.htmlentities($defaultcalendarname).'&quot; calendar under the &quot;'.htmlentities(getCategoryName($event['showincategory'])).'&quot; category.</font>';
 			}
 		  ?></div>
@@ -160,7 +160,7 @@ else {
 			<tr>
 				<td style="background-color: #E3E3E3; border: 1px solid #666666; padding: 5px;">
 					<div><b>Submitted by: </b><?php echo htmlentities($event['sponsor_name']); ?><?php
-					if ($_SESSION['CALENDARID'] == "default" && $event['sponsor_calendarid'] != "default") {
+					if ($_SESSION['CALENDAR_ID'] == "default" && $event['sponsor_calendarid'] != "default") {
 						echo ' <font color=#CC0000">(from the &quot;'.htmlentities(getCalendarName($event['sponsor_calendarid'])).'&quot; calendar)</font>';
 					}
 					?>
@@ -179,7 +179,7 @@ DBclose();
   
 function sendrejectionemail($eventid) {
   // determine sponsor id, name
-  $query = "SELECT e.title AS event_title, e.rejectreason AS event_rejectreason, s.name AS sponsor_name, s.email AS sponsor_email, s.id AS sponsorid FROM vtcal_event e, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
+  $query = "SELECT e.title AS event_title, e.rejectreason AS event_rejectreason, s.name AS sponsor_name, s.email AS sponsor_email, s.id AS sponsorid FROM vtcal_event e, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
   $result = DBQuery($query ); 
   $d = $result->fetchRow(DB_FETCHMODE_ASSOC);
   
@@ -195,7 +195,7 @@ function sendrejectionemail($eventid) {
 		$body.= "You can update the information for this particular event by clicking here:\n";
 		if ( isset($_SERVER["HTTPS"]) ) { $body .= "https"; } else { $body .= "http"; } 
 		$body.= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
-		$body.= "changeeinfo.php?calendarid=".$_SESSION["CALENDARID"];
+		$body.= "changeeinfo.php?calendarid=".$_SESSION['CALENDAR_ID'];
 		$body.= "&authsponsorid=".$d['sponsorid'];
 		$body.= "&eventid=$eventid&httpreferer=update.php";
 	*/

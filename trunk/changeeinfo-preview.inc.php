@@ -11,12 +11,11 @@ pageheader(lang('preview_event'), "Update");
 $day['text'] = Encode_Date_US($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
 $day['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']));
 assemble_timestamp($event);
-$event['css'] = datetoclass($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
 $event['color'] = datetocolor($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],$colorpast,$colortoday,$colorfuture);
 removeslashes($event);
 
 // determine the name of the category
-$result = DBQuery("SELECT id,name AS category_name FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($event['categoryid'])."'" ); 
+$result = DBQuery("SELECT id,name AS category_name FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['categoryid'])."'" ); 
 
 if ($result->numRows() > 0) { // error checking, actually there should be always a category
 	$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);

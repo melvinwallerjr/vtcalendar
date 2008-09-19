@@ -22,7 +22,7 @@ require_once('session_start.inc.php');
   }
 
   // make sure the category exists
-	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
+	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($categoryid)."'" );
 	if ( $result->numRows() != 1 ) {
 		redirect2URL("manageeventcategories.php");
 		exit;
@@ -33,14 +33,14 @@ require_once('session_start.inc.php');
 
   if (isset($save) ) {
     if ($deleteevents=="1") {
-		  $result = DBQuery("DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND categoryid='".sqlescape($categoryid)."'" );
-		  $result = DBQuery("DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND categoryid='".sqlescape($categoryid)."'" );
+		  $result = DBQuery("DELETE FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND categoryid='".sqlescape($categoryid)."'" );
+		  $result = DBQuery("DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND categoryid='".sqlescape($categoryid)."'" );
 		}
 		else {
-   		$result = DBQuery("UPDATE vtcal_event SET categoryid='".sqlescape($newcategoryid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND categoryid='".sqlescape($categoryid)."'" );
-   		$result = DBQuery("UPDATE vtcal_event_public SET categoryid='".sqlescape($newcategoryid)."' WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND categoryid='".sqlescape($categoryid)."'" );
+   		$result = DBQuery("UPDATE vtcal_event SET categoryid='".sqlescape($newcategoryid)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND categoryid='".sqlescape($categoryid)."'" );
+   		$result = DBQuery("UPDATE vtcal_event_public SET categoryid='".sqlescape($newcategoryid)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND categoryid='".sqlescape($categoryid)."'" );
 		}
-		$result = DBQuery("DELETE FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id='".sqlescape($categoryid)."'" );
+		$result = DBQuery("DELETE FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($categoryid)."'" );
     redirect2URL("manageeventcategories.php");
     exit;
   }
@@ -55,7 +55,7 @@ require_once('session_start.inc.php');
 	<?php echo lang('reassign_all_events_to_category'); ?>
   <select name="newcategoryid" size="1">
 <?php
-  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION["CALENDARID"])."' AND id!='".sqlescape($categoryid)."' ORDER BY name" ); 
+  $result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id!='".sqlescape($categoryid)."' ORDER BY name" ); 
 
   // print list with categories from the DB
   for ($i=0; $i<$result->numRows(); $i++) {

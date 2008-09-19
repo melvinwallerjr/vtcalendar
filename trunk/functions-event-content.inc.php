@@ -137,7 +137,7 @@ function adminButtons($eventORshowdate, $buttons, $size, $orientation) {
 				foreach ($buttons as $button) {
 					if ($button == "new") {
 						$IDExt = '-New';
-						$HRef = 'addevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]);
+						$HRef = 'addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']);
 						if (isset($eventORshowdate['year']) && isset($eventORshowdate['month']) && isset($eventORshowdate['day'])) {
 							$HRef .= '&timebegin_year=' . $eventORshowdate['year'] . '&timebegin_month=' . $eventORshowdate['month'] . '&timebegin_day=' . $eventORshowdate['day'];
 						}
@@ -150,7 +150,7 @@ function adminButtons($eventORshowdate, $buttons, $size, $orientation) {
 					}
 					elseif ($button == "approve") {
 						$IDExt = '-Approve';
-						$HRef = 'approval.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&';
+						$HRef = 'approval.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&';
 						if (!empty($eventORshowdate['repeatid'])) {
 							$HRef .= "approveall=1";
 						}
@@ -162,28 +162,28 @@ function adminButtons($eventORshowdate, $buttons, $size, $orientation) {
 					}
 					elseif ($button == "reject") {
 						$IDExt = '-Reject';
-						$HRef = 'approval.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&reject=1&eventid=' . $eventORshowdate['eventid'];
+						$HRef = 'approval.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&reject=1&eventid=' . $eventORshowdate['eventid'];
 						$Label = lang('reject');
 					}
 					elseif ($button == "edit") {
 						$IDExt = '-Edit';
-						$HRef = 'changeeinfo.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&eventid=' . $eventORshowdate['eventid'];
+						$HRef = 'changeeinfo.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&eventid=' . $eventORshowdate['eventid'];
 						$Label = lang('edit');
 					}
 					elseif ($button == "update") {
 						$IDExt = '-Edit';
-						$HRef = 'changeeinfo.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&eventid=' . $eventORshowdate['eventid'];
+						$HRef = 'changeeinfo.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&eventid=' . $eventORshowdate['eventid'];
 						$Label = 'Update';
 					}
 					elseif ($button == "copy") {
 						$IDExt = '-Copy';
 						// Note: Do not use &copy in the URL. Some browsers will think you are trying to do &copy; which is a copyright symbol.
-						$HRef = 'changeeinfo.php?copy=1&calendarid='.urlencode($_SESSION["CALENDARID"]).'&eventid=' . $eventORshowdate['eventid'];
+						$HRef = 'changeeinfo.php?copy=1&calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&eventid=' . $eventORshowdate['eventid'];
 						$Label = lang('copy');
 					}
 					elseif ($button == "delete") {
 						$IDExt = '-Delete';
-						$HRef = 'deleteevent.php?calendarid='.urlencode($_SESSION["CALENDARID"]).'&check=1&eventid=' . $eventORshowdate['eventid'];
+						$HRef = 'deleteevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&check=1&eventid=' . $eventORshowdate['eventid'];
 						$Label = lang('delete');
 					}
 					

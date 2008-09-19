@@ -84,7 +84,7 @@ else {
 		    
 		    // Skip this event if this event is from the "default" calendar
 		    // but is not following its corresponding event from this calendar or has yet to be approved.
-		    if ($_SESSION['CALENDARID'] != "default" && $event['isdefaultcal'] == 1 && (!isset($PreviousEvent) || $event['id'] != $PreviousEvent['id'] || $PreviousEvent['approved'] == 0)) {
+		    if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1 && (!isset($PreviousEvent) || $event['id'] != $PreviousEvent['id'] || $PreviousEvent['approved'] == 0)) {
 		    	continue;
 		    }
 		
@@ -97,7 +97,7 @@ else {
 					}
 				}
 				
-				if ($_SESSION['CALENDARID'] == "default" || $event['isdefaultcal'] == 0)
+				if ($_SESSION['CALENDAR_ID'] == "default" || $event['isdefaultcal'] == 0)
 				{
 					if ( $color == "#eeeeee" )
 						{ $color = "#ffffff"; }
@@ -106,10 +106,10 @@ else {
 				}
 				?>	
 			  <tr bgcolor="<?php echo $color; ?>">
-			    <td <?php if ($_SESSION['CALENDARID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;" class="DefaultCalendarEvent"'; } ?> bgcolor="<?php echo $color; ?>" valign="top">
+			    <td <?php if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;" class="DefaultCalendarEvent"'; } ?> bgcolor="<?php echo $color; ?>" valign="top">
 			    	<div>
 				    <?php
-				    if ($_SESSION['CALENDARID'] != "default" && $event['isdefaultcal'] == 1) {
+				    if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1) {
 				    	echo "This event was submitted to the &quot;".$defaultcalendarname."&quot; calendar";
 				    	
 				    	if (isset($PreviousEvent) && $PreviousEvent['title'] != $event['title']) {
@@ -147,7 +147,7 @@ else {
 							}
 						}
 						?></div></td>
-			    <td <?php if ($_SESSION['CALENDARID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;" colspan="2"'; } ?> bgcolor="<?php echo $color; ?>" valign="top">
+			    <td <?php if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;" colspan="2"'; } ?> bgcolor="<?php echo $color; ?>" valign="top">
 						<?php
 				    if ($event['approved'] == -1) {
 				      echo '<FONT color="red"><B>rejected</B></FONT>';
@@ -161,9 +161,9 @@ else {
 				    }
 						?></td>
 				  <?php
-				  if ($_SESSION['CALENDARID'] == "default" || $event['isdefaultcal'] == 0) {
+				  if ($_SESSION['CALENDAR_ID'] == "default" || $event['isdefaultcal'] == 0) {
 				  	?>
-				    <td <?php if ($_SESSION['CALENDARID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;"'; } ?> bgcolor="<?php echo $color; ?>" valign="top"><?php
+				    <td <?php if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;"'; } ?> bgcolor="<?php echo $color; ?>" valign="top"><?php
 				    		adminButtons($event, array('update','copy','delete'), "small", "horizontal");
 				    	 ?></td>
 				    <?php

@@ -52,7 +52,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('delete_sponsor'), "Update");
 	contentsection_begin(lang('delete_sponsor'));
 ?>
-<p><font color="#ff0000"><b><?php echo lang('delete_sponsor_confirm'); ?> &quot;<b><?php echo $sponsor['name']; ?></b>&quot;</b></font></p>
+<p><b class="WarningText"><?php echo lang('delete_sponsor_confirm'); ?> &quot;<?php echo $sponsor['name']; ?>&quot;</b></p>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="radio" name="deleteevents" value="1"> <?php echo lang('delete_all_events_of_sponsor'); ?><br>
 	<input type="radio" name="deleteevents" value="0" checked> 

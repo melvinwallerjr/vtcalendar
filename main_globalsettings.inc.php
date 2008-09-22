@@ -2,8 +2,8 @@
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
 // determine today's date
-$today = Decode_Date_US(date("m/d/Y"));
-$today['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($today['month'],$today['day'],$today['year']));
+$today = Decode_Date_US(date("m/d/Y", NOW));
+//$today['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($today['month'],$today['day'],$today['year']));
 
 // If a username and password was submitted via POST, then assign them to $userid and $password.
 //--if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }

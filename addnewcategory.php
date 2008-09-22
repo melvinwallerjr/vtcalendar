@@ -50,11 +50,11 @@ contentsection_begin(lang('add_new_event_category'));
 <?php
 	if ( isset($check) ) {
 		if ( empty($category['name']) ) {
-			feedback(lang('category_name_cannot_be_empty'),1);
+			feedback(lang('category_name_cannot_be_empty'),FEEDBACKNEG);
 			echo "<br>";
 		} // end: if ( $namealreadyexists )
 		elseif ( $namealreadyexists ) {
-			feedback(lang('category_name_already_exists'),1);
+			feedback(lang('category_name_already_exists'),FEEDBACKNEG);
 			echo "<br>";
 		} // end: if ( $namealreadyexists )
 	}

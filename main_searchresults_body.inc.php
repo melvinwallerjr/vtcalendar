@@ -68,7 +68,7 @@ if (!empty($keyword)) {
 			if ( isset($search_featured) && array_key_exists ($kw, $search_featured) ) {
 					echo "<tr valign=\"top\">\n  <td colspan=\"3\">\n";
 				echo '<table border="1" cellspacing="0" cellpadding="0" width="100%"><tr><td >';
-				echo '<table border="1" cellspacing="2" cellpadding="5" width="100%"><tr><td bgcolor="#ffffff">';
+				echo '<table border="1" cellspacing="2" cellpadding="5" width="100%"><tr><td>';
 				echo str_replace("\r", "<br>", make_clickable(htmlentities($search_featured[$kw])));
 				echo '</td></tr></table>';
 				echo '</td></tr></table>';
@@ -113,7 +113,7 @@ while ($ievent < $result->numRows()) {
  	  disassemble_timestamp($event);	
 		$event_timebegin_num = timestamp2timenumber($event['timebegin']);
 		$event_timeend_num = timestamp2timenumber($event['timeend']);
-		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
+		$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m", NOW),date("d", NOW),date("Y", NOW));
 		$timediff = $event_timeend_num - $event_timebegin_num;
 		$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
 		$endtimediff = NOW_AS_TIMENUM - $event_timeend_num;
@@ -183,7 +183,7 @@ DBQuery("INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VAL
 		if (strlen($keywords[$x]) <= 25) {
 			DBquery(
 				"INSERT INTO vtcal_searchedkeywords (calendarid, keyword, searchdate, count)"
-				. " VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."', '".sqlescape($keywords[$x])."', '" . date("Y-m-d") . "', 1)"
+				. " VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."', '".sqlescape($keywords[$x])."', '" . date("Y-m-d", NOW) . "', 1)"
 				. " ON DUPLICATE KEY UPDATE count = count + 1");
 		}
 	}

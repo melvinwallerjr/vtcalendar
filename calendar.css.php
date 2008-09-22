@@ -8,27 +8,54 @@ header("Content-Type: text/css");
                  Generic Colors
 ============================================== */
 
+// The default color of backgrounds inside the calendar.
 $_SESSION['COLOR_BG'] = "#FFFFFF";
 
-$_SESSION['COLOR_TITLE'] = "#000000";
+// Default color for text inside the calendar.
 $_SESSION['COLOR_TEXT'] = "#000000";
+
+// Faded color for events that have passed.
+$_SESSION['COLOR_TEXT_FADED'] = "#666666";
+
+// Text that is an urgent message.
+$_SESSION['COLOR_TEXT_WARNING'] = "#FF0000";
+
 $_SESSION['COLOR_LINK'] = "#0000FF";
 
 $_SESSION['COLOR_BODY'] = "#C3D9FF";
 $_SESSION['COLOR_TODAY'] = "#FFE993";
 $_SESSION['COLOR_TODAYLIGHT'] = "#FFFFCC";
 
-// Background color for navigation tabs that are not selected.
-$_SESSION['COLOR_TABGRAYED'] = "#CCCCCC";
+// Background color for table cells that have a decent amount of content.
+$_SESSION['COLOR_LIGHT_CELL_BG'] = "#EEEEEE";
+
+// Background color for table column headers
+$_SESSION['COLOR_COLUMN_HEADER_TEXT'] = "#000000";
 
 // Background color for table column headers
 $_SESSION['COLOR_COLUMN_HEADER_BG'] = "#DDDDDD";
 
 // Faded color for past events
-$_SESSION['COLOR_FONT_FADED'] = "#666666";
+$_SESSION['COLOR_BORDER'] = "#666666";
 
-// Faded color for past events
-$_SESSION['COLOR_BORDER'] = "#999999";
+// Color used to highlight keywords in search results
+$_SESSION['COLOR_KEYWORD_HIGHLIGHT'] = "#FFFF99";
+
+// Second level header used primarily on update.php
+$_SESSION['COLOR_H2'] = "#000000";
+
+// Third level header used primarily on the changeeevent.php form
+$_SESSION['COLOR_H3'] = "#0066CC";
+
+/* ==============================================
+                 Title and Tabs
+============================================== */
+
+// Calendar title displayed to the left of the tabs.
+$_SESSION['COLOR_TITLE'] = "#000000";
+
+// Background color for navigation tabs that are not selected.
+$_SESSION['COLOR_TABGRAYED'] = "#CCCCCC";
 
 /* ==============================================
                  Filter Notice
@@ -80,6 +107,12 @@ $DeleteBorder = "#995555";
 $DeleteBG = "#FFDDDD";
 
 /* ==============================================
+                Day View Specific
+============================================== */
+
+//$_SESSION['COLOR_OTHERMONTH'] = "#AAAAAA"
+
+/* ==============================================
               Month View Specific
 ============================================== */
 
@@ -90,6 +123,9 @@ $_SESSION['COLOR_OTHERMONTH'] = "#EEEEEE";
 /* ==============================================
                  Little Calendar
 ============================================== */
+
+// Color of the border around the current day in the little calendar
+$_SESSION['COLOR_LITTLECAL_TODAY'] = "#004a80";
 
 // Background color for days in the little calendar
 // that are being displayed in the main calendar
@@ -125,6 +161,41 @@ $_SESSION['COLOR_GOBTN_BORDER'] = "#FFFFFF";
 
 #CalendarBlock a {
 	color: <?php echo $_SESSION['COLOR_LINK']; ?>;
+}
+
+tr.ColumnHeaderBG td, td.ColumnHeaderBG {
+	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+}
+
+/* Color for the text that notifies users of an error or warning */
+#CalendarBlock .WarningText {
+	color: <?php echo $_SESSION['COLOR_TEXT_WARNING']; ?>;
+}
+
+/* Color for text that notififies the user of a normal or success message */
+#CalendarBlock .NotificationText {
+	color: #008800;
+}
+
+/* Background behind messages on update.php */
+#CalendarBlock .NotificationTextBG {
+	background-color: #FFFFCC;
+}
+
+#CalendarBlock h2 {
+	color: <?php echo $_SESSION['COLOR_H2']; ?>;
+}
+
+/* Third level header used primarily on the changeeevent.php form */
+#CalendarBlock h3 {
+	color: <?php echo $_SESSION['COLOR_H3']; ?>;
+	font-size: 16px;
+}
+
+/* Color used to highlight keywords in search results */
+#CalendarBlock .KeywordHighlight {
+	background-color: <?php echo $_SESSION['COLOR_KEYWORD_HIGHLIGHT']; ?>;
 }
 
 /*===================================
@@ -205,6 +276,11 @@ table#TopNaviTable td#NaviBar-CalendarTitle a {
 	font-size: 16px;
 }
 
+#MonthSelector div#LeftArrowButtonDisabled,
+#MonthSelector div#RightArrowButtonDisabled {
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
+}
+
 /*    Little Calendar
 --------------------------*/
 
@@ -239,19 +315,15 @@ table#LittleCalendar td.SelectedDay {
 	background-color: <?php echo $_SESSION['COLOR_LITTLECAL_HIGHLIGHT']; ?>;
 }
 
-td.LittleCalendar-DaySelected a.LittleCal-Today, a.LittleCal-TodayGrayedOut {
-	border-color: #FF9900;
-}
-
 /* A border around today on the little calendar */
 a.LittleCal-Today, a.LittleCal-TodayGrayedOut {
 	padding: 1px !important;
-	border: 2px solid #004a80<?php //echo $_SESSION['COLOR_TODAY']; ?>;
+	border: 2px solid <?php echo $_SESSION['COLOR_LITTLECAL_TODAY']; ?>;
 }
 
 /* Grayed out days that are not part of the current month */
 a.LittleCal-GrayedOut, a.LittleCal-TodayGrayedOut {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?> !important;
+	color: <?php echo $_SESSION['COLOR_LITTLECAL_FONTFADED']; ?> !important;
 }
 
 /* Other Left Column Stuff
@@ -404,6 +476,7 @@ table#EventDetail td {
 	padding-right: 8px;
 }
 td.EventDetail-Label {
+	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
 	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 }
 
@@ -421,7 +494,7 @@ td.EventDetail-Label {
 }
 
 #DayTable tr.BorderTop td {
-	border-top: 1px solid #AAAAAA;
+	border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 }
 #DayTable div.EventLeftBar {
 	padding-left: 5px;
@@ -433,7 +506,7 @@ td.EventDetail-Label {
 }
 
 #DayTable td.DateRow div#TodayDateRow {
-	background-color: #ffeb94;
+	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?>;
 }
 
 #DayTable td.DateRow {
@@ -453,7 +526,7 @@ td.EventDetail-Label {
 
 #DayTable td.DateRow div {
 	padding: 8px;
-	background-color: #c6dbff;
+	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
 
 #DayTable td.TimeColumn i, #DayTable td.TimeColumn-Past i {
@@ -461,19 +534,17 @@ td.EventDetail-Label {
 	font-size: 11px;
 }
 
-#DayTable td.TimeColumn, #DayTable td.TimeColumn-Past {
+/* Cell used to display the time and duration of the event in 'day' view for events that have passed. */
+#DayTable td.TimeColumn, #DayTable td.TimeColumn-Past { }
 
-}
-
-#DayTable td.DataColumn, #DayTable td.DataColumn-Past {
-
-}
+/* Cell used to display the event title and description in 'day' view for events that have passed */
+#DayTable td.DataColumn, #DayTable td.DataColumn-Past { }
 
 #DayTable td.TimeColumn-Past, #DayTable td.DataColumn-Past {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
 }
 #DayTable td.DataColumn-Past a {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
 }
 #DayTable td.DataColumn-Past div.EventLeftBar {
 	border-left-color: <?php echo $_SESSION['COLOR_EVENTBAR_PAST']; ?>;
@@ -502,6 +573,7 @@ td.EventDetail-Label {
 --------------------------*/
 
 #WeekdayTable thead td {
+	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
 	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 }
 
@@ -522,10 +594,10 @@ td.EventDetail-Label {
 	padding-bottom: 9px;
 }
 #WeekdayTable tbody div.WeekEvent-Past {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Past a {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Time {
 	font-size: 11px;
@@ -541,7 +613,7 @@ td.EventDetail-Label {
 }
 #WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Title,
 #WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Category {
-	border-left-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+	border-left-color: <?php echo $_SESSION['COLOR_EVENTBAR_PAST']; ?>;
 }
 #WeekdayTable tbody div.WeekEvent-Title a {
 	text-decoration: none;
@@ -564,10 +636,11 @@ td.EventDetail-Label {
 	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 #MonthTable td {
-	border: 1px solid #AAAAAA;
+	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 	padding: 0;
 }
 #MonthTable thead td {
+	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
 	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
 	padding: 5px;
 }
@@ -621,7 +694,7 @@ td.EventDetail-Label {
 /* Link color for the 'day number' and events of past days. */
 #MonthTable td.MonthDay-Past div.DayNumber a,
 #MonthTable p.EventItem-Past a {
-	color: <?php echo $_SESSION['COLOR_FONT_FADED']; ?>;
+	color: <?php echo $_SESSION['COLOR_TEXT_FADED']; ?>;
 }
 
 /* Hover color for the 'day number' for past days. */
@@ -684,7 +757,7 @@ table#AdminButtons a {
 	font-size: 13px;
 	text-decoration: none;
 	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
-	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
 	background-repeat: no-repeat;
 	background-position: center left;
 }

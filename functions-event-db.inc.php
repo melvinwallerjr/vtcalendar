@@ -76,7 +76,7 @@ function insertintoevent($eventid, &$event) {
 }
 
 function insertintoeventsql($calendarid, $eventid, &$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date("Y-m-d H:i:s");
 	$query = "INSERT INTO vtcal_event (calendarid,id,approved,rejectreason,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,url,recordchangedtime,recordchangeduser,showondefaultcal,showincategory) ";
 	$query.= "VALUES ('".sqlescape($calendarid)."','".sqlescape($eventid)."',0,'";
 	if (!empty($event['rejectreason'])) {

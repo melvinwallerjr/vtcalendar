@@ -10,15 +10,15 @@ if (!authorized()) { exit; }
 pageheader(lang('manage_events'), "Update");
 contentsection_begin(lang('manage_events'),true);
 
-if (!isset($_GET['year']) || !setVar($year,$_GET['year'],'timebegin_year')) { $year = date("Y"); }
-if (!isset($_GET['month']) || !setVar($month,$_GET['month'],'timebegin_month')) { $month = date("n"); }
+if (!isset($_GET['year']) || !setVar($year,$_GET['year'],'timebegin_year')) { $year = date("Y", NOW); }
+if (!isset($_GET['month']) || !setVar($month,$_GET['month'],'timebegin_month')) { $month = date("n", NOW); }
 
 // Create timestamps for the selected month.
 $startTimestamp = datetime2timestamp($year, $month, 1, $day_beg_h, 0, "am");
 $endTimestamp = datetime2timestamp($year + ($month == 12 ? 1 : 0), $month + ($month == 12 ? -11 : 1), 1, $day_beg_h, 0, "am");
 
 $ievent = 0;
-$today = Decode_Date_US(date("m/d/Y"));
+$today = Decode_Date_US(date("m/d/Y", NOW));
 $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$today['day'],12,0,"am");
 
 // Output list with events
@@ -50,7 +50,8 @@ else {
 			 			</select></td>
 						<td><select name="year">
 						<?php
-						for ($y = 1990; $y <= date("Y") + 10; $y++) {
+						$currentyear = date("Y", NOW);
+						for ($y = 1990; $y <= $currentyear + 10; $y++) {
 							echo '<option';
 							if ($year == $y) echo " SELECTED";
 							echo '>' . $y . '</option>';
@@ -71,13 +72,13 @@ else {
 		$defaultcalendarname = getCalendarName('default');
 		?>
 		<table border="0" cellspacing="0" cellpadding="4">
-			<tr bgcolor="#CCCCCC">
-				<td bgcolor="#CCCCCC"><b><?php echo lang('title'); ?>/<?php echo lang('date'); ?>/<?php echo lang('time'); ?></b></td>
-				<td bgcolor="#CCCCCC"><b><?php echo lang('status'); ?></b></td>
-				<td bgcolor="#CCCCCC">&nbsp;</td>
+			<tr class="ColumnHeaderBG">
+				<td><b><?php echo lang('title'); ?>/<?php echo lang('date'); ?>/<?php echo lang('time'); ?></b></td>
+				<td><b><?php echo lang('status'); ?></b></td>
+				<td>&nbsp;</td>
 			</tr>
 			<?php
-			$color = "#eeeeee";
+			$color = $_SESSION['COLOR_LIGHT_CELL_BG'];
 			for ($i=0; $i<$result->numRows(); $i++) {
 				$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 				disassemble_timestamp($event);
@@ -99,10 +100,10 @@ else {
 				
 				if ($_SESSION['CALENDAR_ID'] == "default" || $event['isdefaultcal'] == 0)
 				{
-					if ( $color == "#eeeeee" )
-						{ $color = "#ffffff"; }
+					if ( $color == $_SESSION['COLOR_LIGHT_CELL_BG'] )
+						{ $color = $_SESSION['COLOR_BG']; }
 					else
-						{ $color = "#eeeeee"; }
+						{ $color = $_SESSION['COLOR_LIGHT_CELL_BG']; }
 				}
 				?>	
 				<tr bgcolor="<?php echo $color; ?>">
@@ -136,14 +137,14 @@ else {
 						
 							if (!empty($event['repeatid'])) {
 								echo "<br>\n";
-								echo '<font color="#00AA00">';
+								echo '<span class="NotificationText">';
 								readinrepeat($event['repeatid'],$event,$repeat);
 								$repeatdef = repeatinput2repeatdef($event,$repeat);
 								printrecurrence($event['timebegin_year'],
 									$event['timebegin_month'],
 									$event['timebegin_day'],
 									$repeatdef);
-								echo '</font>';
+								echo '</span>';
 							}
 						}
 						?></div></td>

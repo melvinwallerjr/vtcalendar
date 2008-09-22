@@ -48,7 +48,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('delete_calendar'), "Update");
 	contentsection_begin(lang('delete_calendar'));
 ?>
-<font color="#ff0000"><b><?php echo lang('warning_calendar_delete'); ?> &quot;<b><?php echo $c['name']; ?></b>&quot;</b></font>
+<b class="WarningText"><?php echo lang('warning_calendar_delete'); ?> &quot;<?php echo $c['name']; ?>&quot;</b>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php
 	if ( isset ($cal['id']) ) { echo '<input type="hidden" name="cal[id]" value="'.$cal['id'].'">'; }

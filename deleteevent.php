@@ -139,14 +139,14 @@ require_once('session_start.inc.php');
 		<BR>
 <?php
 		if (!empty($event['repeatid'])) {
-			echo '<font color="#00AA00">';
+			echo '<span class="NotificationText">';
 			readinrepeat($event['repeatid'],$event,$repeat);
 			$repeatdef = repeatinput2repeatdef($event,$repeat);
 			printrecurrence($event['timebegin_year'],
 				$event['timebegin_month'],
 				$event['timebegin_day'],
 				$repeatdef);
-			echo '</font>';
+			echo '</span>';
 		}
 	} // end: if (numRows() > 0)
 	else {

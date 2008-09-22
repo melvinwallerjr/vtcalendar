@@ -1,10 +1,10 @@
 <?php
 	if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 	
-?><table width="100%" border="0" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF"><tr><td><?php
+?><table width="100%" border="0" cellpadding="0" cellspacing="10"><tr><td><?php
 echo "<p>" . lang('subscribe_message') . "</p>";
 
-$color = '#ffffff';
+$color = $_SESSION['COLOR_BG'];
 $iCalDirName = 'calendars/';
 
 // Output a list of static ICS files if they exist.
@@ -14,7 +14,7 @@ if (is_dir($iCalDirName) && $iCalDir = opendir($iCalDirName)) {
 	/* This is the correct way to loop over the directory. */
 	while ( ($file = readdir($iCalDir)) != false) {
 		if (strlen($file)>4 && substr($file,strlen($file)-4,4)==".ics") {
-			if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
+			if ( $color == $_SESSION['COLOR_LIGHT_CELL_BG'] ) { $color = $_SESSION['COLOR_BG']; } else { $color = $_SESSION['COLOR_LIGHT_CELL_BG']; }
 			?>	
 			<tr bgcolor="<?php echo $color; ?>">
 				<td bgcolor="<?php echo $color; ?>"><?php echo substr($file,0,strlen($file)-4); ?></td>
@@ -38,7 +38,7 @@ else {
 		echo '<table border="0" cellspacing="0" cellpadding="4">';
 		for ($i=0; $i<$result->numRows(); $i++) {
 			$category =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-			if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
+			if ( $color == $_SESSION['COLOR_LIGHT_CELL_BG'] ) { $color = $_SESSION['COLOR_BG']; } else { $color = $_SESSION['COLOR_LIGHT_CELL_BG']; }
 			?>	
 			<tr bgcolor="<?php echo $color; ?>">
 				<td bgcolor="<?php echo $color; ?>"><?php echo $category['name']; ?></td>

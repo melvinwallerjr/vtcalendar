@@ -42,7 +42,7 @@ require_once('session_start.inc.php');
 <FORM method="post" action="changeemail.php">
 <?php
 	if (!checkemail($sponsor["email"])) {
-		feedback(lang('email_invalid'),1);
+		feedback(lang('email_invalid'),FEEDBACKNEG);
 ?>
 	<BR>
 <?php

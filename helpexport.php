@@ -7,7 +7,7 @@ require_once('session_start.inc.php');
 	$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
 	helpwindow_header();
 ?>
-<H3><IMG alt="" border=0 height=16 src="images/nuvola/16x16/actions/help.png" width=16>
+<H3><IMG alt="" border=0 height=16 src="images/help.gif" width=16>
 <?php echo lang('help_export'); ?>
 </H3>
 <?php echo lang('help_export_intro'); ?>

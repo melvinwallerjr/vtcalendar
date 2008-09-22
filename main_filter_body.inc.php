@@ -45,7 +45,7 @@ function validate ( myForm, id ) {
 	return true;
 }
 //--></script>
-	<table border="0" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF">
+	<table border="0" cellpadding="0" cellspacing="10">
 		<form method="get" action="main.php" name="categorylist">
 			<tr align="left" valign="top">
 			<td colspan="4" valign="top">

@@ -85,7 +85,7 @@
 					$iday['timeend']   = datetime2timestamp($iday['year'],$iday['month'],$iday['day'],11,59,"pm");
 					
 					// Determine the number of days between the day and the current date.
-					$datediff = Delta_Days($iday['month'],$iday['day'],$iday['year'],date("m"),date("d"),date("Y"));
+					$datediff = Delta_Days($iday['month'],$iday['day'],$iday['year'],date("m", NOW),date("d", NOW),date("Y", NOW));
 					
 					echo "<td ";
 					

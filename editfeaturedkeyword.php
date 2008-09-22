@@ -75,10 +75,10 @@ require_once('session_start.inc.php');
 <?php
 	if ( isset($check) ) {
 		if ($keywordexists) {
-			feedback(lang('keyword_already_exists'),1);
+			feedback(lang('keyword_already_exists'),FEEDBACKNEG);
 		}
 		elseif ( empty($keyword) ) {
-			feedback(lang('keyword_cannot_be_empty'),1);
+			feedback(lang('keyword_cannot_be_empty'),FEEDBACKNEG);
 		} 
 	}
 ?>
@@ -92,7 +92,7 @@ require_once('session_start.inc.php');
 <?php
 	if ( isset($check) ) {
 		if ( empty($featuretext) ) {
-			feedback(lang('featured_text_cannot_be_empty'),1);
+			feedback(lang('featured_text_cannot_be_empty'),FEEDBACKNEG);
 		} 
 	}
 ?>

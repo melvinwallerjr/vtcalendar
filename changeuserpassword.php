@@ -52,7 +52,7 @@ require_once('session_start.inc.php');
 			<TD class="bodytext" valign="top">
 <?php
 		if (isset($save) && $oldpw_error) {
-			feedback(lang('old_password_wrong'),1);
+			feedback(lang('old_password_wrong'),FEEDBACKNEG);
 		}
 ?>
 				<INPUT type="password" name="user_oldpassword" maxlength="20" size="20" value="">
@@ -67,10 +67,10 @@ require_once('session_start.inc.php');
 <?php
 	if (isset($save)) {
 		if ($newpw_error == 1) {
-			feedback(lang('two_passwords_dont_match'),1);
+			feedback(lang('two_passwords_dont_match'),FEEDBACKNEG);
 		}
 		elseif ($newpw_error == 2) {
-			feedback(lang('new_password_invalid'),1);
+			feedback(lang('new_password_invalid'),FEEDBACKNEG);
 		} // end: if ($newpw_error == 2)
 	} // end: if (isset($save))
 ?>

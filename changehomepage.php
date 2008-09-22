@@ -44,7 +44,7 @@ require_once('session_start.inc.php');
 <FORM method="post" action="changehomepage.php">
 <?php
 	if (!checkURL($sponsor['url'])) {
-		feedback(lang('url_invalid'),1);
+		feedback(lang('url_invalid'),FEEDBACKNEG);
 ?>
 	<BR>
 <?php

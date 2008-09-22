@@ -322,7 +322,7 @@ function FormatDate($format, $tick) {
 		return date("M j, 'y", $tick);
 	}
 	elseif ($format == "MICRO") {
-		//if (date("F j, Y") == date("F j, Y", $tick)) {
+		//if (date("F j, Y", NOW) == date("F j, Y", $tick)) {
 		//	return "Today";
 		//}
 		//else {

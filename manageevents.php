@@ -72,7 +72,7 @@ else {
 		$defaultcalendarname = getCalendarName('default');
 		?>
 		<table border="0" cellspacing="0" cellpadding="4">
-			<tr class="ColumnHeaderBG">
+			<tr class="TableHeaderBG">
 				<td><b><?php echo lang('title'); ?>/<?php echo lang('date'); ?>/<?php echo lang('time'); ?></b></td>
 				<td><b><?php echo lang('status'); ?></b></td>
 				<td>&nbsp;</td>

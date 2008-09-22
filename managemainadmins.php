@@ -20,7 +20,7 @@ else {
 	<p><a href="addmainadmin.php"><?php echo lang('add_new_main_admin'); ?></a> <?php echo lang('or_delete_existing'); ?></p>
 	
 	<table border="0" cellspacing="0" cellpadding="4">
-		<tr class="ColumnHeaderBG">
+		<tr class="TableHeaderBG">
 			<td><b><?php echo lang('user_id'); ?></b></td>
 			<td>&nbsp;</td>
 		</tr>

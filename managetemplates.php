@@ -19,7 +19,7 @@ else {
 		echo lang('or_modify_existing_template'); ?></p>
 		
 		<table border="0" cellspacing="0" cellpadding="4">
-			<tr class="ColumnHeaderBG">
+			<tr class="TableHeaderBG">
 				<td><b><?php echo lang('template_name'); ?></b></td>
 				<td>&nbsp;</td>
 			</tr>

@@ -21,7 +21,7 @@ else {
 		echo lang('or_manage_existing_pairs');
 		?></p>
 		<table border="0" cellspacing="0" cellpadding="4">
-			<tr class="ColumnHeaderBG">
+			<tr class="TableHeaderBG">
 				<td><b><?php echo lang('keyword'); ?></b></td>
 				<td><b><?php echo lang('alternative_keyword'); ?></b></td>
 				<td>&nbsp;</td>

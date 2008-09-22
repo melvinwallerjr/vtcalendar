@@ -14,51 +14,23 @@ if (isset($_POST['header'])) { setVar($header,$_POST['header'],'calendarHeader')
 if (isset($_POST['footer'])) { setVar($footer,$_POST['footer'],'calendarFooter'); } else { unset($footer); }
 if (isset($_POST['viewauthrequired'])) { setVar($viewauthrequired,$_POST['viewauthrequired'],'viewauthrequired'); } else { unset($viewauthrequired); }
 if (isset($_POST['forwardeventdefault'])) { setVar($forwardeventdefault,$_POST['forwardeventdefault'],'forwardeventdefault'); } else { unset($forwardeventdefault); }
-if (isset($_POST['bgcolor'])) { setVar($bgcolor,$_POST['bgcolor'],'color'); } else { unset($bgcolor); }
-if (isset($_POST['maincolor'])) { setVar($maincolor,$_POST['maincolor'],'color'); } else { unset($maincolor); }
-if (isset($_POST['todaycolor'])) { setVar($todaycolor,$_POST['todaycolor'],'color'); } else { unset($todaycolor); }
-if (isset($_POST['pastcolor'])) { setVar($pastcolor,$_POST['pastcolor'],'color'); } else { unset($pastcolor); }
-if (isset($_POST['futurecolor'])) { setVar($futurecolor,$_POST['futurecolor'],'color'); } else { unset($futurecolor); }
-if (isset($_POST['textcolor'])) { setVar($textcolor,$_POST['textcolor'],'color'); } else { unset($textcolor); }
-if (isset($_POST['linkcolor'])) { setVar($linkcolor,$_POST['linkcolor'],'color'); } else { unset($linkcolor); }
-if (isset($_POST['gridcolor'])) { setVar($gridcolor,$_POST['gridcolor'],'color'); } else { unset($gridcolor); }
 	 
 if (isset($cancel)) {
 redirect2URL("update.php");
 exit;
 };
 
-if (!(isset($title) && isset($header) && isset($footer) && 
-		isset($bgcolor) && isset($maincolor) && isset($todaycolor) && 
-		isset($pastcolor) && isset($futurecolor) && isset($textcolor) && isset($linkcolor) && isset($gridcolor) &&
-			isset($viewauthrequired))) { //(re-)read from database
+// Re-read the settings from the DB if one of the required fields was not set,
+if (!(isset($title) && isset($header) && isset($footer) && isset($viewauthrequired))) {
 	$title = $_SESSION['CALENDAR_TITLE'];	
 	$header = $_SESSION['CALENDAR_HEADER'];	
 	$footer = $_SESSION['CALENDAR_FOOTER'];	
 	$viewauthrequired	= $_SESSION['CALENDAR_VIEWAUTHREQUIRED'];
-	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];
-
-	$bgcolor = $_SESSION["BGCOLOR"];	
-	$maincolor = $_SESSION["MAINCOLOR"];
-	$todaycolor = $_SESSION["TODAYCOLOR"]; //color of the day's view border color, today's date highlight in week, month view and in little calendar 
-	$pastcolor = $_SESSION["PASTCOLOR"];		
-	$futurecolor = $_SESSION["FUTURECOLOR"];		
-	$textcolor = $_SESSION["TEXTCOLOR"];		
-	$linkcolor = $_SESSION["LINKCOLOR"];		
-	$gridcolor = $_SESSION["GRIDCOLOR"];		
+	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];		
 }
 
 $addPIDError="";
 if ( isset($save) ) {
-	if (!preg_match(REGEXVALIDCOLOR, $bgcolor)) { $bgcolor = "#ffffff"; }
-	if (!preg_match(REGEXVALIDCOLOR, $maincolor)) { $maincolor = "#ff9900"; }
-	if (!preg_match(REGEXVALIDCOLOR, $todaycolor)) { $todaycolor = "#ffcc66"; }
-	if (!preg_match(REGEXVALIDCOLOR, $pastcolor)) { $pastcolor = "#eeeeee"; }
-	if (!preg_match(REGEXVALIDCOLOR, $futurecolor)) { $futurecolor = "#ffffff"; }
-	if (!preg_match(REGEXVALIDCOLOR, $textcolor)) { $textcolor = "#000000"; }
-	if (!preg_match(REGEXVALIDCOLOR, $linkcolor)) { $linkcolor = "#3333cc"; }
-	if (!preg_match(REGEXVALIDCOLOR, $gridcolor)) { $gridcolor = "#cccccc"; }
-
 	// check validity of users
 	if ( !empty($users) ) {
 		// disassemble the users string and check all PIDs against the DB
@@ -95,12 +67,9 @@ if ( isset($save) ) {
 		// save the settings to database
 		if ( $viewauthrequired != 0 ) { $viewauthrequired = 1; }
 		if ( $forwardeventdefault!="1" ) { $forwardeventdefault = "0"; }
-		$result =& DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',
-bgcolor='".sqlescape($bgcolor)."',maincolor='".sqlescape($maincolor)."',todaycolor='".sqlescape($todaycolor)."',
-pastcolor='".sqlescape($pastcolor)."',futurecolor='".sqlescape($futurecolor)."',textcolor='".sqlescape($textcolor)."',
-linkcolor='".sqlescape($linkcolor)."',gridcolor='".sqlescape($gridcolor)."',
-viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."' 
-WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
+		$result =& DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',"
+			. "viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."'"
+			. " WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 		
 		if (is_string($result)) { DBErrorBox($result); exit; }
 		
@@ -125,8 +94,8 @@ $result =& DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape
 if (is_string($result)) { DBErrorBox($result); exit; }
 $sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
-pageheader(lang('change_header_footer_colors_auth'), "Update");
-contentsection_begin(lang('change_header_footer_colors_auth'));
+pageheader(lang('change_header_footer_auth'), "Update");
+contentsection_begin(lang('change_header_footer_auth'));
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="globalSettings">
 
@@ -139,26 +108,15 @@ contentsection_begin(lang('change_header_footer_colors_auth'));
 	<br>
 
 	<b><?php echo lang('header_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
-	<textarea name="header" wrap="physical" cols="70" rows="10"><?php 
+	<textarea name="header" wrap="physical" cols="70" rows="10" style="width: 100%;"><?php 
 	echo htmlentities($header);
 	?></textarea><br>
 	<br>
 
 	<b><?php echo lang('footer_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
-	<textarea name="footer" wrap="physical" cols="70" rows="10"><?php
+	<textarea name="footer" wrap="physical" cols="70" rows="10" style="width: 100%;"><?php
 	echo htmlentities($footer);
-	?></textarea>
-
-<!--<p>Note: Changing colors on the calendar is currently disabled.</p>-->
-<input type="hidden" name="bgcolor" value="<?php echo $bgcolor; ?>">
-<input type="hidden" name="maincolor" value="<?php echo $maincolor; ?>">
-<input type="hidden" name="textcolor" value="<?php echo $textcolor; ?>">
-<input type="hidden" name="linkcolor" value="<?php echo $linkcolor; ?>">
-<input type="hidden" name="gridcolor" value="<?php echo $gridcolor; ?>">
-<input type="hidden" name="pastcolor" value="<?php echo $pastcolor; ?>">
-<input type="hidden" name="todaycolor" value="<?php echo $todaycolor; ?>">
-<input type="hidden" name="futurecolor" value="<?php echo $futurecolor; ?>">
-<?php
+	?></textarea><?php
 
 if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 	$result =& DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 

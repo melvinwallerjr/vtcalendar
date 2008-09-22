@@ -23,7 +23,7 @@ else {
 		
 		?></p>
 		<table border="0" cellspacing="0" cellpadding="4">
-			<tr class="ColumnHeaderBG">
+			<tr class="TableHeaderBG">
 				<td><b><?php echo lang('category_name'); ?></b></td>
 				<td>&nbsp;</td>
 			</tr><?php

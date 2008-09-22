@@ -25,7 +25,7 @@ else {
 	<?php echo lang('or_manage_existing_keywords'); ?></p>
 	
 	<table border="0" cellspacing="0" cellpadding="4">
-		<tr class="ColumnHeaderBG">
+		<tr class="TableHeaderBG">
 			<td><b><?php echo lang('keyword'); ?></b></td>
 			<td>&nbsp;</td>
 		</tr>

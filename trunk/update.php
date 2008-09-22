@@ -92,18 +92,28 @@ if ($_SESSION['AUTH_ISCALENDARADMIN']) {
 		<dl style="margin-top: 0; padding-top: 2px;">
 			<dt><a href="approval.php"><?php echo lang('approve_reject_event_updates'); ?></a></dt>
 			<dd style="padding-bottom: 8px;">Approve, edit or deny events that have been submitted by sponsors for this calendar.</dd>
+
 			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="managesponsors.php"><?php echo lang('manage_sponsors'); ?></a></dt>
-			<dd>Sponsors are groups of users who submit under a common name, such as &quot;Chess Club&quot;.</dd>
+			<dd style="padding-bottom: 2px;">Sponsors are groups of users who submit under a common name, such as &quot;Chess Club&quot;.</dd>
+
 			<dt><a href="deleteinactivesponsors.php"><?php echo lang('delete_inactive_sponsors'); ?></a></dt>
 			<dd style="padding-bottom: 8px;">Automatically remove sponsors who have not submitted events in a specific amount of time.</dd>
-			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="changecalendarsettings.php"><?php echo lang('change_header_footer_colors_auth'); ?></a></dt>
-			<dd style="padding-bottom: 8px;">Change the header and footer HTML, as well as basic colors in the calendar. You can also change whether or not the calendar requires authentication for viewing the events.</dd>
+
+			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="changecalendarsettings.php"><?php echo lang('change_header_footer_auth'); ?></a></dt>
+			<dd style="padding-bottom: 2px;">Change the header and footer HTML, as well as basic colors in the calendar. You can also change whether or not the calendar requires authentication for viewing the events.</dd>
+
+			<dt><a href="changecolors.php"><?php echo lang('change_colors'); ?></a></dt>
+			<dd style="padding-bottom: 8px;">Change the calendar colors to match your web site's design.</dd>
+
 			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="manageeventcategories.php"><?php echo lang('manage_event_categories'); ?></a></dt>
 			<dd style="padding-bottom: 8px;">Categories are used when a person wants to filter events on the calendar. All events must be assigned to one category.</dd>
+
 			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="managesearchkeywords.php"><?php echo lang('manage_search_keywords'); ?></a></dt>
 			<dd>Add, edit and remove keyword synonyms.</dd>
+
 			<dt><a href="managefeaturedsearchkeywords.php"><?php echo lang('manage_featured_search_keywords'); ?></a></dt>
 			<dd>When a &quot;Featured keyword&quot; is used in a search, a message automatically appears at the top of the search results.</dd>
+
 			<dt><a href="viewsearchlog.php"><?php echo lang('view_search_log'); ?></a></dt>
 			<dd>You can view a log of all the keywords searched here, which can be useful when you want to create keyword synonyms or featured keywords.</dd>
 		</dl>

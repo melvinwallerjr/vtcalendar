@@ -20,31 +20,37 @@ $_SESSION['COLOR_TEXT_FADED'] = "#666666";
 // Text that is an urgent message.
 $_SESSION['COLOR_TEXT_WARNING'] = "#FF0000";
 
+// Default link color.
 $_SESSION['COLOR_LINK'] = "#0000FF";
 
+// General body color of the calendar.
 $_SESSION['COLOR_BODY'] = "#C3D9FF";
+
+// Color that shows which day is today.
 $_SESSION['COLOR_TODAY'] = "#FFE993";
+
+// Lighter color that shows which day is today.
 $_SESSION['COLOR_TODAYLIGHT'] = "#FFFFCC";
 
 // Background color for table cells that have a decent amount of content.
 $_SESSION['COLOR_LIGHT_CELL_BG'] = "#EEEEEE";
 
-// Background color for table column headers
-$_SESSION['COLOR_COLUMN_HEADER_TEXT'] = "#000000";
+// Background color for table column headers.
+$_SESSION['COLOR_TABLE_HEADER_TEXT'] = "#000000";
 
-// Background color for table column headers
-$_SESSION['COLOR_COLUMN_HEADER_BG'] = "#DDDDDD";
+// Background color for table column headers.
+$_SESSION['COLOR_TABLE_HEADER_BG'] = "#DDDDDD";
 
-// Faded color for past events
+// Faded color for past events.
 $_SESSION['COLOR_BORDER'] = "#666666";
 
-// Color used to highlight keywords in search results
+// Color used to highlight keywords in search results.
 $_SESSION['COLOR_KEYWORD_HIGHLIGHT'] = "#FFFF99";
 
-// Second level header used primarily on update.php
+// Second level header used primarily on update.php.
 $_SESSION['COLOR_H2'] = "#000000";
 
-// Third level header used primarily on the changeeevent.php form
+// Third level header used primarily on the changeeevent.php form.
 $_SESSION['COLOR_H3'] = "#0066CC";
 
 /* ==============================================
@@ -61,29 +67,42 @@ $_SESSION['COLOR_TABGRAYED'] = "#CCCCCC";
                  Filter Notice
 ============================================== */
 
-// Filter and Search Keyword Notice Box
+// Background color for the filter and search keyword notice box.
 $_SESSION['COLOR_FILTERNOTICE_BG'] = "#ad2525";
+
+// Font color for the filter and search keyword notice box.
 $_SESSION['COLOR_FILTERNOTICE_FONT'] = "#FFFFFF";
+
+// Faded font color for the filter and search keyword notice box.
 $_SESSION['COLOR_FILTERNOTICE_FONTFADED'] = "#FFBEBE";
+
+// Background image for the filter and search keyword notice box (leave blank for no background image).
 $_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] = "url(images/background-filter.gif)";
 
 /* ==============================================
                    Event Bar
 ============================================== */
 
-// Colored bars for event summaries
+// Colored bar displayed to the left of past event summaries
 $_SESSION['COLOR_EVENTBAR_PAST'] = "#CCCCCC";
+
+// Colored bar displayed to the left of current event summaries
 $_SESSION['COLOR_EVENTBAR_CURRENT'] = "#9292FB";
+
+// Colored bar displayed to the left of future event summaries
 $_SESSION['COLOR_EVENTBAR_FUTURE'] = "#A7A7FB";
 
 /* ==============================================
                 Month Day Labels
 ============================================== */
 
-// Background colors that appear when the
-// mouse hovers over the day number in month view.
+// Background colors that appear when the mouse hovers over the day number in month view.
 $_SESSION['COLOR_MONTHDAYLABELS_PAST'] = "#DDDDDD";
+
+// Background colors that appear when the mouse hovers over the day number in month view.
 $_SESSION['COLOR_MONTHDAYLABELS_CURRENT'] = "#FFD839";
+
+// Background colors that appear when the mouse hovers over the day number in month view.
 $_SESSION['COLOR_MONTHDAYLABELS_FUTURE'] = "#DDDDFF";
 
 /* ==============================================
@@ -107,17 +126,10 @@ $DeleteBorder = "#995555";
 $DeleteBG = "#FFDDDD";
 
 /* ==============================================
-                Day View Specific
-============================================== */
-
-//$_SESSION['COLOR_OTHERMONTH'] = "#AAAAAA"
-
-/* ==============================================
               Month View Specific
 ============================================== */
 
-// Background color for cells in month view that
-// are not for the month currently being viewed.
+// Background color for cells in month view that are not for the month currently being viewed.
 $_SESSION['COLOR_OTHERMONTH'] = "#EEEEEE";
 
 /* ==============================================
@@ -127,12 +139,10 @@ $_SESSION['COLOR_OTHERMONTH'] = "#EEEEEE";
 // Color of the border around the current day in the little calendar
 $_SESSION['COLOR_LITTLECAL_TODAY'] = "#004a80";
 
-// Background color for days in the little calendar
-// that are being displayed in the main calendar
+// Background color for days in the little calendar that are being displayed in the main calendar
 $_SESSION['COLOR_LITTLECAL_HIGHLIGHT'] = "#CCCCCC";
 
-// Font color for days that are not part of the current month
-// being displayed in the little calendar.
+// Font color for days that are not part of the current month being displayed in the little calendar.
 $_SESSION['COLOR_LITTLECAL_FONTFADED'] = "#999999";
 
 // A small line below the S/M/T/W/T/F/S row in the little calendar
@@ -142,30 +152,33 @@ $_SESSION['COLOR_LITTLECAL_LINE'] = "#999999";
                   Date Selector
 ============================================== */
 
-// The date selector's "GO" button in the column
+// Background color for the date selector's "GO" button in the column
 $_SESSION['COLOR_GOBTN_BG'] = "#FFCC66";
-$_SESSION['COLOR_GOBTN_BORDER'] = "#FFFFFF";
 
-//'
+// Border color for the date selector's "GO" button in the column
+$_SESSION['COLOR_GOBTN_BORDER'] = "#FFFFFF";
 ?>
 
 /*===================================
         Calendar-Wide Styles
 ===================================*/
 
+/* Default calendar font family, size and color */
 #CalendarBlock, #CalendarBlock td, #CalendarBlock p, #CalendarBlock h2 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 }
 
+/* Default link color */
 #CalendarBlock a {
 	color: <?php echo $_SESSION['COLOR_LINK']; ?>;
 }
 
-tr.ColumnHeaderBG td, td.ColumnHeaderBG {
-	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?>;
-	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+/* Background color for table headers (may be column or row headers) */
+tr.TableHeaderBG td, td.TableHeaderBG {
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
 }
 
 /* Color for the text that notifies users of an error or warning */
@@ -183,6 +196,7 @@ tr.ColumnHeaderBG td, td.ColumnHeaderBG {
 	background-color: #FFFFCC;
 }
 
+/* Second level header used primarily on update.php */
 #CalendarBlock h2 {
 	color: <?php echo $_SESSION['COLOR_H2']; ?>;
 }
@@ -476,8 +490,8 @@ table#EventDetail td {
 	padding-right: 8px;
 }
 td.EventDetail-Label {
-	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
-	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
 }
 
 /*===================================
@@ -573,8 +587,8 @@ td.EventDetail-Label {
 --------------------------*/
 
 #WeekdayTable thead td {
-	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
-	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
 }
 
 #WeekdayTable thead td.Weekday-Today {
@@ -640,8 +654,8 @@ td.EventDetail-Label {
 	padding: 0;
 }
 #MonthTable thead td {
-	color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_TEXT']; ?> !important;
-	background-color: <?php echo $_SESSION['COLOR_COLUMN_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
+	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
 	padding: 5px;
 }
 #MonthTable tbody td {

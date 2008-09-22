@@ -48,7 +48,7 @@ if (is_string($result)) {
 }
 else {
 	?><table border="0" cellspacing="0" cellpadding="4">
-		<tr class="ColumnHeaderBG">
+		<tr class="TableHeaderBG">
 			<td align="right"><b>Hits</b></td>
 			<td><b>Keyword</b></td>
 		</tr>

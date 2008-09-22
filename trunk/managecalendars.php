@@ -75,7 +75,7 @@ else {
 	?><p><a href="editcalendar.php?new=1"><?php echo lang('add_new_calendar'); ?></a> <?php echo lang('or_modify_existing_calendar'); ?></p>
 	
 	<table border="0" cellspacing="0" cellpadding="5">
-		<tr class="ColumnHeaderBG">
+		<tr class="TableHeaderBG">
 			<td><b><?php echo lang('calendar_id'); ?></b></td>
 			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><b><?php echo lang('calendar_name'); ?></b></td>
 			<?php if ($calculateTotals) { ?>
@@ -113,7 +113,7 @@ else {
 	}
 		
 	?>		
-		<tr class="ColumnHeaderBG">
+		<tr class="TableHeaderBG">
 			<td colspan="2"><b><?php echo $result->numRows(); ?> <?php echo lang('calendars'); ?></b></td>
 			<?php if ($calculateTotals) { ?>
 			<td align="right"><b><?php

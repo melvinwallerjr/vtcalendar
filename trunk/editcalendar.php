@@ -40,8 +40,8 @@ require_once('session_start.inc.php');
 			}
 			else {
 				// create new calendar
-				$query = "INSERT INTO vtcal_calendar (id,                         name,                          title,                  header, footer, bgcolor,  maincolor, todaycolor, pastcolor, futurecolor, textcolor, linkcolor, gridcolor, viewauthrequired, forwardeventdefault) VALUES 
-																						 ('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '',     '',     '#ffffff','#ff9900', '#ffcc66',  '#eeeeee', '#ffffff',   '#000000', '#3333cc', '#cccccc', 0,                '".sqlescape($cal['forwardeventdefault'])."')";
+				$query = "INSERT INTO vtcal_calendar (id, name, title, header, footer, bgcolor,  maincolor, todaycolor, pastcolor, futurecolor, textcolor, linkcolor, gridcolor, viewauthrequired, forwardeventdefault) VALUES "
+					."('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '', '', '#ffffff','#ff9900', '#ffcc66',  '#eeeeee', '#ffffff', '#000000', '#3333cc', '#cccccc', 0, '".sqlescape($cal['forwardeventdefault'])."')";
 				$result = DBQuery($query );
 
 				$query = "INSERT INTO vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".lang('administration')."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";
@@ -129,16 +129,16 @@ require_once('session_start.inc.php');
 	<TR>
 		<TD class="bodytext" valign="top">
 			<?php echo lang('calendar_id'); ?>:
-			<FONT color="#FF0000">*</FONT>
+			<span class="WarningText">*</span>
 		</TD>
 		<TD class="bodytext" valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['id']) || !isValidInput($cal['id'],'calendarid')) {
-			feedback(lang('choose_valid_calendar_id')." ".constCalendaridVALIDMESSAGE,1);
+			feedback(lang('choose_valid_calendar_id')." ".constCalendaridVALIDMESSAGE,FEEDBACKNEG);
 		}
 		elseif ($calendarexists) {
-			feedback(lang('calendar_already_exists'),1);
+			feedback(lang('calendar_already_exists'),FEEDBACKNEG);
 		}
 	}
 ?>
@@ -162,13 +162,13 @@ require_once('session_start.inc.php');
 	<TR>
 		<TD class="bodytext" valign="top">
 			<?php echo lang('calendar_name'); ?>:
-			<FONT color="#FF0000">*</FONT>
+			<span class="WarningText">*</span>
 		</TD>
 		<TD class="bodytext" valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['name']) || !isValidInput($cal['name'],'calendarname')) {
-			feedback(lang('choose_valid_calendar_name')." ".constCalendarnameVALIDMESSAGE,1);
+			feedback(lang('choose_valid_calendar_name')." ".constCalendarnameVALIDMESSAGE,FEEDBACKNEG);
 		}
 	}
 ?>

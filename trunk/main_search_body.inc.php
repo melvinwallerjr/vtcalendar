@@ -1,6 +1,6 @@
 <?php
 	if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
-?><table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#FFFFFF">
+?><table width="100%" border="0" cellpadding="0" cellspacing="5">
 				<tr valign="top">
 				<td>
 <?php

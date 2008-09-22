@@ -84,7 +84,7 @@ $categoryidlist = $_GET['categoryidlist'];
 					$timeend = datetime2timestamp($timeend_year,$timeend_month,$timeend_day,11,59,"pm");
 				}
 				if (isset($timeend) && $timeend=="today") {
-					$timeend = datetime2timestamp($today[year],$today[month],$today[day],11,59,"pm");
+					$timeend = datetime2timestamp($today['year'],$today['month'],$today['day'],11,59,"pm");
 				}
 			}
 			if (isset($rangedays)) {
@@ -386,7 +386,7 @@ $categoryidlist = $_GET['categoryidlist'];
 		contentsection_begin(lang('export_events'));
 ?>
 <a target="newWindow" onclick="new_window(this.href); return false" 
-	 href="helpexport.php"><img src="images/nuvola/16x16/actions/help.png" width="16" height="16" alt="" border="0"> 
+	 href="helpexport.php"><img src="images/help.gif" width="16" height="16" alt="" border="0"> 
 	 <?php echo lang('how_to_export_events'); ?></a>
 <br>
 <br>

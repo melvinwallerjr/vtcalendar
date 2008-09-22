@@ -14,12 +14,12 @@ function getNewEventId() {
 
 // Used by the calendar admin scripts (e.g. update.php) to output small error messages.
 function feedback($msg,$type) {
-	echo '<span class="';
-	if ($type==0) { echo "feedbackpos"; } // positive feedback
-	if ($type==1) { echo "feedbackneg"; } // error message
+	echo '<b class="';
+	if ($type==0) { echo "NotificationText"; } // positive feedback
+	if ($type==1) { echo "WarningText"; } // error message
 	echo '">';
 	echo $msg;
-	echo '</span><br>';
+	echo '</b><br>';
 }
 
 // NOT USED
@@ -77,7 +77,7 @@ function sendemail2user($useremail,$subject,$body) {
 // case-insensitive
 function highlight_keyword($keyword, $text) {
 	$keyword = preg_quote($keyword);
-	$newtext = preg_replace('/'.$keyword.'/Usi','<span style="background-color:#ffff99">\\0</span>',$text);
+	$newtext = preg_replace('/'.$keyword.'/Usi','<span class="KeywordHighlight">\\0</span>',$text);
 	return $newtext;
 }
 

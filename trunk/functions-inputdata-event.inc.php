@@ -2,7 +2,7 @@
 function defaultevent(&$event,$sponsorid) {
 
 	// Set the default date.
-	$event['timebegin_year']=date("Y");
+	$event['timebegin_year']=date("Y", NOW);
 	$event['timebegin_month']=0;
 	$event['timebegin_day']=0;
 	
@@ -178,17 +178,17 @@ function inputrecurrences(&$event,&$repeat,$check) {
 	if (isset($check) && $repeat['mode'] > 0) {
 
 		if (!isset($event['timeend_month']) || !isset($event['timeend_day']) || !isset($event['timeend_year'])) {
-			feedback(lang('specify_valid_ending_date'),1);
+			feedback(lang('specify_valid_ending_date'),FEEDBACKNEG);
 		}
 		elseif (!checkdate($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']) &&
 			!checkdate($event['timeend_month'],$event['timeend_day'],$event['timeend_year'])) {
-			feedback(lang('specify_valid_dates'),1);
+			feedback(lang('specify_valid_dates'),FEEDBACKNEG);
 		}
 		elseif (!checkdate($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'])) {
-			feedback(lang('specify_valid_starting_date'),1);
+			feedback(lang('specify_valid_starting_date'),FEEDBACKNEG);
 		}
 		elseif (!checkdate($event['timeend_month'],$event['timeend_day'],$event['timeend_year'])) {
-			feedback(lang('specify_valid_ending_date'),1);
+			feedback(lang('specify_valid_ending_date'),FEEDBACKNEG);
 		}
 		elseif (!checkstartenddate($event['timebegin_month'],
 			$event['timebegin_day'],
@@ -196,7 +196,7 @@ function inputrecurrences(&$event,&$repeat,$check) {
 			$event['timeend_month'],
 			$event['timeend_day'],
 			$event['timeend_year'])) {
-			feedback(lang('ending_date_after_starting_date'),1);
+			feedback(lang('ending_date_after_starting_date'),FEEDBACKNEG);
 		}
 	} // end: if (isset($check) && repeat[mode] > 0)
 	
@@ -240,7 +240,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	
 	if ($displaydatetime) {
 		?>
-		<div style="padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;"><h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Date &amp; Time:</h3></div>
+		<div style="padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;"><h3 style="margin: 0; padding: 0;">Date &amp; Time:</h3></div>
 		
 		<div style="padding-left: 18px;">
 		
@@ -267,14 +267,14 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			// Output additional re-occurring event information.
 			if (!empty($event['repeatid'])) {
 				echo "<br>\n";
-				echo '<font color="#00AA00">';
+				echo '<span class="NotificationText">';
 				readinrepeat($event['repeatid'],$event,$repeat);
 				$repeatdef = repeatinput2repeatdef($event,$repeat);
 				printrecurrence($event['timebegin_year'],
 					$event['timebegin_month'],
 					$event['timebegin_day'],
 					$repeatdef);
-				echo '</font>';
+				echo '</span>';
 			}
 		}
 		
@@ -285,13 +285,13 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<TR><TD class="bodytext" valign="top"><strong><?php echo lang('date'); ?>:</strong><?php
 			
 			if ($inputrequired) {
-				?><FONT color="#FF0000">*</FONT><?php
+				?><span class="WarningText">*</span><?php
 			}
 			
 			?></TD><TD class="bodytext" valign="top"><?php
 			
 			if ($inputrequired && $check && $repeat['mode'] == 0 && !checkeventdate($event,$repeat) && !$defaultButtonPressed) {
-				feedback(lang('date_invalid'),1);
+				feedback(lang('date_invalid'),FEEDBACKNEG);
 			}
 	
 			echo '<INPUT type="radio" name="repeat[mode]" value="0" id="onetime"';
@@ -328,13 +328,13 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<TR><TD class="bodytext" valign="top"><strong><?php echo lang('time'); ?>:</strong><?php
 			
 			if ($inputrequired) {
-					?><FONT color="#FF0000">*</FONT><?php
+					?><span class="WarningText">*</span><?php
 			}
 			
 			?></TD><TD class="bodytext" valign="top"><?php
 			
 			if ($inputrequired && $check && $event['wholedayevent']==0 && $event['timebegin_hour']==0 && !$defaultButtonPressed) {
-				feedback(lang('specify_all_day_or_starting_time'),1);
+				feedback(lang('specify_all_day_or_starting_time'),FEEDBACKNEG);
 			}
 			
 			?>
@@ -451,7 +451,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	} // End of date/time block.
 	?>
 	
-	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;"><h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Basic Event Information:</h3></div>
+	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;"><h3 style="margin: 0; padding: 0;">Basic Event Information:</h3></div>
 	<div style="padding-left: 18px;">
 	<table border="0" cellpadding="2" cellspacing="0">
 	<TR>
@@ -459,7 +459,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	<strong><?php echo lang('category'); ?>:</strong>
 	<?php
 	if ($inputrequired) {
-		?><FONT color="#FF0000">*</FONT><?php
+		?><span class="WarningText">*</span><?php
 	}
 	
 	?>
@@ -468,7 +468,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	<?php
 
 	if ($inputrequired && $check && ($event['categoryid']==0) && !$defaultButtonPressed) {
-		feedback(lang('choose_category'),1);
+		feedback(lang('choose_category'),FEEDBACKNEG);
 	}
 	
 	?>
@@ -498,12 +498,12 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		<TD class="bodytext" valign="top">
 			<strong><?php echo lang('title'); ?>:</strong><?php
 	if ($inputrequired) {
-		?><FONT color="#FF0000">*</FONT><?php
+		?><span class="WarningText">*</span><?php
 	}
 	?></TD>
 		<TD class="bodytext" valign="top"><?php
 	if ($inputrequired && $check && (empty($event['title'])) && !$defaultButtonPressed) {
-		feedback(lang('choose_title'),1);
+		feedback(lang('choose_title'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="text" size="24" name="event[title]" maxlength=<?php echo constTitleMaxLength; ?> value="<?php
@@ -533,8 +533,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	</table>
 	</div>
 	
-	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
-		<h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Additional Event Information:</h3>
+	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;">
+		<h3 style="margin: 0; padding: 0;">Additional Event Information:</h3>
 	</div>
 	<div style="padding-left: 18px;">
 	<table border="0" cellpadding="2" cellspacing="0">
@@ -611,7 +611,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		<TD class="bodytext" valign="top">
 <?php
 	if ($check && isset($event['url']) && !checkURL($event['url']) && !$defaultButtonPressed) {
-		feedback(lang('url_invalid'),1);
+		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="text" size="50" name="event[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
@@ -634,8 +634,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	}
 	else {
 		?>
-		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
-			<h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Owner of this Event:</h3>
+		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;">
+			<h3 style="margin: 0; padding: 0;">Owner of this Event:</h3>
 			<div style="padding: 2px; padding-left: 15px;">This is the sponsor who owns this event in the calendar system.<br>
 			The sponsor who owns this event is able to copy and delete it, as well as submit new versions for approval.</div>
 			</div>
@@ -683,8 +683,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	} // end: if ($_SESSION['AUTH_ISCALENDARADMIN'])
 	?>
 	
-	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
-		<h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Information About the Event's Sponsor:</h3>
+	<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;">
+		<h3 style="margin: 0; padding: 0;">Information About the Event's Sponsor:</h3>
 		<div style="padding: 2px; padding-left: 15px;">This is information about the department or organization that is the official sponsor of the event.<br>
 		For example, if this event was Commencement then the sponsor would be the Office of the Secretary.</div>
 		</div>
@@ -711,7 +711,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		<TD class="bodytext" valign="top">
 <?php
 	if ($check && isset($event['displayedsponsorurl']) && !checkURL($event['displayedsponsorurl']) && !$defaultButtonPressed) {
-		feedback(lang('url_invalid'),1);
+		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="text" id="defaultsponsorurltext" size="50" name="event[displayedsponsorurl]" maxlength=<?php echo constDisplayedsponsorurlMaxLength; ?> value="<?php
@@ -730,8 +730,8 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	if ( $_SESSION['CALENDAR_ID'] != "default" && $inputrequired ) {
 		$defaultcalendarname = getCalendarName('default');
 		?>
-		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid #666666; background-color: #EEEEEE;">
-			<h3 style="margin: 0; padding: 0; color: #0066CC; font-size: 16px;">Submit to the &quot;<?php echo $defaultcalendarname; ?>&quot; calendar.:</h3>
+		<div style="margin-top: 16px; padding: 4px; margin-bottom: 6px; border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;">
+			<h3 style="margin: 0; padding: 0;">Submit to the &quot;<?php echo $defaultcalendarname; ?>&quot; calendar.:</h3>
 			<div style="padding: 2px; padding-left: 15px;">Submit this event for approval to be added to the &quot;<?php echo $defaultcalendarname; ?>&quot; calendar.</div>
 		</div>
 		<div style="padding-left: 18px;">
@@ -772,7 +772,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 				</table>
 				<?php
 				if ($check && !empty($event['showondefaultcal']) && $event['showondefaultcal']==1 && (empty($event['showincategory']) || $event['showincategory']==0) && !$defaultButtonPressed) {
-					feedback(lang('choose_category'),1);
+					feedback(lang('choose_category'),FEEDBACKNEG);
 				}
 				?>
 			</td>

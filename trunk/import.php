@@ -229,7 +229,7 @@ if (isset($importurl)) {
 }
 if ($showinputbox) {
 	?>
-	<a target="main" href="helpimport.php"><img src="images/nuvola/16x16/actions/help.png" width="16" height="16" alt="" border="0"> 
+	<a target="main" href="helpimport.php"><img src="images/help.gif" width="16" height="16" alt="" border="0"> 
 	<?php echo lang('how_to_import'); ?></a>
 	<br>
 	<br>

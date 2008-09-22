@@ -165,20 +165,20 @@ else {
 				
 				// Note that the event will also be submitted to the default calendar.
 				if ($_SESSION['CALENDAR_ID'] != "default" && $event['showondefaultcal'] == 1) {
-					echo "<br>\n",'<font color="#CC0000"><b>Note:</b> This event will also be submitted to the &quot;'.htmlentities($defaultcalendarname).'&quot; calendar under the &quot;'.htmlentities(getCategoryName($event['showincategory'])).'&quot; category.</font>';
+					echo "<br>\n",'<span class="WarningText"><b>Note:</b> This event will also be submitted to the &quot;'.htmlentities($defaultcalendarname).'&quot; calendar under the &quot;'.htmlentities(getCategoryName($event['showincategory'])).'&quot; category.</span>';
 				}
 				?></div>
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td style="background-color: #E3E3E3; border: 1px solid #666666; padding: 5px;">
+					<td style="background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>; border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding: 5px;">
 						<div><b>Submitted by: </b><?php echo htmlentities($event['sponsor_name']); ?><?php
 						if ($_SESSION['CALENDAR_ID'] == "default" && $event['sponsor_calendarid'] != "default") {
-							echo ' <font color=#CC0000">(from the &quot;'.htmlentities(getCalendarName($event['sponsor_calendarid'])).'&quot; calendar)</font>';
+							echo ' <span class="WarningText">(from the &quot;'.htmlentities(getCalendarName($event['sponsor_calendarid'])).'&quot; calendar)</span>';
 						}
 						?>
 						</div>
 						<div style="padding-top: 5px; padding-bottom: 5px;"><?php adminButtons($event, array('approve','reject','edit'), "small", "horizontal"); ?></div>
-						<div style="border: 0 solid #666666;"><?php print_event($event, false); ?></div>
+						<div><?php print_event($event, false); ?></div>
 					</td>
 				</tr>
 			</table>

@@ -30,7 +30,7 @@ function pageheader($title, $navbaractive) {
 		<!--[if gte IE 5.5000]>
 		<script src="scripts/fix-ie6.js" type="text/javascript"></script>
 		<![endif]-->
-		<link href="stylesheet.php" rel="stylesheet" type="text/css">
+		<!--<link href="stylesheet.php" rel="stylesheet" type="text/css">-->
 		<link href="calendar.css.php" rel="stylesheet" type="text/css" media="screen">
 		<link href="print.css" rel="stylesheet" type="text/css" media="print">
 		<!--[if lte IE 6]><style>
@@ -120,7 +120,7 @@ function contentsection_begin($headertext="", $showBackToMenuButton=false) {
 		?><div id="MenuButton"><table border="0" cellpadding="3" cellspacing="0"><tr><td><b><a href="update.php"><?php echo lang('back_to_menu'); ?></a></b></td></tr></table></div><?php
 	}
 	
-	?><div id="UpdateBlock"><div style="border: 1px solid #666666; padding: 8px;"><?php
+	?><div id="UpdateBlock"><div style="border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding: 8px;"><?php
 	
 	if (!empty($headertext)) {
 		echo "<h2>".htmlentities($headertext).":</h2>";
@@ -143,14 +143,14 @@ function helpwindow_header() {
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta content="en-us" http-equiv=language>
 		<link href="calendar.css.php" rel="stylesheet" type="text/css">
-		<link href="stylesheet.php" rel="stylesheet" type="text/css">
+		<!--<link href="stylesheet.php" rel="stylesheet" type="text/css">-->
 	</head>
 	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" onLoad="this.window.focus()">
 		<br>
 		<table border="0" cellPadding="5" cellSpacing="0">
 			<tr>
 			<td>&nbsp;</td>
-			<td bgcolor="#eeeeee"><?php
+			<td bgcolor="<?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>"><?php
 } // end: function helpwindow_header
 	
 // Outputs the footer HTML code for a pop-up help window. See helpwindow_header() as well.

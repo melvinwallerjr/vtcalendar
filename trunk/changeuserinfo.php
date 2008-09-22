@@ -116,7 +116,7 @@ require_once('session_start.inc.php');
 <TABLE border="0" cellpadding="2" cellspacing="0">
 	<TR>
 		<TD class="bodytext" valign="baseline">
-			<b><?php echo lang('user_id'); ?>:<FONT color="#FF0000">*</FONT></b>
+			<b><?php echo lang('user_id'); ?>:<span class="WarningText">*</span></b>
 		</TD>
 		<TD class="bodytext" valign="baseline">
 <?php
@@ -125,10 +125,10 @@ require_once('session_start.inc.php');
 	}
 	else {
 		if (isset($check) && $check && (empty($userid))) {
-			feedback(lang('choose_user_id'),1);
+			feedback(lang('choose_user_id'),FEEDBACKNEG);
 		}
 		if (isset($check) && $check && userExistsInDB($userid)) {
-			feedback(lang('user_id_already_exists'),1);
+			feedback(lang('user_id_already_exists'),FEEDBACKNEG);
 		}
 		
 	 echo AUTH_DB_USER_PREFIX;	
@@ -144,12 +144,12 @@ require_once('session_start.inc.php');
 	</TR>
 	<TR>
 		<TD class="bodytext" valign="baseline">
-			<b><?php echo lang('password'); ?><FONT color="#FF0000">*</FONT></b>
+			<b><?php echo lang('password'); ?><span class="WarningText">*</span></b>
 		</TD>
 		<TD class="bodytext" valign="baseline">
 <?php
 	if (isset($check) && $check && (empty($user['password']))) {
-		feedback(lang('choose_password'),1);
+		feedback(lang('choose_password'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="password" size="14" name="user[password]" maxlength=<?php echo constPasswordMaxLength; ?>  value="<?php if (!empty($chooseuser)) { echo "#nochange$"; } ?>"> <BR>

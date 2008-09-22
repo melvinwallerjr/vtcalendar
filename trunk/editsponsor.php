@@ -164,16 +164,16 @@ if ($sponsor['admin']) {
 	<TR>
 		<TD class="bodytext" valign="top">
 			<strong><?php echo lang('sponsor_name'); ?></strong>
-			<FONT color="#FF0000">*</FONT>
+			<span class="WarningText">*</span>
 		</TD>
 		<TD class="bodytext" valign="top">
 <?php
 		if ( isset($check) ) {
 			if (empty($sponsor['name'])) {
-				feedback(lang('choose_sponsor_name'),1);
+				feedback(lang('choose_sponsor_name'),FEEDBACKNEG);
 			}
 			elseif ($sponsorexists) {
-				feedback(lang('sponsor_already_exists'),1);
+				feedback(lang('sponsor_already_exists'),FEEDBACKNEG);
 			}
 		}
 ?>
@@ -186,12 +186,12 @@ if ($sponsor['admin']) {
 	<TR>
 		<TD class="bodytext" valign="top">
 			<strong><?php echo lang('email'); ?></strong>
-			<FONT color="#FF0000">*</FONT>
+			<span class="WarningText">*</span>
 		</TD>
 		<TD class="bodytext" valign="top">
 <?php
 	if (isset($check) && (empty($sponsor['email']))) {
-		feedback(lang('choose_email'),1);
+		feedback(lang('choose_email'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
@@ -208,7 +208,7 @@ if ($sponsor['admin']) {
 		<TD class="bodytext" valign="top">
 <?php
 	if ( isset($check) && !checkURL($sponsor['url']) ) {
-		feedback(lang('url_invalid'),1);
+		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
 			<INPUT type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php

@@ -48,14 +48,14 @@ if (is_string($result)) {
 }
 else {
 	?><table border="0" cellspacing="0" cellpadding="4">
-		<tr>
-			<td align="right" bgcolor="#CCCCCC"><b>Hits</b></td>
-			<td bgcolor="#CCCCCC"><b>Keyword</b></td>
+		<tr class="ColumnHeaderBG">
+			<td align="right"><b>Hits</b></td>
+			<td><b>Keyword</b></td>
 		</tr>
 	<?php
 
 	// The initial row color.
-	$color = "#ffffff";	
+	$color = $_SESSION['COLOR_BG'];	
 	
 	if ($result->numRows() == 0) {
 	
@@ -64,7 +64,7 @@ else {
 		for ($i=0; $i < $result->numRows(); $i++) {
 			$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);
 			echo '<tr><td align="right" bgcolor="' . $color . '">' . $record['sum'] . '</td><td bgcolor="' . $color . '"><a href="#">' . $record['keyword'] . '</a></td></tr>';
-			if ( $color == "#eeeeee" ) { $color = "#ffffff"; } else { $color = "#eeeeee"; }
+			if ( $color == $_SESSION['COLOR_LIGHT_CELL_BG'] ) { $color = $_SESSION['COLOR_BG']; } else { $color = $_SESSION['COLOR_LIGHT_CELL_BG']; }
 		}
 	}
 	?></table><?php

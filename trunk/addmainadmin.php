@@ -89,13 +89,13 @@ if (isset($user['id']) && (!isset($check) || $check != 1)) {
 		<TD class="bodytext" valign="baseline">
 <?php
 		if (isset($check) && $check && (empty($mainuserid))) {
-			feedback(lang('choose_user_id'),1);
+			feedback(lang('choose_user_id'),FEEDBACKNEG);
 		}
 		elseif (isset($check) && $check && mainAdminExistsInDB($mainuserid)) {
-			feedback(lang('already_main_admin'),1);
+			feedback(lang('already_main_admin'),FEEDBACKNEG);
 		}
 		elseif (isset($check) && $check && !isValidUser($mainuserid)) {
-			feedback(lang('user_not_exists'),1);
+			feedback(lang('user_not_exists'),FEEDBACKNEG);
 		}
 ?><INPUT type="text" size="20" name="mainuserid" maxlength="50" value="<?php
 	if (!empty($mainuserid)) {

@@ -9,7 +9,8 @@ pageheader(lang('preview_event'), "Update");
 
 // determine the text representation in the form "MM/DD/YYYY" and the day of the week
 $day['text'] = Encode_Date_US($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']);
-$day['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']));
+//TODO: Remove instaces of dow_text?
+//$day['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year']));
 assemble_timestamp($event);
 removeslashes($event);
 
@@ -36,7 +37,7 @@ contentsection_begin(lang('preview_event'));
 	echo Month_to_Text($event['timebegin_month'])," ",$event['timebegin_day'],", ",$event['timebegin_year'];
 ?></p>
 
-<table border="0" cellpadding="0" cellspacing="0"><tr><td style="border: 1px solid #666666;"><?php
+<table border="0" cellpadding="0" cellspacing="0"><tr><td style="border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php
 print_event($event);
 ?></td></tr></table>
 
@@ -44,11 +45,11 @@ print_event($event);
 <?php
 if (!checkeventtime($event)) {
 	echo "<BR>";
-	feedback(lang('warning_ending_time_before_starting_time'),1);
+	feedback(lang('warning_ending_time_before_starting_time'),FEEDBACKNEG);
 }
 if ($event['timeend_hour']==0) {
 	echo "<BR>";
-	feedback(lang('warning_no_ending_time'),1);
+	feedback(lang('warning_no_ending_time'),FEEDBACKNEG);
 }
 
 echo '<span class="bodytext">';

@@ -40,7 +40,7 @@ else {
 	<p><a href="editsponsor.php"><?php echo lang('add_new_sponsor'); ?></a> <?php echo lang('or_modify_existing_sponsor'); ?></p>
 	<?php
 		if (isset($errorMessage)) {
-			echo '<p><b><font color="#CC0000">'.$errorMessage.'</font></b></p>';
+			echo '<p><b class="WarningText">'.$errorMessage.'</b></p>';
 		}
 		
 		$numLines = 15;

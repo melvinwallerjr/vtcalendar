@@ -48,7 +48,7 @@ require_once('session_start.inc.php');
 	pageheader(lang('delete_event_category'), "Update");
 	contentsection_begin(lang('delete_event_category'));
 ?>
-<font color="#ff0000"><b><?php echo lang('warning_event_category_delete'); ?> &quot;<b><?php echo htmlentities($category['name']); ?></b>&quot;</b></font>
+<b class="WarningText"><?php echo lang('warning_event_category_delete'); ?> &quot;<?php echo htmlentities($category['name']); ?>&quot;</b>
 <form method="post" action="deletecategory.php">
 	<input type="radio" name="deleteevents" value="1"> <?php echo lang('delete_all_events_in_category'); ?><br>
 	<input type="radio" name="deleteevents" value="0" checked> 

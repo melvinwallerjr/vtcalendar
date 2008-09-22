@@ -67,7 +67,7 @@ if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
 		while ($ievent < $result->numRows()) {
 			// print event
 	 	  disassemble_timestamp($event);	
-			$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m"),date("d"),date("Y"));
+			$datediff = Delta_Days($event['timebegin_month'],$event['timebegin_day'],$event['timebegin_year'],date("m", NOW),date("d", NOW),date("Y", NOW));
 			$timediff = $event_timeend_num - $event_timebegin_num;
 			$begintimediff = NOW_AS_TIMENUM - $event_timebegin_num;
 			$endtimediff = NOW_AS_TIMENUM - $event_timeend_num;

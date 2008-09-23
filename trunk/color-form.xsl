@@ -153,12 +153,24 @@
                 <xsl:value-of select="@Variable"/>
             	<xsl:text disable-output-escaping="yes"><![CDATA[']; ?>" onKeyUp="ColorChanged(']]></xsl:text>
             	<xsl:value-of select="@Variable"/>
-            	<xsl:text disable-output-escaping="yes"><![CDATA[')">]]></xsl:text>
+            	<xsl:text disable-output-escaping="yes"><![CDATA[')"> ]]></xsl:text>
+            	
                 <xsl:if test="string-length(text()) &gt; 0">
-                    <xsl:text disable-output-escaping="yes"> &lt;?php echo htmlentities(lang('color_description_</xsl:text>
+                	<xsl:text disable-output-escaping="yes"> &lt;?php echo htmlentities(lang('color_description_</xsl:text>
                     <xsl:value-of select="translate(@Variable, $Upper, $Lower)"/>
                     <xsl:text disable-output-escaping="yes">')); ?&gt;</xsl:text>
                 </xsl:if>
+            	
+            	<xsl:if test="self::Color">
+            		<xsl:text disable-output-escaping="yes"><![CDATA[ (Reset to <span onClick="ResetValue(']]></xsl:text>
+            		<xsl:value-of select="@Variable"/>
+            		<xsl:text disable-output-escaping="yes"><![CDATA[', '<?php echo DEFAULTCOLOR_]]></xsl:text>
+            		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
+            		<xsl:text disable-output-escaping="yes"><![CDATA[; ?>')" title="<?php echo lang('reset_to_default_color'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo DEFAULTCOLOR_]]></xsl:text>
+            		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
+            		<xsl:text disable-output-escaping="yes"><![CDATA[; ?>">&nbsp;</span>) ]]></xsl:text>
+            	</xsl:if>
+            	
                 <xsl:text disable-output-escaping="yes">&lt;?php if (isset($VariableErrors['</xsl:text>
                 <xsl:value-of select="@Variable"/>
                 <xsl:text disable-output-escaping="yes">'])) { ?&gt;</xsl:text>

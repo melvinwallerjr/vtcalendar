@@ -83,17 +83,19 @@ td.TopNavi-ColorPadding {
 table#TopNaviTable td.TopNavi-ColorPadding td {
 	padding-top: 8px;
 }
+
+/* The font style for the calendar title */
 table#TopNaviTable td#NaviBar-CalendarTitle {
-	color: <?php echo $_SESSION['COLOR_TITLE']; ?>
-	padding-bottom: 2px;
-	padding-left: 4px;
-	padding-right: 8px;
 	font-weight: bold;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 18px;
+	padding-bottom: 2px;
+	padding-left: 4px;
+	padding-right: 8px;
 }
+/* The color for the calendar title link */
 table#TopNaviTable td#NaviBar-CalendarTitle a {
-	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
+	color: <?php echo $_SESSION['COLOR_TITLE']; ?>;
 	text-decoration: none;
 }
 .NaviBar-Tab div {
@@ -103,13 +105,16 @@ table#TopNaviTable td#NaviBar-CalendarTitle a {
 	padding: 4px;
 	padding-left: 12px;
 	padding-right: 12px;
-	background-color: <?php echo $_SESSION['COLOR_TABGRAYED']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_TABGRAYED_BG']; ?>;
 }
-.NaviBar-Tab a {
-
+#CalendarBlock .NaviBar-Tab a {
+	color: <?php echo $_SESSION['COLOR_TABGRAYED_TEXT']; ?>;
 }
-#NaviBar-Selected div {
+#CalendarBlock #NaviBar-Selected div {
 	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
+}
+#CalendarBlock #NaviBar-Selected a {
+	color: <?php echo $_SESSION['COLOR_LINK']; ?>;
 }
 
 /*===================================

@@ -156,11 +156,11 @@ elseif (COLUMNSIDE == "RIGHT") {
 
 <?php
 
-ob_start();
+/*ob_start();
 var_dump($_SESSION);
 $output = ob_get_contents();
 ob_end_clean();
-echo "<pre>".htmlentities($output)."</pre>";
+echo "<pre>".htmlentities($output)."</pre>";*/
 
 pagefooter();
 DBclose();

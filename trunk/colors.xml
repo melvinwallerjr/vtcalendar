@@ -19,7 +19,8 @@
     </Section>
     <Section Name="TitleTabs" Title="Title and Tabs">
         <Color Label="Title" Variable="Title" Default="#000000">Calendar title displayed to the left of the tabs.</Color>
-        <Color Label="Grayed Tab" Variable="TabGrayed" Default="#CCCCCC">Background color for navigation tabs that are not selected.</Color>
+    	<Color Label="Grayed Tab Text" Variable="TabGrayed_Text" Default="#0000FF">Text color for the navigation tabs that are not selected.</Color>
+    	<Color Label="Grayed Tab Background" Variable="TabGrayed_BG" Default="#CCCCCC">Background color for navigation tabs that are not selected.</Color>
     </Section>
     <Section Name="FilterNotice" Title="Filter Notice">
         <Description>The colors and background image for a message that appears when the events being displayed are filtered by category or search keyword.</Description>

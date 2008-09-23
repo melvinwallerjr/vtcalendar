@@ -76,7 +76,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 			<td valign="top">
 
-				<table border="0" cellspacing="4" cellpadding="0">
+				<table border="0" cellspacing="2" cellpadding="0">
 					<tr>
 						<td colspan="3" align="center">
 							<div id="cp1_Preview" style="background-color: #fff; width: 60px; height: 60px; padding: 0; margin: 0; border: solid 1px #000;">

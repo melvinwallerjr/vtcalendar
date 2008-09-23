@@ -235,8 +235,6 @@ function userauthenticated($userid, $password) {
 	
 	// Check using a HTTP request if it is allowed.
 	if ($returnValue === false && AUTH_HTTP) {
-		require_once("HTTP/Request.php");
-
 		$req =& new HTTP_Request(AUTH_HTTP_URL);
 		$req->setBasicAuth($userid, $password);
 		

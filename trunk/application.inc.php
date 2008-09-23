@@ -2,13 +2,25 @@
 // Allow any script that includes this file to include php files that restrict their access.
 define("ALLOWINCLUDES", TRUE);
 
-// Include the necessary files.
-require_once('DB.php');
+// Include Pear::DB or output an error message if it does not exist.
+@(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
+
+// Include the necessary VTCalendar files.
 require_once('config.inc.php');
 require_once("config-colordefaults.inc.php");
 require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');
 require_once('constants.inc.php');
+
+if (AUTH_LDAP && !function_exists("ldap_connect")) {
+	echo "PHP LDAP does not seem to be installed or configured. Make sure the extension is included in your php.ini file.";
+	exit();
+}
+
+// Include Pear::HTTP_Request if AUTH_HTTP is true, or output an error message if it does not exist.
+if (AUTH_HTTP) {
+	@(include_once("HTTP/Request.php")) or die("Pear::HTTP_Request is required when using HTTP authentication. See: http://pear.php.net/package/HTTP_Request");
+}
 
 /* ============================================================
                 Open the database connection

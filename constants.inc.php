@@ -26,6 +26,7 @@ define("FEEDBACKNEG","1");
                    Current date and time
 ============================================================ */
 
+// TODO: Reset back to using time()
 define("NOW", mktime(15, 0, 0, 9, 30, 2008)); //time());
 define("NOW_AS_TEXT", date("Y-m-d H:i:s", NOW));
 define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW_AS_TEXT));

@@ -37,7 +37,7 @@ function setCalendarPreferences() {
 	$_SESSION['CALENDAR_FOOTER'] = $calendar['footer'];
 	$_SESSION['CALENDAR_VIEWAUTHREQUIRED'] = $calendar['viewauthrequired'];
 	$_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'] = $calendar['forwardeventdefault'];
-	$calendar->free();
+	$result->free();
 	
 	// TODO: Query to load color table
 	/*
@@ -61,6 +61,8 @@ For sql replace:
 	if (is_string($result)) return $result;
 
 	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	
+	// The following block should only come from the output of colors-dbload.xsl (run against colors.xml).
 	if (isset($record['bg'])) { setVar($_SESSION['COLOR_BG'], $record['bg'], 'color'); }
 	if (isset($record['text'])) { setVar($_SESSION['COLOR_TEXT'], $record['text'], 'color'); }
 	if (isset($record['text_faded'])) { setVar($_SESSION['COLOR_TEXT_FADED'], $record['text_faded'], 'color'); }
@@ -95,13 +97,13 @@ For sql replace:
 	if (isset($record['littlecal_line'])) { setVar($_SESSION['COLOR_LITTLECAL_LINE'], $record['littlecal_line'], 'color'); }
 	if (isset($record['gobtn_bg'])) { setVar($_SESSION['COLOR_GOBTN_BG'], $record['gobtn_bg'], 'color'); }
 	if (isset($record['gobtn_border'])) { setVar($_SESSION['COLOR_GOBTN_BORDER'], $record['gobtn_border'], 'color'); }
-	$record->free();
+	$result->free();
 	
 	$result =& DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" );
 	if (is_string($result)) return $result;
 	$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	$_SESSION['CALENDAR_ADMINEMAIL'] = $sponsor['email'];
-	$sponsor->free();
+	$result->free();
 	
 	return true;
 }

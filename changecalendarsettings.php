@@ -37,6 +37,7 @@ if ( isset($save) ) {
 		$pidsInvalid = "";
 		$pidsTokens = split ( "[ ,;\n\t]", $users );
 		$pidsAddedCount = 0;
+		$pidsAdded = array();
 		for ($i=0; $i<count($pidsTokens); $i++) {
 			$pidName = $pidsTokens[$i];
 			$pidName = trim($pidName);
@@ -66,7 +67,7 @@ if ( isset($save) ) {
 	if (empty($addPIDError)) { 
 		// save the settings to database
 		if ( $viewauthrequired != 0 ) { $viewauthrequired = 1; }
-		if ( $forwardeventdefault!="1" ) { $forwardeventdefault = "0"; }
+		if ( !isset($forwardeventdefault) || $forwardeventdefault != "1" ) { $forwardeventdefault = "0"; }
 		$result =& DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',"
 			. "viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."'"
 			. " WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
@@ -77,7 +78,7 @@ if ( isset($save) ) {
 		$result =& DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 		if (is_string($result)) { DBErrorBox($result); exit; }
 		
-		for ($i=0; $i<count($pidsAdded); $i++) {
+		for ($i=0; $i<$pidsAddedCount; $i++) {
 			$result =& DBQuery("INSERT INTO vtcal_calendarviewauth (calendarid,userid) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($pidsAdded[$i])."')" );
 			if (is_string($result)) { DBErrorBox($result); exit; }
 		}

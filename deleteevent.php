@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-	require_once('application.inc.php');
+require_once('application.inc.php');
 
 	if (isset($_POST['httpreferer'])) { setVar($httpreferer,$_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
 	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }

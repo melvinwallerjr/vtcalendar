@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-	require_once('application.inc.php');
+require_once('application.inc.php');
 
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISMAINADMIN']) { exit; } // additional security

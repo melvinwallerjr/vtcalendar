@@ -1,7 +1,7 @@
 <?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
-	require_once('application.inc.php');
+require_once('application.inc.php');
 
 	if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
 	$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";

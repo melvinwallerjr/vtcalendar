@@ -5,7 +5,6 @@ require_once('application.inc.php');
 require_once('changecolors-functions.inc.php');
 
 $lang['click_for_color_picker'] = "Use Color Picker";
-$lang['reset_colors_button_text'] = "Reset Colors to Defaults";
 $lang['reset_to_default_color'] = "Reset to the Default Calendar Color";
 
 if (!authorized()) { exit; }
@@ -72,7 +71,7 @@ function ResetValue(idbase, defaultValue) {
 
 <form method="post" action="changecolors.php" name="colorSettings">
 
-<p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="reset" value="<?php echo lang('reset_colors_button_text'); ?>" class="button"></p>
+<p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 
 <?php ShowForm(); ?>
 

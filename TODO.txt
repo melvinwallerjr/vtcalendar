@@ -15,27 +15,7 @@ X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.
 - Free results by using $results->free()
 - Properly handle string returns from functions like DBQuery.
 - Change _data files to _preheader just to make it easier to understand
-
-Add colors to vtcal_colors for new CSS:
-	MainColor
-	FadedTabColor
-	TodayColor
-	
-	LinkColor
-	VisitedLinkColor
-	FadedLinkColor
-	
-	TextColor
-	FadedColor
-	
-	Event_UpcomingColor
-	Event_FadedColor
-	Event_DividerColor
-	
-	Table_HeadCellBGColor
-	Table_HeadCellTextColor
-	Table_BorderColor
-	Table_TodayFadedBGColor
+X Add colors to vtcal_colors for new CSS
 
 
 OLD TODO:
@@ -43,7 +23,7 @@ OLD TODO:
 
 FEATURES
 --------
-- don't allow calendar admins to lock themselves out from the calendar by restricting access
+X don't allow calendar admins to lock themselves out from the calendar by restricting access
 - search by sponsor
 - display email addresses as javascript to protect against spammers
 - harden against cross-site scripting attacks
@@ -54,7 +34,7 @@ FEATURES
 
 BUGS
 ----
-- when admin edits an "to-be-approved" item it is automatically approved (which is OK) but
+X when admin edits an "to-be-approved" item it is automatically approved (which is OK) but
 also becomes the event of the admin (which is not OK)
 - using the filter resets the calendar to the view that includes today
 - userids are sometime case sensitive, sometimes not -> you may be able to login with an upper/lowercase Id but not "Manage users" for example

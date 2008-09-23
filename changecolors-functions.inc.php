@@ -150,282 +150,416 @@ function LoadVariables() {
 	if (!isset($_POST['DeleteBG']) || !setVar($GLOBALS['Color_DeleteBG'], $_POST['DeleteBG'],'color')) { if (isset($_POST['DeleteBG'])) $VariableErrors['DeleteBG'] = $_POST['DeleteBG']; $GLOBALS['Color_DeleteBG'] = $_SESSION['COLOR_DELETEBG']; };
 }
 
+function MakeColorUpdateSQL($calendarid) {
+	$sql = "INSERT INTO vtcal_colors (calendarid";
+	$sql .= ", BG, Text, Text_Faded, Text_Warning, Link, Body, Today, TodayLight, Light_Cell_BG, Table_Header_Text, Table_Header_BG, Border, Keyword_Highlight, H2, H3, Title, TabGrayed, FilterNotice_BG, FilterNotice_Font, FilterNotice_FontFaded, FilterNotice_BGImage, EventBar_Past, EventBar_Current, EventBar_Future, MonthDayLabels_Past, MonthDayLabels_Current, MonthDayLabels_Future, OtherMonth, LittleCal_Today, LittleCal_Highlight, LittleCal_FontFaded, LittleCal_Line, GOBtn_BG, GOBtn_Border, NewBorder, NewBG, ApproveBorder, ApproveBG, CopyBorder, CopyBG, DeleteBorder, DeleteBG";
+	$sql .= ") VALUES ('" . sqlescape($calendarid) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_BG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Text']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Text_Faded']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Text_Warning']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Link']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Body']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Today']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_TodayLight']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Light_Cell_BG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Table_Header_Text']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Table_Header_BG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Border']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Keyword_Highlight']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_H2']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_H3']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_Title']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_TabGrayed']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_FilterNotice_BG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_FilterNotice_Font']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_FilterNotice_FontFaded']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_FilterNotice_BGImage']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_EventBar_Past']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_EventBar_Current']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_EventBar_Future']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_MonthDayLabels_Past']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_MonthDayLabels_Current']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_MonthDayLabels_Future']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_OtherMonth']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_LittleCal_Today']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_LittleCal_Highlight']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_LittleCal_FontFaded']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_LittleCal_Line']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_GOBtn_BG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_GOBtn_Border']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_NewBorder']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_NewBG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_ApproveBorder']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_ApproveBG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_CopyBorder']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_CopyBG']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_DeleteBorder']) . "'";
+		$sql .= ",'" . sqlescape($GLOBALS['Color_DeleteBG']) . "'";
+	$sql .= ") ON DUPLICATE KEY UPDATE ";
+		$sql .= "BG = '" . sqlescape($GLOBALS['Color_BG']) . "'";
+		$sql .= ",Text = '" . sqlescape($GLOBALS['Color_Text']) . "'";
+		$sql .= ",Text_Faded = '" . sqlescape($GLOBALS['Color_Text_Faded']) . "'";
+		$sql .= ",Text_Warning = '" . sqlescape($GLOBALS['Color_Text_Warning']) . "'";
+		$sql .= ",Link = '" . sqlescape($GLOBALS['Color_Link']) . "'";
+		$sql .= ",Body = '" . sqlescape($GLOBALS['Color_Body']) . "'";
+		$sql .= ",Today = '" . sqlescape($GLOBALS['Color_Today']) . "'";
+		$sql .= ",TodayLight = '" . sqlescape($GLOBALS['Color_TodayLight']) . "'";
+		$sql .= ",Light_Cell_BG = '" . sqlescape($GLOBALS['Color_Light_Cell_BG']) . "'";
+		$sql .= ",Table_Header_Text = '" . sqlescape($GLOBALS['Color_Table_Header_Text']) . "'";
+		$sql .= ",Table_Header_BG = '" . sqlescape($GLOBALS['Color_Table_Header_BG']) . "'";
+		$sql .= ",Border = '" . sqlescape($GLOBALS['Color_Border']) . "'";
+		$sql .= ",Keyword_Highlight = '" . sqlescape($GLOBALS['Color_Keyword_Highlight']) . "'";
+		$sql .= ",H2 = '" . sqlescape($GLOBALS['Color_H2']) . "'";
+		$sql .= ",H3 = '" . sqlescape($GLOBALS['Color_H3']) . "'";
+		$sql .= ",Title = '" . sqlescape($GLOBALS['Color_Title']) . "'";
+		$sql .= ",TabGrayed = '" . sqlescape($GLOBALS['Color_TabGrayed']) . "'";
+		$sql .= ",FilterNotice_BG = '" . sqlescape($GLOBALS['Color_FilterNotice_BG']) . "'";
+		$sql .= ",FilterNotice_Font = '" . sqlescape($GLOBALS['Color_FilterNotice_Font']) . "'";
+		$sql .= ",FilterNotice_FontFaded = '" . sqlescape($GLOBALS['Color_FilterNotice_FontFaded']) . "'";
+		$sql .= ",FilterNotice_BGImage = '" . sqlescape($GLOBALS['Color_FilterNotice_BGImage']) . "'";
+		$sql .= ",EventBar_Past = '" . sqlescape($GLOBALS['Color_EventBar_Past']) . "'";
+		$sql .= ",EventBar_Current = '" . sqlescape($GLOBALS['Color_EventBar_Current']) . "'";
+		$sql .= ",EventBar_Future = '" . sqlescape($GLOBALS['Color_EventBar_Future']) . "'";
+		$sql .= ",MonthDayLabels_Past = '" . sqlescape($GLOBALS['Color_MonthDayLabels_Past']) . "'";
+		$sql .= ",MonthDayLabels_Current = '" . sqlescape($GLOBALS['Color_MonthDayLabels_Current']) . "'";
+		$sql .= ",MonthDayLabels_Future = '" . sqlescape($GLOBALS['Color_MonthDayLabels_Future']) . "'";
+		$sql .= ",OtherMonth = '" . sqlescape($GLOBALS['Color_OtherMonth']) . "'";
+		$sql .= ",LittleCal_Today = '" . sqlescape($GLOBALS['Color_LittleCal_Today']) . "'";
+		$sql .= ",LittleCal_Highlight = '" . sqlescape($GLOBALS['Color_LittleCal_Highlight']) . "'";
+		$sql .= ",LittleCal_FontFaded = '" . sqlescape($GLOBALS['Color_LittleCal_FontFaded']) . "'";
+		$sql .= ",LittleCal_Line = '" . sqlescape($GLOBALS['Color_LittleCal_Line']) . "'";
+		$sql .= ",GOBtn_BG = '" . sqlescape($GLOBALS['Color_GOBtn_BG']) . "'";
+		$sql .= ",GOBtn_Border = '" . sqlescape($GLOBALS['Color_GOBtn_Border']) . "'";
+		$sql .= ",NewBorder = '" . sqlescape($GLOBALS['Color_NewBorder']) . "'";
+		$sql .= ",NewBG = '" . sqlescape($GLOBALS['Color_NewBG']) . "'";
+		$sql .= ",ApproveBorder = '" . sqlescape($GLOBALS['Color_ApproveBorder']) . "'";
+		$sql .= ",ApproveBG = '" . sqlescape($GLOBALS['Color_ApproveBG']) . "'";
+		$sql .= ",CopyBorder = '" . sqlescape($GLOBALS['Color_CopyBorder']) . "'";
+		$sql .= ",CopyBG = '" . sqlescape($GLOBALS['Color_CopyBG']) . "'";
+		$sql .= ",DeleteBorder = '" . sqlescape($GLOBALS['Color_DeleteBorder']) . "'";
+		$sql .= ",DeleteBG = '" . sqlescape($GLOBALS['Color_DeleteBG']) . "'";
+	return $sql;
+}
+
+
 function ShowForm() {
 	global $VariableErrors; ?>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_genericcolors')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_genericcolors')); ?>:</h3>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_bg')); ?>:</b></td>
-         <td><span id="Swap_BG" onClick="SetupColorPicker('BG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_BG']; ?>">&nbsp;</span> <input type="text" id="Color_BG" name="BG" value="<?php echo $GLOBALS['Color_BG']; ?>"> ( <?php echo htmlentities(lang('color_description_bg')); ?> )<?php if (isset($VariableErrors['BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_BG" onClick="SetupColorPicker('BG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_BG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_BG" name="BG" value="<?php echo $GLOBALS['Color_BG']; ?>" onKeyUp="ColorChanged('BG')"> <?php echo htmlentities(lang('color_description_bg')); ?><?php if (isset($VariableErrors['BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_text')); ?>:</b></td>
-         <td><span id="Swap_Text" onClick="SetupColorPicker('Text')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text']; ?>">&nbsp;</span> <input type="text" id="Color_Text" name="Text" value="<?php echo $GLOBALS['Color_Text']; ?>"> ( <?php echo htmlentities(lang('color_description_text')); ?> )<?php if (isset($VariableErrors['Text'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Text" onClick="SetupColorPicker('Text')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Text" name="Text" value="<?php echo $GLOBALS['Color_Text']; ?>" onKeyUp="ColorChanged('Text')"> <?php echo htmlentities(lang('color_description_text')); ?><?php if (isset($VariableErrors['Text'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_text_faded')); ?>:</b></td>
-         <td><span id="Swap_Text_Faded" onClick="SetupColorPicker('Text_Faded')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text_Faded']; ?>">&nbsp;</span> <input type="text" id="Color_Text_Faded" name="Text_Faded" value="<?php echo $GLOBALS['Color_Text_Faded']; ?>"> ( <?php echo htmlentities(lang('color_description_text_faded')); ?> )<?php if (isset($VariableErrors['Text_Faded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text_Faded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Text_Faded" onClick="SetupColorPicker('Text_Faded')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text_Faded']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Text_Faded" name="Text_Faded" value="<?php echo $GLOBALS['Color_Text_Faded']; ?>" onKeyUp="ColorChanged('Text_Faded')"> <?php echo htmlentities(lang('color_description_text_faded')); ?><?php if (isset($VariableErrors['Text_Faded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text_Faded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_text_warning')); ?>:</b></td>
-         <td><span id="Swap_Text_Warning" onClick="SetupColorPicker('Text_Warning')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text_Warning']; ?>">&nbsp;</span> <input type="text" id="Color_Text_Warning" name="Text_Warning" value="<?php echo $GLOBALS['Color_Text_Warning']; ?>"> ( <?php echo htmlentities(lang('color_description_text_warning')); ?> )<?php if (isset($VariableErrors['Text_Warning'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text_Warning'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Text_Warning" onClick="SetupColorPicker('Text_Warning')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Text_Warning']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Text_Warning" name="Text_Warning" value="<?php echo $GLOBALS['Color_Text_Warning']; ?>" onKeyUp="ColorChanged('Text_Warning')"> <?php echo htmlentities(lang('color_description_text_warning')); ?><?php if (isset($VariableErrors['Text_Warning'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Text_Warning'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_link')); ?>:</b></td>
-         <td><span id="Swap_Link" onClick="SetupColorPicker('Link')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Link']; ?>">&nbsp;</span> <input type="text" id="Color_Link" name="Link" value="<?php echo $GLOBALS['Color_Link']; ?>"> ( <?php echo htmlentities(lang('color_description_link')); ?> )<?php if (isset($VariableErrors['Link'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Link'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Link" onClick="SetupColorPicker('Link')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Link']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Link" name="Link" value="<?php echo $GLOBALS['Color_Link']; ?>" onKeyUp="ColorChanged('Link')"> <?php echo htmlentities(lang('color_description_link')); ?><?php if (isset($VariableErrors['Link'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Link'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_body')); ?>:</b></td>
-         <td><span id="Swap_Body" onClick="SetupColorPicker('Body')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Body']; ?>">&nbsp;</span> <input type="text" id="Color_Body" name="Body" value="<?php echo $GLOBALS['Color_Body']; ?>"> ( <?php echo htmlentities(lang('color_description_body')); ?> )<?php if (isset($VariableErrors['Body'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Body'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Body" onClick="SetupColorPicker('Body')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Body']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Body" name="Body" value="<?php echo $GLOBALS['Color_Body']; ?>" onKeyUp="ColorChanged('Body')"> <?php echo htmlentities(lang('color_description_body')); ?><?php if (isset($VariableErrors['Body'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Body'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_today')); ?>:</b></td>
-         <td><span id="Swap_Today" onClick="SetupColorPicker('Today')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Today']; ?>">&nbsp;</span> <input type="text" id="Color_Today" name="Today" value="<?php echo $GLOBALS['Color_Today']; ?>"> ( <?php echo htmlentities(lang('color_description_today')); ?> )<?php if (isset($VariableErrors['Today'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Today'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Today" onClick="SetupColorPicker('Today')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Today']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Today" name="Today" value="<?php echo $GLOBALS['Color_Today']; ?>" onKeyUp="ColorChanged('Today')"> <?php echo htmlentities(lang('color_description_today')); ?><?php if (isset($VariableErrors['Today'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Today'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_todaylight')); ?>:</b></td>
-         <td><span id="Swap_TodayLight" onClick="SetupColorPicker('TodayLight')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_TodayLight']; ?>">&nbsp;</span> <input type="text" id="Color_TodayLight" name="TodayLight" value="<?php echo $GLOBALS['Color_TodayLight']; ?>"> ( <?php echo htmlentities(lang('color_description_todaylight')); ?> )<?php if (isset($VariableErrors['TodayLight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['TodayLight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_TodayLight" onClick="SetupColorPicker('TodayLight')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_TodayLight']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_TodayLight" name="TodayLight" value="<?php echo $GLOBALS['Color_TodayLight']; ?>" onKeyUp="ColorChanged('TodayLight')"> <?php echo htmlentities(lang('color_description_todaylight')); ?><?php if (isset($VariableErrors['TodayLight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['TodayLight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_light_cell_bg')); ?>:</b></td>
-         <td><span id="Swap_Light_Cell_BG" onClick="SetupColorPicker('Light_Cell_BG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Light_Cell_BG']; ?>">&nbsp;</span> <input type="text" id="Color_Light_Cell_BG" name="Light_Cell_BG" value="<?php echo $GLOBALS['Color_Light_Cell_BG']; ?>"> ( <?php echo htmlentities(lang('color_description_light_cell_bg')); ?> )<?php if (isset($VariableErrors['Light_Cell_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Light_Cell_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Light_Cell_BG" onClick="SetupColorPicker('Light_Cell_BG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Light_Cell_BG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Light_Cell_BG" name="Light_Cell_BG" value="<?php echo $GLOBALS['Color_Light_Cell_BG']; ?>" onKeyUp="ColorChanged('Light_Cell_BG')"> <?php echo htmlentities(lang('color_description_light_cell_bg')); ?><?php if (isset($VariableErrors['Light_Cell_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Light_Cell_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_table_header_text')); ?>:</b></td>
-         <td><span id="Swap_Table_Header_Text" onClick="SetupColorPicker('Table_Header_Text')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Table_Header_Text']; ?>">&nbsp;</span> <input type="text" id="Color_Table_Header_Text" name="Table_Header_Text" value="<?php echo $GLOBALS['Color_Table_Header_Text']; ?>"> ( <?php echo htmlentities(lang('color_description_table_header_text')); ?> )<?php if (isset($VariableErrors['Table_Header_Text'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Table_Header_Text'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Table_Header_Text" onClick="SetupColorPicker('Table_Header_Text')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Table_Header_Text']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Table_Header_Text" name="Table_Header_Text" value="<?php echo $GLOBALS['Color_Table_Header_Text']; ?>" onKeyUp="ColorChanged('Table_Header_Text')"> <?php echo htmlentities(lang('color_description_table_header_text')); ?><?php if (isset($VariableErrors['Table_Header_Text'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Table_Header_Text'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_table_header_bg')); ?>:</b></td>
-         <td><span id="Swap_Table_Header_BG" onClick="SetupColorPicker('Table_Header_BG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Table_Header_BG']; ?>">&nbsp;</span> <input type="text" id="Color_Table_Header_BG" name="Table_Header_BG" value="<?php echo $GLOBALS['Color_Table_Header_BG']; ?>"> ( <?php echo htmlentities(lang('color_description_table_header_bg')); ?> )<?php if (isset($VariableErrors['Table_Header_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Table_Header_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Table_Header_BG" onClick="SetupColorPicker('Table_Header_BG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Table_Header_BG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Table_Header_BG" name="Table_Header_BG" value="<?php echo $GLOBALS['Color_Table_Header_BG']; ?>" onKeyUp="ColorChanged('Table_Header_BG')"> <?php echo htmlentities(lang('color_description_table_header_bg')); ?><?php if (isset($VariableErrors['Table_Header_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Table_Header_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_border')); ?>:</b></td>
-         <td><span id="Swap_Border" onClick="SetupColorPicker('Border')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Border']; ?>">&nbsp;</span> <input type="text" id="Color_Border" name="Border" value="<?php echo $GLOBALS['Color_Border']; ?>"> ( <?php echo htmlentities(lang('color_description_border')); ?> )<?php if (isset($VariableErrors['Border'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Border'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Border" onClick="SetupColorPicker('Border')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Border']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Border" name="Border" value="<?php echo $GLOBALS['Color_Border']; ?>" onKeyUp="ColorChanged('Border')"> <?php echo htmlentities(lang('color_description_border')); ?><?php if (isset($VariableErrors['Border'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Border'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_keyword_highlight')); ?>:</b></td>
-         <td><span id="Swap_Keyword_Highlight" onClick="SetupColorPicker('Keyword_Highlight')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Keyword_Highlight']; ?>">&nbsp;</span> <input type="text" id="Color_Keyword_Highlight" name="Keyword_Highlight" value="<?php echo $GLOBALS['Color_Keyword_Highlight']; ?>"> ( <?php echo htmlentities(lang('color_description_keyword_highlight')); ?> )<?php if (isset($VariableErrors['Keyword_Highlight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Keyword_Highlight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Keyword_Highlight" onClick="SetupColorPicker('Keyword_Highlight')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Keyword_Highlight']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Keyword_Highlight" name="Keyword_Highlight" value="<?php echo $GLOBALS['Color_Keyword_Highlight']; ?>" onKeyUp="ColorChanged('Keyword_Highlight')"> <?php echo htmlentities(lang('color_description_keyword_highlight')); ?><?php if (isset($VariableErrors['Keyword_Highlight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Keyword_Highlight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_h2')); ?>:</b></td>
-         <td><span id="Swap_H2" onClick="SetupColorPicker('H2')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_H2']; ?>">&nbsp;</span> <input type="text" id="Color_H2" name="H2" value="<?php echo $GLOBALS['Color_H2']; ?>"> ( <?php echo htmlentities(lang('color_description_h2')); ?> )<?php if (isset($VariableErrors['H2'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['H2'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_H2" onClick="SetupColorPicker('H2')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_H2']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_H2" name="H2" value="<?php echo $GLOBALS['Color_H2']; ?>" onKeyUp="ColorChanged('H2')"> <?php echo htmlentities(lang('color_description_h2')); ?><?php if (isset($VariableErrors['H2'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['H2'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_h3')); ?>:</b></td>
-         <td><span id="Swap_H3" onClick="SetupColorPicker('H3')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_H3']; ?>">&nbsp;</span> <input type="text" id="Color_H3" name="H3" value="<?php echo $GLOBALS['Color_H3']; ?>"> ( <?php echo htmlentities(lang('color_description_h3')); ?> )<?php if (isset($VariableErrors['H3'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['H3'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_H3" onClick="SetupColorPicker('H3')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_H3']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_H3" name="H3" value="<?php echo $GLOBALS['Color_H3']; ?>" onKeyUp="ColorChanged('H3')"> <?php echo htmlentities(lang('color_description_h3')); ?><?php if (isset($VariableErrors['H3'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['H3'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_titletabs')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_titletabs')); ?>:</h3>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_title')); ?>:</b></td>
-         <td><span id="Swap_Title" onClick="SetupColorPicker('Title')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Title']; ?>">&nbsp;</span> <input type="text" id="Color_Title" name="Title" value="<?php echo $GLOBALS['Color_Title']; ?>"> ( <?php echo htmlentities(lang('color_description_title')); ?> )<?php if (isset($VariableErrors['Title'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Title'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_Title" onClick="SetupColorPicker('Title')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_Title']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_Title" name="Title" value="<?php echo $GLOBALS['Color_Title']; ?>" onKeyUp="ColorChanged('Title')"> <?php echo htmlentities(lang('color_description_title')); ?><?php if (isset($VariableErrors['Title'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['Title'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_tabgrayed')); ?>:</b></td>
-         <td><span id="Swap_TabGrayed" onClick="SetupColorPicker('TabGrayed')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_TabGrayed']; ?>">&nbsp;</span> <input type="text" id="Color_TabGrayed" name="TabGrayed" value="<?php echo $GLOBALS['Color_TabGrayed']; ?>"> ( <?php echo htmlentities(lang('color_description_tabgrayed')); ?> )<?php if (isset($VariableErrors['TabGrayed'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['TabGrayed'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_TabGrayed" onClick="SetupColorPicker('TabGrayed')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_TabGrayed']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_TabGrayed" name="TabGrayed" value="<?php echo $GLOBALS['Color_TabGrayed']; ?>" onKeyUp="ColorChanged('TabGrayed')"> <?php echo htmlentities(lang('color_description_tabgrayed')); ?><?php if (isset($VariableErrors['TabGrayed'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['TabGrayed'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_filternotice')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_filternotice')); ?>:</h3>
    <div style="padding: 2px; padding-left: 15px;"><?php echo htmlentities(lang('color_section_description_filternotice')); ?></div>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_filternotice_bg')); ?>:</b></td>
-         <td><span id="Swap_FilterNotice_BG" onClick="SetupColorPicker('FilterNotice_BG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_BG']; ?>">&nbsp;</span> <input type="text" id="Color_FilterNotice_BG" name="FilterNotice_BG" value="<?php echo $GLOBALS['Color_FilterNotice_BG']; ?>"> ( <?php echo htmlentities(lang('color_description_filternotice_bg')); ?> )<?php if (isset($VariableErrors['FilterNotice_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_FilterNotice_BG" onClick="SetupColorPicker('FilterNotice_BG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_BG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_FilterNotice_BG" name="FilterNotice_BG" value="<?php echo $GLOBALS['Color_FilterNotice_BG']; ?>" onKeyUp="ColorChanged('FilterNotice_BG')"> <?php echo htmlentities(lang('color_description_filternotice_bg')); ?><?php if (isset($VariableErrors['FilterNotice_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_filternotice_font')); ?>:</b></td>
-         <td><span id="Swap_FilterNotice_Font" onClick="SetupColorPicker('FilterNotice_Font')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_Font']; ?>">&nbsp;</span> <input type="text" id="Color_FilterNotice_Font" name="FilterNotice_Font" value="<?php echo $GLOBALS['Color_FilterNotice_Font']; ?>"> ( <?php echo htmlentities(lang('color_description_filternotice_font')); ?> )<?php if (isset($VariableErrors['FilterNotice_Font'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_Font'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_FilterNotice_Font" onClick="SetupColorPicker('FilterNotice_Font')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_Font']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_FilterNotice_Font" name="FilterNotice_Font" value="<?php echo $GLOBALS['Color_FilterNotice_Font']; ?>" onKeyUp="ColorChanged('FilterNotice_Font')"> <?php echo htmlentities(lang('color_description_filternotice_font')); ?><?php if (isset($VariableErrors['FilterNotice_Font'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_Font'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_filternotice_fontfaded')); ?>:</b></td>
-         <td><span id="Swap_FilterNotice_FontFaded" onClick="SetupColorPicker('FilterNotice_FontFaded')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_FontFaded']; ?>">&nbsp;</span> <input type="text" id="Color_FilterNotice_FontFaded" name="FilterNotice_FontFaded" value="<?php echo $GLOBALS['Color_FilterNotice_FontFaded']; ?>"> ( <?php echo htmlentities(lang('color_description_filternotice_fontfaded')); ?> )<?php if (isset($VariableErrors['FilterNotice_FontFaded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_FontFaded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_FilterNotice_FontFaded" onClick="SetupColorPicker('FilterNotice_FontFaded')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_FilterNotice_FontFaded']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_FilterNotice_FontFaded" name="FilterNotice_FontFaded" value="<?php echo $GLOBALS['Color_FilterNotice_FontFaded']; ?>" onKeyUp="ColorChanged('FilterNotice_FontFaded')"> <?php echo htmlentities(lang('color_description_filternotice_fontfaded')); ?><?php if (isset($VariableErrors['FilterNotice_FontFaded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_FontFaded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_filternotice_bgimage')); ?>:</b></td>
-         <td><input type="text" id="Color_FilterNotice_BGImage" name="FilterNotice_BGImage" value="<?php echo $GLOBALS['Color_FilterNotice_BGImage']; ?>"> ( <?php echo htmlentities(lang('color_description_filternotice_bgimage')); ?> )<?php if (isset($VariableErrors['FilterNotice_BGImage'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_BGImage'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><input type="text" id="Color_FilterNotice_BGImage" name="FilterNotice_BGImage" value="<?php echo $GLOBALS['Color_FilterNotice_BGImage']; ?>" onKeyUp="ColorChanged('FilterNotice_BGImage')"> <?php echo htmlentities(lang('color_description_filternotice_bgimage')); ?><?php if (isset($VariableErrors['FilterNotice_BGImage'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['FilterNotice_BGImage'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_eventbar')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_eventbar')); ?>:</h3>
    <div style="padding: 2px; padding-left: 15px;"><?php echo htmlentities(lang('color_section_description_eventbar')); ?></div>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_eventbar_past')); ?>:</b></td>
-         <td><span id="Swap_EventBar_Past" onClick="SetupColorPicker('EventBar_Past')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Past']; ?>">&nbsp;</span> <input type="text" id="Color_EventBar_Past" name="EventBar_Past" value="<?php echo $GLOBALS['Color_EventBar_Past']; ?>"> ( <?php echo htmlentities(lang('color_description_eventbar_past')); ?> )<?php if (isset($VariableErrors['EventBar_Past'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Past'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_EventBar_Past" onClick="SetupColorPicker('EventBar_Past')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Past']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_EventBar_Past" name="EventBar_Past" value="<?php echo $GLOBALS['Color_EventBar_Past']; ?>" onKeyUp="ColorChanged('EventBar_Past')"> <?php echo htmlentities(lang('color_description_eventbar_past')); ?><?php if (isset($VariableErrors['EventBar_Past'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Past'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_eventbar_current')); ?>:</b></td>
-         <td><span id="Swap_EventBar_Current" onClick="SetupColorPicker('EventBar_Current')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Current']; ?>">&nbsp;</span> <input type="text" id="Color_EventBar_Current" name="EventBar_Current" value="<?php echo $GLOBALS['Color_EventBar_Current']; ?>"> ( <?php echo htmlentities(lang('color_description_eventbar_current')); ?> )<?php if (isset($VariableErrors['EventBar_Current'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Current'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_EventBar_Current" onClick="SetupColorPicker('EventBar_Current')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Current']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_EventBar_Current" name="EventBar_Current" value="<?php echo $GLOBALS['Color_EventBar_Current']; ?>" onKeyUp="ColorChanged('EventBar_Current')"> <?php echo htmlentities(lang('color_description_eventbar_current')); ?><?php if (isset($VariableErrors['EventBar_Current'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Current'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_eventbar_future')); ?>:</b></td>
-         <td><span id="Swap_EventBar_Future" onClick="SetupColorPicker('EventBar_Future')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Future']; ?>">&nbsp;</span> <input type="text" id="Color_EventBar_Future" name="EventBar_Future" value="<?php echo $GLOBALS['Color_EventBar_Future']; ?>"> ( <?php echo htmlentities(lang('color_description_eventbar_future')); ?> )<?php if (isset($VariableErrors['EventBar_Future'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Future'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_EventBar_Future" onClick="SetupColorPicker('EventBar_Future')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_EventBar_Future']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_EventBar_Future" name="EventBar_Future" value="<?php echo $GLOBALS['Color_EventBar_Future']; ?>" onKeyUp="ColorChanged('EventBar_Future')"> <?php echo htmlentities(lang('color_description_eventbar_future')); ?><?php if (isset($VariableErrors['EventBar_Future'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['EventBar_Future'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_monthdaylabels')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_monthdaylabels')); ?>:</h3>
    <div style="padding: 2px; padding-left: 15px;"><?php echo htmlentities(lang('color_section_description_monthdaylabels')); ?></div>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_monthdaylabels_past')); ?>:</b></td>
-         <td><span id="Swap_MonthDayLabels_Past" onClick="SetupColorPicker('MonthDayLabels_Past')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Past']; ?>">&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Past" name="MonthDayLabels_Past" value="<?php echo $GLOBALS['Color_MonthDayLabels_Past']; ?>"> ( <?php echo htmlentities(lang('color_description_monthdaylabels_past')); ?> )<?php if (isset($VariableErrors['MonthDayLabels_Past'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Past'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_MonthDayLabels_Past" onClick="SetupColorPicker('MonthDayLabels_Past')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Past']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Past" name="MonthDayLabels_Past" value="<?php echo $GLOBALS['Color_MonthDayLabels_Past']; ?>" onKeyUp="ColorChanged('MonthDayLabels_Past')"> <?php echo htmlentities(lang('color_description_monthdaylabels_past')); ?><?php if (isset($VariableErrors['MonthDayLabels_Past'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Past'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_monthdaylabels_current')); ?>:</b></td>
-         <td><span id="Swap_MonthDayLabels_Current" onClick="SetupColorPicker('MonthDayLabels_Current')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Current']; ?>">&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Current" name="MonthDayLabels_Current" value="<?php echo $GLOBALS['Color_MonthDayLabels_Current']; ?>"> ( <?php echo htmlentities(lang('color_description_monthdaylabels_current')); ?> )<?php if (isset($VariableErrors['MonthDayLabels_Current'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Current'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_MonthDayLabels_Current" onClick="SetupColorPicker('MonthDayLabels_Current')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Current']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Current" name="MonthDayLabels_Current" value="<?php echo $GLOBALS['Color_MonthDayLabels_Current']; ?>" onKeyUp="ColorChanged('MonthDayLabels_Current')"> <?php echo htmlentities(lang('color_description_monthdaylabels_current')); ?><?php if (isset($VariableErrors['MonthDayLabels_Current'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Current'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_monthdaylabels_future')); ?>:</b></td>
-         <td><span id="Swap_MonthDayLabels_Future" onClick="SetupColorPicker('MonthDayLabels_Future')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Future']; ?>">&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Future" name="MonthDayLabels_Future" value="<?php echo $GLOBALS['Color_MonthDayLabels_Future']; ?>"> ( <?php echo htmlentities(lang('color_description_monthdaylabels_future')); ?> )<?php if (isset($VariableErrors['MonthDayLabels_Future'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Future'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_MonthDayLabels_Future" onClick="SetupColorPicker('MonthDayLabels_Future')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_MonthDayLabels_Future']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_MonthDayLabels_Future" name="MonthDayLabels_Future" value="<?php echo $GLOBALS['Color_MonthDayLabels_Future']; ?>" onKeyUp="ColorChanged('MonthDayLabels_Future')"> <?php echo htmlentities(lang('color_description_monthdaylabels_future')); ?><?php if (isset($VariableErrors['MonthDayLabels_Future'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['MonthDayLabels_Future'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_monthspecific')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_monthspecific')); ?>:</h3>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_othermonth')); ?>:</b></td>
-         <td><span id="Swap_OtherMonth" onClick="SetupColorPicker('OtherMonth')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_OtherMonth']; ?>">&nbsp;</span> <input type="text" id="Color_OtherMonth" name="OtherMonth" value="<?php echo $GLOBALS['Color_OtherMonth']; ?>"> ( <?php echo htmlentities(lang('color_description_othermonth')); ?> )<?php if (isset($VariableErrors['OtherMonth'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['OtherMonth'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_OtherMonth" onClick="SetupColorPicker('OtherMonth')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_OtherMonth']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_OtherMonth" name="OtherMonth" value="<?php echo $GLOBALS['Color_OtherMonth']; ?>" onKeyUp="ColorChanged('OtherMonth')"> <?php echo htmlentities(lang('color_description_othermonth')); ?><?php if (isset($VariableErrors['OtherMonth'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['OtherMonth'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_littlecalendar')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_littlecalendar')); ?>:</h3>
    <div style="padding: 2px; padding-left: 15px;"><?php echo htmlentities(lang('color_section_description_littlecalendar')); ?></div>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_littlecal_today')); ?>:</b></td>
-         <td><span id="Swap_LittleCal_Today" onClick="SetupColorPicker('LittleCal_Today')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Today']; ?>">&nbsp;</span> <input type="text" id="Color_LittleCal_Today" name="LittleCal_Today" value="<?php echo $GLOBALS['Color_LittleCal_Today']; ?>"> ( <?php echo htmlentities(lang('color_description_littlecal_today')); ?> )<?php if (isset($VariableErrors['LittleCal_Today'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Today'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_LittleCal_Today" onClick="SetupColorPicker('LittleCal_Today')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Today']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_LittleCal_Today" name="LittleCal_Today" value="<?php echo $GLOBALS['Color_LittleCal_Today']; ?>" onKeyUp="ColorChanged('LittleCal_Today')"> <?php echo htmlentities(lang('color_description_littlecal_today')); ?><?php if (isset($VariableErrors['LittleCal_Today'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Today'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_littlecal_highlight')); ?>:</b></td>
-         <td><span id="Swap_LittleCal_Highlight" onClick="SetupColorPicker('LittleCal_Highlight')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Highlight']; ?>">&nbsp;</span> <input type="text" id="Color_LittleCal_Highlight" name="LittleCal_Highlight" value="<?php echo $GLOBALS['Color_LittleCal_Highlight']; ?>"> ( <?php echo htmlentities(lang('color_description_littlecal_highlight')); ?> )<?php if (isset($VariableErrors['LittleCal_Highlight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Highlight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_LittleCal_Highlight" onClick="SetupColorPicker('LittleCal_Highlight')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Highlight']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_LittleCal_Highlight" name="LittleCal_Highlight" value="<?php echo $GLOBALS['Color_LittleCal_Highlight']; ?>" onKeyUp="ColorChanged('LittleCal_Highlight')"> <?php echo htmlentities(lang('color_description_littlecal_highlight')); ?><?php if (isset($VariableErrors['LittleCal_Highlight'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Highlight'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_littlecal_fontfaded')); ?>:</b></td>
-         <td><span id="Swap_LittleCal_FontFaded" onClick="SetupColorPicker('LittleCal_FontFaded')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_FontFaded']; ?>">&nbsp;</span> <input type="text" id="Color_LittleCal_FontFaded" name="LittleCal_FontFaded" value="<?php echo $GLOBALS['Color_LittleCal_FontFaded']; ?>"> ( <?php echo htmlentities(lang('color_description_littlecal_fontfaded')); ?> )<?php if (isset($VariableErrors['LittleCal_FontFaded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_FontFaded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_LittleCal_FontFaded" onClick="SetupColorPicker('LittleCal_FontFaded')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_FontFaded']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_LittleCal_FontFaded" name="LittleCal_FontFaded" value="<?php echo $GLOBALS['Color_LittleCal_FontFaded']; ?>" onKeyUp="ColorChanged('LittleCal_FontFaded')"> <?php echo htmlentities(lang('color_description_littlecal_fontfaded')); ?><?php if (isset($VariableErrors['LittleCal_FontFaded'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_FontFaded'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_littlecal_line')); ?>:</b></td>
-         <td><span id="Swap_LittleCal_Line" onClick="SetupColorPicker('LittleCal_Line')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Line']; ?>">&nbsp;</span> <input type="text" id="Color_LittleCal_Line" name="LittleCal_Line" value="<?php echo $GLOBALS['Color_LittleCal_Line']; ?>"> ( <?php echo htmlentities(lang('color_description_littlecal_line')); ?> )<?php if (isset($VariableErrors['LittleCal_Line'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Line'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_LittleCal_Line" onClick="SetupColorPicker('LittleCal_Line')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_LittleCal_Line']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_LittleCal_Line" name="LittleCal_Line" value="<?php echo $GLOBALS['Color_LittleCal_Line']; ?>" onKeyUp="ColorChanged('LittleCal_Line')"> <?php echo htmlentities(lang('color_description_littlecal_line')); ?><?php if (isset($VariableErrors['LittleCal_Line'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['LittleCal_Line'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_dateselector')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_dateselector')); ?>:</h3>
    <div style="padding: 2px; padding-left: 15px;"><?php echo htmlentities(lang('color_section_description_dateselector')); ?></div>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_gobtn_bg')); ?>:</b></td>
-         <td><span id="Swap_GOBtn_BG" onClick="SetupColorPicker('GOBtn_BG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_GOBtn_BG']; ?>">&nbsp;</span> <input type="text" id="Color_GOBtn_BG" name="GOBtn_BG" value="<?php echo $GLOBALS['Color_GOBtn_BG']; ?>"> ( <?php echo htmlentities(lang('color_description_gobtn_bg')); ?> )<?php if (isset($VariableErrors['GOBtn_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['GOBtn_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_GOBtn_BG" onClick="SetupColorPicker('GOBtn_BG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_GOBtn_BG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_GOBtn_BG" name="GOBtn_BG" value="<?php echo $GLOBALS['Color_GOBtn_BG']; ?>" onKeyUp="ColorChanged('GOBtn_BG')"> <?php echo htmlentities(lang('color_description_gobtn_bg')); ?><?php if (isset($VariableErrors['GOBtn_BG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['GOBtn_BG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_gobtn_border')); ?>:</b></td>
-         <td><span id="Swap_GOBtn_Border" onClick="SetupColorPicker('GOBtn_Border')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_GOBtn_Border']; ?>">&nbsp;</span> <input type="text" id="Color_GOBtn_Border" name="GOBtn_Border" value="<?php echo $GLOBALS['Color_GOBtn_Border']; ?>"> ( <?php echo htmlentities(lang('color_description_gobtn_border')); ?> )<?php if (isset($VariableErrors['GOBtn_Border'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['GOBtn_Border'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_GOBtn_Border" onClick="SetupColorPicker('GOBtn_Border')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_GOBtn_Border']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_GOBtn_Border" name="GOBtn_Border" value="<?php echo $GLOBALS['Color_GOBtn_Border']; ?>" onKeyUp="ColorChanged('GOBtn_Border')"> <?php echo htmlentities(lang('color_description_gobtn_border')); ?><?php if (isset($VariableErrors['GOBtn_Border'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['GOBtn_Border'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>
 </div>
 <div class="FormSectionHeader">
-   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_adminbuttons')); ?>::</h3>
+   <h3 style="margin: 0; padding: 0;"><?php echo htmlentities(lang('color_section_title_adminbuttons')); ?>:</h3>
 </div>
 <div style="padding-left: 18px;">
    <table border="0" cellpadding="2" cellspacing="0">
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_newborder')); ?>:</b></td>
-         <td><span id="Swap_NewBorder" onClick="SetupColorPicker('NewBorder')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_NewBorder']; ?>">&nbsp;</span> <input type="text" id="Color_NewBorder" name="NewBorder" value="<?php echo $GLOBALS['Color_NewBorder']; ?>"> ( <?php echo htmlentities(lang('color_description_newborder')); ?> )<?php if (isset($VariableErrors['NewBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['NewBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_NewBorder" onClick="SetupColorPicker('NewBorder')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_NewBorder']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_NewBorder" name="NewBorder" value="<?php echo $GLOBALS['Color_NewBorder']; ?>" onKeyUp="ColorChanged('NewBorder')"> <?php echo htmlentities(lang('color_description_newborder')); ?><?php if (isset($VariableErrors['NewBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['NewBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_newbg')); ?>:</b></td>
-         <td><span id="Swap_NewBG" onClick="SetupColorPicker('NewBG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_NewBG']; ?>">&nbsp;</span> <input type="text" id="Color_NewBG" name="NewBG" value="<?php echo $GLOBALS['Color_NewBG']; ?>"> ( <?php echo htmlentities(lang('color_description_newbg')); ?> )<?php if (isset($VariableErrors['NewBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['NewBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_NewBG" onClick="SetupColorPicker('NewBG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_NewBG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_NewBG" name="NewBG" value="<?php echo $GLOBALS['Color_NewBG']; ?>" onKeyUp="ColorChanged('NewBG')"> <?php echo htmlentities(lang('color_description_newbg')); ?><?php if (isset($VariableErrors['NewBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['NewBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_approveborder')); ?>:</b></td>
-         <td><span id="Swap_ApproveBorder" onClick="SetupColorPicker('ApproveBorder')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_ApproveBorder']; ?>">&nbsp;</span> <input type="text" id="Color_ApproveBorder" name="ApproveBorder" value="<?php echo $GLOBALS['Color_ApproveBorder']; ?>"> ( <?php echo htmlentities(lang('color_description_approveborder')); ?> )<?php if (isset($VariableErrors['ApproveBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['ApproveBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_ApproveBorder" onClick="SetupColorPicker('ApproveBorder')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_ApproveBorder']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_ApproveBorder" name="ApproveBorder" value="<?php echo $GLOBALS['Color_ApproveBorder']; ?>" onKeyUp="ColorChanged('ApproveBorder')"> <?php echo htmlentities(lang('color_description_approveborder')); ?><?php if (isset($VariableErrors['ApproveBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['ApproveBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_approvebg')); ?>:</b></td>
-         <td><span id="Swap_ApproveBG" onClick="SetupColorPicker('ApproveBG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_ApproveBG']; ?>">&nbsp;</span> <input type="text" id="Color_ApproveBG" name="ApproveBG" value="<?php echo $GLOBALS['Color_ApproveBG']; ?>"> ( <?php echo htmlentities(lang('color_description_approvebg')); ?> )<?php if (isset($VariableErrors['ApproveBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['ApproveBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_ApproveBG" onClick="SetupColorPicker('ApproveBG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_ApproveBG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_ApproveBG" name="ApproveBG" value="<?php echo $GLOBALS['Color_ApproveBG']; ?>" onKeyUp="ColorChanged('ApproveBG')"> <?php echo htmlentities(lang('color_description_approvebg')); ?><?php if (isset($VariableErrors['ApproveBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['ApproveBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_copyborder')); ?>:</b></td>
-         <td><span id="Swap_CopyBorder" onClick="SetupColorPicker('CopyBorder')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_CopyBorder']; ?>">&nbsp;</span> <input type="text" id="Color_CopyBorder" name="CopyBorder" value="<?php echo $GLOBALS['Color_CopyBorder']; ?>"> ( <?php echo htmlentities(lang('color_description_copyborder')); ?> )<?php if (isset($VariableErrors['CopyBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['CopyBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_CopyBorder" onClick="SetupColorPicker('CopyBorder')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_CopyBorder']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_CopyBorder" name="CopyBorder" value="<?php echo $GLOBALS['Color_CopyBorder']; ?>" onKeyUp="ColorChanged('CopyBorder')"> <?php echo htmlentities(lang('color_description_copyborder')); ?><?php if (isset($VariableErrors['CopyBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['CopyBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_copybg')); ?>:</b></td>
-         <td><span id="Swap_CopyBG" onClick="SetupColorPicker('CopyBG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_CopyBG']; ?>">&nbsp;</span> <input type="text" id="Color_CopyBG" name="CopyBG" value="<?php echo $GLOBALS['Color_CopyBG']; ?>"> ( <?php echo htmlentities(lang('color_description_copybg')); ?> )<?php if (isset($VariableErrors['CopyBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['CopyBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_CopyBG" onClick="SetupColorPicker('CopyBG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_CopyBG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_CopyBG" name="CopyBG" value="<?php echo $GLOBALS['Color_CopyBG']; ?>" onKeyUp="ColorChanged('CopyBG')"> <?php echo htmlentities(lang('color_description_copybg')); ?><?php if (isset($VariableErrors['CopyBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['CopyBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_deleteborder')); ?>:</b></td>
-         <td><span id="Swap_DeleteBorder" onClick="SetupColorPicker('DeleteBorder')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_DeleteBorder']; ?>">&nbsp;</span> <input type="text" id="Color_DeleteBorder" name="DeleteBorder" value="<?php echo $GLOBALS['Color_DeleteBorder']; ?>"> ( <?php echo htmlentities(lang('color_description_deleteborder')); ?> )<?php if (isset($VariableErrors['DeleteBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['DeleteBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_DeleteBorder" onClick="SetupColorPicker('DeleteBorder')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_DeleteBorder']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_DeleteBorder" name="DeleteBorder" value="<?php echo $GLOBALS['Color_DeleteBorder']; ?>" onKeyUp="ColorChanged('DeleteBorder')"> <?php echo htmlentities(lang('color_description_deleteborder')); ?><?php if (isset($VariableErrors['DeleteBorder'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['DeleteBorder'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
       <tr>
          <td><b><?php echo htmlentities(lang('color_label_deletebg')); ?>:</b></td>
-         <td><span id="Swap_DeleteBG" onClick="SetupColorPicker('DeleteBG')" style="border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_DeleteBG']; ?>">&nbsp;</span> <input type="text" id="Color_DeleteBG" name="DeleteBG" value="<?php echo $GLOBALS['Color_DeleteBG']; ?>"> ( <?php echo htmlentities(lang('color_description_deletebg')); ?> )<?php if (isset($VariableErrors['DeleteBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['DeleteBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
+         <td><span id="Swap_DeleteBG" onClick="SetupColorPicker('DeleteBG')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border'];
+            ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_DeleteBG']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" id="Color_DeleteBG" name="DeleteBG" value="<?php echo $GLOBALS['Color_DeleteBG']; ?>" onKeyUp="ColorChanged('DeleteBG')"> <?php echo htmlentities(lang('color_description_deletebg')); ?><?php if (isset($VariableErrors['DeleteBG'])) { ?><span class="WarningText"><br> <?php echo htmlentities('"'.$VariableErrors['DeleteBG'] .'" '. lang('invalid_color')); ?></span><?php } ?>
          </td>
       </tr>
    </table>

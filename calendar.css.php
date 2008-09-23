@@ -639,8 +639,8 @@ div#AdminButtons-Small table#AdminButtons a {
 table#AdminButtons a#AdminButtons-New {
 	text-align: left;
 	padding-left: 25px;
-	background-color: <?php echo $NewBG; ?>;
-	border-color: <?php echo $NewBorder; ?>;
+	background-color: <?php echo $_SESSION['COLOR_NEWBG']; ?>;
+	border-color: <?php echo $_SESSION['COLOR_NEWBORDER']; ?>;
 	background-image: url("images/new-button.gif");
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-New {
@@ -649,8 +649,8 @@ div#AdminButtons-Small table#AdminButtons a#AdminButtons-New {
 table#AdminButtons a#AdminButtons-Edit {
 	text-align: left;
 	padding-left: 25px;
-	background-color: <?php echo $NewBG; ?>;
-	border-color: <?php echo $NewBorder; ?>;
+	background-color: <?php echo $_SESSION['COLOR_NEWBG'] ?>;
+	border-color: <?php echo $_SESSION['COLOR_NEWBORDER'] ?>;
 	background-image: url("images/edit-button.gif");
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Edit {
@@ -659,8 +659,8 @@ div#AdminButtons-Small table#AdminButtons a#AdminButtons-Edit {
 table#AdminButtons #AdminButtons-Copy {
 	text-align: left;
 	padding-left: 25px;
-	background-color: <?php echo $CopyBG; ?>;
-	border-color: <?php echo $CopyBorder; ?>;
+	background-color: <?php echo $_SESSION['COLOR_COPYBG'] ?>;
+	border-color: <?php echo $_SESSION['COLOR_COPYBORDER'] ?>;
 	background-image: url("images/copy-button.gif");
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Copy {
@@ -669,8 +669,8 @@ div#AdminButtons-Small table#AdminButtons a#AdminButtons-Copy {
 table#AdminButtons #AdminButtons-Delete, table#AdminButtons #AdminButtons-Reject {
 	text-align: left;
 	padding-left: 25px;
-	background-color: <?php echo $DeleteBG; ?>;
-	border-color: <?php echo $DeleteBorder; ?>;
+	background-color: <?php echo $_SESSION['COLOR_DELETEBG'] ?>;
+	border-color: <?php echo $_SESSION['COLOR_DELETEBORDER'] ?>;
 	background-image: url("images/delete-button.gif");
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Delete, div#AdminButtons-Small table#AdminButtons a#AdminButtons-Reject {
@@ -679,8 +679,8 @@ div#AdminButtons-Small table#AdminButtons a#AdminButtons-Delete, div#AdminButton
 table#AdminButtons a#AdminButtons-Approve {
 	text-align: left;
 	padding-left: 25px;
-	background-color: <?php echo $ApproveBG; ?>;
-	border-color: <?php echo $ApproveBorder; ?>;
+	background-color: <?php echo $_SESSION['COLOR_APPROVEBG'] ?>;
+	border-color: <?php echo $_SESSION['COLOR_APPROVEBORDER'] ?>;
 	background-image: url("images/ok-button.gif");
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Approve {

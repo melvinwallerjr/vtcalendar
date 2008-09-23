@@ -67,15 +67,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 	<form method="GET" action="" onSubmit="return false;">
 	<table border="0" cellspacing="4" cellpadding="0" align="center">
 		<tr>
-			<td valign="top">
+			<td valign="top" style="width: 256px height: 256px;">
 				<div id="cp1_ColorMap"></div>
 			</td>
+			
 			<td valign="top">
 				<div id="cp1_ColorBar"></div>
 			</td>
 
 			<td valign="top">
-
 				<table border="0" cellspacing="2" cellpadding="0">
 					<tr>
 						<td colspan="3" align="center">

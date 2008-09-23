@@ -1,10 +1,20 @@
 document.ColorChangeHandler = null;
+document.PickerOpenedHandler = null;
+document.PickerClosedHandler = null;
 
 var ie = false;
 if (document.all) { ie = true; nocolor = ''; }
 function getObj(id) {
 	if (ie) { return document.all[id]; } 
 	else {	return document.getElementById(id);	}
+}
+
+function PickerIsOpen() {
+	var picker = getObj("ColorPicker");
+	if (picker) {
+		return picker.style.display != 'none';
+	}
+	return false;
 }
 
 function PickColor(id, hex) {
@@ -20,6 +30,7 @@ function PickColor(id, hex) {
 		picker.style.left = getAbsoluteOffsetLeft(thelink);     
 		picker.style.display = 'block';
 		picker.src="scripts/colorpicker/index.php" + color;
+		if (document.PickerOpenedHandler) document.PickerOpenedHandler();
 	}
 }
 
@@ -29,13 +40,14 @@ function SetColor(hex) {
 	}
 	var picker = getObj("ColorPicker");
 	picker.style.display = 'none';
-	picker.src="scripts/colorpicker/blank.html";
+	//picker.src="scripts/colorpicker/blank.html";
 }
 
 function ClosePicker() {
 	var picker = getObj("ColorPicker");
 	picker.style.display = 'none';
-	picker.src="scripts/colorpicker/blank.html";
+	//picker.src="scripts/colorpicker/blank.html";
+	if (document.PickerClosedHandler) document.PickerClosedHandler();
 }
 
 function getAbsoluteOffsetTop(obj) {

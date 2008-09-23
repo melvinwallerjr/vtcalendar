@@ -24,6 +24,9 @@
         <xsl:value-of select="text()"/>
         <xsl:text>&#13;&#10;</xsl:text>
         
+    	<xsl:text>if (!isset($_SESSION['COLOR_</xsl:text>
+    	<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
+    	<xsl:text>'])) </xsl:text>
         <xsl:text>$_SESSION['COLOR_</xsl:text>
         <xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
         <xsl:text>'] = "</xsl:text>

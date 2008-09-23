@@ -51,6 +51,10 @@ function isValidInput($value, $type) {
 	elseif ($type=='color') {
 		if (preg_match('/^#[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}$/',$value)) { return TRUE; }
 	}
+	elseif ($type=='background') {
+		// TODO: Does this need improving?
+		return true;
+	}
 	elseif ($type=='contact_name') {
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constContact_nameMaxLength.'}$/',$value)) { return TRUE; }
 	}

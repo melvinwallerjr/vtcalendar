@@ -58,6 +58,15 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 	background-color: <?php echo $_SESSION['COLOR_KEYWORD_HIGHLIGHT']; ?>;
 }
 
+/* Section headers used on various forms */
+#CalendarBlock div.FormSectionHeader {
+	margin-top: 16px;
+	padding: 4px;
+	margin-bottom: 6px;
+	border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
+	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
+}
+
 /*===================================
              Top Navi Bar
 ===================================*/

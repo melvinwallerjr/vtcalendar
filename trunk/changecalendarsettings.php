@@ -1,4 +1,4 @@
-<?php //
+<?php
 require_once('config.inc.php');
 require_once('session_start.inc.php');
 require_once('application.inc.php');
@@ -20,7 +20,7 @@ redirect2URL("update.php");
 exit;
 };
 
-// Re-read the settings from the DB if one of the required fields was not set,
+// Re-read the settings from the DB if one of the required fields was not set.
 if (!(isset($title) && isset($header) && isset($footer) && isset($viewauthrequired))) {
 	$title = $_SESSION['CALENDAR_TITLE'];	
 	$header = $_SESSION['CALENDAR_HEADER'];	

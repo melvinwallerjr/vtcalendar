@@ -17,6 +17,7 @@ function pageheader($title, $navbaractive) {
 		<script type="text/javascript" src="scripts/browsersniffer.js"></script>
 		<script type="text/javascript" src="scripts/general.js"></script>
 		<script type="text/javascript" src="scripts/update.js"></script>
+		<script type="text/javascript" src="scripts/colorpicker/colorpicker.js"></script>
 		<script type="text/javascript"><!--
 		// If the browser does not support try/catch, then do not let it run the ChangeCalendar() scripts.
 		if (is_ie3 || is_ie4 || is_js < 1.3) {

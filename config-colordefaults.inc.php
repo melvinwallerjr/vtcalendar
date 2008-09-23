@@ -1,6 +1,7 @@
 <?php
+
 /* ==============================================
-                 Generic Colors
+Generic Colors
 ============================================== */
 
 // The default color of backgrounds inside the calendar.
@@ -49,7 +50,7 @@ $_SESSION['COLOR_H2'] = "#000000";
 $_SESSION['COLOR_H3'] = "#0066CC";
 
 /* ==============================================
-                 Title and Tabs
+Title and Tabs
 ============================================== */
 
 // Calendar title displayed to the left of the tabs.
@@ -59,11 +60,11 @@ $_SESSION['COLOR_TITLE'] = "#000000";
 $_SESSION['COLOR_TABGRAYED'] = "#CCCCCC";
 
 /* ==============================================
-                 Filter Notice
+Filter Notice
 ============================================== */
 
 // Background color for the filter and search keyword notice box.
-$_SESSION['COLOR_FILTERNOTICE_BG'] = "#ad2525";
+$_SESSION['COLOR_FILTERNOTICE_BG'] = "#AD2525";
 
 // Font color for the filter and search keyword notice box.
 $_SESSION['COLOR_FILTERNOTICE_FONT'] = "#FFFFFF";
@@ -72,10 +73,10 @@ $_SESSION['COLOR_FILTERNOTICE_FONT'] = "#FFFFFF";
 $_SESSION['COLOR_FILTERNOTICE_FONTFADED'] = "#FFBEBE";
 
 // Background image for the filter and search keyword notice box (leave blank for no background image).
-$_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] = "url(images/background-filter.gif)";
+$_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] = "images/background-filter.gif";
 
 /* ==============================================
-                   Event Bar
+Event Bar
 ============================================== */
 
 // Colored bar displayed to the left of past event summaries
@@ -88,7 +89,7 @@ $_SESSION['COLOR_EVENTBAR_CURRENT'] = "#9292FB";
 $_SESSION['COLOR_EVENTBAR_FUTURE'] = "#A7A7FB";
 
 /* ==============================================
-                Month Day Labels
+Month Day Labels
 ============================================== */
 
 // Background colors that appear when the mouse hovers over the day number in month view.
@@ -101,38 +102,18 @@ $_SESSION['COLOR_MONTHDAYLABELS_CURRENT'] = "#FFD839";
 $_SESSION['COLOR_MONTHDAYLABELS_FUTURE'] = "#DDDDFF";
 
 /* ==============================================
-                  Admin Buttons
-============================================== */
-
-// "New Event" Admin Button
-$NewBorder = "#999933";
-$NewBG = "#FFFFCC";
-
-// "Approve" Admin Button
-$ApproveBorder = "#339933";
-$ApproveBG = "#CCFFCC";
-
-// "Copy Event" Admin Button
-$CopyBorder = "#555599";
-$CopyBG = "#DDDDFF";
-
-// "Delete Event" Admin Button
-$DeleteBorder = "#995555";
-$DeleteBG = "#FFDDDD";
-
-/* ==============================================
-              Month View Specific
+Specific to Month View
 ============================================== */
 
 // Background color for cells in month view that are not for the month currently being viewed.
 $_SESSION['COLOR_OTHERMONTH'] = "#EEEEEE";
 
 /* ==============================================
-                 Little Calendar
+Little Calendar
 ============================================== */
 
 // Color of the border around the current day in the little calendar
-$_SESSION['COLOR_LITTLECAL_TODAY'] = "#004a80";
+$_SESSION['COLOR_LITTLECAL_TODAY'] = "#004A80";
 
 // Background color for days in the little calendar that are being displayed in the main calendar
 $_SESSION['COLOR_LITTLECAL_HIGHLIGHT'] = "#CCCCCC";
@@ -144,7 +125,7 @@ $_SESSION['COLOR_LITTLECAL_FONTFADED'] = "#999999";
 $_SESSION['COLOR_LITTLECAL_LINE'] = "#999999";
 
 /* ==============================================
-                  Date Selector
+Date Selector
 ============================================== */
 
 // Background color for the date selector's "GO" button in the column
@@ -152,4 +133,33 @@ $_SESSION['COLOR_GOBTN_BG'] = "#FFCC66";
 
 // Border color for the date selector's "GO" button in the column
 $_SESSION['COLOR_GOBTN_BORDER'] = "#FFFFFF";
+
+/* ==============================================
+Admin Buttons
+============================================== */
+
+// Border color for "New Event" Admin Buttons
+$_SESSION['COLOR_NEWBORDER'] = "#999933";
+
+// Background color for "New Event" Admin Buttons
+$_SESSION['COLOR_NEWBG'] = "#FFFFCC";
+
+// Border color for "Approve" Admin Buttons
+$_SESSION['COLOR_APPROVEBORDER'] = "#339933";
+
+// Background color for "Approve" Admin Buttons
+$_SESSION['COLOR_APPROVEBG'] = "#CCFFCC";
+
+// Border color for "Copy Event" Admin Buttons
+$_SESSION['COLOR_COPYBORDER'] = "#555599";
+
+// Background color for "Copy Event" Admin Buttons
+$_SESSION['COLOR_COPYBG'] = "#DDDDFF";
+
+// Background color for "Delete Event" Admin Buttons
+$_SESSION['COLOR_DELETEBORDER'] = "#995555";
+
+// Border color for "Delete Event" Admin Buttons
+$_SESSION['COLOR_DELETEBG'] = "#FFDDDD";
+
 ?>

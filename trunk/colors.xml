@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<colors>
-    <section name="Generic Colors" image="">
-        <description></description>
-        <color label="Background" variable="BG" default="#FFFFFF">The default color of backgrounds inside the calendar.</color>
-        <color label="Text" variable="Text" default="#000000">Default color for text inside the calendar.</color>
-        <color label="Faded Text" variable="Text_Faded" default="#666666">Faded color for events that have passed.</color>
-        <color label="Warning Text" variable="Text_Warning" default="#FF0000">Text that is an urgent message.</color>
-        <color label="Link" variable="Link" default="#0000FF">Default link color.</color>
-        <color label="Body" variable="Body" default="#C3D9FF">General body color of the calendar.</color>
-        <color label="Today" variable="Today" default="#FFE993">Color that shows which day is today.</color>
-        <color label="Today (Lighter)" variable="TodayLight" default="#FFFFCC">Lighter color that shows which day is today.</color>
-        <color label="Light Cell Background" variable="Light_Cell_BG" default="#EEEEEE">Background color for table cells that have a decent amount of content.</color>
-        <color label="Table Header Text" variable="Table_Header_Text" default="#000000">Background color for table column headers.</color>
-        <color label="Table Header Background" variable="Table_Header_BG" default="#DDDDDD">Background color for table column headers.</color>
-        <color label="Border" variable="Border" default="#666666">Faded color for past events.</color>
-        <color label="Keyword Highlight" variable="Keyword_Highlight" default="#FFFF99">Color used to highlight keywords in search results.</color>
-        <color label="Second Level Header" variable="H2" default="#000000">Second level header used primarily on update.php.</color>
-        <color label="Third Level Header" variable="H3" default="#0066CC">Third level header used primarily on the changeeevent.php form.</color>
-    </section>
-    <section name="Title and Tabs">
-        <color label="Title" variable="Title" default="#000000">Calendar title displayed to the left of the tabs.</color>
-        <color label="Grayed Tab" variable="TabGrayed" default="#CCCCCC">Background color for navigation tabs that are not selected.</color>
-    </section>
-    <section name="Filter Notice">
-        <color label="Background" variable="FilterNotice_BG" default="#ad2525">Background color for the filter and search keyword notice box.</color>
-        <color label="Font" variable="FilterNotice_Font" default="#FFFFFF">Font color for the filter and search keyword notice box.</color>
-        <color label="Faded Font" variable="FilterNotice_FontFaded" default="#FFBEBE">Faded font color for the filter and search keyword notice box.</color>
-        <color label="Background Image" variable="FilterNotice_BGImage" default="url(images/background-filter.gif)">Background image for the filter and search keyword notice box (leave blank for no background image).</color>
-    </section>
-    <section name="Event Bar">
-        <color label="Past" variable="EventBar_Past" default="#CCCCCC">Colored bar displayed to the left of past event summaries</color>
-        <color label="Current" variable="EventBar_Current" default="#9292FB">Colored bar displayed to the left of current event summaries</color>
-        <color label="Future" variable="EventBar_Future" default="#A7A7FB">Colored bar displayed to the left of future event summaries</color>
-    </section>
-    <section name="Admin Buttons">
-        <color label="New Border" variable="NewBorder" default="#999933">Border color for "New Event" Admin Buttons</color>
-        <color label="New Background" variable="NewBG" default="#FFFFCC">Background color for "New Event" Admin Buttons</color>
-        <color label="Approve Border" variable="ApproveBorder" default="#339933">Border color for "Approve" Admin Buttons</color>
-        <color label="Approve Background" variable="ApproveBG" default="#CCFFCC">Background color for "Approve" Admin Buttons</color>
-        <color label="Copy Border" variable="CopyBorder" default="#555599">Border color for "Copy Event" Admin Buttons</color>
-        <color label="Copy Background" variable="CopyBG" default="#DDDDFF">Background color for "Copy Event" Admin Buttons</color>
-        <color label="Delete Border" variable="DeleteBorder" default="#995555">Background color for "Delete Event" Admin Buttons</color>
-        <color label="Delete Background" variable="DeleteBG" default="#FFDDDD">Border color for "Delete Event" Admin Buttons</color>
-    </section>
-    <section name="Month Day Labels">
-        <color label="Past" variable="MonthDayLabels_Past" default="#DDDDDD">Background colors that appear when the mouse hovers over the day number in month view.</color>
-        <color label="Current" variable="MonthDayLabels_Current" default="#FFD839">Background colors that appear when the mouse hovers over the day number in month view.</color>
-        <color label="Future" variable="MonthDayLabels_Future" default="#DDDDFF">Background colors that appear when the mouse hovers over the day number in month view.</color>
-    </section>
-    <section name="Month View Specific">
-        <color label="Other Month" variable="OtherMonth" default="#EEEEEE">Background color for cells in month view that are not for the month currently being viewed.</color>
-    </section>
-    <section name="Little Calendar">
-        <color label="Today" variable="LittleCal_Today" default="#004a80">Color of the border around the current day in the little calendar</color>
-        <color label="Highlight" variable="LittleCal_Highlight" default="#CCCCCC">Background color for days in the little calendar that are being displayed in the main calendar</color>
-        <color label="Faded Font" variable="LittleCal_FontFaded" default="#999999">Font color for days that are not part of the current month being displayed in the little calendar.</color>
-        <color label="Line" variable="LittleCal_Line" default="#999999">A small line below the S/M/T/W/T/F/S row in the little calendar</color>
-    </section>
-    <section name="Date Selector">
-        <color label="GO Button Background" variable="GOBtn_BG" default="#FFCC66">Background color for the date selector's "GO" button in the column</color>
-        <color label="GO Button Border" variable="GOBtn_Border" default="#FFFFFF">Border color for the date selector's "GO" button in the column</color>
-    </section>
-</colors>
+<Colors>
+    <Section name="Generic Colors" Image="">
+        <Description/>
+        <Color Label="Background" Variable="BG" Default="#FFFFFF">The default color of backgrounds inside the calendar.</Color>
+        <Color Label="Text" Variable="Text" Default="#000000">Default color for text inside the calendar.</Color>
+        <Color Label="Faded Text" Variable="Text_Faded" Default="#666666">Faded color for events that have passed.</Color>
+        <Color Label="Warning Text" Variable="Text_Warning" Default="#FF0000">Text that is an urgent message.</Color>
+        <Color Label="Link" Variable="Link" Default="#0000FF">Default link color.</Color>
+        <Color Label="Body" Variable="Body" Default="#C3D9FF">General body color of the calendar.</Color>
+        <Color Label="Today" Variable="Today" Default="#FFE993">Color that shows which day is today.</Color>
+        <Color Label="Today (Lighter)" Variable="TodayLight" Default="#FFFFCC">Lighter color that shows which day is today.</Color>
+        <Color Label="Light Cell Background" Variable="Light_Cell_BG" Default="#EEEEEE">Background color for table cells that have a decent amount of content.</Color>
+        <Color Label="Table Header Text" Variable="Table_Header_Text" Default="#000000">Background color for table column headers.</Color>
+        <Color Label="Table Header Background" Variable="Table_Header_BG" Default="#DDDDDD">Background color for table column headers.</Color>
+        <Color Label="Border" Variable="Border" Default="#666666">Faded color for past events.</Color>
+        <Color Label="Keyword Highlight" Variable="Keyword_Highlight" Default="#FFFF99">Color used to highlight keywords in search results.</Color>
+        <Color Label="Second Level Header" Variable="H2" Default="#000000">Second level header used primarily on update.php.</Color>
+        <Color Label="Third Level Header" Variable="H3" Default="#0066CC">Third level header used primarily on the changeeevent.php form.</Color>
+    </Section>
+    <Section name="Title and Tabs">
+        <Color Label="Title" Variable="Title" Default="#000000">Calendar title displayed to the left of the tabs.</Color>
+        <Color Label="Grayed Tab" Variable="TabGrayed" Default="#CCCCCC">Background color for navigation tabs that are not selected.</Color>
+    </Section>
+    <Section name="Filter Notice">
+        <Color Label="Background" Variable="FilterNotice_BG" Default="#ad2525">Background color for the filter and search keyword notice box.</Color>
+        <Color Label="Font" Variable="FilterNotice_Font" Default="#FFFFFF">Font color for the filter and search keyword notice box.</Color>
+        <Color Label="Faded Font" Variable="FilterNotice_FontFaded" Default="#FFBEBE">Faded font color for the filter and search keyword notice box.</Color>
+        <Color Label="Background Image" Variable="FilterNotice_BGImage" Default="url(images/background-filter.gif)">Background image for the filter and search keyword notice box (leave blank for no background image).</Color>
+    </Section>
+    <Section name="Event Bar">
+        <Color Label="Past" Variable="EventBar_Past" Default="#CCCCCC">Colored bar displayed to the left of past event summaries</Color>
+        <Color Label="Current" Variable="EventBar_Current" Default="#9292FB">Colored bar displayed to the left of current event summaries</Color>
+        <Color Label="Future" Variable="EventBar_Future" Default="#A7A7FB">Colored bar displayed to the left of future event summaries</Color>
+    </Section>
+    <Section name="Admin Buttons">
+        <Color Label="New Border" Variable="NewBorder" Default="#999933">Border color for "New Event" Admin Buttons</Color>
+        <Color Label="New Background" Variable="NewBG" Default="#FFFFCC">Background color for "New Event" Admin Buttons</Color>
+        <Color Label="Approve Border" Variable="ApproveBorder" Default="#339933">Border color for "Approve" Admin Buttons</Color>
+        <Color Label="Approve Background" Variable="ApproveBG" Default="#CCFFCC">Background color for "Approve" Admin Buttons</Color>
+        <Color Label="Copy Border" Variable="CopyBorder" Default="#555599">Border color for "Copy Event" Admin Buttons</Color>
+        <Color Label="Copy Background" Variable="CopyBG" Default="#DDDDFF">Background color for "Copy Event" Admin Buttons</Color>
+        <Color Label="Delete Border" Variable="DeleteBorder" Default="#995555">Background color for "Delete Event" Admin Buttons</Color>
+        <Color Label="Delete Background" Variable="DeleteBG" Default="#FFDDDD">Border color for "Delete Event" Admin Buttons</Color>
+    </Section>
+    <Section name="Month Day Labels">
+        <Color Label="Past" Variable="MonthDayLabels_Past" Default="#DDDDDD">Background colors that appear when the mouse hovers over the day number in month view.</Color>
+        <Color Label="Current" Variable="MonthDayLabels_Current" Default="#FFD839">Background colors that appear when the mouse hovers over the day number in month view.</Color>
+        <Color Label="Future" Variable="MonthDayLabels_Future" Default="#DDDDFF">Background colors that appear when the mouse hovers over the day number in month view.</Color>
+    </Section>
+    <Section name="Month View Specific">
+        <Color Label="Other Month" Variable="OtherMonth" Default="#EEEEEE">Background color for cells in month view that are not for the month currently being viewed.</Color>
+    </Section>
+    <Section name="Little Calendar">
+        <Color Label="Today" Variable="LittleCal_Today" Default="#004a80">Color of the border around the current day in the little calendar</Color>
+        <Color Label="Highlight" Variable="LittleCal_Highlight" Default="#CCCCCC">Background color for days in the little calendar that are being displayed in the main calendar</Color>
+        <Color Label="Faded Font" Variable="LittleCal_FontFaded" Default="#999999">Font color for days that are not part of the current month being displayed in the little calendar.</Color>
+        <Color Label="Line" Variable="LittleCal_Line" Default="#999999">A small line below the S/M/T/W/T/F/S row in the little calendar</Color>
+    </Section>
+    <Section name="Date Selector">
+        <Color Label="GO Button Background" Variable="GOBtn_BG" Default="#FFCC66">Background color for the date selector's "GO" button in the column</Color>
+        <Color Label="GO Button Border" Variable="GOBtn_Border" Default="#FFFFFF">Border color for the date selector's "GO" button in the column</Color>
+    </Section>
+</Colors>

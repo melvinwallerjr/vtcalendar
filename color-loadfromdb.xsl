@@ -14,6 +14,10 @@
     		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
     		<xsl:text disable-output-escaping="yes">'], $record['</xsl:text>
     		<xsl:value-of select="@Variable"/>
-    		<xsl:text disable-output-escaping="yes">'], 'color'); }&#13;&#10;</xsl:text>
+    		<xsl:text disable-output-escaping="yes">'], 'color'); } else { $_SESSION['COLOR_</xsl:text>
+    		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
+    		<xsl:text disable-output-escaping="yes">'] = DEFAULTCOLOR_</xsl:text>
+    		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
+    		<xsl:text disable-output-escaping="yes">; } &#13;&#10;</xsl:text>
     	</xsl:for-each>
     </xsl:template></xsl:stylesheet>

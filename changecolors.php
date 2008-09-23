@@ -6,6 +6,7 @@ require_once('changecolors-functions.inc.php');
 
 $lang['click_for_color_picker'] = "Use Color Picker";
 $lang['reset_colors_button_text'] = "Reset Colors to Defaults";
+$lang['reset_to_default_color'] = "Reset to the Default Calendar Color";
 
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
@@ -62,6 +63,10 @@ document.body.onclick = function() {
 }
 function ColorChanged(idbase) {
 	document.getElementById("Swap_" + idbase).style.backgroundColor = document.getElementById("Color_" + idbase).value;
+}
+function ResetValue(idbase, defaultValue) {
+	document.getElementById("Color_" + idbase).value = defaultValue;
+	ColorChanged(idbase);
 }
 </script>
 

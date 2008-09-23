@@ -27,15 +27,17 @@ function calendar_exists($calendarid) {
 }
 
 function setCalendarPreferences() {
-	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
-	$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	$result =& DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+	if (is_string($result)) return $result;
 	
+	$calendar =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	$_SESSION['CALENDAR_TITLE'] = $calendar['title'];
 	$_SESSION['CALENDAR_NAME'] = $calendar['name'];
 	$_SESSION['CALENDAR_HEADER'] = $calendar['header'];
 	$_SESSION['CALENDAR_FOOTER'] = $calendar['footer'];
 	$_SESSION['CALENDAR_VIEWAUTHREQUIRED'] = $calendar['viewauthrequired'];
 	$_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'] = $calendar['forwardeventdefault'];
+	$calendar->free();
 	
 	// TODO: Query to load color table
 	/*
@@ -54,55 +56,54 @@ For sql replace:
   `\l2` char(7) NOT NULL,
 
 */
+
+	$result =& DBQuery("SELECT * FROM vtcal_colors WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+	if (is_string($result)) return $result;
+
+	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	if (isset($record['bg'])) { setVar($_SESSION['COLOR_BG'], $record['bg'], 'color'); }
+	if (isset($record['text'])) { setVar($_SESSION['COLOR_TEXT'], $record['text'], 'color'); }
+	if (isset($record['text_faded'])) { setVar($_SESSION['COLOR_TEXT_FADED'], $record['text_faded'], 'color'); }
+	if (isset($record['text_warning'])) { setVar($_SESSION['COLOR_TEXT_WARNING'], $record['text_warning'], 'color'); }
+	if (isset($record['link'])) { setVar($_SESSION['COLOR_LINK'], $record['link'], 'color'); }
+	if (isset($record['body'])) { setVar($_SESSION['COLOR_BODY'], $record['body'], 'color'); }
+	if (isset($record['today'])) { setVar($_SESSION['COLOR_TODAY'], $record['today'], 'color'); }
+	if (isset($record['todaylight'])) { setVar($_SESSION['COLOR_TODAYLIGHT'], $record['todaylight'], 'color'); }
+	if (isset($record['light_cell_bg'])) { setVar($_SESSION['COLOR_LIGHT_CELL_BG'], $record['light_cell_bg'], 'color'); }
+	if (isset($record['table_header_text'])) { setVar($_SESSION['COLOR_TABLE_HEADER_TEXT'], $record['table_header_text'], 'color'); }
+	if (isset($record['table_header_bg'])) { setVar($_SESSION['COLOR_TABLE_HEADER_BG'], $record['table_header_bg'], 'color'); }
+	if (isset($record['border'])) { setVar($_SESSION['COLOR_BORDER'], $record['border'], 'color'); }
+	if (isset($record['keyword_highlight'])) { setVar($_SESSION['COLOR_KEYWORD_HIGHLIGHT'], $record['keyword_highlight'], 'color'); }
+	if (isset($record['h2'])) { setVar($_SESSION['COLOR_H2'], $record['h2'], 'color'); }
+	if (isset($record['h3'])) { setVar($_SESSION['COLOR_H3'], $record['h3'], 'color'); }
+	if (isset($record['title'])) { setVar($_SESSION['COLOR_TITLE'], $record['title'], 'color'); }
+	if (isset($record['tabgrayed'])) { setVar($_SESSION['COLOR_TABGRAYED'], $record['tabgrayed'], 'color'); }
+	if (isset($record['filternotice_bg'])) { setVar($_SESSION['COLOR_FILTERNOTICE_BG'], $record['filternotice_bg'], 'color'); }
+	if (isset($record['filternotice_font'])) { setVar($_SESSION['COLOR_FILTERNOTICE_FONT'], $record['filternotice_font'], 'color'); }
+	if (isset($record['filternotice_fontfaded'])) { setVar($_SESSION['COLOR_FILTERNOTICE_FONTFADED'], $record['filternotice_fontfaded'], 'color'); }
+	if (isset($record['filternotice_bgimage'])) { setVar($_SESSION['COLOR_FILTERNOTICE_BGIMAGE'], $record['filternotice_bgimage'], 'color'); }
+	if (isset($record['eventbar_past'])) { setVar($_SESSION['COLOR_EVENTBAR_PAST'], $record['eventbar_past'], 'color'); }
+	if (isset($record['eventbar_current'])) { setVar($_SESSION['COLOR_EVENTBAR_CURRENT'], $record['eventbar_current'], 'color'); }
+	if (isset($record['eventbar_future'])) { setVar($_SESSION['COLOR_EVENTBAR_FUTURE'], $record['eventbar_future'], 'color'); }
+	if (isset($record['monthdaylabels_past'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_PAST'], $record['monthdaylabels_past'], 'color'); }
+	if (isset($record['monthdaylabels_current'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_CURRENT'], $record['monthdaylabels_current'], 'color'); }
+	if (isset($record['monthdaylabels_future'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_FUTURE'], $record['monthdaylabels_future'], 'color'); }
+	if (isset($record['othermonth'])) { setVar($_SESSION['COLOR_OTHERMONTH'], $record['othermonth'], 'color'); }
+	if (isset($record['littlecal_today'])) { setVar($_SESSION['COLOR_LITTLECAL_TODAY'], $record['littlecal_today'], 'color'); }
+	if (isset($record['littlecal_highlight'])) { setVar($_SESSION['COLOR_LITTLECAL_HIGHLIGHT'], $record['littlecal_highlight'], 'color'); }
+	if (isset($record['littlecal_fontfaded'])) { setVar($_SESSION['COLOR_LITTLECAL_FONTFADED'], $record['littlecal_fontfaded'], 'color'); }
+	if (isset($record['littlecal_line'])) { setVar($_SESSION['COLOR_LITTLECAL_LINE'], $record['littlecal_line'], 'color'); }
+	if (isset($record['gobtn_bg'])) { setVar($_SESSION['COLOR_GOBTN_BG'], $record['gobtn_bg'], 'color'); }
+	if (isset($record['gobtn_border'])) { setVar($_SESSION['COLOR_GOBTN_BORDER'], $record['gobtn_border'], 'color'); }
+	$record->free();
 	
-	
-if (isset($result['bg'])) { setVar($_SESSION['COLOR_BG'], $result['bg'], 'color'); }
-if (isset($result['text'])) { setVar($_SESSION['COLOR_TEXT'], $result['text'], 'color'); }
-if (isset($result['text_faded'])) { setVar($_SESSION['COLOR_TEXT_FADED'], $result['text_faded'], 'color'); }
-if (isset($result['text_warning'])) { setVar($_SESSION['COLOR_TEXT_WARNING'], $result['text_warning'], 'color'); }
-if (isset($result['link'])) { setVar($_SESSION['COLOR_LINK'], $result['link'], 'color'); }
-if (isset($result['body'])) { setVar($_SESSION['COLOR_BODY'], $result['body'], 'color'); }
-if (isset($result['today'])) { setVar($_SESSION['COLOR_TODAY'], $result['today'], 'color'); }
-if (isset($result['todaylight'])) { setVar($_SESSION['COLOR_TODAYLIGHT'], $result['todaylight'], 'color'); }
-if (isset($result['light_cell_bg'])) { setVar($_SESSION['COLOR_LIGHT_CELL_BG'], $result['light_cell_bg'], 'color'); }
-if (isset($result['table_header_text'])) { setVar($_SESSION['COLOR_TABLE_HEADER_TEXT'], $result['table_header_text'], 'color'); }
-if (isset($result['table_header_bg'])) { setVar($_SESSION['COLOR_TABLE_HEADER_BG'], $result['table_header_bg'], 'color'); }
-if (isset($result['border'])) { setVar($_SESSION['COLOR_BORDER'], $result['border'], 'color'); }
-if (isset($result['keyword_highlight'])) { setVar($_SESSION['COLOR_KEYWORD_HIGHLIGHT'], $result['keyword_highlight'], 'color'); }
-if (isset($result['h2'])) { setVar($_SESSION['COLOR_H2'], $result['h2'], 'color'); }
-if (isset($result['h3'])) { setVar($_SESSION['COLOR_H3'], $result['h3'], 'color'); }
-if (isset($result['title'])) { setVar($_SESSION['COLOR_TITLE'], $result['title'], 'color'); }
-if (isset($result['tabgrayed'])) { setVar($_SESSION['COLOR_TABGRAYED'], $result['tabgrayed'], 'color'); }
-if (isset($result['filternotice_bg'])) { setVar($_SESSION['COLOR_FILTERNOTICE_BG'], $result['filternotice_bg'], 'color'); }
-if (isset($result['filternotice_font'])) { setVar($_SESSION['COLOR_FILTERNOTICE_FONT'], $result['filternotice_font'], 'color'); }
-if (isset($result['filternotice_fontfaded'])) { setVar($_SESSION['COLOR_FILTERNOTICE_FONTFADED'], $result['filternotice_fontfaded'], 'color'); }
-if (isset($result['filternotice_bgimage'])) { setVar($_SESSION['COLOR_FILTERNOTICE_BGIMAGE'], $result['filternotice_bgimage'], 'color'); }
-if (isset($result['eventbar_past'])) { setVar($_SESSION['COLOR_EVENTBAR_PAST'], $result['eventbar_past'], 'color'); }
-if (isset($result['eventbar_current'])) { setVar($_SESSION['COLOR_EVENTBAR_CURRENT'], $result['eventbar_current'], 'color'); }
-if (isset($result['eventbar_future'])) { setVar($_SESSION['COLOR_EVENTBAR_FUTURE'], $result['eventbar_future'], 'color'); }
-if (isset($result['monthdaylabels_past'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_PAST'], $result['monthdaylabels_past'], 'color'); }
-if (isset($result['monthdaylabels_current'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_CURRENT'], $result['monthdaylabels_current'], 'color'); }
-if (isset($result['monthdaylabels_future'])) { setVar($_SESSION['COLOR_MONTHDAYLABELS_FUTURE'], $result['monthdaylabels_future'], 'color'); }
-if (isset($result['othermonth'])) { setVar($_SESSION['COLOR_OTHERMONTH'], $result['othermonth'], 'color'); }
-if (isset($result['littlecal_today'])) { setVar($_SESSION['COLOR_LITTLECAL_TODAY'], $result['littlecal_today'], 'color'); }
-if (isset($result['littlecal_highlight'])) { setVar($_SESSION['COLOR_LITTLECAL_HIGHLIGHT'], $result['littlecal_highlight'], 'color'); }
-if (isset($result['littlecal_fontfaded'])) { setVar($_SESSION['COLOR_LITTLECAL_FONTFADED'], $result['littlecal_fontfaded'], 'color'); }
-if (isset($result['littlecal_line'])) { setVar($_SESSION['COLOR_LITTLECAL_LINE'], $result['littlecal_line'], 'color'); }
-if (isset($result['gobtn_bg'])) { setVar($_SESSION['COLOR_GOBTN_BG'], $result['gobtn_bg'], 'color'); }
-if (isset($result['gobtn_border'])) { setVar($_SESSION['COLOR_GOBTN_BORDER'], $result['gobtn_border'], 'color'); }
-	
-	/*$_SESSION["BGCOLOR"] = $calendar['bgcolor'];
-	$_SESSION["MAINCOLOR"] = $calendar['maincolor'];
-	$_SESSION["TODAYCOLOR"] = $calendar['todaycolor'];
-	$_SESSION["PASTCOLOR"] = $calendar['pastcolor'];		
-	$_SESSION["FUTURECOLOR"] = $calendar['futurecolor'];		
-	$_SESSION["TEXTCOLOR"] = $calendar['textcolor'];		
-	$_SESSION["LINKCOLOR"] = $calendar['linkcolor'];		
-	$_SESSION["GRIDCOLOR"] = $calendar['gridcolor'];*/
-	
-	$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" ); 
-	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	$result =& DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" );
+	if (is_string($result)) return $result;
+	$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	$_SESSION['CALENDAR_ADMINEMAIL'] = $sponsor['email'];
+	$sponsor->free();
+	
+	return true;
 }
 
 function getNumCategories() {

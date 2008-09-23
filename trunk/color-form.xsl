@@ -104,7 +104,6 @@
                 <xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities(lang('color_section_title_</xsl:text>
                 <xsl:value-of select="translate(@Name, $Upper, $Lower)"/>
                 <xsl:text disable-output-escaping="yes">')); ?&gt;:</xsl:text>
-                <xsl:text>:</xsl:text>
             </h3>
 
             <xsl:if test="string-length(Description/text()) &gt; 0">

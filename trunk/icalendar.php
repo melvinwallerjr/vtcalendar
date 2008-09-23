@@ -4,7 +4,7 @@ require_once('session_start.inc.php');
 	// session_start introduces a cache header which results in problems with download unless it's changed
 	header("Cache-control: private");
 
-	require_once('application.inc.php');
+require_once('application.inc.php');
 	require_once("icalendar.inc.php");
 
 	if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }

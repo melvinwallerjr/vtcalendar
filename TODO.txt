@@ -1,4 +1,6 @@
-TODO:
+NEW TODO:
+===========================
+
 X Add helpsignup.php link back to displaylogin() in functions.inc.php
 X Should probably remove checking for HTTPS and just use
   SECUREBASEURL for the action of any forms that need to be

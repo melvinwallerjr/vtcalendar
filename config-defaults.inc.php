@@ -5,7 +5,11 @@
 // Any changes to this file may be overwritten when you upgrade to a newer version of VTCalendar.
 // ##############################################
 
-// H1: General
+// START GENERATED
+
+// =====================================
+// General
+// =====================================
 
 // Config: Title Prefix
 // Added at the beginning of the <title> tag.
@@ -16,34 +20,28 @@ if (!defined("TITLEPREFIX")) define("TITLEPREFIX", "");
 // Added at the end of the <title> tag.
 if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 
-// H1: Database
-
 // Config: Database Connection String
 // This is the database connection string used by the PEAR library.
 // It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"
 if (!defined("DATABASE")) define("DATABASE", "mysql://root:@localhost/vtcalendar");
 
+// Config: Language
+// Example: en, de
+// Language used (refers to language file in directory /languages)
+if (!defined("LANGUAGE")) define("LANGUAGE","en");
+
+// =====================================
+// Authentication
+// =====================================
+
+// Config: User ID Regular Expression
+// This regular expression defines what is considered a valid user-ID.
+if (!defined("REGEXVALIDUSERID")) define("REGEXVALIDUSERID", "/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/");
+
 // Config: Database Authentication
 // Authenticate users against the database.
 // If enabled, this is always performed before any other authentication.
 if (!defined("AUTH_DB")) define("AUTH_DB", true);
-
-// Config: LDAP Authentication
-// Authenticate users against a LDAP server.
-// If enabled, HTTP authenticate will be ignored.
-if (!defined("AUTH_LDAP")) define("AUTH_LDAP", false);
-
-// Config: HTTP Authentication
-// Authenticate users by sending an HTTP request to a server.
-// A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.
-// If LDAP authentication is enabled, this will be ignored.
-if (!defined("AUTH_HTTP")) define("AUTH_HTTP", false);
-
-// Check for an LDAP function if AUTH_LDAP is true.
-if (AUTH_LDAP && !function_exists("ldap_connect")) {
-	echo "PHP LDAP does not seem to be installed or configured. Make sure the extension is included in your php.ini file.";
-	exit();
-}
 
 // Config: Prefix for Database Usernames
 // Example: db_
@@ -58,29 +56,10 @@ if (!defined("AUTH_DB_USER_PREFIX")) define("AUTH_DB_USER_PREFIX", "");
 // know that they should create local users only if they are not in the LDAP.
 if (!defined("AUTH_DB_NOTICE")) define("AUTH_DB_NOTICE", "");
 
-// Config: User ID Regular Expression
-// This regular expression defines what is considered a valid user-ID.
-if (!defined("REGEXVALIDUSERID")) define("REGEXVALIDUSERID", "/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/");
-
-// Config: HTTP Authorizaton URL
-// Example: http://localhost/customauth.php
-// The URL to use for the BASIC HTTP Authentication.
-if (!defined("AUTH_HTTP_URL")) define("AUTH_HTTP_URL", "");
-
-// Make sure the HTTP auth URL is specified if AUTH_HTTP is true.
-if (AUTH_HTTP && empty(AUTH_HTTP_URL)) {
-	echo "You must set AUTH_HTTP_URL if AUTH_HTTP is set to true.";
-	exit();
-}
-
-// Config: HTTP Authentication Cache
-// Cache successful HTTP authentication attempts as hashes in DB.
-// This acts as a failover if the HTTP authentication fails due to a server error.
-if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
-
-// Config: HTTP Authentication Cache Expiration
-// The number of days in which data in the HTTP authentication cache is valid.
-if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
+// Config: LDAP Authentication
+// Authenticate users against a LDAP server.
+// If enabled, HTTP authenticate will be ignored.
+if (!defined("AUTH_LDAP")) define("AUTH_LDAP", false);
 
 // Config: LDAP Host Name
 if (!defined("LDAP_HOST")) define("LDAP_HOST", "");
@@ -114,12 +93,29 @@ if (!defined("LDAP_BIND_USER")) define("LDAP_BIND_USER", "");
 // Leave this blank to connect anonymously.
 if (!defined("LDAP_BIND_PASSWORD")) define("LDAP_BIND_PASSWORD", "");
 
-// Check that the required LDAP settings were set if AUTH_LDAP is true.
-if (AUTH_LDAP && (empty(LDAP_HOST) || empty(LDAP_USERFIELD) || empty(LDAP_BASE_DN))) {
-	echo "You must set LDAP_HOST, LDAP_USERFIELD and LDAP_BASE_DN if AUTH_LDAP is set to true.";
-	exit();
-}
+// Config: HTTP Authentication
+// Authenticate users by sending an HTTP request to a server.
+// A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.
+// If LDAP authentication is enabled, this will be ignored.
+if (!defined("AUTH_HTTP")) define("AUTH_HTTP", false);
 
+// Config: HTTP Authorizaton URL
+// Example: http://localhost/customauth.php
+// The URL to use for the BASIC HTTP Authentication.
+if (!defined("AUTH_HTTP_URL")) define("AUTH_HTTP_URL", "");
+
+// Config: HTTP Authentication Cache
+// Cache successful HTTP authentication attempts as hashes in DB.
+// This acts as a failover if the HTTP authentication fails due to a server error.
+if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
+
+// Config: HTTP Authentication Cache Expiration
+// The number of days in which data in the HTTP authentication cache is valid.
+if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
+
+// =====================================
+// Cookies
+// =====================================
 
 // Config: Cookie Base URL
 // Example: /calendar/
@@ -134,45 +130,42 @@ if (!defined("BASEPATH")) define("BASEPATH", "");
 // Otherwise, the cookie will be submitted with a default host name.
 if (!defined("BASEDOMAIN")) define("BASEDOMAIN", "");
 
+// =====================================
+// URL
+// =====================================
+
 // Config: Calendar Base URL
 // Example: http://localhost/calendar/
 // This is the absolute URL where your calendar software is located.
 // This MUST end with a slash "/"
 if (!defined("BASEURL")) define("BASEURL", "");
 
-if (empty(BASEURL) || substr(BASEURL, -1) != "/") {
-	echo "You must set BASEURL and it MUST end with a slash ('/').";
-	exit();
-}
-
 // Config: Secure Calendar Base URL
 // This is the absolute path where the secure version of the calendar is located.
 // If you are not using URL, set this to the same address as BASEURL.
 // This MUST end with a slash "/"
 if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
-if (substr(BASEURL, -1) != "/") {
-	echo "SECUREBASEURL MUST end with a slash ('/').";
-	exit();
-}
 
-// Config: SQL Log File
-// Example: /var/log/vtcalendarsql.log
-// Put a name of a (folder and) file where the calendar logs every
-// SQL query to the database. This is good for debugging but make
-// sure you write into a file that's not readable by the webserver or
-// else you may expose private information.
-// If left blank ("") no log will be kept. That's the default.
-if (!defined("SQLLOGFILE")) define("SQLLOGFILE","");
+// =====================================
+// Date/Time
+// =====================================
 
 // Config: Timezone Offset
 // Example: -5
 // Defines the offset to GMT, can be positive or negative
 if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", "5");
 
-// Config: Language
-// Example: en, de
-// Language used (refers to language file in directory /languages)
-if (!defined("LANGUAGE")) define("LANGUAGE","en");
+// Config: Week Starting Day
+// defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"
+if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY","0");
+
+// Config: Use AM/PM
+// defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)
+if (!defined("USE_AMPM")) define("USE_AMPM", TRUE);
+
+// =====================================
+// Display
+// =====================================
 
 // Config: Column Position
 // Which side the little calendar, 'jump to', 'today is', etc. will be on.
@@ -189,21 +182,54 @@ if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", TRUE);
 // Values must be TRUE or FALSE.
 if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", TRUE);
 
-// Config: Week Starting Day
-// defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"
-if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY","0");
-
-// Config: Use AM/PM
-// defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)
-if (!defined("USE_AMPM")) define("USE_AMPM", TRUE);
-
 // Config: Max Upcoming Events
 // Whether or not the upcoming tab will be shown.
 if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 
+// =====================================
+// Misc
+// =====================================
+
+// Config: SQL Log File
+// Example: /var/log/vtcalendarsql.log
+// Put a name of a (folder and) file where the calendar logs every
+// SQL query to the database. This is good for debugging but make
+// sure you write into a file that's not readable by the webserver or
+// else you may expose private information.
+// If left blank ("") no log will be kept. That's the default.
+if (!defined("SQLLOGFILE")) define("SQLLOGFILE","");
+
 // Config: Max Category Name Cache Size
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
 if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
+
+// Check for an LDAP function if AUTH_LDAP is true.
+if (AUTH_LDAP && !function_exists("ldap_connect")) {
+	echo "PHP LDAP does not seem to be installed or configured. Make sure the extension is included in your php.ini file.";
+	exit();
+}
+
+// Make sure the HTTP auth URL is specified if AUTH_HTTP is true.
+if (AUTH_HTTP && empty(AUTH_HTTP_URL)) {
+	echo "You must set AUTH_HTTP_URL if AUTH_HTTP is set to true.";
+	exit();
+}
+
+// Check that the required LDAP settings were set if AUTH_LDAP is true.
+if (AUTH_LDAP && (empty(LDAP_HOST) || empty(LDAP_USERFIELD) || empty(LDAP_BASE_DN))) {
+	echo "You must set LDAP_HOST, LDAP_USERFIELD and LDAP_BASE_DN if AUTH_LDAP is set to true.";
+	exit();
+}
+
+if (empty(BASEURL) || substr(BASEURL, -1) != "/") {
+	echo "You must set BASEURL and it MUST end with a slash ('/').";
+	exit();
+}
+
+if (substr(BASEURL, -1) != "/") {
+	echo "SECUREBASEURL MUST end with a slash ('/').";
+	exit();
+}
 
 // ---------- The following functions allow you to customize processing based on your database -------
 

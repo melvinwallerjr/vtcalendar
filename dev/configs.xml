@@ -13,7 +13,7 @@
             </Comment>
         </Config>
         <Config Label="Language" Variable="LANGUAGE" Type="string">
-            <Default>"en"</Default>
+            <Default>en</Default>
             <Example>en, de</Example>
             <Comment>
                 <Line>Language used (refers to language file in directory /languages)</Line>
@@ -22,7 +22,7 @@
     </Section>
     <Section Label="Database">
         <Config Label="Database Connection String" Variable="DATABASE" Type="string">
-            <Default>"mysql://root:@localhost/vtcalendar"</Default>
+        	<Example>mysql://vtcal:abc123@localhost/vtcalendar</Example>
             <Comment>
                 <Line>This is the database connection string used by the PEAR library.</Line>
                 <Line>It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</Line>
@@ -41,7 +41,7 @@
     </Section>
     <Section Label="Authentication">
         <Config Label="User ID Regular Expression" Variable="REGEXVALIDUSERID" Type="string">
-            <Default>"/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/"</Default>
+            <Default>/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/</Default>
             <Comment>
                 <Line>This regular expression defines what is considered a valid user-ID.</Line>
             </Comment>
@@ -128,19 +128,6 @@
                 </Config>
             </Dependants>
         </Config>
-        <Config Label="HTTP Authentication Cache" Variable="AUTH_HTTP_CACHE" Type="boolean">
-            <Default>false</Default>
-            <Comment>
-                <Line>Cache successful HTTP authentication attempts as hashes in DB.</Line>
-                <Line>This acts as a failover if the HTTP authentication fails due to a server error.</Line>
-            </Comment>
-        </Config>
-        <Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number">
-            <Default>4</Default>
-            <Comment>
-                <Line>The number of days in which data in the HTTP authentication cache is valid.</Line>
-            </Comment>
-        </Config>
     </Section>
     <Section Label="Cookies">
         <Config Label="Cookie Base URL" Variable="BASEPATH" Type="string">
@@ -168,7 +155,7 @@
             </Comment>
         </Config>
         <Config Label="Secure Calendar Base URL" Variable="SECUREBASEURL" Type="string">
-            <Default>BASEURL</Default>
+        	<Default Internal="BASEURL"></Default>
             <Example>https://localhost/calendar/</Example>
             <Comment>
                 <Line>This is the absolute path where the secure version of the calendar is located.</Line>
@@ -192,22 +179,22 @@
             </Comment>
         </Config>
         <Config Label="Use AM/PM" Variable="USE_AMPM" Type="boolean">
-            <Default>TRUE</Default>
+            <Default>true</Default>
             <Comment>
-                <Line>defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)</Line>
+                <Line>defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)</Line>
             </Comment>
         </Config>
     </Section>
     <Section Label="Display">
         <Config Label="Column Position" Variable="COLUMNSIDE" Type="string">
-            <Default>"LEFT"</Default>
+            <Default>LEFT</Default>
             <Comment>
                 <Line>Which side the little calendar, 'jump to', 'today is', etc. will be on.</Line>
                 <Line>Values must be LEFT or RIGHT.</Line>
             </Comment>
         </Config>
         <Config Label="Show Upcoming Tab" Variable="SHOW_UPCOMING_TAB" Type="boolean">
-            <Default>TRUE</Default>
+            <Default>true</Default>
             <Comment>
                 <Line>Whether or not the upcoming tab will be shown.</Line>
             </Comment>
@@ -219,15 +206,30 @@
             </Comment>
         </Config>
         <Config Label="Show Month Overlap" Variable="SHOW_MONTH_OVERLAP" Type="boolean">
-            <Default>TRUE</Default>
+            <Default>true</Default>
             <Comment>
                 <Line>Whether or not events in month view on days that are not actually part of the current month should be shown.</Line>
                 <Line>For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.</Line>
-                <Line>Values must be TRUE or FALSE.</Line>
+                <Line>Values must be true or false.</Line>
             </Comment>
         </Config>
     </Section>
     <Section Label="Cache">
+    	<Config Label="HTTP Authentication Cache" Variable="AUTH_HTTP_CACHE" Type="boolean">
+    		<Default>false</Default>
+    		<Comment>
+    			<Line>Cache successful HTTP authentication attempts as hashes in DB.</Line>
+    			<Line>This acts as a failover if the HTTP authentication fails due to a server error.</Line>
+    		</Comment>
+    		<Dependants>
+    			<Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number">
+    				<Default>4</Default>
+    				<Comment>
+    					<Line>The number of days in which data in the HTTP authentication cache is valid.</Line>
+    				</Comment>
+    			</Config>
+    		</Dependants>
+    	</Config>
         <Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number">
             <Default>100</Default>
             <Comment>

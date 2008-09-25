@@ -28,8 +28,12 @@
         
         
         <xsl:text>if (!defined("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>")) define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
-        <xsl:if test="not(Default)">""</xsl:if>
-        <xsl:value-of select="Default/text()"/>
+        <xsl:choose>
+        	<xsl:when test="not(Default)">""</xsl:when>
+        	<xsl:when test="Default/@Internal"><xsl:value-of select="Default/@Internal"/></xsl:when>
+        	<xsl:when test="@Type='string'">"<xsl:value-of select="Default/text()"/>"</xsl:when>
+        	<xsl:otherwise><xsl:value-of select="Default/text()"/></xsl:otherwise>
+        </xsl:choose>
         <xsl:text>);&#13;&#10;&#13;&#10;</xsl:text>
     </xsl:template>
 </xsl:stylesheet>

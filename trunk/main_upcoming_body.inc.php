@@ -1,7 +1,7 @@
 <?php
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
-if (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) {
+if (SHOW_UPCOMING_TAB) {
 
 	$ievent = 0;
 	

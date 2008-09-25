@@ -14,7 +14,7 @@ $today = Decode_Date_US(date("m/d/Y", NOW));
 // Otherwise, unset $view.
 if (isset($_GET['view'])) { setVar($view,$_GET['view'],'view'); } else { 
 	if (!empty($_SESSION['PREVIOUS_VIEW'])) { $view = $_SESSION['PREVIOUS_VIEW']; }
-	elseif (defined("SHOW_UPCOMING_TAB") && SHOW_UPCOMING_TAB) { $view = "upcoming"; }
+	elseif (SHOW_UPCOMING_TAB) { $view = "upcoming"; }
 	else { $view = "day"; } 
 }
 

@@ -4,7 +4,8 @@ set_time_limit(10);
 
 define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
 require_once('DB.php');
-require_once('../config.inc.php');
+@(include_once('../config.inc.php')) or die('config.inc.php was not found. See: <a href="../install/">VTCalendar Configuration</a> installer.');
+require_once('../config-defaults.inc.php');
 require_once('../constants.inc.php');
 require_once('../functions.inc.php');
 require_once('functions.inc.php');

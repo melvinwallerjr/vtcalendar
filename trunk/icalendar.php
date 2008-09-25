@@ -1,5 +1,4 @@
 <?php
-require_once('config.inc.php');
 require_once('session_start.inc.php');
 	// session_start introduces a cache header which results in problems with download unless it's changed
 	header("Cache-control: private");

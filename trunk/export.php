@@ -1,10 +1,8 @@
 <?php
-require_once('config.inc.php');
 require_once('session_start.inc.php');
-	header("Cache-control: private");
-
+header("Cache-control: private");
 require_once('application.inc.php');
-	require_once("icalendar.inc.php");
+require_once("icalendar.inc.php");
 
 	if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
 	if (isset($_GET['type'])) { setVar($type,$_GET['type'],'type'); } else { unset($type); }

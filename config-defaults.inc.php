@@ -20,15 +20,28 @@ if (!defined("TITLEPREFIX")) define("TITLEPREFIX", "");
 // Added at the end of the <title> tag.
 if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 
+// Config: Language
+// Example: en, de
+// Language used (refers to language file in directory /languages)
+if (!defined("LANGUAGE")) define("LANGUAGE", "en");
+
+// =====================================
+// Database
+// =====================================
+
 // Config: Database Connection String
 // This is the database connection string used by the PEAR library.
 // It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"
 if (!defined("DATABASE")) define("DATABASE", "mysql://root:@localhost/vtcalendar");
 
-// Config: Language
-// Example: en, de
-// Language used (refers to language file in directory /languages)
-if (!defined("LANGUAGE")) define("LANGUAGE","en");
+// Config: SQL Log File
+// Example: /var/log/vtcalendarsql.log
+// Put a name of a (folder and) file where the calendar logs every
+// SQL query to the database. This is good for debugging but make
+// sure you write into a file that's not readable by the webserver or
+// else you may expose private information.
+// If left blank ("") no log will be kept. That's the default.
+if (!defined("SQLLOGFILE")) define("SQLLOGFILE", "");
 
 // =====================================
 // Authentication
@@ -70,7 +83,7 @@ if (!defined("LDAP_PORT")) define("LDAP_PORT", "389");
 // Config: LDAP Username Attribute
 // Example: sAMAccountName
 // The attribute which contains the username.
-if (!defined("LDAP_USERFIELD")) define("LDAP_USERFIELD", ""); 
+if (!defined("LDAP_USERFIELD")) define("LDAP_USERFIELD", "");
 
 // Config: LDAP Base DN
 // Example: DC=myuniversity,DC=edu
@@ -111,7 +124,7 @@ if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
 
 // Config: HTTP Authentication Cache Expiration
 // The number of days in which data in the HTTP authentication cache is valid.
-if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
+if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", "4");
 
 // =====================================
 // Cookies
@@ -141,10 +154,11 @@ if (!defined("BASEDOMAIN")) define("BASEDOMAIN", "");
 if (!defined("BASEURL")) define("BASEURL", "");
 
 // Config: Secure Calendar Base URL
+// Example: https://localhost/calendar/
 // This is the absolute path where the secure version of the calendar is located.
 // If you are not using URL, set this to the same address as BASEURL.
 // This MUST end with a slash "/"
-if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
+if (!defined("SECUREBASEURL")) define("SECUREBASEURL", "");
 
 // =====================================
 // Date/Time
@@ -157,7 +171,7 @@ if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", "5");
 
 // Config: Week Starting Day
 // defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"
-if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY","0");
+if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY", "0");
 
 // Config: Use AM/PM
 // defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)
@@ -176,32 +190,29 @@ if (!defined("COLUMNSIDE")) define("COLUMNSIDE", "LEFT");
 // Whether or not the upcoming tab will be shown.
 if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", TRUE);
 
+// Config: Max Upcoming Events
+// Whether or not the upcoming tab will be shown.
+if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", "75");
+
 // Config: Show Month Overlap
 // Whether or not events in month view on days that are not actually part of the current month should be shown.
 // For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.
 // Values must be TRUE or FALSE.
 if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", TRUE);
 
-// Config: Max Upcoming Events
-// Whether or not the upcoming tab will be shown.
-if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
-
 // =====================================
-// Misc
+// Cache
 // =====================================
-
-// Config: SQL Log File
-// Example: /var/log/vtcalendarsql.log
-// Put a name of a (folder and) file where the calendar logs every
-// SQL query to the database. This is good for debugging but make
-// sure you write into a file that's not readable by the webserver or
-// else you may expose private information.
-// If left blank ("") no log will be kept. That's the default.
-if (!defined("SQLLOGFILE")) define("SQLLOGFILE","");
 
 // Config: Max Category Name Cache Size
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
-if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
+if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", "100");
+
+// END GENERATED
+
+// =====================================
+// Config Validation
+// =====================================
 
 // Check for an LDAP function if AUTH_LDAP is true.
 if (AUTH_LDAP && !function_exists("ldap_connect")) {
@@ -226,7 +237,7 @@ if (empty(BASEURL) || substr(BASEURL, -1) != "/") {
 	exit();
 }
 
-if (substr(BASEURL, -1) != "/") {
+if (substr(SECUREBASEURL, -1) != "/") {
 	echo "SECUREBASEURL MUST end with a slash ('/').";
 	exit();
 }

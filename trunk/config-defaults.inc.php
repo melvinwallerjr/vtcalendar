@@ -78,7 +78,7 @@ if (!defined("AUTH_LDAP")) define("AUTH_LDAP", false);
 if (!defined("LDAP_HOST")) define("LDAP_HOST", "");
 
 // Config: LDAP Port
-if (!defined("LDAP_PORT")) define("LDAP_PORT", "389");
+if (!defined("LDAP_PORT")) define("LDAP_PORT", 389);
 
 // Config: LDAP Username Attribute
 // Example: sAMAccountName
@@ -124,7 +124,7 @@ if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
 
 // Config: HTTP Authentication Cache Expiration
 // The number of days in which data in the HTTP authentication cache is valid.
-if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", "4");
+if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
 
 // =====================================
 // Cookies
@@ -158,7 +158,7 @@ if (!defined("BASEURL")) define("BASEURL", "");
 // This is the absolute path where the secure version of the calendar is located.
 // If you are not using URL, set this to the same address as BASEURL.
 // This MUST end with a slash "/"
-if (!defined("SECUREBASEURL")) define("SECUREBASEURL", "");
+if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
 
 // =====================================
 // Date/Time
@@ -167,11 +167,11 @@ if (!defined("SECUREBASEURL")) define("SECUREBASEURL", "");
 // Config: Timezone Offset
 // Example: -5
 // Defines the offset to GMT, can be positive or negative
-if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", "5");
+if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", 5);
 
 // Config: Week Starting Day
 // defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"
-if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY", "0");
+if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY", 0);
 
 // Config: Use AM/PM
 // defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)
@@ -192,7 +192,7 @@ if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", TRUE);
 
 // Config: Max Upcoming Events
 // Whether or not the upcoming tab will be shown.
-if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", "75");
+if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 
 // Config: Show Month Overlap
 // Whether or not events in month view on days that are not actually part of the current month should be shown.
@@ -206,7 +206,7 @@ if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", TRUE);
 
 // Config: Max Category Name Cache Size
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
-if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", "100");
+if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
 
 // END GENERATED
 

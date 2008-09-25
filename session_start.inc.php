@@ -1,5 +1,5 @@
 <?php
-if (defined("BASEPATH") && defined("BASEDOMAIN")) {
+if (BASEPATH != "" && BASEDOMAIN != "") {
 	session_set_cookie_params(0, BASEPATH, BASEDOMAIN);
 }
 else {

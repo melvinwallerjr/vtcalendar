@@ -7,7 +7,8 @@ define("ALLOWINCLUDES", TRUE);
 
 // Include the necessary VTCalendar files.
 require_once('config.inc.php');
-require_once("config-colordefaults.inc.php");
+require_once('config-defaults.inc.php');
+require_once('config-colordefaults.inc.php');
 require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');
 require_once('constants.inc.php');

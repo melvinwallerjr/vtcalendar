@@ -30,9 +30,10 @@ if (!defined("LANGUAGE")) define("LANGUAGE", "en");
 // =====================================
 
 // Config: Database Connection String
+// Example: mysql://vtcal:abc123@localhost/vtcalendar
 // This is the database connection string used by the PEAR library.
 // It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"
-if (!defined("DATABASE")) define("DATABASE", "mysql://root:@localhost/vtcalendar");
+if (!defined("DATABASE")) define("DATABASE", "");
 
 // Config: SQL Log File
 // Example: /var/log/vtcalendarsql.log
@@ -117,15 +118,6 @@ if (!defined("AUTH_HTTP")) define("AUTH_HTTP", false);
 // The URL to use for the BASIC HTTP Authentication.
 if (!defined("AUTH_HTTP_URL")) define("AUTH_HTTP_URL", "");
 
-// Config: HTTP Authentication Cache
-// Cache successful HTTP authentication attempts as hashes in DB.
-// This acts as a failover if the HTTP authentication fails due to a server error.
-if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
-
-// Config: HTTP Authentication Cache Expiration
-// The number of days in which data in the HTTP authentication cache is valid.
-if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
-
 // =====================================
 // Cookies
 // =====================================
@@ -174,8 +166,8 @@ if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", 5);
 if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY", 0);
 
 // Config: Use AM/PM
-// defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)
-if (!defined("USE_AMPM")) define("USE_AMPM", TRUE);
+// defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)
+if (!defined("USE_AMPM")) define("USE_AMPM", true);
 
 // =====================================
 // Display
@@ -188,7 +180,7 @@ if (!defined("COLUMNSIDE")) define("COLUMNSIDE", "LEFT");
 
 // Config: Show Upcoming Tab
 // Whether or not the upcoming tab will be shown.
-if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", TRUE);
+if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", true);
 
 // Config: Max Upcoming Events
 // Whether or not the upcoming tab will be shown.
@@ -197,12 +189,21 @@ if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 // Config: Show Month Overlap
 // Whether or not events in month view on days that are not actually part of the current month should be shown.
 // For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.
-// Values must be TRUE or FALSE.
-if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", TRUE);
+// Values must be true or false.
+if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 
 // =====================================
 // Cache
 // =====================================
+
+// Config: HTTP Authentication Cache
+// Cache successful HTTP authentication attempts as hashes in DB.
+// This acts as a failover if the HTTP authentication fails due to a server error.
+if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
+
+// Config: HTTP Authentication Cache Expiration
+// The number of days in which data in the HTTP authentication cache is valid.
+if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
 
 // Config: Max Category Name Cache Size
 // Cache the list of category names in memory if the calendar has less than or equal to this number.

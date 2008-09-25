@@ -1,299 +1,737 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>VTCalendar Installation</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<style><!--
-body, td, p {
-	font-family: Arial,Helvetica,Sans-Serif;
-	font-size: 10pt;
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>VTCalendar Configuration</title>
+<style type="text/css">
+<!--
+body, th, td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+h1 {
+	font-size: 24px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #333333;
+}
+h2 {
+	font-size: 16px;
+	padding: 6px;
+	background-color: #CCDBFF;
+	border-top: 1px solid #666666;
+}
+table.VariableTable {
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+td.VariableName {
+	background-color: #EEEEEE;
+}
+td.VariableName, td.VariableBody {
+	border-top: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+}
+td.DataField {
+	padding-top: 0;
+}
+td.Comment {
+	padding-top: 0;
+}
+label {
+	cursor: pointer;
+}
+blockquote {
+	margin-left: 22px;
+	margin-right: 0px;
+}
+/*tr.VariableRow td {
+	border-top: 1px solid #CCCCCC;
+}
+.Variable {
+	background-color: #EEEEEE;
+	font-weight: bold;
+}
+tr.CommentRow td {
+	padding-top: 0;
+	padding-bottom: 8px;
+}
+.DependantCell {
+	padding-bottom: 8px;
+}
+.DependantTable {
+	border: 1px solid #666666;
+	background-color: #EEEEEE;
+}*/
+-->
+</style>
+<script type="text/javascript">
+//<!--
+function ToggleDependant(variableid) {
+	if (document.getElementById) {
+		objCheckbox = document.getElementById("CheckBox_" + variableid);
+		objRow = document.getElementById("Dependants_" + variableid);
+		if (objCheckbox && objRow) {
+			if (objCheckbox.checked) {
+				objRow.style.display = "";
+			}
+			else {
+				objRow.style.display = "none";
+			}
+		}
+	}
 }
 //-->
-</style>
+</script>
 </head>
+
 <body>
-<h1>VTCalendar Installation</h1>
-<?php
-	if (!function_exists("file_get_contents")) {
-		function file_get_contents($filename, $use_include_path = 0) {
-			$data = ""; // just to be safe. Dunno, if this is really needed
-			$file = @fopen($filename, "rb", $use_include_path);
-			if ($file) {
-				while (!feof($file)) $data .= fread($file, 1024);
-				fclose($file);
-			}
-			return $data;
-		}
-	}
+<h1>VTCalendar Configuration:</h1>
+<form name="ConfigForm" method="post" action="index-new.php">
+<h2>General:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Title Prefix:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="TITLEPREFIX" value="" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Added at the beginning of the &lt;title&gt; tag.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Title Suffix:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="TITLESUFFIX" value="" size="60"/> 
+                     <i>Example: " - My University"</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Added at the end of the &lt;title&gt; tag.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Language:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="LANGUAGE" value="en" size="60"/> 
+                     <i>Example: en, de</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Language used (refers to language file in directory /languages)</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Database:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Database Connection String:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="DATABASE" value="" size="60"/> 
+                     <i>Example: mysql://vtcal:abc123@localhost/vtcalendar</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">This is the database connection string used by the PEAR library.It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>SQL Log File:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="SQLLOGFILE" value="" size="60"/> 
+                     <i>Example: /var/log/vtcalendarsql.log</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Put a name of a (folder and) file where the calendar logs everySQL query to the database. This is good for debugging but makesure you write into a file that's not readable by the webserver orelse you may expose private information.If left blank ("") no log will be kept. That's the default.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Authentication:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>User ID Regular Expression:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="REGEXVALIDUSERID" value="/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">This regular expression defines what is considered a valid user-ID.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Database Authentication:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_AUTH_DB" name="AUTH_DB" value="true"
+									onclick="ToggleDependant('AUTH_DB');" onchange="ToggleDependant('AUTH_DB');" checked="checked"/><label for="CheckBox_AUTH_DB"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Authenticate users against the database.If enabled, this is always performed before any other authentication.</td>
+               </tr>
+               <tr id="Dependants_AUTH_DB">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Prefix for Database Usernames:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="AUTH_DB_USER_PREFIX" value="" size="60"/> 
+                                       <i>Example: db_</i>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."If you only use auth_db just leave it an empty stringIts purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Database Authentication Notice:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="AUTH_DB_NOTICE" value="" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">This displays a text (or nothing) on the Update tab behind the user user management optionsIt could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let usersknow that they should create local users only if they are not in the LDAP.</td>
+                                 </tr>
 
-	$configfilename = '../config.inc.php';
-	if (isset($_POST['install'])) { // run install procedure
-		// create config file config.inc.php from config.inc.php.template		
-		$config = file_get_contents ("config.inc.template.php");
-
-	if (isset($_POST['language'])) { 
-			$config = preg_replace('/define\("LANGUAGE","en"\);/','define("LANGUAGE","'.$_POST['language'].'");',$config);
-	}
-		
-	if ($_POST['databasetype']=="mysql") { $databasetype = "mysql"; }
-		elseif ($_POST['databasetype']=="postgres") { $databasetype = "pgsql"; }
-		else { $databasetype = "other-please-specify"; }
-		$connectionstring = $databasetype.'://'.$_POST['database_user'].':'.$_POST['database_password'].'@'.$_POST['database_host'].'/'.$_POST['database_name'];
-		$config = ereg_replace('define\("DATABASE",[^\x0A\x0D]*\);','define("DATABASE", "'.$connectionstring.'");',$config);
-
-		if ($_POST['auth_db'] == "1") {
-			$config = ereg_replace('define\("AUTH_DB",[^\x0A\x0D]*\);','define("AUTH_DB", true);',$config);
-		} else {
-			$config = ereg_replace('define\("AUTH_DB",[^\x0A\x0D]*\);','define("AUTH_DB", false);',$config);
-		}
-		$config = ereg_replace('define\("AUTH_DB_USER_PREFIX",[^\x0A\x0D]*\);','define("AUTH_DB_USER_PREFIX", "'.$_POST['username_prefix'].'");',$config);
-
-		if ($_POST['auth_ldap'] == "1") {
-			$config = ereg_replace('define\("AUTH_LDAP",[^\x0A\x0D]*\);','define("AUTH_LDAP", true);',$config);
-		} else {
-			$config = ereg_replace('define\("AUTH_LDAP",[^\x0A\x0D]*\);','define("AUTH_LDAP", false);',$config);
-		}
-		$config = ereg_replace('define\("LDAP_HOST",[^\x0A\x0D]*\);','define("LDAP_HOST", "'.$_POST['ldap_url'].'");',$config);
-		$config = ereg_replace('define\("LDAP_USERFIELD",[^\x0A\x0D]*\);','define("LDAP_USERFIELD", "'.$_POST['ldap_userfield'].'");',$config);
-		$config = ereg_replace('define\("LDAP_BASE_DN",[^\x0A\x0D]*\);','define("LDAP_BASE_DN", "'.$_POST['ldap_basedn'].'");',$config);
-		
-		$base_url = $_POST['base_url']; 
-		if ($base_url[strlen($base_url)-1]!="/") { $base_url .= "/"; }
-		$base_secureurl = $_POST['base_secureurl'];
-		if ($base_secureurl[strlen($base_secureurl)-1]!="/") { $base_secureurl .= "/"; }
-		$config = ereg_replace('define\("BASEURL",[^\x0A\x0D]*\);','define("BASEURL", "'.$base_url.'");',$config);
-		$config = ereg_replace('define\("SECUREBASEURL",[^\x0A\x0D]*\);','define("SECUREBASEURL", "'.$base_secureurl.'");',$config);
-
-		$config = ereg_replace('define\("TIMEZONE_OFFSET",[^\x0A\x0D]*\);','define("TIMEZONE_OFFSET", "'.$_POST['timezone_offset'].'");',$config);
-		
-		$configfile = fopen($configfilename, "w");
-		fputs($configfile, $config);
-		fclose($configfile);	
-
-		// create database
-		require_once( 'DB.php' );
-		$database = DB::connect( $connectionstring );
-		$query = file_get_contents ("database.sql");
-		if (empty($_POST['mainadmin_password'])) {
-			// remove the statment that inserts the user since we assume ldap authentication
-			$query = ereg_replace("INSERT INTO vtcal_user \(id, password, email\) VALUES \('adminuserid', 'adminpassword', ''\);",'',$query);
-		}
-		else {
-			$query = ereg_replace('adminpassword',crypt($_POST['mainadmin_password']),$query);
-		}
-		$query = ereg_replace('adminuserid',$_POST['mainadmin_userid'],$query);
-		if ( $databasetype == "pgsql") {
-			$query = ereg_replace('int NOT NULL auto_increment','serial NOT NULL',$query);
-		}
-		$query = ereg_replace('http://calendar.myorg.edu/',$base_url,$query);
-
-		$queries = explode("\x0D\x0A\x0D\x0A",$query);
-		$error = false;
-		for($i=0; $i<count($queries); $i++) {
-			$q = trim($queries[$i]);
-			if (!empty($q)) {
-				if ( DB::isError( $result = $database->query( $q ) ) ) {
-					echo '<span style="color:red; font-size:16pt; font-weight:bold">Error! '.DB::errorMessage($result).':</span> '.$q.'<br><br>';
-					$error = true;
-				}
-			} 
-		}
-		$database->disconnect();
-		
-		if (!$error) {
- 			echo '<h2 style="color:#009900">Installation successful.</h2>';
-			echo "If you want to make any configuration changes please modify the newly created file <b>config.inc.php</b>.<br><br>";
-			echo '<span style="color:red; font-size:16pt; font-weight:bold">Security Notice:</span> Make sure to remove or secure the <b>/install</b> directory.<br><br>';
-			echo 'Your calendar is now available at: <a href="'.$base_url.'">'.$base_url.'</a>.';
-		}
-	}
-	else { // show parameter screen
-?>
-<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#cccccc">
-	<tr>
-		<td>
-<table width="100%" border="0" cellspacing="1" cellpadding="5">
-	<tr bgcolor="#CCCCCC">
-		<td colspan="2" valign="baseline" nowrap><br>
-			This installation procedure creates
-			the file <font face="Courier New, Courier, mono"><strong>config.inc.php</strong></font> which
-			can
-be edited later by hand.<br>
-<br></td>
-		</tr>
-	<tr bgcolor="#FFFFFF">
-		<td valign="baseline" nowrap><strong>Language:</strong></td>
-		<td valign="baseline"><select name="language"><?php
-$dir = "../languages/";
-if ($dh = opendir($dir)) {
-	while (($file = readdir($dh)) !== false) {
-		if (preg_match("|^(.*)\.inc\.php$|", $file, $matches)) {
-			$languages[] = $matches[1];
-		}
-	}
-	closedir($dh);
-}
-foreach ($languages as $language) {
-		echo '<option value="',$language,'"';
-	if ($language == "en") {
-		echo ' selected';
-	}
-	echo '>',$language,"</option>\n";
-}	
-	?> 
-	</select>
-			(e.g. en stands for English; these match the file names of the translations in the &quot;languages/&quot; folder)</td>
-	</tr>
-	<tr bgcolor="#eeeeee">
-		<td width="10%" valign="baseline" nowrap><strong>Database software:</strong></td>
-		<td width="90%" valign="baseline">
-			<input name="databasetype" type="radio" value="mysql" checked>
-MySQL <br>
-<input name="databasetype" type="radio" value="postgres">
-PostgreSQL<br>
-<input name="databasetype" type="radio" value="other"> 
-other (manual setup)<br><br>
-If you would like to use a  database different from MySQL and PostgreSQL you
-should
-finish
-this
-install and then modify config.inc.php by hand and manually create the database
-structure
-contained in the file tablestructure.sql.
-Since
-VT
-Calendar
-uses
-PHP's
-<a href="http://www.phpbuilder.com/columns/allan20010115.php3">PEAR DB</a> abstraction layer any database
-should work. However, it has only been
-tested with MySQL and PostgreSQL.</td>
-	</tr>
-	<tr bgcolor="#FFFFFF">
-		<td valign="baseline" nowrap><strong>Database host:</strong></td>
-		<td valign="baseline"><input name="database_host" type="text" id="database_host" size="20" maxlength="100">
-(e.g. localhost or database.myorg.com)</td>
-	</tr>
-	<tr bgcolor="#eeeeee">
-		<td valign="baseline" nowrap><strong>Database name:</strong></td>
-		<td valign="baseline"><input name="database_name" type="text" id="database_name" size="20" maxlength="100">
-(e.g. calendar)</td>
-	</tr>
-	<tr bgcolor="#FFFFFF">
-		<td valign="baseline" nowrap><strong>Database user name:</strong></td>
-		<td valign="baseline"><input name="database_user" type="text" id="database_user" size="20" maxlength="100"> 
-			(e.g. user1)</td>
-	</tr>
-	<tr bgcolor="#eeeeee">
-		<td valign="baseline" nowrap><strong>Database user password:</strong></td>
-		<td valign="baseline"><input name="database_password" type="text" id="database_password" size="20" maxlength="100"> 
-			(this is stored in <em>cleartext</em> in the config.inc.php file; don't
-			use &quot;@&quot;,&quot;:&quot;,&quot;$&quot;,&quot;\&quot;)</td>
-	</tr>
-	<tr bgcolor="#FFFFFF">
-		<td valign="baseline" nowrap><strong>Authentication:</strong></td>
-		<td valign="baseline"><input name="auth_db" type="checkbox" id="auth_db" value="1" checked>
-enable authentication via internal calendar database:<br>
-<table width="100%" border="0" cellspacing="3" cellpadding="3">
-	<tr>
-		<td width="1%" nowrap>&nbsp;&nbsp;&nbsp;</td>
-		<td width="9%" valign="baseline" nowrap><strong>User name prefix:</strong></td>
-		<td width="90%" valign="baseline"><input name="username_prefix" type="text" id="username_prefix" size="30" maxlength="100">
-			(e.g. calendar.)<br>
-			This can be used to keep the name space separate if you enable authentication
-			via database <em>and</em> LDAP. If you just use database authentication,
-			leave this field blank.</td>
-	</tr>
-</table><br>
-	<input name="auth_ldap" type="checkbox" id="auth_ldap" value="1">
-enable authentication via external LDAP server:
-<table width="100%" border="0" cellspacing="3" cellpadding="3">
-	<tr>
-		<td width="1%" rowspan="3" nowrap>&nbsp;&nbsp;&nbsp;</td>
-		<td width="9%" valign="baseline" nowrap><strong>LDAP URL:</strong></td>
-		<td width="90%" valign="baseline"><input name="ldap_url" type="text" id="ldap_url" size="30" maxlength="100"> 
-			(e.g. ldap://directory.myorg.edu/ or ldaps://...)</td>
-	</tr>
-	<tr>
-		<td valign="baseline" nowrap><strong>LDAP user field:</strong></td>
-		<td valign="baseline"><input name="ldap_userfield" type="text" id="ldap_userfield" size="30" maxlength="100"> 
-				(e.g. uid)
-			</td>
-	</tr>
-	<tr>
-		<td valign="baseline" nowrap><strong>LDAP Base DN:</strong></td>
-		<td valign="baseline"><input name="ldap_basedn" type="text" id="ldap_basedn" size="30" maxlength="100"> 
-			(e.g. ou=users,dc=myorg,dc=edu)</td>
-	</tr>
-</table>
-<br>
-<table width="100%" border="0" cellspacing="3" cellpadding="3">
-	<tr>
-		<td width="9%" valign="baseline" nowrap><strong>Valid user-ID:</strong></td>
-		<td width="90%" valign="baseline"><input name="ldap_userfield2" type="text" id="ldap_userfield22" value="/^[A-Za-z][_A-Za-z0-9\-]{1,7}$/" size="60" maxlength="300">
-			(regular expression)<br>
-			For example:
-/^[A-Za-z][_A-Za-z0-9\-]{1,7}$/ or in case you have defined a user name prefix &quot;calendar.&quot; it
-would be: /^(calendar\.){0,1}[A-Za-z][_A-Za-z0-9\-]{1,7}$/)      </td>
-	</tr>
-</table>
-<br>
-<table width="100%" border="0" cellspacing="3" cellpadding="3">
-	<tr>
-		<td colspan="2" valign="baseline" nowrap bgcolor="#eeeeee"><strong>Main administrator</strong></td>
-		</tr>
-	<tr>
-		<td colspan="2" valign="baseline">The main administrator(s) can create
-			and manage calendars. Below please enter the user-ID (and password if you
-			do NOT use LDAP authentication). You can always add more admins later using
-			the calendar web interface or by editing the database table &quot;vtcal_adminuser&quot;.</td>
-		</tr>
-	<tr>
-		<td width="9%" valign="baseline" nowrap><strong> User-ID:</strong></td>
-		<td width="90%" valign="baseline"><input name="mainadmin_userid" type="text" id="mainadmin_userid" size="20" maxlength="50">
-			(e.g. jsmith)</td>
-	</tr>
-	<tr>
-		<td valign="baseline" nowrap><strong>Password:</strong></td>
-		<td valign="baseline"><input name="mainadmin_password" type="password" id="mainadmin_password" size="20" maxlength="50"> 
-			(only necessary if you do NOT use LDAP auth)</td>
-	</tr>
-</table>
-		</td>
-	</tr>
-	<tr bgcolor="#eeeeee">
-		<td valign="top" nowrap><strong>Full URL:</strong></td>
-		<td><input name="base_url" type="text" id="base_url" size="30" maxlength="100"> 
-			(e.g. http://www.myorg.edu/calendar/)</td>
-	</tr>
-	<tr bgcolor="#FFFFFF">
-		<td valign="top" nowrap><strong>Secure URL:</strong></td>
-		<td><input name="base_secureurl" type="text" id="base_url" size="30" maxlength="100">      
-			 (e.g. https://secure.myorg.edu/calendar/)<br>
-			 This URL is used when the user clicks the &quot;Update&quot; tab in order to secure
-			 all user-ID/password traffic. If you don't have a secure server with a
-			 copy of the calendar code, just put the same URL as you entered in &quot;Full
-			 URL&quot;.</td>
-	</tr>
-	<tr bgcolor="#eeeeee">
-		<td valign="top" nowrap><strong>GMT-Timezone Offset:</strong></td>
-		<td><input name="timezone_offset" type="text" id="timezone_offset" size="10" maxlength="10"> 
-			(in hours; e.g. 5 for New York/USA, -1 for Berlin/Germany)</td>
-	</tr>
-	<tr bgcolor="#CCCCCC">
-		<td valign="top" nowrap>&nbsp;</td>
-		<td><br>
-			<input type="submit" name="install" value="&nbsp;&nbsp;Install&nbsp;&nbsp;">
-			<br>
-			<br></td>
-	</tr>
-</table>
-</td>
-</tr>
-</table>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('AUTH_DB');</script>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>LDAP Authentication:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_AUTH_LDAP" name="AUTH_LDAP" value="true"
+									onclick="ToggleDependant('AUTH_LDAP');" onchange="ToggleDependant('AUTH_LDAP');"/><label for="CheckBox_AUTH_LDAP"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Authenticate users against a LDAP server.If enabled, HTTP authenticate will be ignored.</td>
+               </tr>
+               <tr id="Dependants_AUTH_LDAP">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Host Name:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_HOST" value="" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment"/>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Port:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_PORT" value="389" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment"/>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Username Attribute:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_USERFIELD" value="" size="60"/> 
+                                       <i>Example: sAMAccountName</i>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">The attribute which contains the username.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Base DN:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_BASE_DN" value="" size="60"/> 
+                                       <i>Example: DC=myuniversity,DC=edu</i>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment"/>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Additional LDAP Search Filter:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_SEARCH_FILTER" value="" size="60"/> 
+                                       <i>Example: (objectClass=person)</i>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">An optional filter to add to the LDAP search.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Search Bind Username.:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_BIND_USER" value="" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">Before authenticating the user, we first check if the username exists.If your LDAP server does not allow anonymous connections, specific a username here.Leave this blank to connect anonymously.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>LDAP Search Bind Password:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="LDAP_BIND_PASSWORD" value="" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">Before authenticating the user, we first check if the username exists.If your LDAP server does not allow anonymous connections, specific a password here.Leave this blank to connect anonymously.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('AUTH_LDAP');</script>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>HTTP Authentication:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_AUTH_HTTP" name="AUTH_HTTP" value="true"
+									onclick="ToggleDependant('AUTH_HTTP');" onchange="ToggleDependant('AUTH_HTTP');"/><label for="CheckBox_AUTH_HTTP"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Authenticate users by sending an HTTP request to a server.A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.If LDAP authentication is enabled, this will be ignored.</td>
+               </tr>
+               <tr id="Dependants_AUTH_HTTP">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>HTTP Authorizaton URL:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="AUTH_HTTP_URL" value="" size="60"/> 
+                                       <i>Example: http://localhost/customauth.php</i>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">The URL to use for the BASIC HTTP Authentication.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('AUTH_HTTP');</script>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Cookies:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Cookie Base URL:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="BASEPATH" value="" size="60"/> 
+                     <i>Example: /calendar/</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.Otherwise, the cookie will be submitted with a default path.This must start and end with a forward slash (/), unless the it is exactly "/".</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Cookie Host Name:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="BASEDOMAIN" value="" size="60"/> 
+                     <i>Example: localhost</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.Otherwise, the cookie will be submitted with a default host name.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>URL:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Calendar Base URL:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="BASEURL" value="" size="60"/> 
+                     <i>Example: http://localhost/calendar/</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">This is the absolute URL where your calendar software is located.This MUST end with a slash "/"</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Secure Calendar Base URL:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="SECUREBASEURL" value="" size="60"/> 
+                     <i>Example: https://localhost/calendar/</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">This is the absolute path where the secure version of the calendar is located.If you are not using URL, set this to the same address as BASEURL.This MUST end with a slash "/"</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Date/Time:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Timezone Offset:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="TIMEZONE_OFFSET" value="5" size="60"/> 
+                     <i>Example: -5</i>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Defines the offset to GMT, can be positive or negative</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Week Starting Day:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="WEEK_STARTING_DAY" value="0" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Use AM/PM:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_USE_AMPM" name="USE_AMPM" value="true"
+									 checked="checked"/><label for="CheckBox_USE_AMPM"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Display:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Column Position:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="COLUMNSIDE" value="LEFT" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Which side the little calendar, 'jump to', 'today is', etc. will be on.Values must be LEFT or RIGHT.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Show Upcoming Tab:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_SHOW_UPCOMING_TAB" name="SHOW_UPCOMING_TAB" value="true"
+									 checked="checked"/><label for="CheckBox_SHOW_UPCOMING_TAB"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Whether or not the upcoming tab will be shown.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Max Upcoming Events:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="MAX_UPCOMING_EVENTS" value="75" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Whether or not the upcoming tab will be shown.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Show Month Overlap:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_SHOW_MONTH_OVERLAP" name="SHOW_MONTH_OVERLAP" value="true"
+									 checked="checked"/><label for="CheckBox_SHOW_MONTH_OVERLAP"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Whether or not events in month view on days that are not actually part of the current month should be shown.For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.Values must be true or false.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Cache:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>HTTP Authentication Cache:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField"><input type="checkbox" id="CheckBox_AUTH_HTTP_CACHE" name="AUTH_HTTP_CACHE" value="true"
+									onclick="ToggleDependant('AUTH_HTTP_CACHE');" onchange="ToggleDependant('AUTH_HTTP_CACHE');"/><label for="CheckBox_AUTH_HTTP_CACHE"> Yes</label>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Cache successful HTTP authentication attempts as hashes in DB.This acts as a failover if the HTTP authentication fails due to a server error.</td>
+               </tr>
+               <tr id="Dependants_AUTH_HTTP_CACHE">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>HTTP Authentication Cache Expiration:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="AUTH_HTTP_CACHE_EXPIRATIONDAYS" value="4" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">The number of days in which data in the HTTP authentication cache is valid.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('AUTH_HTTP_CACHE');</script>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Max Category Name Cache Size:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <input type="text" name="MAX_CACHESIZE_CATEGORYNAME" value="100" size="60"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">Cache the list of category names in memory if the calendar has less than or equal to this number.</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
 </form>
-<?php
-	} // end: else:	if (isset($_POST['install'])) { // run install procedure
-?>
 </body>
 </html>

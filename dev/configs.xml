@@ -12,7 +12,7 @@
                 <Line>Added at the end of the &lt;title&gt; tag.</Line>
             </Comment>
         </Config>
-        <Config Label="Language" Variable="LANGUAGE" Type="string">
+        <Config Label="Language" Variable="LANGUAGE" Type="string" Required="true">
             <Default>en</Default>
             <Example>en, de</Example>
             <Comment>
@@ -21,7 +21,7 @@
         </Config>
     </Section>
     <Section Label="Database">
-        <Config Label="Database Connection String" Variable="DATABASE" Type="string">
+    	<Config Label="Database Connection String" Variable="DATABASE" Type="string" Required="true">
         	<Example>mysql://vtcal:abc123@localhost/vtcalendar</Example>
             <Comment>
                 <Line>This is the database connection string used by the PEAR library.</Line>
@@ -40,7 +40,7 @@
         </Config>
     </Section>
     <Section Label="Authentication">
-        <Config Label="User ID Regular Expression" Variable="REGEXVALIDUSERID" Type="string">
+    	<Config Label="User ID Regular Expression" Variable="REGEXVALIDUSERID" Type="string" Required="true">
             <Default>/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/</Default>
             <Comment>
                 <Line>This regular expression defines what is considered a valid user-ID.</Line>
@@ -77,17 +77,17 @@
                 <Line>If enabled, HTTP authenticate will be ignored.</Line>
             </Comment>
             <Dependants>
-                <Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string"/>
+            	<Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string" Required="true"/>
                 <Config Label="LDAP Port" Variable="LDAP_PORT" Type="number">
                     <Default>389</Default>
                 </Config>
-                <Config Label="LDAP Username Attribute" Variable="LDAP_USERFIELD" Type="string">
+            	<Config Label="LDAP Username Attribute" Variable="LDAP_USERFIELD" Type="string" Required="true">
                     <Example>sAMAccountName</Example>
                     <Comment>
                         <Line>The attribute which contains the username.</Line>
                     </Comment>
                 </Config>
-                <Config Label="LDAP Base DN" Variable="LDAP_BASE_DN" Type="string">
+            	<Config Label="LDAP Base DN" Variable="LDAP_BASE_DN" Type="string" Required="true">
                     <Example>DC=myuniversity,DC=edu</Example>
                 </Config>
                 <Config Label="Additional LDAP Search Filter" Variable="LDAP_SEARCH_FILTER" Type="string">
@@ -120,7 +120,7 @@
                 <Line>If LDAP authentication is enabled, this will be ignored.</Line>
             </Comment>
             <Dependants>
-                <Config Label="HTTP Authorizaton URL" Variable="AUTH_HTTP_URL" Type="string">
+            	<Config Label="HTTP Authorizaton URL" Variable="AUTH_HTTP_URL" Type="string" Required="true">
                     <Example>http://localhost/customauth.php</Example>
                     <Comment>
                         <Line>The URL to use for the BASIC HTTP Authentication.</Line>
@@ -147,7 +147,7 @@
         </Config>
     </Section>
     <Section Label="URL">
-        <Config Label="Calendar Base URL" Variable="BASEURL" Type="string">
+    	<Config Label="Calendar Base URL" Variable="BASEURL" Type="string" Required="true">
             <Example>http://localhost/calendar/</Example>
             <Comment>
                 <Line>This is the absolute URL where your calendar software is located.</Line>
@@ -165,14 +165,14 @@
         </Config>
     </Section>
     <Section Label="Date/Time">
-        <Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number">
+    	<Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number" Required="true">
             <Default>5</Default>
             <Example>-5</Example>
             <Comment>
                 <Line>Defines the offset to GMT, can be positive or negative</Line>
             </Comment>
         </Config>
-        <Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number">
+    	<Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number" Required="true">
             <Default>0</Default>
             <Comment>
                 <Line>defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"</Line>
@@ -186,7 +186,7 @@
         </Config>
     </Section>
     <Section Label="Display">
-        <Config Label="Column Position" Variable="COLUMNSIDE" Type="string">
+    	<Config Label="Column Position" Variable="COLUMNSIDE" Type="string" Required="true">
             <Default>LEFT</Default>
             <Comment>
                 <Line>Which side the little calendar, 'jump to', 'today is', etc. will be on.</Line>
@@ -198,12 +198,14 @@
             <Comment>
                 <Line>Whether or not the upcoming tab will be shown.</Line>
             </Comment>
-        </Config>
-        <Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number">
-            <Default>75</Default>
-            <Comment>
-                <Line>Whether or not the upcoming tab will be shown.</Line>
-            </Comment>
+        	<Dependants>
+        		<Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number" Required="true">
+        			<Default>75</Default>
+        			<Comment>
+        				<Line>Whether or not the upcoming tab will be shown.</Line>
+        			</Comment>
+        		</Config>
+        	</Dependants>
         </Config>
         <Config Label="Show Month Overlap" Variable="SHOW_MONTH_OVERLAP" Type="boolean">
             <Default>true</Default>
@@ -222,7 +224,7 @@
     			<Line>This acts as a failover if the HTTP authentication fails due to a server error.</Line>
     		</Comment>
     		<Dependants>
-    			<Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number">
+    			<Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number" Required="true">
     				<Default>4</Default>
     				<Comment>
     					<Line>The number of days in which data in the HTTP authentication cache is valid.</Line>
@@ -230,7 +232,7 @@
     			</Config>
     		</Dependants>
     	</Config>
-        <Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number">
+    	<Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number" Required="true">
             <Default>100</Default>
             <Comment>
                 <Line>Cache the list of category names in memory if the calendar has less than or equal to this number.</Line>

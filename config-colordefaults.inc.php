@@ -1,9 +1,9 @@
 <?php
 
-/* ##############################################
-WARNING: If you want to override the defaults below, define them in config.inc.php.
-Any changes to this file may be overwritten when you upgrade to a newer version of VTCalendar.
-############################################## */
+// ##############################################
+// WARNING: If you want to override the defaults below, define them in config.inc.php.
+// Any changes to this file may be overwritten when you upgrade to a newer version of VTCalendar.
+// ##############################################
 
 /* ==============================================
 Generic Colors

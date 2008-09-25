@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configs>
+    <Section Label="General">
+        <Config Label="Title Prefix" Variable="TITLEPREFIX" Type="string">
+            <Comment>
+                <Line>Added at the beginning of the &lt;title&gt; tag.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Title Suffix" Variable="TITLESUFFIX" Type="string">
+            <Example>" - My University"</Example>
+            <Comment>
+                <Line>Added at the end of the &lt;title&gt; tag.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Language" Variable="LANGUAGE" Type="string">
+            <Default>"en"</Default>
+            <Example>en, de</Example>
+            <Comment>
+                <Line>Language used (refers to language file in directory /languages)</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Database">
+        <Config Label="Database Connection String" Variable="DATABASE" Type="string">
+            <Default>"mysql://root:@localhost/vtcalendar"</Default>
+            <Comment>
+                <Line>This is the database connection string used by the PEAR library.</Line>
+                <Line>It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</Line>
+            </Comment>
+        </Config>
+        <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">
+            <Example>/var/log/vtcalendarsql.log</Example>
+            <Comment>
+                <Line>Put a name of a (folder and) file where the calendar logs every</Line>
+                <Line>SQL query to the database. This is good for debugging but make</Line>
+                <Line>sure you write into a file that's not readable by the webserver or</Line>
+                <Line>else you may expose private information.</Line>
+                <Line>If left blank ("") no log will be kept. That's the default.</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Authentication">
+        <Config Label="User ID Regular Expression" Variable="REGEXVALIDUSERID" Type="string">
+            <Default>"/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/"</Default>
+            <Comment>
+                <Line>This regular expression defines what is considered a valid user-ID.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Database Authentication" Variable="AUTH_DB" Type="boolean">
+            <Default>true</Default>
+            <Comment>
+                <Line>Authenticate users against the database.</Line>
+                <Line>If enabled, this is always performed before any other authentication.</Line>
+            </Comment>
+            <Dependants>
+                <Config Label="Prefix for Database Usernames" Variable="AUTH_DB_USER_PREFIX" Type="string">
+                    <Example>db_</Example>
+                    <Comment>
+                        <Line>This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."</Line>
+                        <Line>If you only use auth_db just leave it an empty string</Line>
+                        <Line>Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP</Line>
+                    </Comment>
+                </Config>
+                <Config Label="Database Authentication Notice" Variable="AUTH_DB_NOTICE" Type="string">
+                    <Comment>
+                        <Line>This displays a text (or nothing) on the Update tab behind the user user management options</Line>
+                        <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users</Line>
+                        <Line>know that they should create local users only if they are not in the LDAP.</Line>
+                    </Comment>
+                </Config>
+            </Dependants>
+        </Config>
+        <Config Label="LDAP Authentication" Variable="AUTH_LDAP" Type="boolean">
+            <Default>false</Default>
+            <Comment>
+                <Line>Authenticate users against a LDAP server.</Line>
+                <Line>If enabled, HTTP authenticate will be ignored.</Line>
+            </Comment>
+            <Dependants>
+                <Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string"/>
+                <Config Label="LDAP Port" Variable="LDAP_PORT" Type="number">
+                    <Default>389</Default>
+                </Config>
+                <Config Label="LDAP Username Attribute" Variable="LDAP_USERFIELD" Type="string">
+                    <Example>sAMAccountName</Example>
+                    <Comment>
+                        <Line>The attribute which contains the username.</Line>
+                    </Comment>
+                </Config>
+                <Config Label="LDAP Base DN" Variable="LDAP_BASE_DN" Type="string">
+                    <Example>DC=myuniversity,DC=edu</Example>
+                </Config>
+                <Config Label="Additional LDAP Search Filter" Variable="LDAP_SEARCH_FILTER" Type="string">
+                    <Example>(objectClass=person)</Example>
+                    <Comment>
+                        <Line>An optional filter to add to the LDAP search.</Line>
+                    </Comment>
+                </Config>
+                <Config Label="LDAP Search Bind Username." Variable="LDAP_BIND_USER" Type="string">
+                    <Comment>
+                        <Line>Before authenticating the user, we first check if the username exists.</Line>
+                        <Line>If your LDAP server does not allow anonymous connections, specific a username here.</Line>
+                        <Line>Leave this blank to connect anonymously.</Line>
+                    </Comment>
+                </Config>
+                <Config Label="LDAP Search Bind Password" Variable="LDAP_BIND_PASSWORD" Type="string">
+                    <Comment>
+                        <Line>Before authenticating the user, we first check if the username exists.</Line>
+                        <Line>If your LDAP server does not allow anonymous connections, specific a password here.</Line>
+                        <Line>Leave this blank to connect anonymously.</Line>
+                    </Comment>
+                </Config>
+            </Dependants>
+        </Config>
+        <Config Label="HTTP Authentication" Variable="AUTH_HTTP" Type="boolean">
+            <Default>false</Default>
+            <Comment>
+                <Line>Authenticate users by sending an HTTP request to a server.</Line>
+                <Line>A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.</Line>
+                <Line>If LDAP authentication is enabled, this will be ignored.</Line>
+            </Comment>
+            <Dependants>
+                <Config Label="HTTP Authorizaton URL" Variable="AUTH_HTTP_URL" Type="string">
+                    <Example>http://localhost/customauth.php</Example>
+                    <Comment>
+                        <Line>The URL to use for the BASIC HTTP Authentication.</Line>
+                    </Comment>
+                </Config>
+            </Dependants>
+        </Config>
+        <Config Label="HTTP Authentication Cache" Variable="AUTH_HTTP_CACHE" Type="boolean">
+            <Default>false</Default>
+            <Comment>
+                <Line>Cache successful HTTP authentication attempts as hashes in DB.</Line>
+                <Line>This acts as a failover if the HTTP authentication fails due to a server error.</Line>
+            </Comment>
+        </Config>
+        <Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number">
+            <Default>4</Default>
+            <Comment>
+                <Line>The number of days in which data in the HTTP authentication cache is valid.</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Cookies">
+        <Config Label="Cookie Base URL" Variable="BASEPATH" Type="string">
+            <Example>/calendar/</Example>
+            <Comment>
+                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.</Line>
+                <Line>Otherwise, the cookie will be submitted with a default path.</Line>
+                <Line>This must start and end with a forward slash (/), unless the it is exactly "/".</Line>
+            </Comment>
+        </Config>
+        <Config Label="Cookie Host Name" Variable="BASEDOMAIN" Type="string">
+            <Example>localhost</Example>
+            <Comment>
+                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.</Line>
+                <Line>Otherwise, the cookie will be submitted with a default host name.</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="URL">
+        <Config Label="Calendar Base URL" Variable="BASEURL" Type="string">
+            <Example>http://localhost/calendar/</Example>
+            <Comment>
+                <Line>This is the absolute URL where your calendar software is located.</Line>
+                <Line>This MUST end with a slash "/"</Line>
+            </Comment>
+        </Config>
+        <Config Label="Secure Calendar Base URL" Variable="SECUREBASEURL" Type="string">
+            <Default>BASEURL</Default>
+            <Example>https://localhost/calendar/</Example>
+            <Comment>
+                <Line>This is the absolute path where the secure version of the calendar is located.</Line>
+                <Line>If you are not using URL, set this to the same address as BASEURL.</Line>
+                <Line>This MUST end with a slash "/"</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Date/Time">
+        <Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number">
+            <Default>5</Default>
+            <Example>-5</Example>
+            <Comment>
+                <Line>Defines the offset to GMT, can be positive or negative</Line>
+            </Comment>
+        </Config>
+        <Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number">
+            <Default>0</Default>
+            <Comment>
+                <Line>defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"</Line>
+            </Comment>
+        </Config>
+        <Config Label="Use AM/PM" Variable="USE_AMPM" Type="boolean">
+            <Default>TRUE</Default>
+            <Comment>
+                <Line>defines time format e.g. 1am-11pm (TRUE) or 1:00-23:00 (FALSE)</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Display">
+        <Config Label="Column Position" Variable="COLUMNSIDE" Type="string">
+            <Default>"LEFT"</Default>
+            <Comment>
+                <Line>Which side the little calendar, 'jump to', 'today is', etc. will be on.</Line>
+                <Line>Values must be LEFT or RIGHT.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Show Upcoming Tab" Variable="SHOW_UPCOMING_TAB" Type="boolean">
+            <Default>TRUE</Default>
+            <Comment>
+                <Line>Whether or not the upcoming tab will be shown.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number">
+            <Default>75</Default>
+            <Comment>
+                <Line>Whether or not the upcoming tab will be shown.</Line>
+            </Comment>
+        </Config>
+        <Config Label="Show Month Overlap" Variable="SHOW_MONTH_OVERLAP" Type="boolean">
+            <Default>TRUE</Default>
+            <Comment>
+                <Line>Whether or not events in month view on days that are not actually part of the current month should be shown.</Line>
+                <Line>For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.</Line>
+                <Line>Values must be TRUE or FALSE.</Line>
+            </Comment>
+        </Config>
+    </Section>
+    <Section Label="Cache">
+        <Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number">
+            <Default>100</Default>
+            <Comment>
+                <Line>Cache the list of category names in memory if the calendar has less than or equal to this number.</Line>
+            </Comment>
+        </Config>
+    </Section>
+</Configs>

@@ -26,7 +26,6 @@
             <xsl:text>&#13;&#10;</xsl:text>
         </xsl:for-each>
         
-        
         <xsl:text>if (!defined("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>")) define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
         <xsl:choose>
         	<xsl:when test="not(Default)">""</xsl:when>

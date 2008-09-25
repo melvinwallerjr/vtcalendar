@@ -1,6 +1,4 @@
 <?php
-require_once('config.inc.php');
-require_once('session_start.inc.php');
 require_once('application.inc.php');
 
 if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 

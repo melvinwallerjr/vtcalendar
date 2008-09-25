@@ -1,8 +1,6 @@
 <?php
 // Used by changeinfo.php to retrieve the sponsor name/url via an XMLHTTPRequest without having to reload the whole page.
 
-require_once('config.inc.php');
-require_once('session_start.inc.php');
 require_once('application.inc.php');
 
 if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }

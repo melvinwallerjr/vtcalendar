@@ -7,10 +7,10 @@
 
     <xsl:template match="/">
         <xsl:text disable-output-escaping="yes">&lt;?php&#13;&#10;&#13;&#10;</xsl:text>
-    	<xsl:text>/* ##############################################
-WARNING: If you want to override the defaults below, define them in config.inc.php.
-Any changes to this file may be overwritten when you upgrade to a newer version of VTCalendar.
-############################################## */
+    	<xsl:text>// ##############################################
+// WARNING: If you want to override the defaults below, define them in config.inc.php.
+// Any changes to this file may be overwritten when you upgrade to a newer version of VTCalendar.
+// ##############################################
 
 </xsl:text>
     	

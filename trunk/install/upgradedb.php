@@ -1,93 +1,9 @@
-<?php
-
-if (!file_exists("../VERSION.txt")) die("VERSION.txt was not found. Make sure it exists in the VTCalendar folder.");
-if (($version = file_get_contents("../VERSION.txt")) === false) die("VERSION.txt could not be read.");
-
-if (file_exists("../VERSION-DBCHECKED.txt")) {
-	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt could not be read.");
-	if (trim($version) == trim($dbVersionChecked)) {
-		die("VERSION-DBCHECKED.txt already matches VERSION.txt.<br><br>If you would like to run this script, remove the VERSION-DBCHECKED.txt file in the VTCalendar folder.");
-	}
-}
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Upgrade MySQL DB</title>
-<style type="text/css">
-body {
-	font-family: Arial;
-	font-size: 13px;
-}
-form {
-	margin: 0;
-	padding: 0;
-}
-h1 {
-	font-size: 24px;
-	padding-bottom: 8px;
-	border-bottom: 2px solid #333333;
-}
-h2 {
-	font-size: 16px;
-	padding: 6px;
-	background-color: #CCDBFF;
-	border-top: 1px solid #666666;
-}
-h3.Table {
-	background-image: url(table-big.png);
-	background-repeat: no-repeat;
-	height: 24px;
-	padding: 0;
-	padding-left: 38px;
-	padding-top: 8px;
-	margin: 0;
-}
-div {
-	margin-bottom: 2px;
-	padding: 5px;
-}
-div.Error, div.Success, div.Table, div.Field, div.PrimaryKey, div.Index {
-	background-repeat: no-repeat;
-	background-position: 5px 5px;
-	padding-left: 30px;
-}
-div.Error {
-	background-image: url(failed.png);
-}
-div.Success {
-	background-image: url(success.png);
-}
-div.Table {
-	background-image: url(table.png);
-}
-div.PrimaryKey {
-	background-image: url(primarykey.png);
-}
-div.Index {
-	background-image: url(index.png);
-}
-div.Field {
-	background-image: url(field.png);
-}
-div.Error {
-	background-color: #FFDDDD;
-}
-div.Unused {
-	background-color: #EEEEEE;
-}
-div.Create {
-	background-color: #DDFFDD;
-}
-div.Alter {
-	background-color: #FFFF99;
-}
-code {
-	color: #0000FF;
-}
-</style>
+<title>Install or Upgrade VTCalendar Database (MySQL Only)</title>
+<link href="styles.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript">
 function verifyUpgrade() {
 	return confirm("Are you sure you want to upgrade the database?");
@@ -96,7 +12,27 @@ function verifyUpgrade() {
 </head>
 
 <body>
-<h1>Install/Upgrade VTCalendar Database (MySQL Only)</h1>
+
+
+<?php
+
+if (!file_exists("../VERSION.txt")) die("VERSION.txt was not found. Make sure it exists in the VTCalendar folder.");
+if (($version = file_get_contents("../VERSION.txt")) === false) die("VERSION.txt exists but could not be read. May not have read access to the file.");
+
+if (file_exists("../VERSION-DBCHECKED.txt")) {
+	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt exists but could not be. May not have read access to the file.");
+	if (trim($version) == trim($dbVersionChecked)) {
+		echo "<h1 style='color: red;'>Database Already Installed or Upgraded:</h1>"
+			."<p><a href='../VERSION-DBCHECKED.txt'><code>VERSION-DBCHECKED.txt</code></a> already matches <a href='../VERSION.txt'><code>VERSION.txt</code></a>.</p>"
+			."<p>If you would like to run this script, remove the <code>VERSION-DBCHECKED.txt</code> file in the VTCalendar folder.</p></body></html>";
+		exit;
+		//die("VERSION-DBCHECKED.txt already matches VERSION.txt.<br><br>If you would like to run this script, remove the VERSION-DBCHECKED.txt file in the VTCalendar folder.");
+	}
+}
+?>
+
+
+<h1>Install or Upgrade VTCalendar Database (MySQL Only)</h1>
 
 <?php
 
@@ -147,7 +83,7 @@ if (isset($_GET['success'])) {
 	$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", $version) !== false);
 	
 	if (!$versionRecorded) {
-		echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/updated. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
+		echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
 	}
 
 }
@@ -168,7 +104,7 @@ elseif (defined("DATABASE") && defined("UPGRADESQL")) {
 				if (is_string($result)) {
 					$queryError = true;
 					echo "<div class='Error'><b>Error:</b> Query # " . ($i+1) . " failed: " . $result . "</div>";
-					?><textarea name="updatesql" cols="60" rows="5" readonly="readonly" onFocus="this.select();" onClick="this.select(); this.focus();"><?php echo htmlentities($queries[$i]); ?></textarea><?php
+					?><textarea name="updatesql" cols="60" rows="5" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($queries[$i]); ?></textarea><?php
 				}
 				else {
 					echo "<div class='Success'><b>Success:</b> Query # " . ($i+1) . " successful.</div>";
@@ -218,7 +154,7 @@ elseif (defined("DATABASE") && !defined("UPGRADESQL")) {
 					$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", $version) !== false);
 					
 					if (!$versionRecorded) {
-						echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/updated. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
+						echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
 					}
 					
 					// Show a cleaner success page if no changes or notifications were outputted.
@@ -232,7 +168,7 @@ elseif (defined("DATABASE") && !defined("UPGRADESQL")) {
 					<p>After reviewing the above upgrades you may <input type="submit" value="Upgrade the Database"/></p>
 					<p style="font-size: 16px; font-weight: bold;">- or -</p>
 					<div>If your account does not have permission to CREATE or ALTER tables,<br/>copy/paste the SQL code below to manually upgrade your database</div>
-					<textarea name="updatesql" cols="60" rows="15" readonly="readonly" onFocus="this.select();" onClick="this.select(); this.focus();"><?php echo htmlentities($FinalSQL); ?></textarea>
+					<textarea name="updatesql" cols="60" rows="15" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($FinalSQL); ?></textarea>
 					<?php
 				}
 				

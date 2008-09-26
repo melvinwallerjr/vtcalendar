@@ -10,63 +10,7 @@ define("ALLOWINCLUDES","true");
 <script type="text/javascript" src="../scripts/browsersniffer.js"></script>
 <script type="text/javascript" src="../scripts/http.js"></script>
 <script type="text/javascript" src="scripts.js"></script>
-<style type="text/css">
-<!--
-body, th, td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-
-h1 {
-	font-size: 24px;
-	padding-bottom: 8px;
-	border-bottom: 2px solid #333333;
-}
-h2 {
-	font-size: 16px;
-	padding: 6px;
-	background-color: #CCDBFF;
-	border-top: 1px solid #666666;
-}
-table.VariableTable {
-	border-right: 1px solid #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
-}
-td.VariableName {
-	background-color: #EEEEEE;
-}
-td.VariableName, td.VariableBody {
-	border-top: 1px solid #CCCCCC;
-	border-left: 1px solid #CCCCCC;
-}
-td.DataField {
-	padding-top: 0;
-}
-td.Comment {
-	padding-top: 0;
-}
-label {
-	cursor: pointer;
-}
-blockquote {
-	margin-left: 22px;
-	margin-right: 0px;
-}
-#SaveFailed {
-	border: 1px solid #660000;
-	background-color: #FFEEEE;
-	padding: 8px;
-	font-weight: none;
-}
-#SaveFailed b.Title {
-	font-size: 18px;
-}
-#SaveFailed p {
-	padding-top: 0;
-	margin-top: 0;
-}
--->
-</style>
+<link href="styles.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -93,7 +37,7 @@ if (isset($_POST['SaveConfig'])) {
 	
 	$ConfigOutput .= "// For a full list of config options (and default values) see config-defaults.inc.php.\n\n";
 	
-	require("index-code.php");
+	require("config-code.php");
 	
 	$ConfigOutput .= "?>";
 	
@@ -117,17 +61,17 @@ if (isset($_POST['SaveConfig'])) {
 if (isset($_POST['SaveConfig']) && !$WriteSuccess) {
 	?>
 	<div id="SaveFailed">
-	<p><b class="Title">Save Failed:</b><br/>The config file could not be saved. To manually create the config.inc.php, copy/paste the contents of the box below and paste it into a new file. Save that file to the vtcalendar folder and name it "config.inc.php".<br/><br/>
+	<p><b class="Title">Save Failed:</b><br/>The config file could not be saved. To manually create the config.inc.php, copy/paste the contents of the box below and paste it into a new file. Save that file to the vtcalendar folder and name it &quot;config.inc.php&quot;.<br/><br/>
 	<b style="color: #FF0000;">Security Notice:</b> It is recommended that you remove or secure the <b>/install</b> directory.</p>
-	<textarea style="width: 100%; height: 200px" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($ConfigOutput); ?></textarea>
+	<textarea style="width: 100%; height: 200px" cols="60" rows="15" name="code" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($ConfigOutput); ?></textarea>
 	</div>
 	<?php
 }
 else {
 ?>
-<form name="ConfigForm" method="post" action="index.php">
+<form name="ConfigForm" method="post" action="config.php">
 
-<?php require("index-form.php"); ?>
+<?php require("config-form.php"); ?>
 
 <script type="text/javascript">
 //<!--

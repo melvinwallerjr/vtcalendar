@@ -1,3 +1,16 @@
+<?php
+
+if (!file_exists("../VERSION.txt")) die("VERSION.txt was not found. Make sure it exists in the VTCalendar folder.");
+if (($version = file_get_contents("../VERSION.txt")) === false) die("VERSION.txt could not be read.");
+
+if (file_exists("../VERSION-DBCHECKED.txt")) {
+	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt could not be read.");
+	if (trim($version) == trim($dbVersionChecked)) {
+		die("VERSION-DBCHECKED.txt already matches VERSION.txt.<br><br>If you would like to run this script, remove the VERSION-DBCHECKED.txt file in the VTCalendar folder.");
+	}
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -195,8 +208,14 @@ elseif (defined("DATABASE") && !defined("UPGRADESQL")) {
 				if ($changes < 1) {
 					echo "<div class='Success'>No changes to the database were necessary.</div>";
 					
+					$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", $version) !== false);
+					
+					if (!$versionRecorded) {
+						echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/updated. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
+					}
+					
 					// Show a cleaner success page if no changes or notifications were outputted.
-					if ($changes == 0) {
+					elseif ($changes == 0) {
 						?><script type="text/javascript">location.replace("upgradedb.php?success=nochanges")</script><?php
 					}
 				}

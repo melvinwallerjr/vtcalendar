@@ -37,14 +37,14 @@
 	<Field Name="title" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="header" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="footer" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="bgcolor" Type="text" NotNull="false" AutoIncrement="false"/>
+	<!--<Field Name="bgcolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="maincolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="todaycolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="pastcolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="futurecolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="textcolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="linkcolor" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="gridcolor" Type="text" NotNull="false" AutoIncrement="false"/>
+	<Field Name="gridcolor" Type="text" NotNull="false" AutoIncrement="false"/>-->
 	<Field Name="viewauthrequired" Type="int(11)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="forwardeventdefault" Type="int(11)" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>

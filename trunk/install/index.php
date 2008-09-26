@@ -111,7 +111,7 @@ if (isset($_POST['SaveConfig'])) {
 	if (isset($_POST['LANGUAGE'])) { $Form_LANGUAGE = $_POST['LANGUAGE']; } else { $Form_LANGUAGE = 'en'; }
 	if (isset($_POST['DATABASE'])) { $Form_DATABASE = $_POST['DATABASE']; } else { $Form_DATABASE = ''; }
 	if (isset($_POST['SQLLOGFILE'])) { $Form_SQLLOGFILE = $_POST['SQLLOGFILE']; } else { $Form_SQLLOGFILE = ''; }
-	if (isset($_POST['REGEXVALIDUSERID'])) { $Form_REGEXVALIDUSERID = $_POST['REGEXVALIDUSERID']; } else { $Form_REGEXVALIDUSERID = '/^[A-Za-z][\\\\._A-Za-z0-9\\\\-\\\\\\\\]{1,49}$/'; }
+	if (isset($_POST['REGEXVALIDUSERID'])) { $Form_REGEXVALIDUSERID = $_POST['REGEXVALIDUSERID']; } else { $Form_REGEXVALIDUSERID = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/'; }
 	if (isset($_POST['AUTH_DB']) && strtolower($_POST['AUTH_DB']) == 'true') { $Form_AUTH_DB = 'true'; } else { $Form_AUTH_DB = 'false'; }
 	if (isset($_POST['AUTH_DB_USER_PREFIX'])) { $Form_AUTH_DB_USER_PREFIX = $_POST['AUTH_DB_USER_PREFIX']; } else { $Form_AUTH_DB_USER_PREFIX = ''; }
 	if (isset($_POST['AUTH_DB_NOTICE'])) { $Form_AUTH_DB_NOTICE = $_POST['AUTH_DB_NOTICE']; } else { $Form_AUTH_DB_NOTICE = ''; }
@@ -486,7 +486,7 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="REGEXVALIDUSERID" value="/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/" size="60"/>
+                     <input type="text" name="REGEXVALIDUSERID" value="/^[A-Za-z][\._A-Za-z0-9\-\\]{1,49}$/" size="60"/>
                   </td>
                </tr>
                <tr>

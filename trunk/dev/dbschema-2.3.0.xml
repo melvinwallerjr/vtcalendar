@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DBSchema>
+	
+	<!-- 
+	CalendarID <= 20
+	CalendarName <= 100
+	CalendarTitle <= 50
+	Keyword <= 100
+	EventTitle <= 1024
+	EventURL/SponsorURL <= 100
+	EventLocation <= 100
+	EventPrice <= 100
+	
+	ContactName <= 100
+	ContactPhone <= 100
+	
+	EventDescription <= 10000
+	DisplayedSponsor <= 100
+	DisplayedSponsorURL <= 100
+	-->
+	
 <Table Name="vtcal_adminuser">
 	<Field Name="id" Type="varchar(50)" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>

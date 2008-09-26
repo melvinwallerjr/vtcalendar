@@ -13,7 +13,7 @@
         <xsl:text>// </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
         <xsl:text>// =====================================&#13;&#10;&#13;&#10;</xsl:text>
         
-        <xsl:apply-templates select="descendant::Config"/>
+        <xsl:apply-templates select="Config[not(@IsDefinition = 'false')]"/>
     </xsl:template>
     
     <xsl:template match="Config">
@@ -44,5 +44,7 @@
         	<xsl:otherwise><xsl:value-of select="Default/text()"/></xsl:otherwise>
         </xsl:choose>
         <xsl:text>);&#13;&#10;&#13;&#10;</xsl:text>
+        
+        <xsl:apply-templates select="Dependants/Config[not(@IsDefinition = 'false')]"/>
     </xsl:template>
 </xsl:stylesheet>

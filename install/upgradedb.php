@@ -75,9 +75,16 @@ code {
 	color: #0000FF;
 }
 </style>
+<script type="text/javascript">
+function verifyUpgrade() {
+	return confirm("Are you sure you want to upgrade the database?");
+}
+</script>
 </head>
 
 <body>
+<h1>Upgrade VTCalendar MySQL DB</h1>
+
 <?php
 
 @(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
@@ -92,8 +99,17 @@ elseif (isset($_POST['DSN'])) {
 	define("DATABASE", $_POST['DSN']);
 }
 
+if (isset($_POST['updatesql'])) {
+	define("UPGRADESQL", $_POST['updatesql']);
+}
+
 ?>
-<h1>Upgrade VTCalendar MySQL DB</h1>
+<h2>About this Page:</h2>
+<blockquote>
+<p>When upgrading VTCalendar, it is necessary to upgrade the database as well. This page will scan your current database and tell you what needs to be changed. You can then apply the changes to the database directly through this page, or copy/paste the necessary SQL into another program of your choice.</p>
+<p><b style="color: #CC0000;">Backup Your Database!</b><br/>It is recommended that you backup your entire VTCalendar database before upgrading. Changes made by applying this upgrade CANNOT be undone without a backup.</p>
+</blockquote>
+
 <h2>Enter the Database Connection String:</h2>
 <blockquote>
 <form action="upgradedb.php" method="POST">
@@ -104,8 +120,48 @@ elseif (isset($_POST['DSN'])) {
 </blockquote>
 <?php
 
-if (defined("DATABASE")) {
-	?><h2>Upgrade Preview:</h2><?php
+if (isset($_GET['success'])) {
+	?><h2>Upgrade Result:</h2><?php
+	if ($_GET['success'] == "nochanges") {
+		echo "<div class='Success'>No changes to the database were necessary.</div>";
+	}
+	else {
+		echo "<div class='Success'><b>Success:</b> All upgrades were applied successfully!</div>";
+	}
+}
+elseif (defined("DATABASE") && defined("UPGRADESQL")) {
+	?><h2>Upgrade Result:</h2><?php
+	
+	$DBCONNECTION = DBOpen();
+	if (is_string($DBCONNECTION)) {
+		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
+	}
+	else {
+		$queries = preg_split("/(\r\n\r\n)|(\n\n)/", UPGRADESQL);
+		$queryError = false;
+		
+		for ($i = 0; $i < count($queries); $i++) {
+			if (!trim($queries[$i]) == "") {
+				$result =& DBquery($queries[$i]);
+				if (is_string($result)) {
+					$queryError = true;
+					echo "<div class='Error'><b>Error:</b> Query # " . ($i+1) . " failed: " . $result . "</div>";
+					?><textarea name="updatesql" cols="60" rows="5" readonly="readonly" onFocus="this.select();" onClick="this.select(); this.focus();"><?php echo htmlentities($queries[$i]); ?></textarea><?php
+				}
+				else {
+					echo "<div class='Success'><b>Success:</b> Query # " . ($i+1) . " successful.</div>";
+				}
+			}
+		}
+		DBClose();
+		
+		if (!$queryError) {
+			?><script type="text/javascript">location.replace("upgradedb.php?success=true")</script><?php
+		}
+	}
+}
+elseif (defined("DATABASE") && !defined("UPGRADESQL")) {
+	?><h2>Upgrade Preview:</h2><p>The following is a preview of changes to the database that are needed.<br/>To apply any needed changes, proceed to the <a href="#Upgrade">Upgrade the Database</a> section at the bottom of this page.<?php
 	
 	$FinalSQL = "";
 	
@@ -129,18 +185,23 @@ if (defined("DATABASE")) {
 			DBClose();
 		}
 		
-		?><h2>Upgrade Database:</h2><blockquote><?php
+		?><h2><a name="Upgrade"></a>Upgrade Database:</h2><form action="upgradedb.php" method="post" onsubmit="return verifyUpgrade();"><input type="hidden" name="DSN" value="<?php echo DATABASE; ?>"/><blockquote><?php
 		
 		if (empty($FinalSQL)) {
 			echo "<div class='Success'>No changes to the database were necessary.</div>";
+			?><!--<script type="text/javascript">location.replace("upgradedb.php?success=nochanges")</script>--><?php
 		}
 		else {
 			?>
+			<p style="font-size: 18px; padding: 8px; background-color: #FFEEEE; border: 1px solid #FF3333;"><b>LAST WARNING!</b><br/>It is recommended that you backup your entire VTCalendar database before upgrading. Changes made by applying this upgrade CANNOT be undone without a backup.</p>
+			<p>After reviewing the above upgrades you may <input type="submit" value="Upgrade the Database"/></p>
+			<p style="font-size: 16px; font-weight: bold;">- or -</p>
+			<div>If your account does not have permission to CREATE or ALTER tables,<br/>copy/paste the SQL code below to manually upgrade your database</div>
 			<textarea name="updatesql" cols="60" rows="15" readonly="readonly" onFocus="this.select();" onClick="this.select(); this.focus();"><?php echo htmlentities($FinalSQL); ?></textarea>
 			<?php
 		}
 		
-		?></blockquote><?php
+		?></blockquote></form><?php
 	}
 }
 

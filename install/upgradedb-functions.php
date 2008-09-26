@@ -79,7 +79,6 @@ function CheckTables() {
 	// Loop through the current tables to see what can be dropped.
 	for ($i = 0; $i < count($CurrentTableNames); $i++) {
 		if (!array_key_exists($CurrentTableNames[$i], $FinalTables)) {
-			echo "<div class='Unused Table'><b>Unused Table Notice:</b> The `<code>" . $CurrentTableNames[$i] . "</code>` table is not used by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be manually removed.</div>";
 		}
 	}
 	
@@ -149,8 +148,8 @@ function CheckTable($TableName) {
 	// Loop through the current table fields to see what can be dropped.
 	for ($i = 0; $i < count($CurrentTableFields); $i++) {
 		if (!array_key_exists($CurrentTableFields[$i], $FinalTables[$TableName]['Fields'])) {
-			echo "<div class='Unused Field'><b>Unused Field Notice:</b> The `<code>" . $CurrentTableFields[$i] . "</code>` field in the `<code>" . $TableName . "</code>` table is not used by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be manually removed.</div>";
-			$changes++;
+			echo "<div class='Unused Field'><b>Unused Field Notice:</b> The `<code>" . $CurrentTableFields[$i] . "</code>` field in the `<code>" . $TableName . "</code>` table is not used by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be removed manually.</div>";
+			//$changes++;
 		}
 	}
 	
@@ -185,7 +184,7 @@ function CheckTable($TableName) {
 	for ($i = 0; $i < count($CurrentTableIndexes); $i++) {
 		if (!array_key_exists($CurrentTableIndexes[$i], $FinalTables[$TableName]['Keys'])) {
 			echo "<div class='Unused Index'><b>Unused Index Notice:</b> The `<code>" . $CurrentTableIndexes[$i] . "</code>` index in the `<code>" . $TableName . "</code>` table is not specified by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be manually removed.</div>";
-			$changes++;
+			//$changes++;
 		}
 	}
 	

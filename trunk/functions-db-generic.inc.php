@@ -29,7 +29,7 @@ function DBQuery($query) {
 	}
 	
 	// Write to the SQL log file if one is defined.
-	if (SQLLOGFILE != "") {
+	if (defined("SQLLOGFILE") && SQLLOGFILE != "") {
 		$logfile = fopen(SQLLOGFILE, "a");
 		
 		// Log the username if logged in.

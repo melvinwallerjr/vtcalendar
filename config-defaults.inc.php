@@ -37,10 +37,8 @@ if (!defined("DATABASE")) define("DATABASE", "");
 
 // Config: SQL Log File
 // Example: /var/log/vtcalendarsql.log
-// Put a name of a (folder and) file where the calendar logs every
-// SQL query to the database. This is good for debugging but make
-// sure you write into a file that's not readable by the webserver or
-// else you may expose private information.
+// Put a name of a (folder and) file where the calendar logs every SQL query to the database.
+// This is good for debugging but make sure you write into a file that's not readable by the webserver or else you may expose private information.
 // If left blank ("") no log will be kept. That's the default.
 if (!defined("SQLLOGFILE")) define("SQLLOGFILE", "");
 
@@ -60,14 +58,13 @@ if (!defined("AUTH_DB")) define("AUTH_DB", true);
 // Config: Prefix for Database Usernames
 // Example: db_
 // This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."
-// If you only use auth_db just leave it an empty string
-// Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP
+// If you only use auth_db just leave it an empty string.
+// Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.
 if (!defined("AUTH_DB_USER_PREFIX")) define("AUTH_DB_USER_PREFIX", "");
 
 // Config: Database Authentication Notice
-// This displays a text (or nothing) on the Update tab behind the user user management options
-// It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users
-// know that they should create local users only if they are not in the LDAP.
+// This displays a text (or nothing) on the Update tab behind the user user management options.
+// It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.
 if (!defined("AUTH_DB_NOTICE")) define("AUTH_DB_NOTICE", "");
 
 // Config: LDAP Authentication
@@ -76,9 +73,12 @@ if (!defined("AUTH_DB_NOTICE")) define("AUTH_DB_NOTICE", "");
 if (!defined("AUTH_LDAP")) define("AUTH_LDAP", false);
 
 // Config: LDAP Host Name
+// Example: directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/
+// If you are using OpenLDAP 2.x.x you can specify a URL ('ldap://host/') instead of the hostname ('host').
 if (!defined("LDAP_HOST")) define("LDAP_HOST", "");
 
 // Config: LDAP Port
+// The port to connect to. Ignored if LDAP Host Name is a URL.
 if (!defined("LDAP_PORT")) define("LDAP_PORT", 389);
 
 // Config: LDAP Username Attribute

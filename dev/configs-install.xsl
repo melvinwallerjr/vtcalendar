@@ -41,15 +41,14 @@
 								</xsl:otherwise>
 							</xsl:choose>
 							<xsl:if test="Example">
-								<xsl:text> </xsl:text>
-								<i>Example: <xsl:value-of select="Example/text()"/></i>
+								<br/><i>Example: <xsl:value-of select="Example/text()"/></i>
 							</xsl:if>
 						</td>
 					</tr>
 					<tr>
 						<td class="Comment">
 							<xsl:for-each select="Comment/Line">
-								<!--<xsl:if test="position() &gt; 1"><br/></xsl:if>-->
+								<xsl:if test="position() &gt; 1"><br/></xsl:if>
 								<xsl:value-of select="text()"/>
 							</xsl:for-each>
 						</td>

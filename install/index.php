@@ -167,10 +167,8 @@ if (isset($_POST['SaveConfig'])) {
 	// Output SQL Log File
 	$ConfigOutput .= '// Config: SQL Log File'."\n";
 	$ConfigOutput .= '// Example: /var/log/vtcalendarsql.log'."\n";
-	$ConfigOutput .= '// Put a name of a (folder and) file where the calendar logs every'."\n";
-	$ConfigOutput .= '// SQL query to the database. This is good for debugging but make'."\n";
-	$ConfigOutput .= '// sure you write into a file that\'s not readable by the webserver or'."\n";
-	$ConfigOutput .= '// else you may expose private information.'."\n";
+	$ConfigOutput .= '// Put a name of a (folder and) file where the calendar logs every SQL query to the database.'."\n";
+	$ConfigOutput .= '// This is good for debugging but make sure you write into a file that\'s not readable by the webserver or else you may expose private information.'."\n";
 	$ConfigOutput .= '// If left blank ("") no log will be kept. That\'s the default.'."\n";
 	$ConfigOutput .= 'define("SQLLOGFILE", \''. escapephpstring($Form_SQLLOGFILE) .'\');'."\n\n";
 
@@ -189,15 +187,14 @@ if (isset($_POST['SaveConfig'])) {
 	$ConfigOutput .= '// Config: Prefix for Database Usernames'."\n";
 	$ConfigOutput .= '// Example: db_'."\n";
 	$ConfigOutput .= '// This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."'."\n";
-	$ConfigOutput .= '// If you only use auth_db just leave it an empty string'."\n";
-	$ConfigOutput .= '// Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP'."\n";
+	$ConfigOutput .= '// If you only use auth_db just leave it an empty string.'."\n";
+	$ConfigOutput .= '// Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.'."\n";
 	$ConfigOutput .= 'define("AUTH_DB_USER_PREFIX", \''. escapephpstring($Form_AUTH_DB_USER_PREFIX) .'\');'."\n\n";
 
 	// Output Database Authentication Notice
 	$ConfigOutput .= '// Config: Database Authentication Notice'."\n";
-	$ConfigOutput .= '// This displays a text (or nothing) on the Update tab behind the user user management options'."\n";
-	$ConfigOutput .= '// It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users'."\n";
-	$ConfigOutput .= '// know that they should create local users only if they are not in the LDAP.'."\n";
+	$ConfigOutput .= '// This displays a text (or nothing) on the Update tab behind the user user management options.'."\n";
+	$ConfigOutput .= '// It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.'."\n";
 	$ConfigOutput .= 'define("AUTH_DB_NOTICE", \''. escapephpstring($Form_AUTH_DB_NOTICE) .'\');'."\n\n";
 
 	// Output LDAP Authentication
@@ -208,10 +205,13 @@ if (isset($_POST['SaveConfig'])) {
 
 	// Output LDAP Host Name
 	$ConfigOutput .= '// Config: LDAP Host Name'."\n";
+	$ConfigOutput .= '// Example: directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/'."\n";
+	$ConfigOutput .= '// If you are using OpenLDAP 2.x.x you can specify a URL (\'ldap://host/\') instead of the hostname (\'host\').'."\n";
 	$ConfigOutput .= 'define("LDAP_HOST", \''. escapephpstring($Form_LDAP_HOST) .'\');'."\n\n";
 
 	// Output LDAP Port
 	$ConfigOutput .= '// Config: LDAP Port'."\n";
+	$ConfigOutput .= '// The port to connect to. Ignored if LDAP Host Name is a URL.'."\n";
 	$ConfigOutput .= 'define("LDAP_PORT", \''. escapephpstring($Form_LDAP_PORT) .'\');'."\n\n";
 
 	// Output LDAP Username Attribute
@@ -376,6 +376,9 @@ if (isset($_POST['SaveConfig']) && !$WriteSuccess) {
 else {
 ?>
 <form name="ConfigForm" method="post" action="index.php">
+
+<!-- START GENERATED -->
+
 <h2>General:</h2>
 <blockquote>
    <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
@@ -404,7 +407,8 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="TITLESUFFIX" value="" size="60"/> 
+                     <input type="text" name="TITLESUFFIX" value="" size="60"/>
+                     <br/>
                      <i>Example: " - My University"</i>
                   </td>
                </tr>
@@ -422,7 +426,8 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="LANGUAGE" value="en" size="60"/> 
+                     <input type="text" name="LANGUAGE" value="en" size="60"/>
+                     <br/>
                      <i>Example: en, de</i>
                   </td>
                </tr>
@@ -445,12 +450,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="DATABASE" value="" size="60"/> 
+                     <input type="text" name="DATABASE" value="" size="60"/>
+                     <br/>
                      <i>Example: mysql://vtcal:abc123@localhost/vtcalendar</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">This is the database connection string used by the PEAR library.It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</td>
+                  <td class="Comment">This is the database connection string used by the PEAR library.<br/>It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</td>
                </tr>
             </table>
          </td>
@@ -463,12 +469,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="SQLLOGFILE" value="" size="60"/> 
+                     <input type="text" name="SQLLOGFILE" value="" size="60"/>
+                     <br/>
                      <i>Example: /var/log/vtcalendarsql.log</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Put a name of a (folder and) file where the calendar logs everySQL query to the database. This is good for debugging but makesure you write into a file that's not readable by the webserver orelse you may expose private information.If left blank ("") no log will be kept. That's the default.</td>
+                  <td class="Comment">Put a name of a (folder and) file where the calendar logs every SQL query to the database.<br/>This is good for debugging but make sure you write into a file that's not readable by the webserver or else you may expose private information.<br/>If left blank ("") no log will be kept. That's the default.</td>
                </tr>
             </table>
          </td>
@@ -507,7 +514,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Authenticate users against the database.If enabled, this is always performed before any other authentication.</td>
+                  <td class="Comment">Authenticate users against the database.<br/>If enabled, this is always performed before any other authentication.</td>
                </tr>
                <tr id="Dependants_AUTH_DB">
                   <td>
@@ -520,12 +527,13 @@ else {
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <input type="text" name="AUTH_DB_USER_PREFIX" value="" size="60"/> 
+                                       <input type="text" name="AUTH_DB_USER_PREFIX" value="" size="60"/>
+                                       <br/>
                                        <i>Example: db_</i>
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment">This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."If you only use auth_db just leave it an empty stringIts purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP</td>
+                                    <td class="Comment">This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."<br/>If you only use auth_db just leave it an empty string.<br/>Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.</td>
                                  </tr>
                               </table>
                            </td>
@@ -542,9 +550,8 @@ else {
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment">This displays a text (or nothing) on the Update tab behind the user user management optionsIt could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let usersknow that they should create local users only if they are not in the LDAP.</td>
+                                    <td class="Comment">This displays a text (or nothing) on the Update tab behind the user user management options.<br/>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.</td>
                                  </tr>
-
                               </table>
                            </td>
                         </tr>
@@ -567,7 +574,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Authenticate users against a LDAP server.If enabled, HTTP authenticate will be ignored.</td>
+                  <td class="Comment">Authenticate users against a LDAP server.<br/>If enabled, HTTP authenticate will be ignored.</td>
                </tr>
                <tr id="Dependants_AUTH_LDAP">
                   <td>
@@ -581,10 +588,12 @@ else {
                                  <tr>
                                     <td class="DataField">
                                        <input type="text" name="LDAP_HOST" value="" size="60"/>
+                                       <br/>
+                                       <i>Example: directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/</i>
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment"/>
+                                    <td class="Comment">If you are using OpenLDAP 2.x.x you can specify a URL ('ldap://host/') instead of the hostname ('host').</td>
                                  </tr>
                               </table>
                            </td>
@@ -601,7 +610,7 @@ else {
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment"/>
+                                    <td class="Comment">The port to connect to. Ignored if LDAP Host Name is a URL.</td>
                                  </tr>
                               </table>
                            </td>
@@ -614,7 +623,8 @@ else {
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <input type="text" name="LDAP_USERFIELD" value="" size="60"/> 
+                                       <input type="text" name="LDAP_USERFIELD" value="" size="60"/>
+                                       <br/>
                                        <i>Example: sAMAccountName</i>
                                     </td>
                                  </tr>
@@ -632,7 +642,8 @@ else {
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <input type="text" name="LDAP_BASE_DN" value="" size="60"/> 
+                                       <input type="text" name="LDAP_BASE_DN" value="" size="60"/>
+                                       <br/>
                                        <i>Example: DC=myuniversity,DC=edu</i>
                                     </td>
                                  </tr>
@@ -650,7 +661,8 @@ else {
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <input type="text" name="LDAP_SEARCH_FILTER" value="" size="60"/> 
+                                       <input type="text" name="LDAP_SEARCH_FILTER" value="" size="60"/>
+                                       <br/>
                                        <i>Example: (objectClass=person)</i>
                                     </td>
                                  </tr>
@@ -672,7 +684,7 @@ else {
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment">Before authenticating the user, we first check if the username exists.If your LDAP server does not allow anonymous connections, specific a username here.Leave this blank to connect anonymously.</td>
+                                    <td class="Comment">Before authenticating the user, we first check if the username exists.<br/>If your LDAP server does not allow anonymous connections, specific a username here.<br/>Leave this blank to connect anonymously.</td>
                                  </tr>
                               </table>
                            </td>
@@ -689,7 +701,7 @@ else {
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td class="Comment">Before authenticating the user, we first check if the username exists.If your LDAP server does not allow anonymous connections, specific a password here.Leave this blank to connect anonymously.</td>
+                                    <td class="Comment">Before authenticating the user, we first check if the username exists.<br/>If your LDAP server does not allow anonymous connections, specific a password here.<br/>Leave this blank to connect anonymously.</td>
                                  </tr>
                               </table>
                            </td>
@@ -713,7 +725,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Authenticate users by sending an HTTP request to a server.A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.If LDAP authentication is enabled, this will be ignored.</td>
+                  <td class="Comment">Authenticate users by sending an HTTP request to a server.<br/>A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.<br/>If LDAP authentication is enabled, this will be ignored.</td>
                </tr>
                <tr id="Dependants_AUTH_HTTP">
                   <td>
@@ -726,7 +738,8 @@ else {
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <input type="text" name="AUTH_HTTP_URL" value="" size="60"/> 
+                                       <input type="text" name="AUTH_HTTP_URL" value="" size="60"/>
+                                       <br/>
                                        <i>Example: http://localhost/customauth.php</i>
                                     </td>
                                  </tr>
@@ -756,12 +769,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="BASEPATH" value="" size="60"/> 
+                     <input type="text" name="BASEPATH" value="" size="60"/>
+                     <br/>
                      <i>Example: /calendar/</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.Otherwise, the cookie will be submitted with a default path.This must start and end with a forward slash (/), unless the it is exactly "/".</td>
+                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.<br/>Otherwise, the cookie will be submitted with a default path.<br/>This must start and end with a forward slash (/), unless the it is exactly "/".</td>
                </tr>
             </table>
          </td>
@@ -774,12 +788,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="BASEDOMAIN" value="" size="60"/> 
+                     <input type="text" name="BASEDOMAIN" value="" size="60"/>
+                     <br/>
                      <i>Example: localhost</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.Otherwise, the cookie will be submitted with a default host name.</td>
+                  <td class="Comment">If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.<br/>Otherwise, the cookie will be submitted with a default host name.</td>
                </tr>
             </table>
          </td>
@@ -797,12 +812,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="BASEURL" value="" size="60"/> 
+                     <input type="text" name="BASEURL" value="" size="60"/>
+                     <br/>
                      <i>Example: http://localhost/calendar/</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">This is the absolute URL where your calendar software is located.This MUST end with a slash "/"</td>
+                  <td class="Comment">This is the absolute URL where your calendar software is located.<br/>This MUST end with a slash "/"</td>
                </tr>
             </table>
          </td>
@@ -815,12 +831,13 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="SECUREBASEURL" value="" size="60"/> 
+                     <input type="text" name="SECUREBASEURL" value="" size="60"/>
+                     <br/>
                      <i>Example: https://localhost/calendar/</i>
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">This is the absolute path where the secure version of the calendar is located.If you are not using URL, set this to the same address as BASEURL.This MUST end with a slash "/"</td>
+                  <td class="Comment">This is the absolute path where the secure version of the calendar is located.<br/>If you are not using URL, set this to the same address as BASEURL.<br/>This MUST end with a slash "/"</td>
                </tr>
             </table>
          </td>
@@ -838,7 +855,8 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <input type="text" name="TIMEZONE_OFFSET" value="5" size="60"/> 
+                     <input type="text" name="TIMEZONE_OFFSET" value="5" size="60"/>
+                     <br/>
                      <i>Example: -5</i>
                   </td>
                </tr>
@@ -899,7 +917,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Which side the little calendar, 'jump to', 'today is', etc. will be on.Values must be LEFT or RIGHT.</td>
+                  <td class="Comment">Which side the little calendar, 'jump to', 'today is', etc. will be on.<br/>Values must be LEFT or RIGHT.</td>
                </tr>
             </table>
          </td>
@@ -912,28 +930,35 @@ else {
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField"><input type="checkbox" id="CheckBox_SHOW_UPCOMING_TAB" name="SHOW_UPCOMING_TAB" value="true"
-									 checked="checked"/><label for="CheckBox_SHOW_UPCOMING_TAB"> Yes</label>
+									onclick="ToggleDependant('SHOW_UPCOMING_TAB');" onchange="ToggleDependant('SHOW_UPCOMING_TAB');" checked="checked"/><label for="CheckBox_SHOW_UPCOMING_TAB"> Yes</label>
                   </td>
                </tr>
                <tr>
                   <td class="Comment">Whether or not the upcoming tab will be shown.</td>
                </tr>
-            </table>
-         </td>
-      </tr>
-      <tr>
-         <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>Max Upcoming Events:</b>
-         </td>
-         <td class="VariableBody">
-            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-               <tr>
-                  <td class="DataField">
-                     <input type="text" name="MAX_UPCOMING_EVENTS" value="75" size="60"/>
+               <tr id="Dependants_SHOW_UPCOMING_TAB">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Max Upcoming Events:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <input type="text" name="MAX_UPCOMING_EVENTS" value="75" size="60"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">Whether or not the upcoming tab will be shown.</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('SHOW_UPCOMING_TAB');</script>
                   </td>
-               </tr>
-               <tr>
-                  <td class="Comment">Whether or not the upcoming tab will be shown.</td>
                </tr>
             </table>
          </td>
@@ -950,7 +975,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Whether or not events in month view on days that are not actually part of the current month should be shown.For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.Values must be true or false.</td>
+                  <td class="Comment">Whether or not events in month view on days that are not actually part of the current month should be shown.<br/>For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.<br/>Values must be true or false.</td>
                </tr>
             </table>
          </td>
@@ -972,7 +997,7 @@ else {
                   </td>
                </tr>
                <tr>
-                  <td class="Comment">Cache successful HTTP authentication attempts as hashes in DB.This acts as a failover if the HTTP authentication fails due to a server error.</td>
+                  <td class="Comment">Cache successful HTTP authentication attempts as hashes in DB.<br/>This acts as a failover if the HTTP authentication fails due to a server error.</td>
                </tr>
                <tr id="Dependants_AUTH_HTTP_CACHE">
                   <td>
@@ -1020,6 +1045,9 @@ else {
       </tr>
    </table>
 </blockquote>
+
+<!-- END GENERATED -->
+
 <input type="submit" name="SaveConfig" value="Save Configuration"/>
 </form>
 <?php } ?>

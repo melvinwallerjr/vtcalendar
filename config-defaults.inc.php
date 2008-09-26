@@ -23,7 +23,7 @@ if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 // Config: Language
 // Example: en, de
 // Language used (refers to language file in directory /languages)
-if (!defined("LANGUAGE")) define("LANGUAGE", "en");
+if (!defined("LANGUAGE")) define("LANGUAGE", 'en');
 
 // =====================================
 // Database
@@ -50,7 +50,7 @@ if (!defined("SQLLOGFILE")) define("SQLLOGFILE", "");
 
 // Config: User ID Regular Expression
 // This regular expression defines what is considered a valid user-ID.
-if (!defined("REGEXVALIDUSERID")) define("REGEXVALIDUSERID", "/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/");
+if (!defined("REGEXVALIDUSERID")) define("REGEXVALIDUSERID", '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/');
 
 // Config: Database Authentication
 // Authenticate users against the database.
@@ -176,7 +176,7 @@ if (!defined("USE_AMPM")) define("USE_AMPM", true);
 // Config: Column Position
 // Which side the little calendar, 'jump to', 'today is', etc. will be on.
 // Values must be LEFT or RIGHT.
-if (!defined("COLUMNSIDE")) define("COLUMNSIDE", "LEFT");
+if (!defined("COLUMNSIDE")) define("COLUMNSIDE", 'LEFT');
 
 // Config: Show Upcoming Tab
 // Whether or not the upcoming tab will be shown.

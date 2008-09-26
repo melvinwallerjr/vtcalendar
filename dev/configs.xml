@@ -41,7 +41,7 @@
     </Section>
     <Section Label="Authentication">
     	<Config Label="User ID Regular Expression" Variable="REGEXVALIDUSERID" Type="string" Required="true">
-            <Default>/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/</Default>
+            <Default>/^[A-Za-z][\._A-Za-z0-9\-\\]{1,49}$/</Default>
             <Comment>
                 <Line>This regular expression defines what is considered a valid user-ID.</Line>
             </Comment>

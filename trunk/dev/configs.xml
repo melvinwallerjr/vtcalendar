@@ -31,10 +31,8 @@
         <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">
             <Example>/var/log/vtcalendarsql.log</Example>
             <Comment>
-                <Line>Put a name of a (folder and) file where the calendar logs every</Line>
-                <Line>SQL query to the database. This is good for debugging but make</Line>
-                <Line>sure you write into a file that's not readable by the webserver or</Line>
-                <Line>else you may expose private information.</Line>
+                <Line>Put a name of a (folder and) file where the calendar logs every SQL query to the database.</Line>
+                <Line>This is good for debugging but make sure you write into a file that's not readable by the webserver or else you may expose private information.</Line>
                 <Line>If left blank ("") no log will be kept. That's the default.</Line>
             </Comment>
         </Config>
@@ -57,15 +55,14 @@
                     <Example>db_</Example>
                     <Comment>
                         <Line>This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."</Line>
-                        <Line>If you only use auth_db just leave it an empty string</Line>
-                        <Line>Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP</Line>
+                        <Line>If you only use auth_db just leave it an empty string.</Line>
+                        <Line>Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.</Line>
                     </Comment>
                 </Config>
                 <Config Label="Database Authentication Notice" Variable="AUTH_DB_NOTICE" Type="string">
                     <Comment>
-                        <Line>This displays a text (or nothing) on the Update tab behind the user user management options</Line>
-                        <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users</Line>
-                        <Line>know that they should create local users only if they are not in the LDAP.</Line>
+                        <Line>This displays a text (or nothing) on the Update tab behind the user user management options.</Line>
+                        <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.</Line>
                     </Comment>
                 </Config>
             </Dependants>
@@ -77,9 +74,17 @@
                 <Line>If enabled, HTTP authenticate will be ignored.</Line>
             </Comment>
             <Dependants>
-            	<Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string" Required="true"/>
+            	<Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string" Required="true">
+            	    <Example>directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/</Example>
+            	    <Comment>
+            	        <Line>If you are using OpenLDAP 2.x.x you can specify a URL ('ldap://host/') instead of the hostname ('host').</Line>
+            	    </Comment>
+            	</Config>
                 <Config Label="LDAP Port" Variable="LDAP_PORT" Type="number">
                     <Default>389</Default>
+                    <Comment>
+                        <Line>The port to connect to. Ignored if LDAP Host Name is a URL.</Line>
+                    </Comment>
                 </Config>
             	<Config Label="LDAP Username Attribute" Variable="LDAP_USERFIELD" Type="string" Required="true">
                     <Example>sAMAccountName</Example>

@@ -182,7 +182,12 @@ function userauthenticated($userid, $password) {
 			$searchFilter = '(&' . $searchFilter . LDAP_SEARCH_FILTER . ')';
 		}
 		
-		$ldap = ldap_connect(LDAP_HOST, LDAP_PORT);
+		if (preg_match("/^ldap(s?):\\/\\//") == 1) {
+			$ldap = ldap_connect(LDAP_HOST);
+		}
+		else {
+			$ldap = ldap_connect(LDAP_HOST, LDAP_PORT);
+		}
 		
 		if (!isset($ldap) || $ldap === false) {
 			$returnValue = "Could not connect to the login server. (LDAP)";

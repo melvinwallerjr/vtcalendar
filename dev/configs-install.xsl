@@ -28,48 +28,54 @@
 				<table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
 					<tr>
 						<td class="DataField">
-							<xsl:choose>
-								<xsl:when test="@Type='boolean'">
-									<xsl:text disable-output-escaping="yes"><![CDATA[<input type="checkbox" id="CheckBox_]]></xsl:text><xsl:value-of select="@Variable"/><![CDATA[" name="]]><xsl:value-of select="@Variable"/><![CDATA[" value="true"]]>
-									<xsl:if test="string-length($CheckboxJS) &gt; 0">onclick="<xsl:value-of select="$CheckboxJS"/>" onchange="<xsl:value-of select="$CheckboxJS"/>"</xsl:if>
-									<xsl:if test="Default/text() = 'true'"> checked="checked"</xsl:if>
-									<xsl:text disable-output-escaping="yes"><![CDATA[/>]]></xsl:text>
-									<label for="CheckBox_{@Variable}"> Yes</label>
-								</xsl:when>
-								<xsl:when test="count(Choices/Choice) &gt; 0">
-									<select name="{@Variable}">
-										<xsl:for-each select="Choices/Choice">
-											<xsl:variable name="ChoiceValue">
+							
+							<div class="DataFieldInput">
+								<xsl:choose>
+									<xsl:when test="@Type='boolean'">
+										<xsl:text disable-output-escaping="yes"><![CDATA[<input type="checkbox" id="CheckBox_]]></xsl:text><xsl:value-of select="@Variable"/><![CDATA[" name="]]><xsl:value-of select="@Variable"/><![CDATA[" value="true"]]>
+										<xsl:if test="string-length($CheckboxJS) &gt; 0">onclick="<xsl:value-of select="$CheckboxJS"/>" onchange="<xsl:value-of select="$CheckboxJS"/>"</xsl:if>
+										<xsl:if test="Default/text() = 'true'"> checked="checked"</xsl:if>
+										<xsl:text disable-output-escaping="yes"><![CDATA[/>]]></xsl:text>
+										<label for="CheckBox_{@Variable}"> Yes</label>
+									</xsl:when>
+									<xsl:when test="count(Choices/Choice) &gt; 0">
+										<select name="{@Variable}" id="Input_{@Variable}">
+											<xsl:for-each select="Choices/Choice">
+												<xsl:variable name="ChoiceValue">
+													<xsl:choose>
+														<xsl:when test="@Value"><xsl:value-of select="@Value"/></xsl:when>
+														<xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
+													</xsl:choose>
+												</xsl:variable>
 												<xsl:choose>
-													<xsl:when test="@Value"><xsl:value-of select="@Value"/></xsl:when>
-													<xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
+													<xsl:when test="$ChoiceValue = ../../Default/text()">
+														<option value="{$ChoiceValue}" selected="selected"><xsl:value-of select="text()"/></option>
+													</xsl:when>
+													<xsl:otherwise>
+														<option value="{$ChoiceValue}"><xsl:value-of select="text()"/></option>
+													</xsl:otherwise>
 												</xsl:choose>
-											</xsl:variable>
-											<xsl:choose>
-												<xsl:when test="$ChoiceValue = ../../Default/text()">
-													<option value="{$ChoiceValue}" selected="selected"><xsl:value-of select="text()"/></option>
-												</xsl:when>
-												<xsl:otherwise>
-													<option value="{$ChoiceValue}"><xsl:value-of select="text()"/></option>
-												</xsl:otherwise>
-											</xsl:choose>
-										</xsl:for-each>
-									</select>
-								</xsl:when>
-								<xsl:otherwise>
-									<input type="text" name="{@Variable}" value="{Default/text()}" size="60"/>
-								</xsl:otherwise>
-							</xsl:choose>
+											</xsl:for-each>
+										</select>
+									</xsl:when>
+									<xsl:otherwise>
+										<input type="text" id="Input_{@Variable}" name="{@Variable}" value="{Default/text()}" size="60"/>
+									</xsl:otherwise>
+								</xsl:choose>
+								<span id="DataFieldInputExtra_{@Variable}"></span>
+							</div>
+							
 							<xsl:if test="Example">
-								<br/><i>Example: <xsl:value-of select="Example/text()"/></i>
+								<div class="Example"><i>Example: <xsl:value-of select="Example/text()"/></i></div>
 							</xsl:if>
 						</td>
 					</tr>
 					<tr>
 						<td class="Comment">
 							<xsl:for-each select="Comment/Line[not(@Hidden = 'true')]">
-								<xsl:if test="position() &gt; 1"><br/></xsl:if>
-								<xsl:value-of select="text()"/>
+								<div class="CommentLine">
+									<xsl:value-of select="text()"/>
+								</div>
 							</xsl:for-each>
 						</td>
 					</tr>

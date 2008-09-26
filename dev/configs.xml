@@ -27,7 +27,7 @@
                 <Line>This is the database connection string used by the PEAR library.</Line>
                 <Line>It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</Line>
             </Comment>
-        </Config>
+    	</Config>
         <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">
             <Example>/var/log/vtcalendarsql.log</Example>
             <Comment>
@@ -64,6 +64,19 @@
                         <Line>This displays a text (or nothing) on the Update tab behind the user user management options.</Line>
                         <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.</Line>
                     </Comment>
+                </Config>
+                <Config Label="Create Main Admin Account" Variable="AUTH_DB_CREATEADMIN" Type="boolean" IsDefinition="false">
+                    <Default>true</Default>
+                    <Comment>
+                        <Line>If the database has not yet been populated, you will need to create a main admin account in order to administer the calendar.</Line>
+                        <Line>However, if you are using LDAP or HTTP authentication this will not be necessary assuming you specify main admin account names under those sections.</Line>
+                    </Comment>
+                    <Dependants>
+                        <Config Label="Main Admin Username" Variable="AUTH_DB_CREATEADMIN_USERNAME" Type="string" Required="true" IsDefinition="false">
+                            <Example>root</Example>
+                        </Config>
+                        <Config Label="Main Admin Password" Variable="AUTH_DB_CREATEADMIN_PASSWORD" Type="string" Required="true" IsDefinition="false"/>
+                    </Dependants>
                 </Config>
             </Dependants>
         </Config>
@@ -115,6 +128,13 @@
                         <Line>Leave this blank to connect anonymously.</Line>
                     </Comment>
                 </Config>
+                <Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="string" IsDefinition="false">
+                    <Example>bsmith;ajackson</Example>
+                    <Comment>
+                        <Line>A semi-colon (;) delimited list of account names that will be added as main admins.</Line>
+                        <Line>No DB accounts will be created for these account names.</Line>
+                    </Comment>
+                </Config>
             </Dependants>
         </Config>
         <Config Label="HTTP Authentication" Variable="AUTH_HTTP" Type="boolean">
@@ -130,15 +150,22 @@
                     <Comment>
                         <Line>The URL to use for the BASIC HTTP Authentication.</Line>
                     </Comment>
+            	</Config>
+                <Config Label="Accounts to Add as Main Admins" Variable="AUTH_HTTP_MAINADMINS" Type="string" IsDefinition="false">
+                    <Example>bsmith;ajackson</Example>
+                    <Comment>
+                        <Line>A semi-colon (;) delimited list of account names that will be added as main admins.</Line>
+                        <Line>No DB accounts will be created for these account names.</Line>
+                    </Comment>
                 </Config>
             </Dependants>
         </Config>
     </Section>
     <Section Label="Cookies">
-        <Config Label="Cookie Base URL" Variable="BASEPATH" Type="string">
+        <Config Label="Cookie Path" Variable="BASEPATH" Type="string">
             <Example>/calendar/</Example>
             <Comment>
-                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.</Line>
+                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's path.</Line>
                 <Line>Otherwise, the cookie will be submitted with a default path.</Line>
                 <Line>This must start and end with a forward slash (/), unless the it is exactly "/".</Line>
             </Comment>
@@ -179,23 +206,32 @@
         </Config>
     	<Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number" Required="true">
             <Default>0</Default>
+    	    <Choices>
+    	        <Choice Value="0">Sunday (0)</Choice>
+    	        <Choice Value="1">Monday (1)</Choice>
+    	    </Choices>
             <Comment>
-                <Line>defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"</Line>
+                <Line>Defines the week starting day</Line>
+                <Line Hidden="true">Allowable values - 0 for "Sunday" or 1 for "Monday"</Line>
             </Comment>
         </Config>
         <Config Label="Use AM/PM" Variable="USE_AMPM" Type="boolean">
             <Default>true</Default>
             <Comment>
-                <Line>defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)</Line>
+                <Line>Defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)</Line>
             </Comment>
         </Config>
     </Section>
     <Section Label="Display">
     	<Config Label="Column Position" Variable="COLUMNSIDE" Type="string" Required="true">
             <Default>LEFT</Default>
+    	    <Choices>
+    	        <Choice>LEFT</Choice>
+    	        <Choice>RIGHT</Choice>
+    	    </Choices>
             <Comment>
                 <Line>Which side the little calendar, 'jump to', 'today is', etc. will be on.</Line>
-                <Line>Values must be LEFT or RIGHT.</Line>
+                <Line Hidden="true">Values must be LEFT or RIGHT.</Line>
             </Comment>
         </Config>
         <Config Label="Show Upcoming Tab" Variable="SHOW_UPCOMING_TAB" Type="boolean">
@@ -207,7 +243,7 @@
         		<Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number" Required="true">
         			<Default>75</Default>
         			<Comment>
-        				<Line>Whether or not the upcoming tab will be shown.</Line>
+        				<Line>The maximum number of upcoming events displayed.</Line>
         			</Comment>
         		</Config>
         	</Dependants>

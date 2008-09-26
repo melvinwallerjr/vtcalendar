@@ -7,6 +7,9 @@ define("ALLOWINCLUDES","true");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>VTCalendar Configuration</title>
+<script type="text/javascript" src="../scripts/browsersniffer.js"></script>
+<script type="text/javascript" src="../scripts/http.js"></script>
+<script type="text/javascript" src="scripts.js"></script>
 <style type="text/css">
 <!--
 body, th, td {
@@ -64,24 +67,6 @@ blockquote {
 }
 -->
 </style>
-<script type="text/javascript">
-//<!--
-function ToggleDependant(variableid) {
-	if (document.getElementById) {
-		objCheckbox = document.getElementById("CheckBox_" + variableid);
-		objRow = document.getElementById("Dependants_" + variableid);
-		if (objCheckbox && objRow) {
-			if (objCheckbox.checked) {
-				objRow.style.display = "";
-			}
-			else {
-				objRow.style.display = "none";
-			}
-		}
-	}
-}
-//-->
-</script>
 </head>
 
 <body>
@@ -143,6 +128,12 @@ else {
 <form name="ConfigForm" method="post" action="index.php">
 
 <?php require("index-form.php"); ?>
+
+<script type="text/javascript">
+//<!--
+AddCheckDSNLink();
+//-->
+</script>
 
 <input type="submit" name="SaveConfig" value="Save Configuration"/>
 </form>

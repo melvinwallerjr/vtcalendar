@@ -93,7 +93,7 @@ function CheckTables() {
 		else {
 			$changes = CheckTable($FinalTableNames[$i]);
 			
-			if ($changes == 0) {
+			if ($changes < 1) {
 			echo "<div class='Success'><b>OK:</b> The `<code>" . $FinalTableNames[$i] . "</code>` table does not require any changes.</div>";
 			}
 			
@@ -102,6 +102,8 @@ function CheckTables() {
 		
 		echo "</blockquote>";
 	}
+	
+	return $totalchanges;
 }
 
 function CreateTable($TableName) {
@@ -149,7 +151,7 @@ function CheckTable($TableName) {
 	for ($i = 0; $i < count($CurrentTableFields); $i++) {
 		if (!array_key_exists($CurrentTableFields[$i], $FinalTables[$TableName]['Fields'])) {
 			echo "<div class='Unused Field'><b>Unused Field Notice:</b> The `<code>" . $CurrentTableFields[$i] . "</code>` field in the `<code>" . $TableName . "</code>` table is not used by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be removed manually.</div>";
-			//$changes++;
+			$changes += 0.0001;
 		}
 	}
 	
@@ -184,7 +186,7 @@ function CheckTable($TableName) {
 	for ($i = 0; $i < count($CurrentTableIndexes); $i++) {
 		if (!array_key_exists($CurrentTableIndexes[$i], $FinalTables[$TableName]['Keys'])) {
 			echo "<div class='Unused Index'><b>Unused Index Notice:</b> The `<code>" . $CurrentTableIndexes[$i] . "</code>` index in the `<code>" . $TableName . "</code>` table is not specified by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be manually removed.</div>";
-			//$changes++;
+			$changes += 0.0001;
 		}
 	}
 	

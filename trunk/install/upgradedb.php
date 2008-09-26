@@ -143,6 +143,13 @@ if (isset($_GET['success'])) {
 	else {
 		echo "<div class='Success'><b>Success:</b> All upgrades were applied successfully!</div>";
 	}
+	
+	$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", $version) !== false);
+	
+	if (!$versionRecorded) {
+		echo "<div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/updated. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div>";
+	}
+
 }
 elseif (defined("DATABASE") && defined("UPGRADESQL")) {
 	?><h2>Upgrade Result:</h2><?php
@@ -169,7 +176,7 @@ elseif (defined("DATABASE") && defined("UPGRADESQL")) {
 			}
 		}
 		DBClose();
-		
+					
 		if (!$queryError) {
 			?><script type="text/javascript">location.replace("upgradedb.php?success=true")</script><?php
 		}

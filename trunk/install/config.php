@@ -27,6 +27,8 @@ function escapephpstring($string) {
 	return str_replace("'", "\\'", str_replace("\\", "\\\\", $string));
 }
 
+require("config-code.php");
+	
 if (isset($_POST['SaveConfig'])) {
 	
 	$ConfigOutput = "<?php\n\n";
@@ -37,18 +39,18 @@ if (isset($_POST['SaveConfig'])) {
 	
 	$ConfigOutput .= "// For a full list of config options (and default values) see config-defaults.inc.php.\n\n";
 	
-	require("config-code.php");
+	BuildOutput($ConfigOutput);
 	
 	$ConfigOutput .= "?>";
 	
 	// TODO: Validate input.
 	
-	$WriteSuccess = false; //(file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
+	$WriteSuccess = true; //(file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
 	
 	if ($WriteSuccess) {
 		echo '<h1 style="color:#009900">Configuration File Successfully Created</h1>';
-		echo "<p>If you want to make any configuration changes please modify the newly created file <b>config.inc.php</b>.<br><br>";
-		echo '<b style="color: #FF0000;">Security Notice:</b> It is recommended that you remove or secure the <b>/install</b> directory.</p>';
+		echo "<p>If you want to make any configuration changes please modify the newly created file <code>config.inc.php</code>.</p>";
+		echo '<form method="post" action="upgradedb.php?fromconfig=yes"><input type="hidden" name="DSN" value="' . $Form_DATABASE . '"/>If this is a <b>fresh install</b> or if you have <b>upgraded to a newer version</b> of VTCalendar, you should <input type="submit" value="Install or Upgrade Database"/> (MySQL databases only).</form>';
 		echo '</body></html>';
 		exit;
 	}

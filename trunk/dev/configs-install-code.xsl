@@ -7,7 +7,9 @@
 	<xsl:template match="/">
 		<xsl:apply-templates select="//Config" mode="ReadFormData"/>
 		<xsl:text>&#13;&#10;</xsl:text>
+		<xsl:text disable-output-escaping="yes">function BuildOutput(&amp;$ConfigOutput) {&#13;&#10;</xsl:text>
 		<xsl:apply-templates select="//Config" mode="BuildString"/>
+		<xsl:text>}</xsl:text>
 	</xsl:template>
 	
 	<xsl:template match="Config" mode="ReadFormData">
@@ -47,9 +49,9 @@
 	
 	<xsl:template match="Config" mode="BuildString">
 		<xsl:if test="not(@IsDefinition = 'false')">
-			<xsl:text>// Output </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
+			<xsl:text>&#9;// Output </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
 			
-			<xsl:text>$ConfigOutput .= '// Config: </xsl:text>
+			<xsl:text>&#9;$ConfigOutput .= '// Config: </xsl:text>
 			
 			<xsl:call-template name="escape-string">
 				<xsl:with-param name="text" select="@Label"/>
@@ -59,7 +61,7 @@
 			
 			<xsl:text>'."\n";&#13;&#10;</xsl:text>
 			<xsl:if test="Example">
-				<xsl:text>$ConfigOutput .= '// Example: </xsl:text>
+				<xsl:text>&#9;$ConfigOutput .= '// Example: </xsl:text>
 				
 				<xsl:call-template name="escape-string">
 					<xsl:with-param name="text" select="Example/text()"/>
@@ -71,7 +73,7 @@
 			</xsl:if>
 			
 			<xsl:for-each select="Comment/Line">
-				<xsl:text>$ConfigOutput .= '// </xsl:text>
+				<xsl:text>&#9;$ConfigOutput .= '// </xsl:text>
 				
 				<xsl:call-template name="escape-string">
 					<xsl:with-param name="text" select="text()"/>
@@ -83,7 +85,7 @@
 			</xsl:for-each>
 			
 			
-			<xsl:text>$ConfigOutput .= 'define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
+			<xsl:text>&#9;$ConfigOutput .= 'define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
 			
 			<xsl:choose>
 				<xsl:when test="@Type='boolean'">' . $Form_<xsl:value-of select="@Variable"/> .'</xsl:when>

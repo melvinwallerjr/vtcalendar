@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 	<xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	
+	<!-- Include the search and replace named template. -->
+	<xsl:include href="common-escape-string.xsl" />
 
 	<xsl:template match="/">
 		<xsl:apply-templates select="/Configs/Section"/>
@@ -59,7 +62,21 @@
 										</select>
 									</xsl:when>
 									<xsl:otherwise>
-										<input type="text" id="Input_{@Variable}" name="{@Variable}" value="{Default/text()}" size="60"/>
+										<!--<input type="text" id="Input_{@Variable}" name="{@Variable}" value="{Default/text()}" size="60"/>-->
+										
+										<xsl:text disable-output-escaping="yes"><![CDATA[<input type="text" id="Input_]]></xsl:text>
+										<xsl:value-of select="@Variable"/>
+										<xsl:text disable-output-escaping="yes"><![CDATA[" name="]]></xsl:text>
+										<xsl:value-of select="@Variable"/>
+										<xsl:text disable-output-escaping="yes"><![CDATA[" value="]]></xsl:text>
+										
+										<!--<xsl:call-template name="xml-escape-string">
+											<xsl:with-param name="text" select="Default/text()"/>
+										</xsl:call-template>-->
+										
+										<xsl:text disable-output-escaping="yes">&lt;?php </xsl:text>echo htmlentities($Form_<xsl:value-of select="@Variable"/><xsl:text disable-output-escaping="yes">); ?&gt;</xsl:text>
+										
+										<xsl:text disable-output-escaping="yes"><![CDATA[" size="60"/> ]]></xsl:text>
 									</xsl:otherwise>
 								</xsl:choose>
 								<span id="DataFieldInputExtra_{@Variable}"></span>

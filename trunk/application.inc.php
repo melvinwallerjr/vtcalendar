@@ -6,7 +6,8 @@ define("ALLOWINCLUDES", TRUE);
 @(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
 
 // Include the necessary VTCalendar files.
-@(include_once('config.inc.php')) or die('config.inc.php was not found. See: <a href="install/">VTCalendar Configuration</a> installer.');
+@(include_once('version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
+@(include_once('config.inc.php')) or die('config.inc.php was not found. See: <a href="install/">VTCalendar Installation</a>.');
 require_once('config-defaults.inc.php');
 require_once('config-colordefaults.inc.php');
 require_once('session_start.inc.php');

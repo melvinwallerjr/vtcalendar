@@ -84,11 +84,16 @@ h3.Table {
 	padding-top: 8px;
 	margin: 0;
 }
-div {
+#UpgradeDB div {
 	margin-bottom: 2px;
 	padding: 5px;
 }
-div.Error, div.Success, div.Table, div.Field, div.PrimaryKey, div.Index {
+#UpgradeDB div.Error,
+#UpgradeDB div.Success,
+#UpgradeDB div.Table,
+#UpgradeDB div.Field,
+#UpgradeDB div.PrimaryKey,
+#UpgradeDB div.Index {
 	background-repeat: no-repeat;
 	background-position: 5px 5px;
 	padding-left: 30px;

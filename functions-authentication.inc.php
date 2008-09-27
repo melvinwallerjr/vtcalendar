@@ -182,7 +182,7 @@ function userauthenticated($userid, $password) {
 			$searchFilter = '(&' . $searchFilter . LDAP_SEARCH_FILTER . ')';
 		}
 		
-		if (preg_match("/^ldap(s?):\\/\\//") == 1) {
+		if (preg_match("/^ldap(s?):\\/\\//", LDAP_HOST) == 1) {
 			$ldap = ldap_connect(LDAP_HOST);
 		}
 		else {

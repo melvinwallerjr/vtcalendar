@@ -48,6 +48,18 @@ function DBQuery($query) {
 	return $result;
 }
 
+// escapes a value to make it safe for a SQL query
+if (!function_exists('sqlescape')) {
+	function sqlescape($value) {
+	  if (preg_match("/^pgsql/",DATABASE)) {
+		  return pg_escape_string($value);
+		}
+		else {
+			return mysql_escape_string($value);
+		}
+	}
+}
+
 function DBErrorBox($message="") {
 	?>
 	<style type="text/css">

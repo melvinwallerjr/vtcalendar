@@ -22,7 +22,7 @@ if (function_exists("file_get_contents") && file_exists("../VERSION-DBCHECKED.tx
 	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt exists but could not be. May not have read access to the file.");
 	if (trim(VERSION) == trim($dbVersionChecked)) {
 		echo "<h1 style='color: red;'>Database Already Installed or Upgraded:</h1>"
-			."<p><a href='../VERSION-DBCHECKED.txt'><code>VERSION-DBCHECKED.txt</code></a> already matches <a href='../VERSION.txt'><code>VERSION.txt</code></a>.</p>"
+			."<p>The database has already been checked for version " . VERSION . ".</p>"
 			."<p>If you would like to run this script, remove the <code>VERSION-DBCHECKED.txt</code> file in the VTCalendar folder.</p></body></html>";
 		exit;
 	}
@@ -62,7 +62,7 @@ if (isset($Success)) {
 		$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
 		
 		if (!$versionRecorded) {
-			?><div class='Error'><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div><?php
+			?><div class="Error"><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), create a file named <code>VERSION-DBCHECKED.txt</code> in the VTCalendar folder that contains the text &quot;<?php echo VERSION; ?>&quot; (without the quotes). On Linux the file name is case-sensitive.</div><?php
 		}
 	}
 }
@@ -112,7 +112,7 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 						$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
 						
 						if (!$versionRecorded) {
-							?><div class="Error"><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), copy the <code>VERSION.txt</code> file to <code>VERSION-DBCHECKED.txt</code>. On Linux the file is case-sensitive.</div><?php
+							?><div class="Error"><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), create a file named <code>VERSION-DBCHECKED.txt</code> in the VTCalendar folder that contains the text &quot;<?php echo VERSION; ?>&quot; (without the quotes). On Linux the file name is case-sensitive.</div><?php
 						}
 					}
 				}

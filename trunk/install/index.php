@@ -39,7 +39,7 @@ if (!defined("VERSION")) {
 }
 else {
 	?>
-	<script type="text/javascript" src="http://vtcalendar.sourceforge.net/version.js"></script>
+	<script type="text/javascript" src="http://vtcalendar.sourceforge.net/version.js.php"></script>
 	<script type="text/javascript" src="../scripts/checkversion.js"></script>
 	<script type="text/javascript">
 	//<!--

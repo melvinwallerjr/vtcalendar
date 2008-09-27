@@ -16,7 +16,7 @@ if (isset($_GET['str']) && $_GET['str'] != "") {
 		echo "Failed: " . $connection->getMessage();
 	}
 	else {
-		echo "Connected to database successfully!";
+		echo "Successfully connected to the database!";
 	}
 }
 else {

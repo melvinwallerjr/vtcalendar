@@ -245,7 +245,7 @@ if (substr(SECUREBASEURL, -1) != "/") {
 
 // ---------- The following functions allow you to customize processing based on your database -------
 
-// escapes a value to make it safe for a SQL query
+/*// escapes a value to make it safe for a SQL query
 if (!function_exists('sqlescape')) {
 	function sqlescape($value) {
 	  if (preg_match("/^pgsql/",DATABASE)) {
@@ -255,7 +255,7 @@ if (!function_exists('sqlescape')) {
 			return mysql_escape_string($value);
 		}
 	}
-}
+}*/
 
 // --------------- The following functions allow you to customize the date format display ------------
  

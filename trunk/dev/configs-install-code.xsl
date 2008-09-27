@@ -19,22 +19,22 @@
 				<xsl:value-of select="@Variable"/>
 				<xsl:text>']) &amp;&amp; strtolower($_POST['</xsl:text>
 					<xsl:value-of select="@Variable"/>
-					<xsl:text>']) == 'true') { $Form_</xsl:text>
+					<xsl:text>']) == 'true') { $GLOBALS['Form_</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text> = 'true'; } else { $Form_</xsl:text>
+				<xsl:text>'] = 'true'; } else { $GLOBALS['Form_</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text> = 'false'; }&#13;&#10;</xsl:text>
+				<xsl:text>'] = 'false'; }&#13;&#10;</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:text>if (isset($_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>'])) { $Form_</xsl:text>
+				<xsl:text>'])) { $GLOBALS['Form_</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text> = $_POST['</xsl:text>
+				<xsl:text>'] = $_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>']; } else { $Form_</xsl:text>
+				<xsl:text>']; } else { $GLOBALS['Form_</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text> = '</xsl:text>
+				<xsl:text>'] = '</xsl:text>
 				
 				<xsl:call-template name="escape-string">
 					<xsl:with-param name="text" select="Default/text()"/>
@@ -88,8 +88,8 @@
 			<xsl:text>&#9;$ConfigOutput .= 'define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
 			
 			<xsl:choose>
-				<xsl:when test="@Type='boolean'">' . $Form_<xsl:value-of select="@Variable"/> .'</xsl:when>
-				<xsl:otherwise>\''. escapephpstring($Form_<xsl:value-of select="@Variable"/>) .'\'</xsl:otherwise>
+				<xsl:when test="@Type='boolean'">' . $GLOBALS['Form_<xsl:value-of select="@Variable"/>'] .'</xsl:when>
+				<xsl:otherwise>\''. escapephpstring($GLOBALS['Form_<xsl:value-of select="@Variable"/>']) .'\'</xsl:otherwise>
 			</xsl:choose>
 			
 			<xsl:text>);'."\n\n";&#13;&#10;&#13;&#10;</xsl:text>

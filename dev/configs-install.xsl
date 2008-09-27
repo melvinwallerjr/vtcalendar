@@ -37,7 +37,7 @@
 									<xsl:when test="@Type='boolean'">
 										<xsl:text disable-output-escaping="yes"><![CDATA[<input type="checkbox" id="CheckBox_]]></xsl:text><xsl:value-of select="@Variable"/><![CDATA[" name="]]><xsl:value-of select="@Variable"/><![CDATA[" value="true"]]>
 										<xsl:if test="string-length($CheckboxJS) &gt; 0">onclick="<xsl:value-of select="$CheckboxJS"/>" onchange="<xsl:value-of select="$CheckboxJS"/>"</xsl:if>
-										<xsl:if test="Default/text() = 'true'"> checked="checked"</xsl:if>
+										<xsl:text disable-output-escaping="yes">&lt;?php </xsl:text>if ($GLOBALS['Form_<xsl:value-of select="@Variable"/>']<xsl:text disable-output-escaping="yes"> == 'true') echo ' checked="checked"'; ?&gt;</xsl:text>
 										<xsl:text disable-output-escaping="yes"><![CDATA[/>]]></xsl:text>
 										<label for="CheckBox_{@Variable}"> Yes</label>
 									</xsl:when>
@@ -61,6 +61,9 @@
 											</xsl:for-each>
 										</select>
 									</xsl:when>
+									<xsl:when test="@Type='multiline'">
+										<textarea id="Input_{@Variable}" name="{@Variable}" rows="15" cols="60"><xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities($GLOBALS['Form_</xsl:text><xsl:value-of select="@Variable"/><xsl:text disable-output-escaping="yes">']); ?&gt;</xsl:text></textarea>
+									</xsl:when>
 									<xsl:otherwise>
 										<!--<input type="text" id="Input_{@Variable}" name="{@Variable}" value="{Default/text()}" size="60"/>-->
 										
@@ -70,11 +73,7 @@
 										<xsl:value-of select="@Variable"/>
 										<xsl:text disable-output-escaping="yes"><![CDATA[" value="]]></xsl:text>
 										
-										<!--<xsl:call-template name="xml-escape-string">
-											<xsl:with-param name="text" select="Default/text()"/>
-										</xsl:call-template>-->
-										
-										<xsl:text disable-output-escaping="yes">&lt;?php </xsl:text>echo htmlentities($Form_<xsl:value-of select="@Variable"/><xsl:text disable-output-escaping="yes">); ?&gt;</xsl:text>
+										<xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities($GLOBALS['Form_</xsl:text><xsl:value-of select="@Variable"/><xsl:text disable-output-escaping="yes">']); ?&gt;</xsl:text>
 										
 										<xsl:text disable-output-escaping="yes"><![CDATA[" size="60"/> ]]></xsl:text>
 									</xsl:otherwise>

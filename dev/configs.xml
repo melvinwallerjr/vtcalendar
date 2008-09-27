@@ -3,13 +3,13 @@
     <Section Label="General">
         <Config Label="Title Prefix" Variable="TITLEPREFIX" Type="string">
             <Comment>
-                <Line>Added at the beginning of the &lt;title&gt; tag.</Line>
+                <Line>OPTIONAL. Added at the beginning of the &lt;title&gt; tag.</Line>
             </Comment>
         </Config>
         <Config Label="Title Suffix" Variable="TITLESUFFIX" Type="string">
             <Example>" - My University"</Example>
             <Comment>
-                <Line>Added at the end of the &lt;title&gt; tag.</Line>
+                <Line>OPTIONAL. Added at the end of the &lt;title&gt; tag.</Line>
             </Comment>
         </Config>
         <Config Label="Language" Variable="LANGUAGE" Type="string" Required="true">
@@ -31,7 +31,7 @@
         <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">
             <Example>/var/log/vtcalendarsql.log</Example>
             <Comment>
-                <Line>Put a name of a (folder and) file where the calendar logs every SQL query to the database.</Line>
+                <Line>OPTIONAL. Put a name of a (folder and) file where the calendar logs every SQL query to the database.</Line>
                 <Line>This is good for debugging but make sure you write into a file that's not readable by the webserver or else you may expose private information.</Line>
                 <Line>If left blank ("") no log will be kept. That's the default.</Line>
             </Comment>
@@ -54,14 +54,14 @@
                 <Config Label="Prefix for Database Usernames" Variable="AUTH_DB_USER_PREFIX" Type="string">
                     <Example>db_</Example>
                     <Comment>
-                        <Line>This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."</Line>
+                        <Line>OPTIONAL. This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."</Line>
                         <Line>If you only use auth_db just leave it an empty string.</Line>
                         <Line>Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.</Line>
                     </Comment>
                 </Config>
                 <Config Label="Database Authentication Notice" Variable="AUTH_DB_NOTICE" Type="string">
                     <Comment>
-                        <Line>This displays a text (or nothing) on the Update tab behind the user user management options.</Line>
+                        <Line>OPTIONAL. This displays a text (or nothing) on the Update tab behind the user user management options.</Line>
                         <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.</Line>
                     </Comment>
                 </Config>
@@ -111,27 +111,27 @@
                 <Config Label="Additional LDAP Search Filter" Variable="LDAP_SEARCH_FILTER" Type="string">
                     <Example>(objectClass=person)</Example>
                     <Comment>
-                        <Line>An optional filter to add to the LDAP search.</Line>
+                        <Line>OPTIONAL. A filter to add to the LDAP search.</Line>
                     </Comment>
                 </Config>
                 <Config Label="LDAP Search Bind Username." Variable="LDAP_BIND_USER" Type="string">
                     <Comment>
-                        <Line>Before authenticating the user, we first check if the username exists.</Line>
+                        <Line>OPTIONAL. Before authenticating the user, we first check if the username exists.</Line>
                         <Line>If your LDAP server does not allow anonymous connections, specific a username here.</Line>
                         <Line>Leave this blank to connect anonymously.</Line>
                     </Comment>
                 </Config>
                 <Config Label="LDAP Search Bind Password" Variable="LDAP_BIND_PASSWORD" Type="string">
                     <Comment>
-                        <Line>Before authenticating the user, we first check if the username exists.</Line>
+                        <Line>OPTIONAL. Before authenticating the user, we first check if the username exists.</Line>
                         <Line>If your LDAP server does not allow anonymous connections, specific a password here.</Line>
                         <Line>Leave this blank to connect anonymously.</Line>
                     </Comment>
                 </Config>
-                <Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="string" IsDefinition="false">
+                <Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="multiline" IsDefinition="false">
                     <Example>bsmith;ajackson</Example>
                     <Comment>
-                        <Line>A semi-colon (;) delimited list of account names that will be added as main admins.</Line>
+                        <Line>OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</Line>
                         <Line>No DB accounts will be created for these account names.</Line>
                     </Comment>
                 </Config>
@@ -151,10 +151,10 @@
                         <Line>The URL to use for the BASIC HTTP Authentication.</Line>
                     </Comment>
             	</Config>
-                <Config Label="Accounts to Add as Main Admins" Variable="AUTH_HTTP_MAINADMINS" Type="string" IsDefinition="false">
+                <Config Label="Accounts to Add as Main Admins" Variable="AUTH_HTTP_MAINADMINS" Type="multiline" IsDefinition="false">
                     <Example>bsmith;ajackson</Example>
                     <Comment>
-                        <Line>A semi-colon (;) delimited list of account names that will be added as main admins.</Line>
+                        <Line>OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</Line>
                         <Line>No DB accounts will be created for these account names.</Line>
                     </Comment>
                 </Config>
@@ -165,7 +165,7 @@
         <Config Label="Cookie Path" Variable="BASEPATH" Type="string">
             <Example>/calendar/</Example>
             <Comment>
-                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's path.</Line>
+                <Line>OPTIONAL. If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's path.</Line>
                 <Line>Otherwise, the cookie will be submitted with a default path.</Line>
                 <Line>This must start and end with a forward slash (/), unless the it is exactly "/".</Line>
             </Comment>
@@ -173,7 +173,7 @@
         <Config Label="Cookie Host Name" Variable="BASEDOMAIN" Type="string">
             <Example>localhost</Example>
             <Comment>
-                <Line>If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.</Line>
+                <Line>OPTIONAL. If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.</Line>
                 <Line>Otherwise, the cookie will be submitted with a default host name.</Line>
             </Comment>
         </Config>

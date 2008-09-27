@@ -11,7 +11,7 @@ function verifyUpgrade() {
 </script>
 </head>
 
-<body>
+<body id="UpgradeDB">
 
 
 <?php

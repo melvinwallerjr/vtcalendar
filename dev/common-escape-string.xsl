@@ -37,6 +37,34 @@ and insert the 'escape-character' string before each one found.
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
+	
+<xsl:template name="xml-escape-string">
+	<xsl:param name="text"/>
+	
+	<xsl:call-template name="replace-string">
+		<xsl:with-param name="text">
+			<xsl:call-template name="replace-string">
+				<xsl:with-param name="text">
+					<xsl:call-template name="replace-string">
+						<xsl:with-param name="text">
+							<xsl:call-template name="replace-string">
+								<xsl:with-param name="text" select="$text"/>
+								<xsl:with-param name="search"><xsl:text>&amp;</xsl:text></xsl:with-param>
+								<xsl:with-param name="replace"><xsl:text>&amp;amp;</xsl:text></xsl:with-param>
+							</xsl:call-template>
+						</xsl:with-param>
+						<xsl:with-param name="search"><xsl:text>&quot;</xsl:text></xsl:with-param>
+						<xsl:with-param name="replace"><xsl:text>&amp;quot;</xsl:text></xsl:with-param>
+					</xsl:call-template>
+				</xsl:with-param>
+				<xsl:with-param name="search"><xsl:text>&lt;</xsl:text></xsl:with-param>
+				<xsl:with-param name="replace"><xsl:text>&amp;lt;</xsl:text></xsl:with-param>
+			</xsl:call-template>
+		</xsl:with-param>
+		<xsl:with-param name="search"><xsl:text>&gt;</xsl:text></xsl:with-param>
+		<xsl:with-param name="replace"><xsl:text>&amp;gt;</xsl:text></xsl:with-param>
+	</xsl:call-template>
+</xsl:template>
 
 <!-- Include the search and replace named template. -->
 <xsl:include href="common-replace-string.xsl" />

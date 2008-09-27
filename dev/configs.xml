@@ -224,13 +224,14 @@
     </Section>
     <Section Label="Display">
     	<Config Label="Column Position" Variable="COLUMNSIDE" Type="string" Required="true">
-            <Default>LEFT</Default>
+            <Default>RIGHT</Default>
     	    <Choices>
     	        <Choice>LEFT</Choice>
     	        <Choice>RIGHT</Choice>
     	    </Choices>
             <Comment>
                 <Line>Which side the little calendar, 'jump to', 'today is', etc. will be on.</Line>
+                <Line>RIGHT is more user friendly for users with low resolutions.</Line>
                 <Line Hidden="true">Values must be LEFT or RIGHT.</Line>
             </Comment>
         </Config>

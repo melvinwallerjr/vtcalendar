@@ -69,7 +69,7 @@ if (isset($_POST['SaveConfig'])) {
 	if ($Form_AUTH_DB == "true") {
 	
 		// Check the DB main admin username/password
-		if ($Form_AUTH_DB_CREATEADMIN == "true") {
+		/*if ($Form_AUTH_DB_CREATEADMIN == "true") {
 			if (empty($Form_AUTH_DB_CREATEADMIN_USERNAME)) {
 				$FormErrors[count($FormErrors)] = "You must specify the username of the Main Admin Account under Database Authentication.";
 			}
@@ -80,7 +80,7 @@ if (isset($_POST['SaveConfig'])) {
 			if (empty($Form_AUTH_DB_CREATEADMIN_PASSWORD)) {
 				$FormErrors[count($FormErrors)] = "You must specify the password for Main Admin Account under Database Authentication.";
 			}
-		}
+		}*/
 	}
 	
 	// Check LDAP Authentication fields.
@@ -123,7 +123,7 @@ if (isset($_POST['SaveConfig'])) {
 				}
 			}
 			
-			ProcessMainAdminAccountList($Form_LDAP_MAINADMINS, $assignMainAdmins);
+			//ProcessMainAdminAccountList($Form_LDAP_MAINADMINS, $assignMainAdmins);
 		}
 	}
 	
@@ -162,23 +162,31 @@ if (isset($_POST['SaveConfig'])) {
 			$FormErrors[count($FormErrors)] = "You must specify the HTTP Authorizaton URL.";
 		}
 		
-		ProcessMainAdminAccountList($Form_AUTH_HTTP_MAINADMINS, $assignMainAdmins);
+		//ProcessMainAdminAccountList($Form_AUTH_HTTP_MAINADMINS, $assignMainAdmins);
 	}
 	
 	// Do not make any changes if errors occurred.
 	if (count($FormErrors) == 0) {
-		if ($Form_AUTH_DB_CREATEADMIN == "true") {
+		/*if ($Form_AUTH_DB_CREATEADMIN == "true") {
 			// Add the account
-			AddUser($Form_AUTH_DB_CREATEADMIN_USERNAME, $Form_AUTH_DB_CREATEADMIN_PASSWORD);
+			if (is_string($return = AddUser($Form_AUTH_DB_CREATEADMIN_USERNAME, $Form_AUTH_DB_CREATEADMIN_PASSWORD))) {
+				$FormErrors[count($FormErrors)] = $return;
+			}
 			
 			// Add the account as a main admin
-			AddMainAdmin($Form_AUTH_DB_CREATEADMIN_USERNAME);
+			if (is_string($return = AddMainAdmin($Form_AUTH_DB_CREATEADMIN_USERNAME))) {
+				$FormErrors[count($FormErrors)] = $return;
+			}
 		}
 		
 		// Add the specified accounts as a main admins
 		for ($i = 0; $i < count($assignMainAdmins); $i++) {
-			AddMainAdmin($assignMainAdmins[$i]);
-		}
+			
+			// Add the account as a main admin
+			if (is_string($return = AddMainAdmin($assignMainAdmins[$i]))) {
+				$FormErrors[count($FormErrors)] = $return;
+			}
+		}*/
 		
 		// Close the DB connection
 		DBClose();

@@ -217,75 +217,6 @@
                               </table>
                            </td>
                         </tr>
-                        <tr>
-                           <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>Create Main Admin Account:</b>
-                           </td>
-                           <td class="VariableBody">
-                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                 <tr>
-                                    <td class="DataField">
-                                       <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_DB_CREATEADMIN" name="AUTH_DB_CREATEADMIN" value="true"
-										onclick="ToggleDependant('AUTH_DB_CREATEADMIN');" onchange="ToggleDependant('AUTH_DB_CREATEADMIN');"<?php if ($GLOBALS['Form_AUTH_DB_CREATEADMIN'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_DB_CREATEADMIN"> Yes</label>
-                                          <span id="DataFieldInputExtra_AUTH_DB_CREATEADMIN"/>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment">
-                                       <div class="CommentLine">If the database has not yet been populated, you will need to create a main admin account in order to administer the calendar.</div>
-                                       <div class="CommentLine">However, if you are using LDAP or HTTP authentication this will not be necessary assuming you specify main admin account names under those sections.</div>
-                                    </td>
-                                 </tr>
-                                 <tr id="Dependants_AUTH_DB_CREATEADMIN">
-                                    <td>
-                                       <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
-                                          <tr>
-                                             <td class="VariableName" nowrap="nowrap" valign="top">
-                                                <b>Main Admin Username:</b>
-                                             </td>
-                                             <td class="VariableBody">
-                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                                   <tr>
-                                                      <td class="DataField">
-                                                         <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_CREATEADMIN_USERNAME" name="AUTH_DB_CREATEADMIN_USERNAME" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_CREATEADMIN_USERNAME']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_CREATEADMIN_USERNAME"/>
-                                                         </div>
-                                                         <div class="Example">
-                                                            <i>Example: root</i>
-                                                         </div>
-                                                      </td>
-                                                   </tr>
-                                                   <tr>
-                                                      <td class="Comment"/>
-                                                   </tr>
-                                                </table>
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td class="VariableName" nowrap="nowrap" valign="top">
-                                                <b>Main Admin Password:</b>
-                                             </td>
-                                             <td class="VariableBody">
-                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                                   <tr>
-                                                      <td class="DataField">
-                                                         <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_CREATEADMIN_PASSWORD" name="AUTH_DB_CREATEADMIN_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_CREATEADMIN_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_CREATEADMIN_PASSWORD"/>
-                                                         </div>
-                                                      </td>
-                                                   </tr>
-                                                   <tr>
-                                                      <td class="Comment"/>
-                                                   </tr>
-                                                </table>
-                                             </td>
-                                          </tr>
-                                       </table>
-                                       <script type="text/javascript">ToggleDependant('AUTH_DB_CREATEADMIN');</script>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
                      </table>
                      <script type="text/javascript">ToggleDependant('AUTH_DB');</script>
                   </td>
@@ -470,32 +401,6 @@
                               </table>
                            </td>
                         </tr>
-                        <tr>
-                           <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>Accounts to Add as Main Admins:</b>
-                           </td>
-                           <td class="VariableBody">
-                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                 <tr>
-                                    <td class="DataField">
-                                       <div class="DataFieldInput">
-                                          <textarea id="Input_LDAP_MAINADMINS" name="LDAP_MAINADMINS" rows="15" cols="60"><?php echo htmlentities($GLOBALS['Form_LDAP_MAINADMINS']); ?></textarea>
-                                          <span id="DataFieldInputExtra_LDAP_MAINADMINS"/>
-                                       </div>
-                                       <div class="Example">
-                                          <i>Example: bsmith;ajackson</i>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment">
-                                       <div class="CommentLine">OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</div>
-                                       <div class="CommentLine">No DB accounts will be created for these account names.</div>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
                      </table>
                      <script type="text/javascript">ToggleDependant('AUTH_LDAP');</script>
                   </td>
@@ -545,32 +450,6 @@
                                  <tr>
                                     <td class="Comment">
                                        <div class="CommentLine">The URL to use for the BASIC HTTP Authentication.</div>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>Accounts to Add as Main Admins:</b>
-                           </td>
-                           <td class="VariableBody">
-                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                 <tr>
-                                    <td class="DataField">
-                                       <div class="DataFieldInput">
-                                          <textarea id="Input_AUTH_HTTP_MAINADMINS" name="AUTH_HTTP_MAINADMINS" rows="15" cols="60"><?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_MAINADMINS']); ?></textarea>
-                                          <span id="DataFieldInputExtra_AUTH_HTTP_MAINADMINS"/>
-                                       </div>
-                                       <div class="Example">
-                                          <i>Example: bsmith;ajackson</i>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment">
-                                       <div class="CommentLine">OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</div>
-                                       <div class="CommentLine">No DB accounts will be created for these account names.</div>
                                     </td>
                                  </tr>
                               </table>

@@ -16,7 +16,7 @@ define("CONFIGFILENAME", '../config.inc.php');
 
 // Output a message if the calendar has already been configured.
 if (file_exists(CONFIGFILENAME)) {
-	echo "<h1 style='color: red;'>Calendar Already Configured:</h1> Cannot configure calendar since config.inc.php already exists.<br/>Edit the file manually, or remove/rename config.inc.php and try again.</body></html>";
+	echo "<h1 style='color: red;'>Calendar Already Configured:</h1> Cannot configure calendar since <code>config.inc.php</code> already exists.<br/>Edit the file manually, or remove/rename <code>config.inc.php</code> and try again.</body></html>";
 	exit();
 }
 

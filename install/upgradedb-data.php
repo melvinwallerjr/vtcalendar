@@ -280,8 +280,9 @@ $FinalTables['vtcal_event']['Fields']['showondefaultcal']['AutoIncrement'] = fal
 $FinalTables['vtcal_event']['Fields']['showincategory']['Type'] = "int(11)";
 $FinalTables['vtcal_event']['Fields']['showincategory']['NotNull'] = false;
 $FinalTables['vtcal_event']['Fields']['showincategory']['AutoIncrement'] = false;
-$FinalTables['vtcal_event']['Keys']['indexCalendarID']['Fields']['calendarid'] = "";
-$FinalTables['vtcal_event']['Keys']['indexCalendarID']['Unique'] = false;
+$FinalTables['vtcal_event']['Keys']['PRIMARY']['Fields']['calendarid'] = "";
+$FinalTables['vtcal_event']['Keys']['PRIMARY']['Fields']['id'] = "";
+$FinalTables['vtcal_event']['Keys']['PRIMARY']['Unique'] = true;
 $FinalTables['vtcal_event_public']['Fields']['calendarid']['Type'] = "varchar(50)";
 $FinalTables['vtcal_event_public']['Fields']['calendarid']['NotNull'] = true;
 $FinalTables['vtcal_event_public']['Fields']['calendarid']['AutoIncrement'] = false;
@@ -342,8 +343,9 @@ $FinalTables['vtcal_event_public']['Fields']['displayedsponsorurl']['AutoIncreme
 $FinalTables['vtcal_event_public']['Fields']['repeatid']['Type'] = "varchar(13)";
 $FinalTables['vtcal_event_public']['Fields']['repeatid']['NotNull'] = false;
 $FinalTables['vtcal_event_public']['Fields']['repeatid']['AutoIncrement'] = false;
-$FinalTables['vtcal_event_public']['Keys']['indexCalendarID']['Fields']['calendarid'] = "";
-$FinalTables['vtcal_event_public']['Keys']['indexCalendarID']['Unique'] = false;
+$FinalTables['vtcal_event_public']['Keys']['PRIMARY']['Fields']['calendarid'] = "";
+$FinalTables['vtcal_event_public']['Keys']['PRIMARY']['Fields']['id'] = "";
+$FinalTables['vtcal_event_public']['Keys']['PRIMARY']['Unique'] = true;
 $FinalTables['vtcal_event_repeat']['Fields']['calendarid']['Type'] = "varchar(50)";
 $FinalTables['vtcal_event_repeat']['Fields']['calendarid']['NotNull'] = true;
 $FinalTables['vtcal_event_repeat']['Fields']['calendarid']['AutoIncrement'] = false;
@@ -535,5 +537,4 @@ $FinalTables['vtcal_user']['Fields']['email']['NotNull'] = true;
 $FinalTables['vtcal_user']['Fields']['email']['AutoIncrement'] = false;
 $FinalTables['vtcal_user']['Keys']['PRIMARY']['Fields']['id'] = "";
 $FinalTables['vtcal_user']['Keys']['PRIMARY']['Unique'] = true;
-
 ?>

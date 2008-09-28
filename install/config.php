@@ -66,10 +66,10 @@ if (isset($_POST['SaveConfig'])) {
 	}*/
 	
 	// Check Database Authentication fields.
-	if ($Form_AUTH_DB == "true") {
+	if ($Form_AUTH_DB) {
 	
 		// Check the DB main admin username/password
-		/*if ($Form_AUTH_DB_CREATEADMIN == "true") {
+		/*if ($Form_AUTH_DB_CREATEADMIN) {
 			if (empty($Form_AUTH_DB_CREATEADMIN_USERNAME)) {
 				$FormErrors[count($FormErrors)] = "You must specify the username of the Main Admin Account under Database Authentication.";
 			}
@@ -84,7 +84,7 @@ if (isset($_POST['SaveConfig'])) {
 	}
 	
 	// Check LDAP Authentication fields.
-	if ($Form_AUTH_LDAP == "true") {
+	if ($Form_AUTH_LDAP) {
 		if (!function_exists("ldap_connect")) {
 				$FormErrors[count($FormErrors)] = "PHP LDAP does not seem to be installed or configured. Make sure the extension is included in your php.ini file.";
 		}
@@ -104,8 +104,9 @@ if (isset($_POST['SaveConfig'])) {
 			}
 			if (empty($Form_LDAP_BASE_DN)) {
 				$FormErrors[count($FormErrors)] = "You must specify the LDAP Base DN.";
+				$ldapfieldsok = false;
 			}
-			if ($Form_LDAP_BIND == "true") {
+			if ($Form_LDAP_BIND) {
 				if (empty($Form_LDAP_BIND_USER)) {
 					$FormErrors[count($FormErrors)] = "You must specify the LDAP Username to bind as.";
 					$ldapfieldsok = false;
@@ -116,7 +117,7 @@ if (isset($_POST['SaveConfig'])) {
 				}
 			}
 			
-			if ($ldapfieldsok) {
+			if ($ldapfieldsok && $Form_LDAP_CHECK) {
 				if (preg_match("/^ldap(s?):\\/\\//", $Form_LDAP_HOST) == 1) {
 					$ldap = @(ldap_connect($Form_LDAP_HOST));
 				}
@@ -127,9 +128,15 @@ if (isset($_POST['SaveConfig'])) {
 				if (!isset($ldap) || $ldap === false) {
 					$FormErrors[count($FormErrors)] = "Could not connect to the LDAP server.";
 				}
-				elseif (!empty($Form_LDAP_BIND_USER) || !@(ldap_bind($ldap, $Form_LDAP_BIND_USER, $Form_LDAP_BIND_PASSWORD))) {
+				elseif ($Form_LDAP_BIND && !@(ldap_bind($ldap, $Form_LDAP_BIND_USER, $Form_LDAP_BIND_PASSWORD))) {
 					$lastError = error_get_last();
 					$FormErrors[count($FormErrors)] = "Could not bind to the LDAP server.<br/>Error: <code>" . htmlentities($lastError['message']) . "</code>";
+				}
+				
+				// Search for users name to dn
+				if (($result = @(ldap_search($ldap, $Form_LDAP_BASE_DN, "(objectclass=*)", array('dn'), 1, 1))) === false) {
+					$lastError = error_get_last();
+					$FormErrors[count($FormErrors)] = "Could not perform a LDAP search. May not have permissions to search anonymously.<br/>Error: <code>" . htmlentities($lastError['message']) . "</code>";
 				}
 			}
 			
@@ -149,11 +156,11 @@ if (isset($_POST['SaveConfig'])) {
 		$FormErrors[count($FormErrors)] = "The timezone offset must be a positive or negative integer.";
 	}
 	
-	if ($Form_SHOW_UPCOMING_TAB == 'true' && preg_match("/^[0-9]+$/", $Form_MAX_UPCOMING_EVENTS) == 0) {
+	if ($Form_SHOW_UPCOMING_TAB && preg_match("/^[0-9]+$/", $Form_MAX_UPCOMING_EVENTS) == 0) {
 		$FormErrors[count($FormErrors)] = "The Max Upcoming Events must be an integer.";
 	}
 	
-	if ($Form_AUTH_HTTP_CACHE == 'true' && preg_match("/^[0-9]+$/", $Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS) == 0) {
+	if ($Form_AUTH_HTTP_CACHE && preg_match("/^[0-9]+$/", $Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS) == 0) {
 		$FormErrors[count($FormErrors)] = "The HTTP Authentication Cache Expiration must be an integer.";
 	}
 	
@@ -162,7 +169,7 @@ if (isset($_POST['SaveConfig'])) {
 	}
 	
 	// Check HTTP Authentication fields.
-	if ($Form_AUTH_HTTP == "true") {
+	if ($Form_AUTH_HTTP) {
 		if (empty($Form_AUTH_HTTP_URL)) {
 			$FormErrors[count($FormErrors)] = "You must specify the HTTP Authorizaton URL.";
 		}
@@ -172,7 +179,7 @@ if (isset($_POST['SaveConfig'])) {
 	
 	// Do not make any changes if errors occurred.
 	if (count($FormErrors) == 0) {
-		/*if ($Form_AUTH_DB_CREATEADMIN == "true") {
+		/*if ($Form_AUTH_DB_CREATEADMIN) {
 			// Add the account
 			if (is_string($return = AddUser($Form_AUTH_DB_CREATEADMIN_USERNAME, $Form_AUTH_DB_CREATEADMIN_PASSWORD))) {
 				$FormErrors[count($FormErrors)] = $return;
@@ -210,7 +217,7 @@ if (isset($_POST['SaveConfig'])) {
 			
 			$ConfigOutput .= "?>";
 			
-			$WriteSuccess = true; //(file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
+			$WriteSuccess = false; //(file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
 			
 			if ($WriteSuccess) {
 				?>

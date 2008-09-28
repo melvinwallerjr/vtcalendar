@@ -9,29 +9,44 @@
 </head>
 
 <body>
+
 <h1>VTCalendar Installation</h1>
-<h2>Wizards</h2>
-<blockquote>
-<p>Two wizards are available for installing VTCalendar:</p>
-<p><a href="config.php"><font size="3"><b> Configure VTCalendar</b></font></a></p>
-<ul>
-	<li>Specify how to connect to the database.</li>
-    <li>Specify the URL at which the calendar is accessed. </li>
-    <li>Choose the way users authenticate. </li>
-    <li>Toggle some display features.<br />
-   	    <i>and more...</i></li>
-</ul>
-<p><font size="3"><a href="upgradedb.php"><b>Install or Upgrade  Database (MySQL Only)</b></a></font></p>
-<blockquote>
-	<p>If this is a <b>fresh VTCalendar install</b> this script will create the necessary VTCalendar tables.</p>
-    <p>If you are <b>upgrading VTCalendar</b> it is necessary to upgrade the database as well.</p>
-</blockquote>
+
 <p style="padding: 8px; background-color: #FFEEEE; border: 1px solid #FF3333;"><font size="3"><b>Security Warning:</b></font><br />
-	Once you complete the configuration and DB upgrade, it is recommended that you remove or secure the <code>/install</code> folder. </p>
+	Once you complete the wizards below, you should remove or secure the <code>install</code> folder. </p>
+
+<h2>Wizards</h2>
+
+<blockquote>
+	<p>There are three steps to installing VTCalendar:</p>
+	<p><font size="3"><b>1. <a href="config.php">Configure VTCalendar</a></b></font></p>
+	<blockquote>
+		<p>Configure various VTCalendar settings including:</p>
+		<ul>
+			<li>Specify how to connect to the database.</li>
+		    <li>Specify the URL at which the calendar is accessed. </li>
+		    <li>Choose the way users authenticate. </li>
+		    <li>Toggle some display features.</li>
+		</ul>
+	</blockquote>
+	
+	<p><font size="3"><b>2. <a href="upgradedb.php">Install or Upgrade  Database (MySQL Only)</a></b></font></p>
+	<blockquote>
+		<p>If this is a <b>fresh VTCalendar install</b> this wizard will create the necessary VTCalendar tables.</p>
+	    <p>If you are <b>upgrading VTCalendar</b> this wizard will upgrade the database, adding any missing tables, columns or indexes.</p>
+	</blockquote>
+	
+	<p><font size="3"><b>3. <a href="createadmin.php">Create Main Admin Accounts</a></b></font></p>
+	<blockquote>
+		<p>If this is a <b>fresh VTCalendar install</b> you may use this wizard to create main admin accounts.</p>
+	</blockquote>
 </blockquote>
 	
 <h2>Version Check</h2>
-<blockquote><table border="0" cellpadding="0" cellspacing="0" border="0"><tr>
+
+<blockquote>
+	<table border="0" cellpadding="0" cellspacing="0" border="0">
+		<tr>
 <?php
 @(include_once('../version.inc.php'));
 if (!defined("VERSION")) {
@@ -64,7 +79,9 @@ else {
 	<?php
 }
 ?>
-</tr></table></blockquote>
+		</tr>
+	</table>
+</blockquote>
 
 </body>
 </html>

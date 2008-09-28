@@ -72,7 +72,7 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 	
 	$FinalSQL = "";
 	
-	$DBCONNECTION = DBOpen();
+	$DBCONNECTION =& DBOpen();
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}
@@ -136,7 +136,7 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 elseif ($Submit_Upgrade && defined("DATABASE") && isset($UpgradeSQL)) {
 	?><h2>Upgrade Result:</h2><?php
 	
-	$DBCONNECTION = DBOpen();
+	$DBCONNECTION =& DBOpen();
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}

@@ -48,7 +48,7 @@ if ( isset($_GET['htmlencode']) && $_GET['htmlencode'] != "" ) { if ( isValidRem
 // Load the Calendar Information
 // ==========================================================
 
-$DBCONNECTION = DBOpen();
+$DBCONNECTION =& DBOpen();
 if (is_string($DBCONNECTION)) {
 	outputErrorMessage("A database error occurred: " . $DBCONNECTION);
 }

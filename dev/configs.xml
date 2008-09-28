@@ -65,7 +65,7 @@
                         <Line>It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.</Line>
                     </Comment>
                 </Config>
-                <Config Label="Create Main Admin Account" Variable="AUTH_DB_CREATEADMIN" Type="boolean" IsDefinition="false">
+                <!--<Config Label="Create Main Admin Account" Variable="AUTH_DB_CREATEADMIN" Type="boolean" IsDefinition="false">
                     <Default>true</Default>
                     <Comment>
                         <Line>If the database has not yet been populated, you will need to create a main admin account in order to administer the calendar.</Line>
@@ -77,7 +77,7 @@
                         </Config>
                         <Config Label="Main Admin Password" Variable="AUTH_DB_CREATEADMIN_PASSWORD" Type="string" Required="true" IsDefinition="false"/>
                     </Dependants>
-                </Config>
+                </Config>-->
             </Dependants>
         </Config>
         <Config Label="LDAP Authentication" Variable="AUTH_LDAP" Type="boolean">
@@ -128,13 +128,13 @@
                         <Line>Leave this blank to connect anonymously.</Line>
                     </Comment>
                 </Config>
-                <Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="multiline" IsDefinition="false">
+                <!--<Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="multiline" IsDefinition="false">
                     <Example>bsmith;ajackson</Example>
                     <Comment>
                         <Line>OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</Line>
                         <Line>No DB accounts will be created for these account names.</Line>
                     </Comment>
-                </Config>
+                </Config>-->
             </Dependants>
         </Config>
         <Config Label="HTTP Authentication" Variable="AUTH_HTTP" Type="boolean">
@@ -151,13 +151,13 @@
                         <Line>The URL to use for the BASIC HTTP Authentication.</Line>
                     </Comment>
             	</Config>
-                <Config Label="Accounts to Add as Main Admins" Variable="AUTH_HTTP_MAINADMINS" Type="multiline" IsDefinition="false">
+                <!--<Config Label="Accounts to Add as Main Admins" Variable="AUTH_HTTP_MAINADMINS" Type="multiline" IsDefinition="false">
                     <Example>bsmith;ajackson</Example>
                     <Comment>
                         <Line>OPTIONAL. A list of account names that will be added as main admins. Each account name must be on its own line.</Line>
                         <Line>No DB accounts will be created for these account names.</Line>
                     </Comment>
-                </Config>
+                </Config>-->
             </Dependants>
         </Config>
     </Section>

@@ -7,13 +7,10 @@ if (isset($_POST['LANGUAGE'])) { $GLOBALS['Form_LANGUAGE'] = $_POST['LANGUAGE'];
 if (isset($_POST['DATABASE'])) { $GLOBALS['Form_DATABASE'] = $_POST['DATABASE']; } else { $GLOBALS['Form_DATABASE'] = ''; }
 if (isset($_POST['SQLLOGFILE'])) { $GLOBALS['Form_SQLLOGFILE'] = $_POST['SQLLOGFILE']; } else { $GLOBALS['Form_SQLLOGFILE'] = ''; }
 if (isset($_POST['REGEXVALIDUSERID'])) { $GLOBALS['Form_REGEXVALIDUSERID'] = $_POST['REGEXVALIDUSERID']; } else { $GLOBALS['Form_REGEXVALIDUSERID'] = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/'; }
-if (isset($_POST['AUTH_DB']) && strtolower($_POST['AUTH_DB']) == 'true') { $GLOBALS['Form_AUTH_DB'] = 'true'; } else { $GLOBALS['Form_AUTH_DB'] = 'false'; }
+if (isset($_POST['AUTH_DB'])) { $GLOBALS['Form_AUTH_DB'] = strtolower($_POST['AUTH_DB']) == 'true'; } else { $GLOBALS['Form_AUTH_DB'] = 'true'; }
 if (isset($_POST['AUTH_DB_USER_PREFIX'])) { $GLOBALS['Form_AUTH_DB_USER_PREFIX'] = $_POST['AUTH_DB_USER_PREFIX']; } else { $GLOBALS['Form_AUTH_DB_USER_PREFIX'] = ''; }
 if (isset($_POST['AUTH_DB_NOTICE'])) { $GLOBALS['Form_AUTH_DB_NOTICE'] = $_POST['AUTH_DB_NOTICE']; } else { $GLOBALS['Form_AUTH_DB_NOTICE'] = ''; }
-if (isset($_POST['AUTH_DB_CREATEADMIN']) && strtolower($_POST['AUTH_DB_CREATEADMIN']) == 'true') { $GLOBALS['Form_AUTH_DB_CREATEADMIN'] = 'true'; } else { $GLOBALS['Form_AUTH_DB_CREATEADMIN'] = 'false'; }
-if (isset($_POST['AUTH_DB_CREATEADMIN_USERNAME'])) { $GLOBALS['Form_AUTH_DB_CREATEADMIN_USERNAME'] = $_POST['AUTH_DB_CREATEADMIN_USERNAME']; } else { $GLOBALS['Form_AUTH_DB_CREATEADMIN_USERNAME'] = ''; }
-if (isset($_POST['AUTH_DB_CREATEADMIN_PASSWORD'])) { $GLOBALS['Form_AUTH_DB_CREATEADMIN_PASSWORD'] = $_POST['AUTH_DB_CREATEADMIN_PASSWORD']; } else { $GLOBALS['Form_AUTH_DB_CREATEADMIN_PASSWORD'] = ''; }
-if (isset($_POST['AUTH_LDAP']) && strtolower($_POST['AUTH_LDAP']) == 'true') { $GLOBALS['Form_AUTH_LDAP'] = 'true'; } else { $GLOBALS['Form_AUTH_LDAP'] = 'false'; }
+if (isset($_POST['AUTH_LDAP'])) { $GLOBALS['Form_AUTH_LDAP'] = strtolower($_POST['AUTH_LDAP']) == 'true'; } else { $GLOBALS['Form_AUTH_LDAP'] = 'false'; }
 if (isset($_POST['LDAP_HOST'])) { $GLOBALS['Form_LDAP_HOST'] = $_POST['LDAP_HOST']; } else { $GLOBALS['Form_LDAP_HOST'] = ''; }
 if (isset($_POST['LDAP_PORT'])) { $GLOBALS['Form_LDAP_PORT'] = $_POST['LDAP_PORT']; } else { $GLOBALS['Form_LDAP_PORT'] = '389'; }
 if (isset($_POST['LDAP_USERFIELD'])) { $GLOBALS['Form_LDAP_USERFIELD'] = $_POST['LDAP_USERFIELD']; } else { $GLOBALS['Form_LDAP_USERFIELD'] = ''; }
@@ -21,22 +18,20 @@ if (isset($_POST['LDAP_BASE_DN'])) { $GLOBALS['Form_LDAP_BASE_DN'] = $_POST['LDA
 if (isset($_POST['LDAP_SEARCH_FILTER'])) { $GLOBALS['Form_LDAP_SEARCH_FILTER'] = $_POST['LDAP_SEARCH_FILTER']; } else { $GLOBALS['Form_LDAP_SEARCH_FILTER'] = ''; }
 if (isset($_POST['LDAP_BIND_USER'])) { $GLOBALS['Form_LDAP_BIND_USER'] = $_POST['LDAP_BIND_USER']; } else { $GLOBALS['Form_LDAP_BIND_USER'] = ''; }
 if (isset($_POST['LDAP_BIND_PASSWORD'])) { $GLOBALS['Form_LDAP_BIND_PASSWORD'] = $_POST['LDAP_BIND_PASSWORD']; } else { $GLOBALS['Form_LDAP_BIND_PASSWORD'] = ''; }
-if (isset($_POST['LDAP_MAINADMINS'])) { $GLOBALS['Form_LDAP_MAINADMINS'] = $_POST['LDAP_MAINADMINS']; } else { $GLOBALS['Form_LDAP_MAINADMINS'] = ''; }
-if (isset($_POST['AUTH_HTTP']) && strtolower($_POST['AUTH_HTTP']) == 'true') { $GLOBALS['Form_AUTH_HTTP'] = 'true'; } else { $GLOBALS['Form_AUTH_HTTP'] = 'false'; }
+if (isset($_POST['AUTH_HTTP'])) { $GLOBALS['Form_AUTH_HTTP'] = strtolower($_POST['AUTH_HTTP']) == 'true'; } else { $GLOBALS['Form_AUTH_HTTP'] = 'false'; }
 if (isset($_POST['AUTH_HTTP_URL'])) { $GLOBALS['Form_AUTH_HTTP_URL'] = $_POST['AUTH_HTTP_URL']; } else { $GLOBALS['Form_AUTH_HTTP_URL'] = ''; }
-if (isset($_POST['AUTH_HTTP_MAINADMINS'])) { $GLOBALS['Form_AUTH_HTTP_MAINADMINS'] = $_POST['AUTH_HTTP_MAINADMINS']; } else { $GLOBALS['Form_AUTH_HTTP_MAINADMINS'] = ''; }
 if (isset($_POST['BASEPATH'])) { $GLOBALS['Form_BASEPATH'] = $_POST['BASEPATH']; } else { $GLOBALS['Form_BASEPATH'] = ''; }
 if (isset($_POST['BASEDOMAIN'])) { $GLOBALS['Form_BASEDOMAIN'] = $_POST['BASEDOMAIN']; } else { $GLOBALS['Form_BASEDOMAIN'] = ''; }
 if (isset($_POST['BASEURL'])) { $GLOBALS['Form_BASEURL'] = $_POST['BASEURL']; } else { $GLOBALS['Form_BASEURL'] = ''; }
 if (isset($_POST['SECUREBASEURL'])) { $GLOBALS['Form_SECUREBASEURL'] = $_POST['SECUREBASEURL']; } else { $GLOBALS['Form_SECUREBASEURL'] = ''; }
 if (isset($_POST['TIMEZONE_OFFSET'])) { $GLOBALS['Form_TIMEZONE_OFFSET'] = $_POST['TIMEZONE_OFFSET']; } else { $GLOBALS['Form_TIMEZONE_OFFSET'] = '5'; }
 if (isset($_POST['WEEK_STARTING_DAY'])) { $GLOBALS['Form_WEEK_STARTING_DAY'] = $_POST['WEEK_STARTING_DAY']; } else { $GLOBALS['Form_WEEK_STARTING_DAY'] = '0'; }
-if (isset($_POST['USE_AMPM']) && strtolower($_POST['USE_AMPM']) == 'true') { $GLOBALS['Form_USE_AMPM'] = 'true'; } else { $GLOBALS['Form_USE_AMPM'] = 'false'; }
+if (isset($_POST['USE_AMPM'])) { $GLOBALS['Form_USE_AMPM'] = strtolower($_POST['USE_AMPM']) == 'true'; } else { $GLOBALS['Form_USE_AMPM'] = 'true'; }
 if (isset($_POST['COLUMNSIDE'])) { $GLOBALS['Form_COLUMNSIDE'] = $_POST['COLUMNSIDE']; } else { $GLOBALS['Form_COLUMNSIDE'] = 'RIGHT'; }
-if (isset($_POST['SHOW_UPCOMING_TAB']) && strtolower($_POST['SHOW_UPCOMING_TAB']) == 'true') { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = 'true'; } else { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = 'false'; }
+if (isset($_POST['SHOW_UPCOMING_TAB'])) { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = strtolower($_POST['SHOW_UPCOMING_TAB']) == 'true'; } else { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = 'true'; }
 if (isset($_POST['MAX_UPCOMING_EVENTS'])) { $GLOBALS['Form_MAX_UPCOMING_EVENTS'] = $_POST['MAX_UPCOMING_EVENTS']; } else { $GLOBALS['Form_MAX_UPCOMING_EVENTS'] = '75'; }
-if (isset($_POST['SHOW_MONTH_OVERLAP']) && strtolower($_POST['SHOW_MONTH_OVERLAP']) == 'true') { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = 'true'; } else { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = 'false'; }
-if (isset($_POST['AUTH_HTTP_CACHE']) && strtolower($_POST['AUTH_HTTP_CACHE']) == 'true') { $GLOBALS['Form_AUTH_HTTP_CACHE'] = 'true'; } else { $GLOBALS['Form_AUTH_HTTP_CACHE'] = 'false'; }
+if (isset($_POST['SHOW_MONTH_OVERLAP'])) { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = strtolower($_POST['SHOW_MONTH_OVERLAP']) == 'true'; } else { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = 'true'; }
+if (isset($_POST['AUTH_HTTP_CACHE'])) { $GLOBALS['Form_AUTH_HTTP_CACHE'] = strtolower($_POST['AUTH_HTTP_CACHE']) == 'true'; } else { $GLOBALS['Form_AUTH_HTTP_CACHE'] = 'false'; }
 if (isset($_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS'])) { $GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS'] = $_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS']; } else { $GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS'] = '4'; }
 if (isset($_POST['MAX_CACHESIZE_CATEGORYNAME'])) { $GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME'] = $_POST['MAX_CACHESIZE_CATEGORYNAME']; } else { $GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME'] = '100'; }
 

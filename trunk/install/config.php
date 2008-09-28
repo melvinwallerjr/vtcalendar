@@ -218,7 +218,7 @@ if (isset($_POST['SaveConfig'])) {
 			
 			$ConfigOutput .= "?>";
 			
-			$WriteSuccess = false; //(file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
+			$WriteSuccess = (file_put_contents(CONFIGFILENAME, $ConfigOutput) !== false);
 			
 			if ($WriteSuccess) {
 				?>

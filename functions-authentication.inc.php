@@ -27,7 +27,7 @@ function displaylogin($errormsg="") {
 	}
 	?>
 	<DIV>
-	<?php if (file_exists("static-includes/loginform-pre.txt")) { include('static-includes/loginform-pre.txt'); } ?>
+	<?php @(readfile('static-includes/loginform-pre.txt')); ?>
 	<FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
 	<?php
 	if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($eventid),"\">\n"; }
@@ -53,7 +53,7 @@ function displaylogin($errormsg="") {
 	<script language="JavaScript1.2"><!--
 		document.loginform.login_userid.focus();
 	//--></script>
-	<?php if (file_exists("static-includes/loginform-post.txt")) { include('static-includes/loginform-post.txt'); } ?>
+	<?php @(readfile('static-includes/xloginform-post.txt')); ?>
 	</DIV>
 	<?php
 	contentsection_end();

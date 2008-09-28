@@ -7,7 +7,7 @@ define("ALLOWINCLUDES", TRUE);
 
 // Include the necessary VTCalendar files.
 @(include_once('version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
-@(include_once('config.inc.php')) or die('config.inc.php was not found. See: <a href="install/">VTCalendar Installation</a>.');
+@(include_once('config.inc.php')) or die('config.inc.php was not found. See: <a href="install/index.php">VTCalendar Installation</a>.');
 require_once('config-defaults.inc.php');
 require_once('config-colordefaults.inc.php');
 require_once('session_start.inc.php');
@@ -29,7 +29,7 @@ if (AUTH_HTTP) {
                 Open the database connection
 ============================================================ */
 
-$DBCONNECTION = DBOpen();
+$DBCONNECTION =& DBOpen();
 if (is_string($DBCONNECTION)) {
 	include("dberror.php");
 	exit;

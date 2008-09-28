@@ -10,7 +10,7 @@ require_once("DB.php");
 require_once("../functions-db-generic.inc.php");
 
 // Open the DB Connection
-DBOpen();
+$DBCONNECTION =& DBOpen();
 
 // Process the Tables
 GetTables();

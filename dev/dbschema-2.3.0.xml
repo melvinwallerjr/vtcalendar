@@ -164,9 +164,10 @@
 	<Field Name="repeatid" Type="varchar(13)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="showondefaultcal" Type="int(11)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="showincategory" Type="int(11)" NotNull="false" AutoIncrement="false"/>
-	<Key Name="indexCalendarID" Unique="false">
+	<PrimaryKey>
 		<KeyField Name="calendarid" SubPart=""/>
-	</Key>
+		<KeyField Name="id" SubPart=""/>
+	</PrimaryKey>
 </Table>
 
 <Table Name="vtcal_event_public">
@@ -190,9 +191,10 @@
 	<Field Name="displayedsponsor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="displayedsponsorurl" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="repeatid" Type="varchar(13)" NotNull="false" AutoIncrement="false"/>
-	<Key Name="indexCalendarID" Unique="false">
+	<PrimaryKey>
 		<KeyField Name="calendarid" SubPart=""/>
-	</Key>
+		<KeyField Name="id" SubPart=""/>
+	</PrimaryKey>
 </Table>
 
 <Table Name="vtcal_event_repeat">

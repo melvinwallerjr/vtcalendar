@@ -10,6 +10,7 @@ define("ALLOWINCLUDES", TRUE);
 @(include_once('config.inc.php')) or die('config.inc.php was not found. See: <a href="install/index.php">VTCalendar Installation</a>.');
 require_once('config-defaults.inc.php');
 require_once('config-colordefaults.inc.php');
+require_once('config-validation.inc.php');
 require_once('session_start.inc.php');
 require_once('functions.inc.php');
 require_once('languages/'.LANGUAGE.'.inc.php');

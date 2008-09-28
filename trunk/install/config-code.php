@@ -1,40 +1,95 @@
 <?php
 if (!defined("ALLOWINCLUDES")) exit;
 
-if (isset($_POST['TITLEPREFIX'])) { $GLOBALS['Form_TITLEPREFIX'] = $_POST['TITLEPREFIX']; } else { $GLOBALS['Form_TITLEPREFIX'] = ''; }
-if (isset($_POST['TITLESUFFIX'])) { $GLOBALS['Form_TITLESUFFIX'] = $_POST['TITLESUFFIX']; } else { $GLOBALS['Form_TITLESUFFIX'] = ''; }
-if (isset($_POST['LANGUAGE'])) { $GLOBALS['Form_LANGUAGE'] = $_POST['LANGUAGE']; } else { $GLOBALS['Form_LANGUAGE'] = 'en'; }
-if (isset($_POST['DATABASE'])) { $GLOBALS['Form_DATABASE'] = $_POST['DATABASE']; } else { $GLOBALS['Form_DATABASE'] = ''; }
-if (isset($_POST['SQLLOGFILE'])) { $GLOBALS['Form_SQLLOGFILE'] = $_POST['SQLLOGFILE']; } else { $GLOBALS['Form_SQLLOGFILE'] = ''; }
-if (isset($_POST['REGEXVALIDUSERID'])) { $GLOBALS['Form_REGEXVALIDUSERID'] = $_POST['REGEXVALIDUSERID']; } else { $GLOBALS['Form_REGEXVALIDUSERID'] = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/'; }
-if (isset($_POST['AUTH_DB'])) { $GLOBALS['Form_AUTH_DB'] = strtolower($_POST['AUTH_DB']) == 'true'; } else { $GLOBALS['Form_AUTH_DB'] = 'true'; }
-if (isset($_POST['AUTH_DB_USER_PREFIX'])) { $GLOBALS['Form_AUTH_DB_USER_PREFIX'] = $_POST['AUTH_DB_USER_PREFIX']; } else { $GLOBALS['Form_AUTH_DB_USER_PREFIX'] = ''; }
-if (isset($_POST['AUTH_DB_NOTICE'])) { $GLOBALS['Form_AUTH_DB_NOTICE'] = $_POST['AUTH_DB_NOTICE']; } else { $GLOBALS['Form_AUTH_DB_NOTICE'] = ''; }
-if (isset($_POST['AUTH_LDAP'])) { $GLOBALS['Form_AUTH_LDAP'] = strtolower($_POST['AUTH_LDAP']) == 'true'; } else { $GLOBALS['Form_AUTH_LDAP'] = 'false'; }
-if (isset($_POST['LDAP_HOST'])) { $GLOBALS['Form_LDAP_HOST'] = $_POST['LDAP_HOST']; } else { $GLOBALS['Form_LDAP_HOST'] = ''; }
-if (isset($_POST['LDAP_PORT'])) { $GLOBALS['Form_LDAP_PORT'] = $_POST['LDAP_PORT']; } else { $GLOBALS['Form_LDAP_PORT'] = '389'; }
-if (isset($_POST['LDAP_USERFIELD'])) { $GLOBALS['Form_LDAP_USERFIELD'] = $_POST['LDAP_USERFIELD']; } else { $GLOBALS['Form_LDAP_USERFIELD'] = ''; }
-if (isset($_POST['LDAP_BASE_DN'])) { $GLOBALS['Form_LDAP_BASE_DN'] = $_POST['LDAP_BASE_DN']; } else { $GLOBALS['Form_LDAP_BASE_DN'] = ''; }
-if (isset($_POST['LDAP_SEARCH_FILTER'])) { $GLOBALS['Form_LDAP_SEARCH_FILTER'] = $_POST['LDAP_SEARCH_FILTER']; } else { $GLOBALS['Form_LDAP_SEARCH_FILTER'] = ''; }
-if (isset($_POST['LDAP_BIND_USER'])) { $GLOBALS['Form_LDAP_BIND_USER'] = $_POST['LDAP_BIND_USER']; } else { $GLOBALS['Form_LDAP_BIND_USER'] = ''; }
-if (isset($_POST['LDAP_BIND_PASSWORD'])) { $GLOBALS['Form_LDAP_BIND_PASSWORD'] = $_POST['LDAP_BIND_PASSWORD']; } else { $GLOBALS['Form_LDAP_BIND_PASSWORD'] = ''; }
-if (isset($_POST['AUTH_HTTP'])) { $GLOBALS['Form_AUTH_HTTP'] = strtolower($_POST['AUTH_HTTP']) == 'true'; } else { $GLOBALS['Form_AUTH_HTTP'] = 'false'; }
-if (isset($_POST['AUTH_HTTP_URL'])) { $GLOBALS['Form_AUTH_HTTP_URL'] = $_POST['AUTH_HTTP_URL']; } else { $GLOBALS['Form_AUTH_HTTP_URL'] = ''; }
-if (isset($_POST['BASEPATH'])) { $GLOBALS['Form_BASEPATH'] = $_POST['BASEPATH']; } else { $GLOBALS['Form_BASEPATH'] = ''; }
-if (isset($_POST['BASEDOMAIN'])) { $GLOBALS['Form_BASEDOMAIN'] = $_POST['BASEDOMAIN']; } else { $GLOBALS['Form_BASEDOMAIN'] = ''; }
-if (isset($_POST['BASEURL'])) { $GLOBALS['Form_BASEURL'] = $_POST['BASEURL']; } else { $GLOBALS['Form_BASEURL'] = ''; }
-if (isset($_POST['SECUREBASEURL'])) { $GLOBALS['Form_SECUREBASEURL'] = $_POST['SECUREBASEURL']; } else { $GLOBALS['Form_SECUREBASEURL'] = ''; }
-if (isset($_POST['TIMEZONE_OFFSET'])) { $GLOBALS['Form_TIMEZONE_OFFSET'] = $_POST['TIMEZONE_OFFSET']; } else { $GLOBALS['Form_TIMEZONE_OFFSET'] = '5'; }
-if (isset($_POST['WEEK_STARTING_DAY'])) { $GLOBALS['Form_WEEK_STARTING_DAY'] = $_POST['WEEK_STARTING_DAY']; } else { $GLOBALS['Form_WEEK_STARTING_DAY'] = '0'; }
-if (isset($_POST['USE_AMPM'])) { $GLOBALS['Form_USE_AMPM'] = strtolower($_POST['USE_AMPM']) == 'true'; } else { $GLOBALS['Form_USE_AMPM'] = 'true'; }
-if (isset($_POST['COLUMNSIDE'])) { $GLOBALS['Form_COLUMNSIDE'] = $_POST['COLUMNSIDE']; } else { $GLOBALS['Form_COLUMNSIDE'] = 'RIGHT'; }
-if (isset($_POST['SHOW_UPCOMING_TAB'])) { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = strtolower($_POST['SHOW_UPCOMING_TAB']) == 'true'; } else { $GLOBALS['Form_SHOW_UPCOMING_TAB'] = 'true'; }
-if (isset($_POST['MAX_UPCOMING_EVENTS'])) { $GLOBALS['Form_MAX_UPCOMING_EVENTS'] = $_POST['MAX_UPCOMING_EVENTS']; } else { $GLOBALS['Form_MAX_UPCOMING_EVENTS'] = '75'; }
-if (isset($_POST['SHOW_MONTH_OVERLAP'])) { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = strtolower($_POST['SHOW_MONTH_OVERLAP']) == 'true'; } else { $GLOBALS['Form_SHOW_MONTH_OVERLAP'] = 'true'; }
-if (isset($_POST['AUTH_HTTP_CACHE'])) { $GLOBALS['Form_AUTH_HTTP_CACHE'] = strtolower($_POST['AUTH_HTTP_CACHE']) == 'true'; } else { $GLOBALS['Form_AUTH_HTTP_CACHE'] = 'false'; }
-if (isset($_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS'])) { $GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS'] = $_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS']; } else { $GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS'] = '4'; }
-if (isset($_POST['MAX_CACHESIZE_CATEGORYNAME'])) { $GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME'] = $_POST['MAX_CACHESIZE_CATEGORYNAME']; } else { $GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME'] = '100'; }
+// Default Form Values
+$Form_TITLEPREFIX = '';
+$Form_TITLESUFFIX = '';
+$Form_LANGUAGE = 'en';
+$Form_DATABASE = '';
+$Form_SQLLOGFILE = '';
+$Form_REGEXVALIDUSERID = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/';
+$Form_AUTH_DB = true;
+$Form_AUTH_DB_USER_PREFIX = '';
+$Form_AUTH_DB_NOTICE = '';
+$Form_AUTH_LDAP = false;
+$Form_LDAP_CHECK = true;
+$Form_LDAP_HOST = '';
+$Form_LDAP_PORT = '389';
+$Form_LDAP_USERFIELD = '';
+$Form_LDAP_BASE_DN = '';
+$Form_LDAP_SEARCH_FILTER = '';
+$Form_LDAP_BIND = false;
+$Form_LDAP_BIND_USER = '';
+$Form_LDAP_BIND_PASSWORD = '';
+$Form_AUTH_HTTP = false;
+$Form_AUTH_HTTP_URL = '';
+$Form_BASEPATH = '';
+$Form_BASEDOMAIN = '';
+$Form_BASEURL = '';
+$Form_SECUREBASEURL = '';
+$Form_TIMEZONE_OFFSET = '5';
+$Form_WEEK_STARTING_DAY = '0';
+$Form_USE_AMPM = true;
+$Form_COLUMNSIDE = 'RIGHT';
+$Form_SHOW_UPCOMING_TAB = true;
+$Form_MAX_UPCOMING_EVENTS = '75';
+$Form_SHOW_MONTH_OVERLAP = true;
+$Form_AUTH_HTTP_CACHE = false;
+$Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = '4';
+$Form_MAX_CACHESIZE_CATEGORYNAME = '100';
 
+// Load Submitted Form Values
+if (isset($_POST['SaveConfig'])) {
+	$Form_TITLEPREFIX = $_POST['TITLEPREFIX'];
+	$Form_TITLESUFFIX = $_POST['TITLESUFFIX'];
+	$Form_LANGUAGE = $_POST['LANGUAGE'];
+	$Form_DATABASE = $_POST['DATABASE'];
+	$Form_SQLLOGFILE = $_POST['SQLLOGFILE'];
+	$Form_REGEXVALIDUSERID = $_POST['REGEXVALIDUSERID'];
+	$Form_AUTH_DB = isset($_POST['AUTH_DB']);
+	if ($Form_AUTH_DB) {
+		$Form_AUTH_DB_USER_PREFIX = $_POST['AUTH_DB_USER_PREFIX'];
+		$Form_AUTH_DB_NOTICE = $_POST['AUTH_DB_NOTICE'];
+	}
+	$Form_AUTH_LDAP = isset($_POST['AUTH_LDAP']);
+	if ($Form_AUTH_LDAP) {
+		$Form_LDAP_CHECK = isset($_POST['LDAP_CHECK']);
+		$Form_LDAP_HOST = $_POST['LDAP_HOST'];
+		$Form_LDAP_PORT = $_POST['LDAP_PORT'];
+		$Form_LDAP_USERFIELD = $_POST['LDAP_USERFIELD'];
+		$Form_LDAP_BASE_DN = $_POST['LDAP_BASE_DN'];
+		$Form_LDAP_SEARCH_FILTER = $_POST['LDAP_SEARCH_FILTER'];
+		$Form_LDAP_BIND = isset($_POST['LDAP_BIND']);
+		if ($Form_LDAP_BIND) {
+			$Form_LDAP_BIND_USER = $_POST['LDAP_BIND_USER'];
+			$Form_LDAP_BIND_PASSWORD = $_POST['LDAP_BIND_PASSWORD'];
+		}
+	}
+	$Form_AUTH_HTTP = isset($_POST['AUTH_HTTP']);
+	if ($Form_AUTH_HTTP) {
+		$Form_AUTH_HTTP_URL = $_POST['AUTH_HTTP_URL'];
+	}
+	$Form_BASEPATH = $_POST['BASEPATH'];
+	$Form_BASEDOMAIN = $_POST['BASEDOMAIN'];
+	$Form_BASEURL = $_POST['BASEURL'];
+	$Form_SECUREBASEURL = $_POST['SECUREBASEURL'];
+	$Form_TIMEZONE_OFFSET = $_POST['TIMEZONE_OFFSET'];
+	$Form_WEEK_STARTING_DAY = $_POST['WEEK_STARTING_DAY'];
+	$Form_USE_AMPM = isset($_POST['USE_AMPM']);
+	$Form_COLUMNSIDE = $_POST['COLUMNSIDE'];
+	$Form_SHOW_UPCOMING_TAB = isset($_POST['SHOW_UPCOMING_TAB']);
+	if ($Form_SHOW_UPCOMING_TAB) {
+		$Form_MAX_UPCOMING_EVENTS = $_POST['MAX_UPCOMING_EVENTS'];
+	}
+	$Form_SHOW_MONTH_OVERLAP = isset($_POST['SHOW_MONTH_OVERLAP']);
+	$Form_AUTH_HTTP_CACHE = isset($_POST['AUTH_HTTP_CACHE']);
+	if ($Form_AUTH_HTTP_CACHE) {
+		$Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = $_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS'];
+	}
+	$Form_MAX_CACHESIZE_CATEGORYNAME = $_POST['MAX_CACHESIZE_CATEGORYNAME'];
+}
+
+// Build Code for config.inc.php
 function BuildOutput(&$ConfigOutput) {
 	// Output Title Prefix
 	$ConfigOutput .= '// Config: Title Prefix'."\n";
@@ -77,7 +132,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Config: Database Authentication'."\n";
 	$ConfigOutput .= '// Authenticate users against the database.'."\n";
 	$ConfigOutput .= '// If enabled, this is always performed before any other authentication.'."\n";
-	$ConfigOutput .= 'define("AUTH_DB", ' . $GLOBALS['Form_AUTH_DB'] .');'."\n\n";
+	$ConfigOutput .= 'define("AUTH_DB", ' . ($GLOBALS['Form_AUTH_DB'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Prefix for Database Usernames
 	$ConfigOutput .= '// Config: Prefix for Database Usernames'."\n";
@@ -97,7 +152,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Config: LDAP Authentication'."\n";
 	$ConfigOutput .= '// Authenticate users against a LDAP server.'."\n";
 	$ConfigOutput .= '// If enabled, HTTP authenticate will be ignored.'."\n";
-	$ConfigOutput .= 'define("AUTH_LDAP", ' . $GLOBALS['Form_AUTH_LDAP'] .');'."\n\n";
+	$ConfigOutput .= 'define("AUTH_LDAP", ' . ($GLOBALS['Form_AUTH_LDAP'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output LDAP Host Name
 	$ConfigOutput .= '// Config: LDAP Host Name'."\n";
@@ -127,18 +182,16 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// OPTIONAL. A filter to add to the LDAP search.'."\n";
 	$ConfigOutput .= 'define("LDAP_SEARCH_FILTER", \''. escapephpstring($GLOBALS['Form_LDAP_SEARCH_FILTER']) .'\');'."\n\n";
 
-	// Output LDAP Search Bind Username.
-	$ConfigOutput .= '// Config: LDAP Search Bind Username.'."\n";
-	$ConfigOutput .= '// OPTIONAL. Before authenticating the user, we first check if the username exists.'."\n";
+	// Output LDAP Username
+	$ConfigOutput .= '// Config: LDAP Username'."\n";
+	$ConfigOutput .= '// Before authenticating the user, we first check if the username exists.'."\n";
 	$ConfigOutput .= '// If your LDAP server does not allow anonymous connections, specific a username here.'."\n";
 	$ConfigOutput .= '// Leave this blank to connect anonymously.'."\n";
 	$ConfigOutput .= 'define("LDAP_BIND_USER", \''. escapephpstring($GLOBALS['Form_LDAP_BIND_USER']) .'\');'."\n\n";
 
-	// Output LDAP Search Bind Password
-	$ConfigOutput .= '// Config: LDAP Search Bind Password'."\n";
-	$ConfigOutput .= '// OPTIONAL. Before authenticating the user, we first check if the username exists.'."\n";
-	$ConfigOutput .= '// If your LDAP server does not allow anonymous connections, specific a password here.'."\n";
-	$ConfigOutput .= '// Leave this blank to connect anonymously.'."\n";
+	// Output LDAP Password
+	$ConfigOutput .= '// Config: LDAP Password'."\n";
+	$ConfigOutput .= '// If you specified LDAP_BIND_USER you must also enter a password here.'."\n";
 	$ConfigOutput .= 'define("LDAP_BIND_PASSWORD", \''. escapephpstring($GLOBALS['Form_LDAP_BIND_PASSWORD']) .'\');'."\n\n";
 
 	// Output HTTP Authentication
@@ -146,7 +199,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Authenticate users by sending an HTTP request to a server.'."\n";
 	$ConfigOutput .= '// A HTTP status code of 200 will authorize the user. Otherwise, they will not be authorized.'."\n";
 	$ConfigOutput .= '// If LDAP authentication is enabled, this will be ignored.'."\n";
-	$ConfigOutput .= 'define("AUTH_HTTP", ' . $GLOBALS['Form_AUTH_HTTP'] .');'."\n\n";
+	$ConfigOutput .= 'define("AUTH_HTTP", ' . ($GLOBALS['Form_AUTH_HTTP'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output HTTP Authorizaton URL
 	$ConfigOutput .= '// Config: HTTP Authorizaton URL'."\n";
@@ -199,7 +252,7 @@ function BuildOutput(&$ConfigOutput) {
 	// Output Use AM/PM
 	$ConfigOutput .= '// Config: Use AM/PM'."\n";
 	$ConfigOutput .= '// Defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)'."\n";
-	$ConfigOutput .= 'define("USE_AMPM", ' . $GLOBALS['Form_USE_AMPM'] .');'."\n\n";
+	$ConfigOutput .= 'define("USE_AMPM", ' . ($GLOBALS['Form_USE_AMPM'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Column Position
 	$ConfigOutput .= '// Config: Column Position'."\n";
@@ -211,7 +264,7 @@ function BuildOutput(&$ConfigOutput) {
 	// Output Show Upcoming Tab
 	$ConfigOutput .= '// Config: Show Upcoming Tab'."\n";
 	$ConfigOutput .= '// Whether or not the upcoming tab will be shown.'."\n";
-	$ConfigOutput .= 'define("SHOW_UPCOMING_TAB", ' . $GLOBALS['Form_SHOW_UPCOMING_TAB'] .');'."\n\n";
+	$ConfigOutput .= 'define("SHOW_UPCOMING_TAB", ' . ($GLOBALS['Form_SHOW_UPCOMING_TAB'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Max Upcoming Events
 	$ConfigOutput .= '// Config: Max Upcoming Events'."\n";
@@ -223,13 +276,13 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Whether or not events in month view on days that are not actually part of the current month should be shown.'."\n";
 	$ConfigOutput .= '// For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.'."\n";
 	$ConfigOutput .= '// Values must be true or false.'."\n";
-	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . $GLOBALS['Form_SHOW_MONTH_OVERLAP'] .');'."\n\n";
+	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output HTTP Authentication Cache
 	$ConfigOutput .= '// Config: HTTP Authentication Cache'."\n";
 	$ConfigOutput .= '// Cache successful HTTP authentication attempts as hashes in DB.'."\n";
 	$ConfigOutput .= '// This acts as a failover if the HTTP authentication fails due to a server error.'."\n";
-	$ConfigOutput .= 'define("AUTH_HTTP_CACHE", ' . $GLOBALS['Form_AUTH_HTTP_CACHE'] .');'."\n\n";
+	$ConfigOutput .= 'define("AUTH_HTTP_CACHE", ' . ($GLOBALS['Form_AUTH_HTTP_CACHE'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output HTTP Authentication Cache Expiration
 	$ConfigOutput .= '// Config: HTTP Authentication Cache Expiration'."\n";

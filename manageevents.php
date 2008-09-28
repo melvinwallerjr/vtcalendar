@@ -64,7 +64,7 @@ else {
 	<p><a href="addevent.php"><?php echo lang('add_new_event'); ?></a> <?php if ($result->numRows() > 0) echo lang('or_manage_existing_events'); ?></p><?php
 	
 	if ($result->numRows() == 0) {
-		echo '<p>' . $lang['no_managed_events'] . date("F, Y", mktime(0, 0, 0, $month, 15, $year)) . '.</p>';
+		echo '<p>' . lang('no_managed_events') . date("F, Y", mktime(0, 0, 0, $month, 15, $year)) . '.</p>';
 	}
 	else {
 		$defaultcalendarname = getCalendarName('default');

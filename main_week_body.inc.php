@@ -158,7 +158,7 @@ else {
 
 // prints one event in the format of the week view
 function print_week_event(&$event) {
-	global $day_end_h, $lang;
+	global $day_end_h;
 	disassemble_timestamp($event);
 	$event_timebegin  = timestamp2datetime($event['timebegin']);
 	$event_timeend    = timestamp2datetime($event['timeend']);
@@ -173,7 +173,7 @@ function print_week_event(&$event) {
 		}
 	}
 	else {
-		echo $lang['all_day'];
+		echo lang('all_day');
 	}
 	echo '</div>';
 	

@@ -158,7 +158,7 @@ function userauthenticated($userid, $password) {
 	if (AUTH_DB) {
 		$result =& DBQuery("SELECT password FROM vtcal_user WHERE id='".sqlescape($userid)."'"); 
 		if (is_string($result)) {
-			$returnValue = $lang['dberror_generic'] . ": " . $result;
+			$returnValue = lang('dberror_generic') . ": " . $result;
 		}
 		else {
 			if ($result->numRows() > 0) {
@@ -264,7 +264,7 @@ function userauthenticated($userid, $password) {
 					$result =& DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
 					
 					if (is_string($result)) {
-						$returnValue = $lang['dberror_generic'] . ": " . $result;
+						$returnValue = lang('dberror_generic') . ": " . $result;
 					}
 					elseif ($result->numRows() > 0) {
 						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -387,7 +387,7 @@ function authorized() {
 			$result =& DBQuery($query);
 			
 			if (is_string($result)) {
-				displaylogin($lang['dberror_generic'] . ": " . $result);
+				displaylogin(lang('dberror_generic') . ": " . $result);
 				$returnValue = false;
 			}
 			else {
@@ -421,14 +421,14 @@ function authorized() {
 			
 			// Display an error message if the query failed.
 			if (is_string($result)) {
-				displaylogin($lang['dberror_generic'] . ": " . $result);
+				displaylogin(lang('dberror_generic') . ": " . $result);
 				$returnValue = false;
 			}
 			else {
 				// If the user does not have a sponsor for this calendar, then the user is not authorized or there are no sponsors (!).
 				if ($result->numRows() == 0) {
 					if ($_SESSION['AUTH_ISMAINADMIN']) {
-						displaylogin($lang['dberror_nosponsor']);
+						displaylogin(lang('dberror_nosponsor'));
 					}
 					else {
 						displaynotauthorized();

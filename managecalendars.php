@@ -23,7 +23,7 @@ if ($calculateTotals) {
 	$result =& DBQuery("SELECT count(id) as count, calendarid FROM vtcal_event_public v GROUP BY calendarid ORDER BY calendarid");
 	
 	if (is_string($result)) {
-		echo "<p>" . $lang['dberror_nototals'] . ": " . $result . "</p>";
+		echo "<p>" . lang('dberror_nototals') . ": " . $result . "</p>";
 	}
 	else {
 		$totalEvents = array();
@@ -44,7 +44,7 @@ if ($calculateTotals) {
 		$result =& DBQuery("SELECT count(id) as count, calendarid FROM vtcal_event_public v WHERE timebegin >= '".sqlescape($todayTimeStamp)."' GROUP BY calendarid ORDER BY calendarid");
 		
 		if (is_string($result)) {
-			echo "<p>" . $lang['dberror_noupcomingtotals'] . ": " . $result . "</p>";
+			echo "<p>" . lang('dberror_noupcomingtotals') . ": " . $result . "</p>";
 		}
 		else {
 			$upcomingEvents = array();
@@ -77,9 +77,9 @@ else {
 			<td><b><?php echo lang('calendar_id'); ?></b></td>
 			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><b><?php echo lang('calendar_name'); ?></b></td>
 			<?php if ($calculateTotals) { ?>
-			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;" align="right"><b><?php echo $lang['upcoming_total']; ?></b></td>
+			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;" align="right"><b><?php echo lang('upcoming_total'); ?></b></td>
 			<?php } ?>
-			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo !$calculateTotals ? '<a href="managecalendars.php?totals=y">' . $lang['show_totals'] . '</a>' : '&nbsp;'; ?></td>
+			<td style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo !$calculateTotals ? '<a href="managecalendars.php?totals=y">' . lang('show_totals') . '</a>' : '&nbsp;'; ?></td>
 		</tr><?php
 	
 	// The initial row color.

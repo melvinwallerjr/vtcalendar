@@ -17,13 +17,15 @@
 			<xsl:when test="@Type='boolean'">
 				<xsl:text>if (isset($_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>']) &amp;&amp; strtolower($_POST['</xsl:text>
-					<xsl:value-of select="@Variable"/>
-					<xsl:text>']) == 'true') { $GLOBALS['Form_</xsl:text>
+				<xsl:text>'])) { $GLOBALS['Form_</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>'] = 'true'; } else { $GLOBALS['Form_</xsl:text>
+				<xsl:text>'] = strtolower($_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>'] = 'false'; }&#13;&#10;</xsl:text>
+				<xsl:text>']) == 'true'; } else { $GLOBALS['Form_</xsl:text>
+				<xsl:value-of select="@Variable"/>
+				<xsl:text>'] = '</xsl:text>
+				<xsl:value-of select="Default/text()"/>
+				<xsl:text>'; }&#13;&#10;</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:text>if (isset($_POST['</xsl:text>

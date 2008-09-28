@@ -11,7 +11,7 @@ function ProcessMainAdminAccountList($accountlist, &$finallist) {
 	for ($i = 0; $i < count($splitLDAPAdmins); $i++) {
 		if (trim($splitLDAPAdmins[$i]) != "") {
 			if (preg_match($Form_REGEXVALIDUSERID, $splitLDAPAdmins[$i]) == 0) {
-				$FormErrors[count($FormErrors)] = "The username '" . htmlentities($splitLDAPAdmins[$i]) . "' must match the User ID Regular Expression.";
+				$FormErrors[count($FormErrors)] = "The username '<code>" . htmlentities($splitLDAPAdmins[$i]) . "</code>' must match the User ID Regular Expression.";
 			}
 			else {
 				$finallist[count($finallist)] = $splitLDAPAdmins[$i];
@@ -20,7 +20,7 @@ function ProcessMainAdminAccountList($accountlist, &$finallist) {
 	}
 }
 
-function AddMainAdmin($username) {
+/*function AddMainAdmin($username) {
 	// Check that the account does not already exist
 	$result =& DBQuery("SELECT count(*) as idcount FROM vtcal_adminuser WHERE (id='".sqlescape($username)."')");
 	
@@ -75,6 +75,6 @@ function AddUser($username, $password) {
 	
 	// Return that the user was added successfully.
 	return true;
-}
+}*/
 
 ?>

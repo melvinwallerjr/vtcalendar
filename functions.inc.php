@@ -65,6 +65,13 @@ function isValidUser($userid) */
 require_once("functions-db-gets.inc.php");
 
 
+/* Set various information to the database:
+----------------------------------------------------
+function AddMainAdmin($username)
+function AddUser($username, $password) */
+require_once("functions-db-sets.inc.php");
+
+
 /* VTCalendar specific date/time conversions and formatting:
 ----------------------------------------------------
 function printeventdate(&$event)

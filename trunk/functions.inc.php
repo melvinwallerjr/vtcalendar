@@ -19,6 +19,13 @@ function escapeJavaScriptString($string) */
 require_once("functions-misc.inc.php");
 
 
+/* IO functions:
+----------------------------------------------------
+function file_get_contents($filename, $flags = false, $resource_context = null, $offset = 0, $maxlen = 0)
+function file_put_contents($filename, $content, $flags = null, $resource_context = null) */
+require_once("functions-io.inc.php");
+
+
 /* Generic database functions:
 ----------------------------------------------------
 function DBopen()

@@ -78,7 +78,7 @@
 										<xsl:text disable-output-escaping="yes"><![CDATA[" size="60"/> ]]></xsl:text>
 									</xsl:otherwise>
 								</xsl:choose>
-								<span id="DataFieldInputExtra_{@Variable}"></span>
+								<span id="DataFieldInputExtra_{@Variable}"><xsl:text> </xsl:text></span>
 							</div>
 							
 							<xsl:if test="Example">
@@ -86,15 +86,17 @@
 							</xsl:if>
 						</td>
 					</tr>
-					<tr>
-						<td class="Comment">
-							<xsl:for-each select="Comment/Line[not(@Hidden = 'true')]">
-								<div class="CommentLine">
-									<xsl:value-of select="text()"/>
-								</div>
-							</xsl:for-each>
-						</td>
-					</tr>
+					<xsl:if test="count(Comment/Line[not(@Hidden = 'true')]) &gt; 0">
+						<tr>
+							<td class="Comment">
+								<xsl:for-each select="Comment/Line[not(@Hidden = 'true')]">
+									<div class="CommentLine">
+										<xsl:value-of select="text()"/>
+									</div>
+								</xsl:for-each>
+							</td>
+						</tr>
+					</xsl:if>
 					<xsl:if test="count(Dependants/Config) &gt; 0">
 						<tr id="Dependants_{@Variable}">
 							<td>

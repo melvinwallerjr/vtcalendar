@@ -18,7 +18,7 @@ function verifyUpgrade() {
 @(include_once('../version.inc.php')) or die('version.inc.php was not found or could not be read. Make sure it exists in the VTCalendar folder and it defines a constant named "VERSION".');
 if (!defined("VERSION")) die('VERSION was not defined. Make sure version.inc.php defines a constant named "VERSION" (e.g. <code>define("VERSION", "2.3.0");</code>).');
 
-if (function_exists("file_get_contents") && file_exists("../VERSION-DBCHECKED.txt")) {
+if (file_exists("../VERSION-DBCHECKED.txt")) {
 	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt exists but could not be. May not have read access to the file.");
 	if (trim(VERSION) == trim($dbVersionChecked)) {
 		echo "<h1 style='color: red;'>Database Already Installed or Upgraded:</h1>"
@@ -35,6 +35,7 @@ if (function_exists("file_get_contents") && file_exists("../VERSION-DBCHECKED.tx
 <?php
 
 @(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
+require_once("../functions-io.inc.php");
 require_once("../functions-db-generic.inc.php");
 require_once("upgradedb-functions.php");
 require_once("upgradedb-data.php");
@@ -58,12 +59,10 @@ if (isset($Success)) {
 		?><div class="Success"><b>Success:</b> All upgrades were applied successfully!</div><?php
 	}
 	
-	if (function_exists("file_put_contents")) {
-		$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
-		
-		if (!$versionRecorded) {
-			?><div class="Error"><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), create a file named <code>VERSION-DBCHECKED.txt</code> in the VTCalendar folder that contains the text &quot;<?php echo VERSION; ?>&quot; (without the quotes). On Linux the file name is case-sensitive.</div><?php
-		}
+	$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
+	
+	if (!$versionRecorded) {
+		?><div class="Error"><b>Warning:</b> The <code>VERSION-DBCHECKED.txt</code> file could not be created/changed. To avoid people from accessing this page (and potentially compromising your database), create a file named <code>VERSION-DBCHECKED.txt</code> in the VTCalendar folder that contains the text &quot;<?php echo VERSION; ?>&quot; (without the quotes). On Linux the file name is case-sensitive.</div><?php
 	}
 }
 
@@ -108,7 +107,7 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 					if ($changes == 0) {
 						echo '<script type="text/javascript">location.replace("upgradedb.php?Success=nochanges")</script>';
 					}
-					elseif (function_exists("file_put_contents")) {
+					else {
 						$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
 						
 						if (!$versionRecorded) {

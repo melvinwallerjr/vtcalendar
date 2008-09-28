@@ -1,10 +1,7 @@
 <?php
 
-define("CONFIGFILENAME", '../config.inc.php');
-
-if (file_exists(CONFIGFILENAME)) {
-	exit();
-}
+// Exit if the config file already exists.
+if (file_exists('../config.inc.php')) exit();
 
 // Include Pear::DB or output an error message if it does not exist.
 @(include_once('DB.php')) or die('Pear::DB not installed.');

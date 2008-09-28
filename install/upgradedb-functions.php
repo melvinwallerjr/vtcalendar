@@ -79,6 +79,10 @@ function CheckTables() {
 	// Loop through the current tables to see what can be dropped.
 	for ($i = 0; $i < count($CurrentTableNames); $i++) {
 		if (!array_key_exists($CurrentTableNames[$i], $FinalTables)) {
+			echo "<h3 class='Table'>Table: " . $CurrentTableNames[$i] . "</h3><blockquote>";
+			echo "<div class='Unused Table'><b>Unused Table Notice:</b> The `<code>" . $CurrentTableNames[$i] . "</code>` table is not used by VTCalendar (unless you've made moficiations). This field will not be touched, and will need to be removed manually.</div>";
+			echo "</blockquote>";
+			$totalchanges += 0.0001;
 		}
 	}
 	
@@ -89,6 +93,7 @@ function CheckTables() {
 		if (!array_key_exists($FinalTableNames[$i], $CurrentTables)) {
 			echo "<div class='Create Table'><b>Create Table:</b> The `<code>" . $FinalTableNames[$i] . "</code>` table is missing and will be created.</div>";
 			CreateTable($FinalTableNames[$i]);
+			$totalchanges++;
 		}
 		else {
 			$changes = CheckTable($FinalTableNames[$i]);

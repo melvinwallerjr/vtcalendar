@@ -61,9 +61,9 @@ if (isset($_POST['SaveConfig'])) {
 	define("DATABASE", $Form_DATABASE);
 	
 	// Check the DSN
-	if (is_string($CONNECTION =& DBOpen())) {
+	/*if (is_string($CONNECTION =& DBOpen())) {
 			$FormErrors[count($FormErrors)] = "Could not connect to the database using the supplied Database Connection String.<br/>Error: <code>" . htmlentities($CONNECTION) . "</code>";
-	}
+	}*/
 	
 	// Check Database Authentication fields.
 	if ($Form_AUTH_DB == "true") {
@@ -104,6 +104,16 @@ if (isset($_POST['SaveConfig'])) {
 			}
 			if (empty($Form_LDAP_BASE_DN)) {
 				$FormErrors[count($FormErrors)] = "You must specify the LDAP Base DN.";
+			}
+			if ($Form_LDAP_BIND == "true") {
+				if (empty($Form_LDAP_BIND_USER)) {
+					$FormErrors[count($FormErrors)] = "You must specify the LDAP Username to bind as.";
+					$ldapfieldsok = false;
+				}
+				if (empty($Form_LDAP_BIND_PASSWORD)) {
+					$FormErrors[count($FormErrors)] = "You must specify the LDAP Password for the LDAP Username.";
+					$ldapfieldsok = false;
+				}
 			}
 			
 			if ($ldapfieldsok) {
@@ -151,11 +161,6 @@ if (isset($_POST['SaveConfig'])) {
 		$FormErrors[count($FormErrors)] = "The Max Category Name Cache Size must be an integer.";
 	}
 	
-	//TODO: TIMEZONE_OFFSET
-	//TODO: MAX_UPCOMING_EVENTS (if SHOW_UPCOMING_TAB is true)
-	//TODO: AUTH_HTTP_CACHE_EXPIRATIONDAYS (if AUTH_HTTP_CACHE is true)
-	//TODO: MAX_CACHESIZE_CATEGORYNAME
-	
 	// Check HTTP Authentication fields.
 	if ($Form_AUTH_HTTP == "true") {
 		if (empty($Form_AUTH_HTTP_URL)) {
@@ -189,7 +194,7 @@ if (isset($_POST['SaveConfig'])) {
 		}*/
 		
 		// Close the DB connection
-		DBClose();
+		//DBClose();
 		
 		// Do not save the file if any errors were encountered after the DB changes
 		if (count($FormErrors) == 0) {

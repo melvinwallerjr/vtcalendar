@@ -249,6 +249,29 @@
                      <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
                         <tr>
                            <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Verify LDAP Settings:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="checkbox" id="CheckBox_LDAP_CHECK" name="LDAP_CHECK" value="true"
+										<?php if ($GLOBALS['Form_LDAP_CHECK'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_LDAP_CHECK"> Yes</label>
+                                          <span id="DataFieldInputExtra_LDAP_CHECK"/>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">Check this box if you would like to verify the LDAP settings when submitting this form.</div>
+                                       <div class="CommentLine">Uncheck this box if you know the settings are correct, but your LDAP server is currently unavailable.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
                               <b>LDAP Host Name:</b>
                            </td>
                            <td class="VariableBody">
@@ -359,43 +382,65 @@
                         </tr>
                         <tr>
                            <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>LDAP Search Bind Username.:</b>
+                              <b>Authenticate When Connecting to LDAP:</b>
                            </td>
                            <td class="VariableBody">
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_USER" name="LDAP_BIND_USER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_USER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_USER"/>
+                                       <div class="DataFieldInput"><input type="checkbox" id="CheckBox_LDAP_BIND" name="LDAP_BIND" value="true"
+										onclick="ToggleDependant('LDAP_BIND');" onchange="ToggleDependant('LDAP_BIND');"<?php if ($GLOBALS['Form_LDAP_BIND'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_LDAP_BIND"> Yes</label>
+                                          <span id="DataFieldInputExtra_LDAP_BIND"/>
                                        </div>
                                     </td>
                                  </tr>
                                  <tr>
                                     <td class="Comment">
-                                       <div class="CommentLine">OPTIONAL. Before authenticating the user, we first check if the username exists.</div>
-                                       <div class="CommentLine">If your LDAP server does not allow anonymous connections, specific a username here.</div>
-                                       <div class="CommentLine">Leave this blank to connect anonymously.</div>
+                                       <div class="CommentLine">Before authenticating the user, we first check if the username exists.</div>
+                                       <div class="CommentLine">If your LDAP server does not allow anonymous searches, you will need to specify a username and password to bind as.</div>
                                     </td>
                                  </tr>
-                              </table>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>LDAP Search Bind Password:</b>
-                           </td>
-                           <td class="VariableBody">
-                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                 <tr>
-                                    <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_PASSWORD" name="LDAP_BIND_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_PASSWORD"/>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment">
-                                       <div class="CommentLine">OPTIONAL. Before authenticating the user, we first check if the username exists.</div>
-                                       <div class="CommentLine">If your LDAP server does not allow anonymous connections, specific a password here.</div>
-                                       <div class="CommentLine">Leave this blank to connect anonymously.</div>
+                                 <tr id="Dependants_LDAP_BIND">
+                                    <td>
+                                       <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                                          <tr>
+                                             <td class="VariableName" nowrap="nowrap" valign="top">
+                                                <b>LDAP Username:</b>
+                                             </td>
+                                             <td class="VariableBody">
+                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                                   <tr>
+                                                      <td class="DataField">
+                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_USER" name="LDAP_BIND_USER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_USER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_USER"/>
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="Comment"/>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td class="VariableName" nowrap="nowrap" valign="top">
+                                                <b>LDAP Password:</b>
+                                             </td>
+                                             <td class="VariableBody">
+                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                                   <tr>
+                                                      <td class="DataField">
+                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_PASSWORD" name="LDAP_BIND_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_PASSWORD"/>
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="Comment"/>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                       <script type="text/javascript">ToggleDependant('LDAP_BIND');</script>
                                     </td>
                                  </tr>
                               </table>

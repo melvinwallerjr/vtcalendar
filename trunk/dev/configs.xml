@@ -87,7 +87,14 @@
                 <Line>If enabled, HTTP authenticate will be ignored.</Line>
             </Comment>
             <Dependants>
-            	<Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string" Required="true">
+                <Config Label="Verify LDAP Settings" Variable="LDAP_CHECK" Type="boolean" IsDefinition="false">
+                    <Default>true</Default>
+                    <Comment>
+                        <Line>Check this box if you would like to verify the LDAP settings when submitting this form.</Line>
+                        <Line>Uncheck this box if you know the settings are correct, but your LDAP server is currently unavailable.</Line>
+                    </Comment>
+                </Config>
+                <Config Label="LDAP Host Name" Variable="LDAP_HOST" Type="string" Required="true">
             	    <Example>directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/</Example>
             	    <Comment>
             	        <Line>If you are using OpenLDAP 2.x.x you can specify a URL ('ldap://host/') instead of the hostname ('host').</Line>
@@ -114,19 +121,26 @@
                         <Line>OPTIONAL. A filter to add to the LDAP search.</Line>
                     </Comment>
                 </Config>
-                <Config Label="LDAP Search Bind Username." Variable="LDAP_BIND_USER" Type="string">
+                <Config Label="Authenticate When Connecting to LDAP" Variable="LDAP_BIND" Type="boolean" IsDefinition="false">
+                    <Default>false</Default>
                     <Comment>
-                        <Line>OPTIONAL. Before authenticating the user, we first check if the username exists.</Line>
-                        <Line>If your LDAP server does not allow anonymous connections, specific a username here.</Line>
-                        <Line>Leave this blank to connect anonymously.</Line>
+                        <Line>Before authenticating the user, we first check if the username exists.</Line>
+                        <Line>If your LDAP server does not allow anonymous searches, you will need to specify a username and password to bind as.</Line>
                     </Comment>
-                </Config>
-                <Config Label="LDAP Search Bind Password" Variable="LDAP_BIND_PASSWORD" Type="string">
-                    <Comment>
-                        <Line>OPTIONAL. Before authenticating the user, we first check if the username exists.</Line>
-                        <Line>If your LDAP server does not allow anonymous connections, specific a password here.</Line>
-                        <Line>Leave this blank to connect anonymously.</Line>
-                    </Comment>
+                    <Dependants>
+                        <Config Label="LDAP Username" Variable="LDAP_BIND_USER" Type="string" Required="true">
+                            <Comment>
+                                <Line Hidden="true">Before authenticating the user, we first check if the username exists.</Line>
+                                <Line Hidden="true">If your LDAP server does not allow anonymous connections, specific a username here.</Line>
+                                <Line Hidden="true">Leave this blank to connect anonymously.</Line>
+                            </Comment>
+                        </Config>
+                        <Config Label="LDAP Password" Variable="LDAP_BIND_PASSWORD" Type="string" Required="true">
+                            <Comment>
+                                <Line Hidden="true">If you specified LDAP_BIND_USER you must also enter a password here.</Line>
+                            </Comment>
+                        </Config>
+                    </Dependants>
                 </Config>
                 <!--<Config Label="Accounts to Add as Main Admins" Variable="LDAP_MAINADMINS" Type="multiline" IsDefinition="false">
                     <Example>bsmith;ajackson</Example>

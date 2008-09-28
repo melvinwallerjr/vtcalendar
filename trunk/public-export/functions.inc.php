@@ -506,61 +506,61 @@ function createRepeatString($startdate, $enddate, $startyear, $startmonth, $star
 
 			$ReturnString = $ReturnString. ' '.lang('of_the_month_every').' ';
 
-			if ($interval==1) { $ReturnString = $ReturnString. lang("month"); }
-			elseif ($interval==2) { $ReturnString = $ReturnString. lang("other_month"); }
+			if ($interval==1) { $ReturnString = $ReturnString. lang('month'); }
+			elseif ($interval==2) { $ReturnString = $ReturnString. lang('other_month'); }
 			elseif ($interval>=3 && $interval<=6) { $ReturnString = $ReturnString. $interval.' '.lang('months'); }
-			elseif ($interval==12) { $ReturnString = $ReturnString. lang("year"); }
+			elseif ($interval==12) { $ReturnString = $ReturnString. lang('year'); }
 
 		} // end: if ($frequency=="MP")
 		else {
-			if ($interval==1) { $ReturnString = $ReturnString. ucfirst(lang("every")); }
-			elseif ($interval==2) { $ReturnString = $ReturnString. ucfirst(lang("every_other")); }
-			elseif ($interval==3) { $ReturnString = $ReturnString. ucfirst(lang("every_third")); }
-			elseif ($interval==4) { $ReturnString = $ReturnString. ucfirst(lang("every_fourth")); }
+			if ($interval==1) { $ReturnString = $ReturnString. ucfirst(lang('every')); }
+			elseif ($interval==2) { $ReturnString = $ReturnString. ucfirst(lang('every_other')); }
+			elseif ($interval==3) { $ReturnString = $ReturnString. ucfirst(lang('every_third')); }
+			elseif ($interval==4) { $ReturnString = $ReturnString. ucfirst(lang('every_fourth')); }
 			$ReturnString = $ReturnString. ' ';
 
-			if ($frequency=="D") { $ReturnString = $ReturnString. strtolower(lang("day")); }
-			elseif ($frequency=="M") { $ReturnString = $ReturnString. strtolower(lang("month")); }
-			elseif ($frequency=="Y") { $ReturnString = $ReturnString. strtolower(lang("year")); }
+			if ($frequency=="D") { $ReturnString = $ReturnString. strtolower(lang('day')); }
+			elseif ($frequency=="M") { $ReturnString = $ReturnString. strtolower(lang('month')); }
+			elseif ($frequency=="Y") { $ReturnString = $ReturnString. strtolower(lang('year')); }
 			elseif ($frequency=="W") {
 				$ReturnString = $ReturnString. " ";
-				if (empty($frequencymodifier)) { $ReturnString = $ReturnString. strtolower(lang("week")); }
+				if (empty($frequencymodifier)) { $ReturnString = $ReturnString. strtolower(lang('week')); }
 				else {
 					$frequencymodifier = " ".$frequencymodifier;
 					$comma = 0;
 					if (strpos($frequencymodifier,"SU")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("sun");
+						$ReturnString = $ReturnString. lang('sun');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"MO")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("mon");
+						$ReturnString = $ReturnString. lang('mon');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"TU")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("tue");
+						$ReturnString = $ReturnString. lang('tue');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"WE")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("wed");
+						$ReturnString = $ReturnString. lang('wed');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"TH")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("thu");
+						$ReturnString = $ReturnString. lang('thu');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"FR")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("fri");
+						$ReturnString = $ReturnString. lang('fri');
 									$comma=1;
 					}
 					if (strpos($frequencymodifier,"SA")!=0) {
 						if ($comma) { $ReturnString = $ReturnString. ", "; }
-						$ReturnString = $ReturnString. lang("sat");
+						$ReturnString = $ReturnString. lang('sat');
 									$comma=1;
 					}
 				} // end: else: if (empty($frequencymodifier))

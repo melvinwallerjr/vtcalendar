@@ -269,62 +269,62 @@ function printrecurrence($startyear,$startmonth,$startday,$repeatdef) {
 
 			echo ' ',lang('of_the_month_every'),' ';
 
-			if ($interval==1) { echo lang("month"); }
-			elseif ($interval==2) { echo lang("other_month"); }
+			if ($interval==1) { echo lang('month'); }
+			elseif ($interval==2) { echo lang('other_month'); }
 			elseif ($interval>=3 && $interval<=6) { echo $interval,' ',lang('months'); }
-			elseif ($interval==12) { echo lang("year"); }
+			elseif ($interval==12) { echo lang('year'); }
 
 		} // end: if ($frequency=="MP")
 		else {
-			if ($interval==1) { echo lang("every"); }
-			elseif ($interval==2) { echo lang("every_other"); }
-			elseif ($interval==3) { echo lang("every_third"); }
-			elseif ($interval==4) { echo lang("every_fourth"); }
+			if ($interval==1) { echo lang('every'); }
+			elseif ($interval==2) { echo lang('every_other'); }
+			elseif ($interval==3) { echo lang('every_third'); }
+			elseif ($interval==4) { echo lang('every_fourth'); }
 			echo ' ';
 
-			if ($frequency=="D") { echo lang("day"); }
-			elseif ($frequency=="M") { echo lang("month"); }
-			elseif ($frequency=="Y") { echo lang("year"); }
+			if ($frequency=="D") { echo lang('day'); }
+			elseif ($frequency=="M") { echo lang('month'); }
+			elseif ($frequency=="Y") { echo lang('year'); }
 			elseif ($frequency=="W") {
 				echo " ";
-				if (empty($frequencymodifier)) { echo lang("week"); }
+				if (empty($frequencymodifier)) { echo lang('week'); }
 				else {
 					$frequencymodifier = " ".$frequencymodifier;
 
 		$comma = 0;
 		if (strpos($frequencymodifier,"SU")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("sunday");
+			echo lang('sunday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"MO")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("monday");
+			echo lang('monday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"TU")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("tuesday");
+			echo lang('tuesday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"WE")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("wednesday");
+			echo lang('wednesday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"TH")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("thursday");
+			echo lang('thursday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"FR")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("friday");
+			echo lang('friday');
 						$comma=1;
 		}
 		if (strpos($frequencymodifier,"SA")!=0) {
 			if ($comma) { echo ", "; }
-			echo lang("saturday");
+			echo lang('saturday');
 						$comma=1;
 		}
 	} // end: else: if (empty($frequencymodifier))

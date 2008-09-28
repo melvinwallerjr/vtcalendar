@@ -22,6 +22,7 @@ if (file_exists(CONFIGFILENAME)) {
 
 require_once("DB.php");
 require_once("config-code.php");
+require_once("../functions-io.inc.php");
 require_once("../functions-db-generic.inc.php");
 require_once("config-functions.inc.php");
 

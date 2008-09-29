@@ -12,9 +12,6 @@ E exclude
 YYYYMMDD start date
 YYYYMMDD end date
 
-//HHMM start time
-//HHMM end time
-
 (if both are the same, this repeating instance is considered a single day and non-repeating. no other data is read)
 
 E every
@@ -26,7 +23,7 @@ F every fourth
 2 second
 3 third
 4 fourth
-5 fifth
+//5 fifth
 0 last
 
 
@@ -43,9 +40,9 @@ E wednesday
 H thursday
 F friday
 A saturday
-------
-X odd day
-V even day
+//------
+//X odd day
+//V even day
 
 
 1 month

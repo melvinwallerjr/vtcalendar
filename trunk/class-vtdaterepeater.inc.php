@@ -36,6 +36,99 @@ class vtDateRepeater {
 		echo "</pre>";
 	}
 	
+	function &_parseRepeat($repeatString) {
+		$split = explode(" ", $repeatString);
+		$repeat = array();
+		
+		// Fail if the string does not have at least two parts.
+		if (count($split) < 2) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Assign the first two parts to the repeat array.
+		$repeat['filter'] = $split[0];
+		$repeat['start'] = $split[1];
+		
+		// Fail if the first item in the repeat is not an I or an E (include or exclude).
+		if (count($split) < 1 || !preg_match("/^[IE]$/", $repeat['filter'])) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Fail if the start date is invalid.
+		if (count($split) < 2 || !preg_match("/^[0-9]{8}$/", $repeat['start']) ||
+			!checkdate(substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2), substr($repeat['start'], 0, 4))) {
+			$repeat = false;
+			return $repeat;
+		}
+		else {
+			$repeat['startDate'] = new vtDate(substr($repeat['start'], 0, 4), substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2));
+		}
+		
+		// If the date is the last part of the repeat string,
+		// then it specifices a single day and not a repeat.
+		if (count($split) == 2) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Fail if the string does not have at least five parts.
+		if (count($split) < 5) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Assign the next two parts to the repeat array.
+		$repeat['end'] = $split[2];
+		$repeat['mode'] = $split[3];
+		$repeat['interval'] = $split[4];
+		
+		// Validate the ending date for the repeat.
+		if (count($split) < 3 || !preg_match("/^[0-9]{8}$/", $repeat['end']) ||
+			!checkdate(substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2), substr($repeat['end'], 0, 4))) {
+			$repeat = false;
+			return $repeat;
+		}
+		else {
+			$repeat['endDate'] = new vtDate(substr($repeat['end'], 0, 4), substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2));
+		}
+		
+		// If the fourth item is a number, then the repeat must have
+		// at least 6 items and the last item must be a number from 1-12.
+		// The fifth item only allows 'weekdays' and the individual weekdays themselves.
+		if (preg_match("/^[12340]$/", $repeat['mode'])) {
+			
+			// Fail if the string does not have at least 6 parts.
+			if (count($split) < 6) {
+				$repeat = false;
+				return $repeat;
+			}
+			
+			$repeat['months'] = $split[5];
+			if (count($split) < 6 || !preg_match("/^([1-9]|(10|11|12))$/", $repeat['months']) || !preg_match("/^[KSOTEHFA]$/", $repeat['interval'])) {
+				$repeat = false;
+				return $repeat;
+			}
+		}
+		
+		// If the fourth item is a character, then make sure the fifth item has a valid value.
+		elseif (preg_match("/^[EOTF]$/", $repeat['mode'])) {
+			if (!preg_match("/^[DWMYKSOTEHFA]$/", $repeat['interval'])) {
+				$repeat = false;
+				return $repeat;
+			}
+		}
+		
+		// Fail if the fourth item is invalid.
+		else {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		return $repeat;
+	}
+	
 	function _moveToNextDate($repeatIndex, &$dateMarker) {
 		$listItem =& $this->_repeatList[$repeatIndex];
 		
@@ -167,159 +260,6 @@ class vtDateRepeater {
 		}
 		
 		return $days + ((abs($increment) - 1) * 7);
-	}
-	
-	function &_parseRepeat($repeatString) {
-		$split = explode(" ", $repeatString);
-		$repeat = array();
-		
-		// Fail if the string does not have at least two parts.
-		if (count($split) < 2) {
-			$repeat = false;
-			return $repeat;
-		}
-		
-		// Assign the first two parts to the repeat array.
-		$repeat['filter'] = $split[0];
-		$repeat['start'] = $split[1];
-		
-		// Fail if the first item in the repeat is not an I or an E (include or exclude).
-		if (count($split) < 1 || !preg_match("/^[IE]$/", $repeat['filter'])) {
-			$repeat = false;
-			return $repeat;
-		}
-		
-		// Fail if the start date is invalid.
-		if (count($split) < 2 || !preg_match("/^[0-9]{8}$/", $repeat['start']) ||
-			!checkdate(substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2), substr($repeat['start'], 0, 4))) {
-			$repeat = false;
-			return $repeat;
-		}
-		else {
-			$repeat['startDate'] = new vtDate(substr($repeat['start'], 0, 4), substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2));
-		}
-		
-		// If the date is the last part of the repeat string,
-		// then it specifices a single day and not a repeat.
-		if (count($split) == 2) {
-			$repeat = false;
-			return $repeat;
-		}
-		
-		// Fail if the string does not have at least five parts.
-		if (count($split) < 5) {
-			$repeat = false;
-			return $repeat;
-		}
-		
-		// Assign the next two parts to the repeat array.
-		$repeat['end'] = $split[2];
-		$repeat['mode'] = $split[3];
-		$repeat['interval'] = $split[4];
-		
-		// Validate the ending date for the repeat.
-		if (count($split) < 3 || !preg_match("/^[0-9]{8}$/", $repeat['end']) ||
-			!checkdate(substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2), substr($repeat['end'], 0, 4))) {
-			$repeat = false;
-			return $repeat;
-		}
-		else {
-			$repeat['endDate'] = new vtDate(substr($repeat['end'], 0, 4), substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2));
-		}
-		
-		// If the fourth item is a number, then the repeat must have
-		// at least 6 items and the last item must be a number from 1-12.
-		// The fifth item only allows 'weekdays' and the individual weekdays themselves.
-		if (preg_match("/^[12340]$/", $repeat['mode'])) {
-			
-			// Fail if the string does not have at least 6 parts.
-			if (count($split) < 6) {
-				$repeat = false;
-				return $repeat;
-			}
-			
-			$repeat['months'] = $split[5];
-			if (count($split) < 6 || !preg_match("/^([1-9]|(10|11|12))$/", $repeat['months']) || !preg_match("/^[KSOTEHFA]$/", $repeat['interval'])) {
-				$repeat = false;
-				return $repeat;
-			}
-		}
-		
-		// If the fourth item is a character, then make sure the fifth item has a valid value.
-		elseif (preg_match("/^[EOTF]$/", $repeat['mode'])) {
-			if (!preg_match("/^[DWMYKSOTEHFA]$/", $repeat['interval'])) {
-				$repeat = false;
-				return $repeat;
-			}
-		}
-		
-		// Fail if the fourth item is invalid.
-		else {
-			$repeat = false;
-			return $repeat;
-		}
-		
-		return $repeat;
-	}
-	
-	function _isValidRepeat(&$repeat) {
-		// Repeats must have at least three items.
-		if (count($repeat) < 3) {
-			return false;
-		}
-		
-		// Make sure that:
-		// 1. The first item in the repeat is an I or an E (include or exclude).
-		// 2. The first and second item are 8 digits.
-		if (!preg_match("/^[IE]$/", $repeat[0]) || !preg_match("/^[0-9]{8}$/", $repeat[1]) || !preg_match("/^[0-9]{8}$/", $repeat[2])) {
-			return false;
-		}
-		
-		// Fail if either of the two dates are not valid Gregorian dates.
-		if (!checkdate(substr($repeat[1], 4, 2), substr($repeat[1], 6, 2), substr($repeat[1], 0, 4)) ||
-			!checkdate(substr($repeat[2], 4, 2), substr($repeat[2], 6, 2), substr($repeat[2], 0, 4))) {
-			return false;
-		}
-		
-		// Fail if the end date is before the start date.
-		if ($repeat[1] > $repeat[2]) {
-			return false;
-		}
-		
-		// The rest of the repeat does not matter if the dates match.
-		// This means a single day is included/excluded.
-		if ($repeat[1] == $repeat[2]) {
-			return true;
-		}
-		
-		// Repeats that do not have matching dates need at least 5 items.
-		if (count($repeat) < 5) {
-			return false;
-		}
-		
-		// If the fourth item is a number, then the repeat must have
-		// at least 6 items and the last item must be a number from 1-12.
-		// The fifth item only allows 'weekdays' and the individual weekdays themselves.
-		if (preg_match("/^[12340]$/", $repeat[3])) {
-			if (count($repeat) < 6 || !preg_match("/^([1-9]|(10|11|12))$/", $repeat[5]) || !preg_match("/^[KSOTEHFA]$/", $repeat[4])) {
-				return false;
-			}
-		}
-		
-		// If the fourth item is a character, then make sure the fifth item has a valid value.
-		elseif (preg_match("/^[EOTF]$/", $repeat[3])) {
-			if (!preg_match("/^[DWMYKSOTEHFA]$/", $repeat[4])) {
-				return false;
-			}
-		}
-		
-		// Fail if the fourth item is invalid.
-		else {
-			return false;
-		}
-		
-		// Return true since no errors were found.
-		return true;
 	}
 }
 ?>

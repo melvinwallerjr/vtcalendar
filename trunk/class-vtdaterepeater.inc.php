@@ -3,9 +3,14 @@ require_once("languages/en.inc.php");
 require_once("functions.inc.php");
 require_once("class-vtdate.inc.php");
 
-$repeater = new vtDateRepeater("E 20090101 20090201 E W"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
+?><pre><?php
+
+$repeater = new vtDateRepeater("E 20090101 20090201 0 S 1"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
 $date = new vtDate(2008, 1, 1);
 $repeater->_moveToNextDate(0, $date);
+echo "New Date: " . $date->format("%c");
+
+?></pre><?php
 
 class vtDateRepeater {
 	var $_repeatList;
@@ -19,20 +24,10 @@ class vtDateRepeater {
 		
 		// Process all the repeat strings
 		for ($i = 0; $i < count($repeatMixed); $i++) {
-		
-			if (!is_array($repeatMixed[$i])) {
-				$repeatMixed[$i] = explode(" ", $repeatMixed[$i]);
-			}
 			
-			// Validate all the repeats
-			if ($this->_isValidRepeat($repeatMixed[$i])) {
-				
-				// Assign the dates as vtDates for easier processing
-				//$repeatMixed[$i][1] = new vtDate(substr($repeatMixed[$i][1], 0, 4), substr($repeatMixed[$i][1], 4, 2), substr($repeatMixed[$i][1], 6, 2));
-				//$repeatMixed[$i][2] = new vtDate(substr($repeatMixed[$i][2], 0, 4), substr($repeatMixed[$i][2], 4, 2), substr($repeatMixed[$i][2], 6, 2));
-				
-				// Add the repeat to the list
-				$this->_repeatList[count($this->_repeatList)] = $repeatMixed[$i];
+			// Insert valid repeat strings into the list.
+			if (($newRepeat =& $this->_parseRepeat($repeatMixed[$i])) !== false) {
+				$this->_repeatList[] =& $newRepeat;
 			}
 		}
 		
@@ -44,25 +39,28 @@ class vtDateRepeater {
 	function _moveToNextDate($repeatIndex, &$dateMarker) {
 		$listItem =& $this->_repeatList[$repeatIndex];
 		
+		// Loopups to convert codes to integers.
 		$multipliers = array('E'=>1, 'O'=>2, 'T'=>3, 'F'=>4);
 		$intervalsDOW = array('S'=>0, 'O'=>1, 'T'=>2, 'E'=>3, 'H'=>4, 'F'=>5, 'A'=>6);
 		
 		// TODO: Remove these
-		$multiplierNames = array('E'=>'Every', 'O'=>'Every other', 'T'=>'Every third', 'F'=>'Every fourth');
+		/*$multiplierNames = array('E'=>'Every', 'O'=>'Every other', 'T'=>'Every third', 'F'=>'Every fourth');
 		$intervals = array(
 			'D'=>'day', 'W'=>'week', 'M'=>'month', 'Y'=>'year', 'K'=>'weekday',
-			'S'=>'sunday', 'O'=>'monday', 'T'=>'tuesday', 'E'=>'wednesday', 'H'=>'thursday', 'F'=>'friday', 'A'=>'saturday');
+			'S'=>'sunday', 'O'=>'monday', 'T'=>'tuesday', 'E'=>'wednesday', 'H'=>'thursday', 'F'=>'friday', 'A'=>'saturday');*/
 		
-		if (is_numeric($listItem[3])) {
-			if ($listItem[3] == 0) {
+		// If the fourth field is numeric then the repeat is either
+		// an ordinal (i.e. 'first') or the 'last' X of the month.
+		if (is_numeric($listItem['mode'])) {
+			if ($listItem['mode'] == 0) {
 				$dateMarker->setDay(1);
-				$dateMarker->add(($listItem[5]+1) . " month");
+				$dateMarker->add(($listItem['months']+1) . " month");
 				
-				if ($listItem[4] == "K") {
+				if ($listItem['interval'] == "K") {
 					$days = $this->_determineDaysForWeekdayIncrement($dateMarker->getDOW(), -1) * -1;
 				}
 				else {
-					$intervalDOW = $intervalsDOW[$listItem[4]];
+					$intervalDOW = $intervalsDOW[$listItem['interval']];
 					$days = $this->_determineDaysForDOWIncrement($dateMarker->getDOW(), $intervalDOW, -1) * -1;
 				}
 				
@@ -70,29 +68,31 @@ class vtDateRepeater {
 			}
 			else {
 				$dateMarker->setDay(1);
-				$dateMarker->add($listItem[5] . " month");
+				$dateMarker->add($listItem['months'] . " month");
 				
-				if ($listItem[4] == "K") {
+				if ($listItem['interval'] == "K") {
 					$days = $this->_determineDaysForWeekdayIncrement($dateMarker->getDOW(), 1);
 				}
 				else {
-					$intervalDOW = $intervalsDOW[$listItem[4]];
+					$intervalDOW = $intervalsDOW[$listItem['interval']];
 					$days = $this->_determineDaysForDOWIncrement($dateMarker->getDOW(), $intervalDOW, 1);
 				}
 				
 				$dateMarker->add($days . " day");
 			}
 		}
+		
+		// Otherwise, the repeat is a normal repeat (e.g. every 2 days).
 		else {
-			switch ($listItem[4]) {
+			switch ($listItem['interval']) {
 				// Increment by X number of days
 				case 'D':
-					$dateMarker->add($multipliers[$listItem[3]] . " day");
+					$dateMarker->add($multipliers[$listItem['mode']] . " day");
 					break;
 				
 				// Increment by X number of weeks
 				case 'W':
-					$dateMarker->add((7 * $multipliers[$listItem[3]]) . " day");
+					$dateMarker->add((7 * $multipliers[$listItem['mode']]) . " day");
 					break;
 					
 				// Increment X number of months.
@@ -111,16 +111,14 @@ class vtDateRepeater {
 				
 				// Increment X number of weekdays.
 				case 'K':
-					$dateMarker->add($days = $this->_determineDaysForWeekdayIncrement($dateMarker->getDOW(), $multipliers[$listItem[3]]) . " day");
+					$dateMarker->add($days = $this->_determineDaysForWeekdayIncrement($dateMarker->getDOW(), $multipliers[$listItem['mode']]) . " day");
 					break;
 				
 				// Increment X number of a specific day of the week.
 				default:
-					$dateMarker->add($this->_determineDaysForDOWIncrement($dateMarker->getDOW(), $intervalsDOW[$listItem[4]], $multipliers[$listItem[3]]) . " day");
+					$dateMarker->add($this->_determineDaysForDOWIncrement($dateMarker->getDOW(), $intervalsDOW[$listItem['interval']], $multipliers[$listItem['mode']]) . " day");
 			}
 		}
-		
-		echo "New Date: " . $dateMarker->format("%c");
 		
 		return true;
 	}
@@ -169,6 +167,99 @@ class vtDateRepeater {
 		}
 		
 		return $days + ((abs($increment) - 1) * 7);
+	}
+	
+	function &_parseRepeat($repeatString) {
+		$split = explode(" ", $repeatString);
+		$repeat = array();
+		
+		// Fail if the string does not have at least two parts.
+		if (count($split) < 2) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Assign the first two parts to the repeat array.
+		$repeat['filter'] = $split[0];
+		$repeat['start'] = $split[1];
+		
+		// Fail if the first item in the repeat is not an I or an E (include or exclude).
+		if (count($split) < 1 || !preg_match("/^[IE]$/", $repeat['filter'])) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Fail if the start date is invalid.
+		if (count($split) < 2 || !preg_match("/^[0-9]{8}$/", $repeat['start']) ||
+			!checkdate(substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2), substr($repeat['start'], 0, 4))) {
+			$repeat = false;
+			return $repeat;
+		}
+		else {
+			$repeat['startDate'] = new vtDate(substr($repeat['start'], 0, 4), substr($repeat['start'], 4, 2), substr($repeat['start'], 6, 2));
+		}
+		
+		// If the date is the last part of the repeat string,
+		// then it specifices a single day and not a repeat.
+		if (count($split) == 2) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Fail if the string does not have at least five parts.
+		if (count($split) < 5) {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		// Assign the next two parts to the repeat array.
+		$repeat['end'] = $split[2];
+		$repeat['mode'] = $split[3];
+		$repeat['interval'] = $split[4];
+		
+		// Validate the ending date for the repeat.
+		if (count($split) < 3 || !preg_match("/^[0-9]{8}$/", $repeat['end']) ||
+			!checkdate(substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2), substr($repeat['end'], 0, 4))) {
+			$repeat = false;
+			return $repeat;
+		}
+		else {
+			$repeat['endDate'] = new vtDate(substr($repeat['end'], 0, 4), substr($repeat['end'], 4, 2), substr($repeat['end'], 6, 2));
+		}
+		
+		// If the fourth item is a number, then the repeat must have
+		// at least 6 items and the last item must be a number from 1-12.
+		// The fifth item only allows 'weekdays' and the individual weekdays themselves.
+		if (preg_match("/^[12340]$/", $repeat['mode'])) {
+			
+			// Fail if the string does not have at least 6 parts.
+			if (count($split) < 6) {
+				$repeat = false;
+				return $repeat;
+			}
+			
+			$repeat['months'] = $split[5];
+			if (count($split) < 6 || !preg_match("/^([1-9]|(10|11|12))$/", $repeat['months']) || !preg_match("/^[KSOTEHFA]$/", $repeat['interval'])) {
+				$repeat = false;
+				return $repeat;
+			}
+		}
+		
+		// If the fourth item is a character, then make sure the fifth item has a valid value.
+		elseif (preg_match("/^[EOTF]$/", $repeat['mode'])) {
+			if (!preg_match("/^[DWMYKSOTEHFA]$/", $repeat['interval'])) {
+				$repeat = false;
+				return $repeat;
+			}
+		}
+		
+		// Fail if the fourth item is invalid.
+		else {
+			$repeat = false;
+			return $repeat;
+		}
+		
+		return $repeat;
 	}
 	
 	function _isValidRepeat(&$repeat) {

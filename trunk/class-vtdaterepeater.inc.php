@@ -7,7 +7,8 @@ require_once("class-vtdate.inc.php");
 
 $repeater = new vtDateRepeater("E 20090101 20090201 0 S 1"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
 $date = new vtDate(2008, 1, 1);
-$repeater->_moveToNextDate(0, $date);
+$repeater->reset();
+//$repeater->_moveToNextDate(0, $date);
 echo "New Date: " . $date->format("%c");
 
 ?></pre><?php
@@ -41,13 +42,29 @@ class vtDateRepeater {
 			
 			// Insert valid repeat strings into the list.
 			if (($newRepeat =& $this->_parseRepeat($repeatMixed[$i])) !== false) {
-				$this->_repeatList[] =& $newRepeat;
+				$this->_repeatList[count($this->_repeatList)] =& $newRepeat;
 			}
 		}
 		
-		echo "<pre>";
+		echo '<pre style="border: 1px solid #666666;">$this->_repeatList:<br>';
 		var_dump($this->_repeatList);
 		echo "</pre>";
+	}
+	
+	function moveToNextDate(&$currentDate) {
+		if (!$currentDate instanceof vtDate) {
+			
+		}
+	}
+	
+	/**
+     * Reset the vtDateRepeater so that the next call to moveToNextDate() will start from the beginning.
+     */
+	function reset() {
+		$list = $this->_repeatList;
+		for ($i = 0; $i < count($this->_repeatList); $i++) {
+			unset($this->_repeatList[$i]['marker']); // =& $this->_repeatList[$i]['startDate']->copy();
+		}
 	}
 	
 	/**
@@ -150,6 +167,7 @@ class vtDateRepeater {
 	
 	/**
 	 * Move the passed date to the next date in the repeating set.
+	 * This is used internally by moveToNextDate() to check an individual item in the repeat list.
 	 * @param int $repeatIndex
 	 * @param vtDate $dateMarker The 
 	 * @access private

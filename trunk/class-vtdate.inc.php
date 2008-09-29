@@ -1,16 +1,25 @@
 <?php
-
 require_once("languages/en.inc.php");
 require_once("functions.inc.php");
 
-//echo "<pre>\n";
+echo "<pre>\n";
 
 $dowstart = 0;
 
-$firstDay = new vtDate(2008, 1, 1);
-$lastDay = new vtDate(2008, 1, $firstDay->getDaysInMonth());
+//echo date("c", strtotime("2 month -2 day", mktime(0, 0, 0, 1, 1, 2008)));
 
+//echo vtDateRepeater::_determineDaysForDOWIncrement(0, 1, -2);
+
+// Determine the first and last day of the month
+$firstDay = new vtDate(2008, 1, 1);
+$lastDay = new vtDate($firstDay->getYear(), $firstDay->getMonth(), $firstDay->getDaysInMonth());
+
+// Determine the first day displayed on the calendar.
+// This may be part of the last or current month.
 $firstDisplayDay =& $firstDay->getWeekStartDate($dowstart);
+
+// Determine the last day displayed on the calendar.
+// This may be part of the current or next month.
 $lastDisplayDay =& $lastDay->getWeekEndDate($dowstart);
 
 $displayDays = $lastDisplayDay->getDayDiff($firstDisplayDay);
@@ -19,7 +28,7 @@ $displayDays = $lastDisplayDay->getDayDiff($firstDisplayDay);
 //echo $lastDisplayDay->getDateStamp() . "\n";
 //echo $displayDays . "\n";
 
-//echo "</pre>";
+echo "</pre>";
 
 
 echo "<table border='1' cellpadding='2' cellspacing='0'>\n";
@@ -56,6 +65,7 @@ for ($i = 0; $i <= $displayDays; $i++) {
 
 echo "</table>\n";
 
+// Stores information about a date and provides several functions used by the VTCalendar.
 class vtDate {
 	var $_epoch;
 	var $_year;
@@ -67,6 +77,7 @@ class vtDate {
 	var $_dow;
 	var $_daysInMonth;
 	
+	// Create a new instance of vtDate
 	function vtDate($year_date_or_string, $month = null, $day = null, $hour = "0", $minute = "0", $second = "0", $isPM = false) {
 		
 		if ($month === null) {
@@ -94,16 +105,23 @@ class vtDate {
 	
 	// Get the parts of the date.
 	function _processEpoch() {
-		list($this->_year, $this->_month, $this->_day, $this->_hour, $this->_minute, $this->_second, $this->_dow, $this->_daysInMonth) = 
-			explode("\n", date("Y\nm\nd\nH\ni\ns\nw\nt", $this->_epoch));
+		$parts = explode("\n", date("Y\nm\nd\nH\ni\ns\nw\nt", $this->_epoch));
+		$this->_year = intval($parts[0]);
+		$this->_month = intval($parts[1]);
+		$this->_day = intval($parts[2]);
+		$this->_hour = intval($parts[3]);
+		$this->_minute = intval($parts[4]);
+		$this->_second = intval($parts[5]);
+		$this->_dow = intval($parts[6]);
+		$this->_daysInMonth = intval($parts[7]);
 	}
 	
 	function getDateStamp() {
-		return $this->_year . "-" . $this->_month . "-" . $this->_day;
+		return $this->_year . "-" . sprintf("%02s", $this->_month) . "-" . sprintf("%02s", $this->_day);
 	}
 	
 	function getTimeStamp() {
-		return $this->_hour . ":" . $this->_minute . ":" . $this->_second;
+		return sprintf("%02s", $this->_hour) . ":" . sprintf("%02s", $this->_minute) . ":" . sprintf("%02s", $this->_second);
 	}
 	
 	function getDateTimeStamp() {
@@ -150,14 +168,31 @@ class vtDate {
 		return $this->_daysInMonth;
 	}
 	
+	function setDate($year, $month, $day) {
+		if (!checkdate($month, $day, $year)) {
+			return false;
+		}
+		$this->_epoch = mktime($this->_hour, $this->_minute, $this->_second, $month, $day, $year);
+		$this->_processEpoch();
+		return true;
+	}
+	
+	function setYear($year) {
+		return $this->setDate($year, $this->_month, $this->_day);
+	}
+	
+	function setMonth($month) {
+		return $this->setDate($this->_year, $month, $this->_day);
+	}
+	
+	function setDay($day) {
+		return $this->setDate($this->_year, $this->_month, $day);
+	}
+	
 	// $change can be '+1 day', '-1 week', 'next thursday', etc. see strtotime()
 	function add($change) {
 		$this->_epoch = strtotime($change, $this->_epoch);
 		$this->_processEpoch();
-	}
-	
-	function addMonth($count) {
-		
 	}
 	
 	function &getWeekStartDate($firstDOW = 0) {

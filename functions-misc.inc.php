@@ -214,11 +214,14 @@ function setVar(&$var,$value,$type) {
 function lang($sTextKey) {
 	global $lang;
 	
-	if (isset($lang[$sTextKey])) {
-		return $lang[$sTextKey];
+	if (!isset($lang[$sTextKey])) {
+		require('languages/en.inc.php');
+	}
+	
+	if (!isset($lang[$sTextKey])) {
+		return "";
 	}
 	else {
-		require('languages/en.inc.php');
 		return $lang[$sTextKey];
 	}
 }

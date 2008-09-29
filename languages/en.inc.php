@@ -2,12 +2,15 @@
 $lang['encoding'] = 'ISO-8859-1';
 
 // ================================== public interface =====================================
+
 $lang['upcoming'] = 'Upcoming';
 $lang['day'] = 'Day';
 $lang['week'] = 'Week';
 $lang['month'] = 'Month';
 $lang['search'] = 'Search';
 $lang['update'] = 'Update';
+
+// Little Calendar
 $lang['lit_cal_sun'] = 'S';
 $lang['lit_cal_mon'] = 'M';
 $lang['lit_cal_tue'] = 'T';
@@ -17,12 +20,22 @@ $lang['lit_cal_fri'] = 'F';
 $lang['lit_cal_sat'] = 'S';
 $lang['lit_cal_week'] = 'Wk';
 
-$lang['jump_to'] = 'Jump to...';
+// Date Picker
+//$lang['jump_to'] = 'Jump to...';
 $lang['today_is'] = 'Today is: ';
+
+// Column Links
 $lang['subscribe_download'] = 'Subscribe &amp; Download';
 $lang['filter_events'] = 'Filter Events';
+
+// Filter
 $lang['showing_filtered_events'] = 'Showing only filtered events';
 
+
+$lang['AM'] = 'AM';
+$lang['am'] = 'am';
+$lang['PM'] = 'PM';
+$lang['pm'] = 'pm';
 
 $lang['monday'] = 'Monday';
 $lang['tuesday'] = 'Tuesday';
@@ -66,7 +79,7 @@ $lang['oct'] = 'Oct';
 $lang['nov'] = 'Nov';
 $lang['dec'] = 'Dec';
 
-//navprevious next in all views
+// Next/Previous Links in All Views
 $lang['previous_day'] = 'Previous Day';
 $lang['next_day'] = 'Next Day';
 $lang['previous_week'] = 'Previous Week';
@@ -74,7 +87,7 @@ $lang['next_week'] = 'Next Week';
 $lang['previous_month'] = 'Previous Month';
 $lang['next_month'] = 'Next Month';
 
-//day view
+// Day View
 $lang['upcoming_page_header'] = 'Upcoming Events';
 $lang['day_page_header'] = 'Day';
 $lang['no_events'] = 'No events were found for this day.';

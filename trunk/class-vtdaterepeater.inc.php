@@ -12,9 +12,23 @@ echo "New Date: " . $date->format("%c");
 
 ?></pre><?php
 
+/**
+ * Determines on which days an event repeats.
+ * @package VTCalendar
+ * @author Andre Mekkawi
+ */
 class vtDateRepeater {
+	/**
+	 * A list of repeat data sets.
+	 * @access private
+	 * @var array
+	 */
 	var $_repeatList;
 	
+	/**
+	 * Create a new vtDateRepeater object.
+	 * @return vtDateRepeater a vtDateRepeater object.
+	 */
 	function vtDateRepeater($repeatMixed = array()) {
 		$this->_repeatList = array();
 		
@@ -36,6 +50,11 @@ class vtDateRepeater {
 		echo "</pre>";
 	}
 	
+	/**
+	 * Parse and validate a repeat string, and build a repeat data set from it.
+	 * @access private
+	 * @return array the repeat data set
+	 */
 	function &_parseRepeat($repeatString) {
 		$split = explode(" ", $repeatString);
 		$repeat = array();
@@ -67,7 +86,7 @@ class vtDateRepeater {
 		}
 		
 		// If the date is the last part of the repeat string,
-		// then it specifices a single day and not a repeat.
+		// then it specifies a single day and not a repeat.
 		if (count($split) == 2) {
 			$repeat = false;
 			return $repeat;
@@ -129,10 +148,17 @@ class vtDateRepeater {
 		return $repeat;
 	}
 	
+	/**
+	 * Move the passed date to the next date in the repeating set.
+	 * @param int $repeatIndex
+	 * @param vtDate $dateMarker The 
+	 * @access private
+	 * @return boolean true if the next date could be determined; otherwise, false.
+	 */
 	function _moveToNextDate($repeatIndex, &$dateMarker) {
 		$listItem =& $this->_repeatList[$repeatIndex];
 		
-		// Loopups to convert codes to integers.
+		// Lookups to convert codes to integers.
 		$multipliers = array('E'=>1, 'O'=>2, 'T'=>3, 'F'=>4);
 		$intervalsDOW = array('S'=>0, 'O'=>1, 'T'=>2, 'E'=>3, 'H'=>4, 'F'=>5, 'A'=>6);
 		
@@ -216,13 +242,25 @@ class vtDateRepeater {
 		return true;
 	}
 	
+	/**
+	 * Determine the number of days that would need to pass in order to go forward or backward N weekdays.
+	 * For example, if $startDOW is 6 (Sun) and $increment is 1, 2 days would need to pass in order to get to the next weekday (Monday).
+	 * @param int $startDOW an integer from 0 (Sun) to 6 (Sat) that is the starting point from which the counting will begin.
+	 * @param int $increment a positive or negative interger (cannot be zero). If this number is negative then we will count backwards; otherwise we count forwards.
+	 * @access private
+	 * @return int number of days that would need to pass.
+	 */
 	function _determineDaysForWeekdayIncrement($startDOW, $increment) {
 		if ($increment == 0) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $increment cannot be zero.', E_USER_ERROR);
 		if ($startDOW < 0 || $startDOW > 6) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $startDOW out of range.', E_USER_ERROR);
 		
 		$days = 0;
 		$weekdays = 0;
+		
+		// Keep counting until we find the specified number of weekdays
 		while ($weekdays < abs($increment)) {
+			
+			// Loop the startDOW if it gets beyond 0-6.
 			if ($increment < 0) {
 				if ($startDOW == 0) $startDOW = 6;
 				else $startDOW--;
@@ -232,21 +270,35 @@ class vtDateRepeater {
 				else $startDOW++;
 			}
 			
+			// If the current DOW is a weekday, then increment the count.
 			if ($startDOW > 0 && $startDOW < 6)
 				$weekdays++;
 			
+			// Increment the count of days.
 			$days++;
 		}
 		return $days;
 	}
 	
+	/**
+     * Determine the number of days that would need to pass to go forward or backwards N number of the specified day of the week.
+	 * @param int $startDOW an integer from 0 (Sun) to 6 (Sat). This is the starting point from which the counting will begin.
+     * @param int $dow an integer from 0 (Sun) to 6 (Sat) that is the day of the week that we need to find N of.
+	 * @param int $increment a positive or negative interger (cannot be zero). If this number is negative then we will count backwards; otherwise we count forwards.
+     * @access private
+     * @return int the number of days that would need to pass.
+     */
 	function _determineDaysForDOWIncrement($startDOW, $dow, $increment) {
 		if ($increment == 0) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $increment cannot be zero.', E_USER_ERROR);
 		if ($startDOW < 0 || $startDOW > 6) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $startDOW out of range.', E_USER_ERROR);
 		if ($dow < 0 || $dow > 6) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $dow out of range.', E_USER_ERROR);
 		
 		$days = 0;
+		
+		// Keep counting until we are at the first occurrence of $dow
 		while ($startDOW != $dow) {
+		
+			// Loop the startDOW if it gets beyond 0-6.
 			if ($increment < 0) {
 				if ($startDOW == 0) $startDOW = 6;
 				else $startDOW--;
@@ -256,9 +308,12 @@ class vtDateRepeater {
 				else $startDOW++;
 			}
 			
+			// Increment the count of days.
 			$days++;
 		}
 		
+		// Add and return the number of weeks that would need to pass to meet the
+		// specified $increment (note: if the increment is 1 then nothing is added).
 		return $days + ((abs($increment) - 1) * 7);
 	}
 }

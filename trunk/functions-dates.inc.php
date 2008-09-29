@@ -1,40 +1,7 @@
 <?php
-// NOT USED
-function printeventdate(&$event) {
-	$event_timebegin_month = $event['timebegin_month'];
-	if (strlen($event_timebegin_month) == 1) { $event_timebegin_month = "0".$event_timebegin_month; }
-	$event_timebegin_day   = $event['timebegin_day'];
-	if (strlen($event_timebegin_day) == 1) { $event_timebegin_day = "0".$event_timebegin_day; }
-
-	return $event_timebegin_month.'/'.$event_timebegin_day.'/'.$event['timebegin_year'];
-}
-
-// NOT USED
-function printeventtime(&$event) {
-	$event_timebegin_hour = $event['timebegin_hour'];
-	if (strlen($event_timebegin_hour) == 1) { $event_timebegin_hour = "0".$event_timebegin_hour; }
-	$event_timebegin_min = $event['timebegin_min'];
-	if (strlen($event_timebegin_min) == 1) { $event_timebegin_min = "0".$event_timebegin_min; }
-	$event_timeend_hour = $event['timeend_hour'];
-	if (strlen($event_timeend_hour) == 1) { $event_timeend_hour = "0".$event_timeend_hour; }
-	$event_timeend_min = $event['timeend_min'];
-	if (strlen($event_timeend_min) == 1) { $event_timeend_min = "0".$event_timeend_min; }
-
-	return $event_timebegin_hour.':'.$event_timebegin_min.$event['timebegin_ampm'].'-'.$event_timeend_hour.':'.$event_timeend_min.$event['timeend_ampm'];
-}
-
-// NOTUSED
-/* converts a year/month-pair to a timestamp in the format "1999-09" */
-function yearmonth2timestamp($year,$month) {
-	$timestamp="$year-";
-	if (strlen($month)==1) { $timestamp.="0"; }
-	$timestamp.="$month";
-
-	return $timestamp;
-}
 
 // converts a year/month/day-pair to a timestamp in the format "1999-09-17"
-function yearmonthday2timestamp($year,$month,$day) {
+function yearmonthday2timestamp($year, $month, $day) {
 	$timestamp="$year-";
 	if (strlen($month)==1) { $timestamp.="0"; }
 	$timestamp.="$month";
@@ -45,7 +12,7 @@ function yearmonthday2timestamp($year,$month,$day) {
 }
 
 /* converts a date/time to a timestamp in the format "1999-09-16 18:57:00" */
-function datetime2timestamp($year,$month,$day,$hour,$min,$ampm) {
+function datetime2timestamp($year, $month, $day, $hour, $min, $ampm) {
 	global $use_ampm;
 	$timestamp="$year-";
 	if (strlen($month)==1) { $timestamp.="0$month-"; } else { $timestamp.="$month-"; }

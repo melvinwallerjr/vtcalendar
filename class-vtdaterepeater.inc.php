@@ -1,18 +1,4 @@
 <?php
-require_once("languages/en.inc.php");
-require_once("functions.inc.php");
-require_once("class-vtdate.inc.php");
-
-?><pre><?php
-
-$repeater = new vtDateRepeater("E 20090101 20090201 0 S 1"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
-$date = new vtDate(2008, 1, 1);
-$repeater->reset();
-//$repeater->_moveToNextDate(0, $date);
-echo "New Date: " . $date->format("%c");
-
-?></pre><?php
-
 /**
  * Determines on which days an event repeats.
  * @package VTCalendar
@@ -28,6 +14,7 @@ class vtDateRepeater {
 	
 	/**
 	 * Create a new vtDateRepeater object.
+	 * @param string|array $repeatMixed either a string or an array of strings
 	 * @return vtDateRepeater a vtDateRepeater object.
 	 */
 	function vtDateRepeater($repeatMixed = array()) {
@@ -45,10 +32,6 @@ class vtDateRepeater {
 				$this->_repeatList[count($this->_repeatList)] =& $newRepeat;
 			}
 		}
-		
-		echo '<pre style="border: 1px solid #666666;">$this->_repeatList:<br>';
-		var_dump($this->_repeatList);
-		echo "</pre>";
 	}
 	
 	function moveToNextDate(&$currentDate) {
@@ -275,6 +258,8 @@ class vtDateRepeater {
 		$days = 0;
 		$weekdays = 0;
 		
+		// TODO: Improve these to avoid while loop
+		
 		// Keep counting until we find the specified number of weekdays
 		while ($weekdays < abs($increment)) {
 			
@@ -312,6 +297,8 @@ class vtDateRepeater {
 		if ($dow < 0 || $dow > 6) trigger_error('vtDateRepeater->_determineDaysForWeekdayIncrement() $dow out of range.', E_USER_ERROR);
 		
 		$days = 0;
+		
+		// TODO: Improve these to avoid while loop
 		
 		// Keep counting until we are at the first occurrence of $dow
 		while ($startDOW != $dow) {

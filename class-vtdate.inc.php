@@ -10,11 +10,14 @@ class vtDate {
 	var $_second;
 	var $_dow;
 	var $_daysInMonth;
+	var $_isLeapYear;
 	
 	// Create a new instance of vtDate
-	function vtDate($year_date_or_string, $month = null, $day = null, $hour = "0", $minute = "0", $second = "0", $isPM = false) {
-		
-		if ($month === null) {
+	function vtDate($year_date_or_string = null, $month = null, $day = null, $hour = "0", $minute = "0", $second = "0", $isPM = false) {
+		if ($year_date_or_string === null) {
+			$this->_epoch = time();
+		}
+		elseif ($month === null) {
 			if (is_string($year_date_or_string)) {
 				if (($this->_epoch = strtotime($year_date_or_string)) === false) {
 					trigger_error('vtDate() year_date_or_string could not be parsed using strtotime.', E_USER_WARNING);
@@ -39,7 +42,7 @@ class vtDate {
 	
 	// Get the parts of the date.
 	function _processEpoch() {
-		$parts = explode("\n", date("Y\nm\nd\nH\ni\ns\nw\nt", $this->_epoch));
+		$parts = explode("\n", date("Y\nm\nd\nH\ni\ns\nw\nt\nL", $this->_epoch));
 		$this->_year = intval($parts[0]);
 		$this->_month = intval($parts[1]);
 		$this->_day = intval($parts[2]);
@@ -48,6 +51,7 @@ class vtDate {
 		$this->_second = intval($parts[5]);
 		$this->_dow = intval($parts[6]);
 		$this->_daysInMonth = intval($parts[7]);
+		$this->_isLeapYear = $parts[7] === "1";
 	}
 	
 	function getDateStamp() {
@@ -102,6 +106,10 @@ class vtDate {
 		return $this->_daysInMonth;
 	}
 	
+	function isLeapYear() {
+		return $this->_isLeapYear;
+	}
+	
 	function setDate($year, $month, $day) {
 		if (!checkdate($month, $day, $year)) {
 			return false;
@@ -154,11 +162,14 @@ class vtDate {
 	function &getWeekEndDate($firstDOW = 0) {
 		$lastDay =& $this->copy();
 		
-		if ($firstDOW > $this->_dow) {
-			$lastDay->add((($firstDOW - $this->_dow - 7) + 6) . " day");
+		if ($firstDOW > $lastDay->_dow) {
+			$lastDay->add((($firstDOW - $lastDay->_dow - 7) + 6) . " day");
 		}
-		elseif ($firstDOW < $this->_dow) {
-			$lastDay->add(((($this->_dow - $firstDOW) * -1) + 6) . " day");
+		elseif ($firstDOW < $lastDay->_dow) {
+			$lastDay->add(((($lastDay->_dow - $firstDOW) * -1) + 6) . " day");
+		}
+		else {
+			$lastDay->add("6 day");
 		}
 		
 		return $lastDay;

@@ -59,15 +59,16 @@ class vtDateRepeater {
 		$split = explode(" ", $repeatString);
 		$repeat = array();
 		
-		// Fail if the string does not have at least two parts.
-		if (count($split) < 2) {
+		// Fail if the string does not have at least three parts.
+		if (count($split) < 3) {
 			$repeat = false;
 			return $repeat;
 		}
 		
 		// Assign the first two parts to the repeat array.
 		$repeat['filter'] = $split[0];
-		$repeat['start'] = $split[1];
+		$repeat['daterange'] = $split[1];
+		$repeat['timerange'] = $split[2];
 		
 		// Fail if the first item in the repeat is not an I or an E (include or exclude).
 		if (count($split) < 1 || !preg_match("/^[IE]$/", $repeat['filter'])) {

@@ -135,7 +135,7 @@ function DrawCalendar($year, $month, $hideOtherMonths = false, $showDOW = true, 
 
 ?><pre><?php
 
-$repeater = new vtDateRepeater("E 20090101 20090201 0 S 1"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
+$repeater = new vtDateRepeater("E 20090101-20090201 0000-2459 0 S 1"); //;I 20080101 20090101 E D;I 20070101 20090101 1 S 12");
 $date = new vtDate(2008, 1, 1);
 $repeater->reset();
 //$repeater->_moveToNextDate(0, $date);

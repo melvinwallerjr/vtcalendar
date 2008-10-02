@@ -4,123 +4,123 @@ header("Cache-control: private");
 require_once('application.inc.php');
 require_once("icalendar.inc.php");
 
-	if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_GET['type'])) { setVar($type,$_GET['type'],'type'); } else { unset($type); }
-	if (isset($_GET['sponsortype'])) { setVar($sponsortype,$_GET['sponsortype'],'sponsortype'); } else { unset($sponsortype); }
-	if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
-	if (isset($_GET['timebegin'])) { setVar($timebegin,$_GET['timebegin'],'timebegin'); } else { unset($timebegin); }
-	if (isset($_GET['timebegin_year'])) { setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
-	if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
-	if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
-	if (isset($_GET['timeend'])) { setVar($timeend,$_GET['timeend'],'timeend'); } else { unset($timeend); }
-	if (isset($_GET['timeend_year'])) { setVar($timeend_year,$_GET['timeend_year'],'timeend_year'); } else { unset($timeend_year); }
-	if (isset($_GET['timeend_month'])) { setVar($timeend_month,$_GET['timeend_month'],'timeend_month'); } else { unset($timeend_month); }
-	if (isset($_GET['timeend_day'])) { setVar($timeend_day,$_GET['timeend_day'],'timeend_day'); } else { unset($timeend_day); }
-	if (isset($_GET['rangedays'])) { setVar($rangedays,$_GET['rangedays'],'rangedays'); } else { unset($rangedays); }
-	if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
+if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
+if (isset($_GET['type'])) { setVar($type,$_GET['type'],'type'); } else { unset($type); }
+if (isset($_GET['sponsortype'])) { setVar($sponsortype,$_GET['sponsortype'],'sponsortype'); } else { unset($sponsortype); }
+if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
+if (isset($_GET['timebegin'])) { setVar($timebegin,$_GET['timebegin'],'timebegin'); } else { unset($timebegin); }
+if (isset($_GET['timebegin_year'])) { setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
+if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
+if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
+if (isset($_GET['timeend'])) { setVar($timeend,$_GET['timeend'],'timeend'); } else { unset($timeend); }
+if (isset($_GET['timeend_year'])) { setVar($timeend_year,$_GET['timeend_year'],'timeend_year'); } else { unset($timeend_year); }
+if (isset($_GET['timeend_month'])) { setVar($timeend_month,$_GET['timeend_month'],'timeend_month'); } else { unset($timeend_month); }
+if (isset($_GET['timeend_day'])) { setVar($timeend_day,$_GET['timeend_day'],'timeend_day'); } else { unset($timeend_day); }
+if (isset($_GET['rangedays'])) { setVar($rangedays,$_GET['rangedays'],'rangedays'); } else { unset($rangedays); }
+if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
+if (isset($_GET['categoryidlist'])) { setVar($categoryidlist,$_GET['categoryidlist'],'categoryidlist'); } else { unset($categoryidlist); }
+if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
+if (isset($_GET['specificsponsor'])) { setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); } else { unset($specificsponsor); }
+		
+if (!viewauthorized()) { exit; }
 
-// TODO: input validation for "categoryidlist" parameter of the format e.g. "3,34,17"
-$categoryidlist = $_GET['categoryidlist'];
+if (isset($cancel)) {
+	redirect2URL("update.php");
+	exit;
+}
 
-	if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
-	if (isset($_GET['specificsponsor'])) { setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); } else { unset($specificsponsor); }
-			
-	if (!viewauthorized()) { exit; }
+if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
+$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
 
-	if (isset($cancel)) {
-		redirect2URL("update.php");
-		exit;
+// translates text into XML text, writing entity names like "&amp;" instead of "&"
+function text2xmltext($text) {
+	$text = htmlentities($text);
+	$text = ereg_replace("\'","&apos;",$text);
+	return $text;
+} // end: function txt2xmltxt
+
+// outputs everything depending in the params in XML format
+if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $type == "rss1_0" || $type == "vxml") ) {
+	// determine which sponsors to show
+	if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
+		// read sponsor name from DB
+		$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
+		$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+		$displayedsponsor = $s['name']; 
 	}
-	
-	if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
-	$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
+	elseif ($sponsortype == "specific") {
+		$displayedsponsor = $specificsponsor; 
+	}
+	else { // elseif ($sponsortype == "all")
+		$displayedsponsor = ""; 
+	}
 
-	// translates text into XML text, writing entity names like "&amp;" instead of "&"
-	function text2xmltext($text) {
-		$text = htmlentities($text);
-		$text = ereg_replace("\'","&apos;",$text);
-		return $text;
-	} // end: function txt2xmltxt
-
-	if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $type == "rss1_0" || $type == "vxml") ) { // outputs everything depending in the params in XML format
-		// determine which sponsors to show
-		if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
-			// read sponsor name from DB
-			$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
-			$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			$displayedsponsor = $s['name']; 
-		}
-		elseif ($sponsortype == "specific") {
-			$displayedsponsor = $specificsponsor; 
-		}
-		else { // elseif ($sponsortype == "all") {
-			$displayedsponsor = ""; 
-		}
-
-		// if the starting point not passed as a param then use defaults
-		if (isset($eventid)) {
-			$timebegin = "";
-			$timeend = "";
-		}
-		else {
-			// determine today's date
+	// if the starting point not passed as a param then use defaults
+	if (isset($eventid)) {
+		$timebegin = "";
+		$timeend = "";
+	}
+	else {
+		// determine today's date
 		$today = Decode_Date_US(date("m/d/Y"));
-			if ($timebegin == "now") {
+		if ($timebegin == "now") {
 			$timebegin = date("Y-m-d H:i:s");
 		}
 		elseif (!isset($timebegin) || $timebegin=="today") {
-				if (isset($timebegin_year)) { // details was called from the searchform
-					$timebegin = datetime2timestamp($timebegin_year,$timebegin_month,$timebegin_day,12,0,"am");
-				}
-				else { // details is called without any time limits, use "today" as default
-					$timebegin = datetime2timestamp($today['year'],$today['month'],$today['day'],12,0,"am");
-				}
+			if (isset($timebegin_year)) { // details was called from the searchform
+				$timebegin = datetime2timestamp($timebegin_year,$timebegin_month,$timebegin_day,12,0,"am");
 			}
-		
-			if (!isset($timeend) || $timeend=="today") {
-				if (isset($timeend_year)) {
-					$timeend = datetime2timestamp($timeend_year,$timeend_month,$timeend_day,11,59,"pm");
-				}
-				if (isset($timeend) && $timeend=="today") {
-					$timeend = datetime2timestamp($today['year'],$today['month'],$today['day'],11,59,"pm");
-				}
+			else { // details is called without any time limits, use "today" as default
+				$timebegin = datetime2timestamp($today['year'],$today['month'],$today['day'],12,0,"am");
 			}
-			if (isset($rangedays)) {
-				$timebeginrange = timestamp2datetime($timebegin);
-				$timeendrange = Add_Delta_Days($timebeginrange['month'],$timebeginrange['day'],$timebeginrange['year'],$rangedays);
-				$timeend = datetime2timestamp($timeendrange['year'],$timeendrange['month'],$timeendrange['day'],11,59,"pm");
+		}
+	
+		if (!isset($timeend) || $timeend=="today") {
+			if (isset($timeend_year)) {
+				$timeend = datetime2timestamp($timeend_year,$timeend_month,$timeend_day,11,59,"pm");
 			}
-		} // end: if (isset($eventid))
+			if (isset($timeend) && $timeend=="today") {
+				$timeend = datetime2timestamp($today['year'],$today['month'],$today['day'],11,59,"pm");
+			}
+		}
+		if (isset($rangedays)) {
+			$timebeginrange = timestamp2datetime($timebegin);
+			$timeendrange = Add_Delta_Days($timebeginrange['month'],$timebeginrange['day'],$timebeginrange['year'],$rangedays);
+			$timeend = datetime2timestamp($timeendrange['year'],$timeendrange['month'],$timeendrange['day'],11,59,"pm");
+		}
+	} // end: if (isset($eventid))
 
-		if (!isset($categoryid)) { $categoryid=0; }
-		if (!isset($keyword)) { $keyword=""; }
+	if (!isset($categoryid)) { $categoryid=0; }
+	if (!isset($keyword)) { $keyword=""; }
 
-		$query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
+	$query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 
-		if (!empty($eventid))  { $query.= " AND e.id='".sqlescape($eventid)."'"; }
-		if (!empty($timebegin)) { 
-				$date = substr($timebegin,0,10);
-			$query.= " AND (";
+	if (!empty($eventid))  { $query.= " AND e.id='".sqlescape($eventid)."'"; }
+	if (!empty($timebegin)) { 
+		$date = substr($timebegin,0,10);
+		$query.= " AND (";
 		// also get "all day" events
-//		$query.= "(e.timebegin = '".sqlescape($date)." 00:00:00' AND e.timeend = '".sqlescape($date)." 23:59:00')"; 
+		//$query.= "(e.timebegin = '".sqlescape($date)." 00:00:00' AND e.timeend = '".sqlescape($date)." 23:59:00')"; 
 		$query.= "(e.timebegin = '".sqlescape($date)." 00:00:00' AND e.wholedayevent = '1')"; 
 		$query.= " OR e.timebegin >= '".sqlescape($timebegin)."')"; 
 	}
-		if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }
-		if (!empty($displayedsponsor))  { $query.= " AND e.displayedsponsor LIKE '%".sqlescape($displayedsponsor)."%'"; }
+	if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }
+	if (!empty($displayedsponsor))  { $query.= " AND e.displayedsponsor LIKE '%".sqlescape($displayedsponsor)."%'"; }
 
 	if (!empty($categoryidlist)) {
-			$query.= " AND (";
-			$aCategoryIdList = explode(",",$categoryidlist);
-			$i=0;
-			foreach($aCategoryIdList as $sCategoryId) {
-					$i++;
+		$query.= " AND (";
+		$aCategoryIdList = explode(",",$categoryidlist);
+		$i=0;
+		foreach($aCategoryIdList as $sCategoryId) {
+			if (isValidInput($sCategoryId, 'categoryid')) {
+				$i++;
 				if ($i > 1) {
 					$query.= " OR "; 
 				}
 				$query.= "e.categoryid='".sqlescape($sCategoryId)."'"; 
 			}
-			$query.= ")";
+		}
+		$query.= ")";
 	}
 	else {
 			if (isset($categoryid) && $categoryid!=0) { 
@@ -128,46 +128,46 @@ $categoryidlist = $_GET['categoryidlist'];
 		}
 	}
 
-		if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') or (e.description LIKE '%".sqlescape($keyword)."%'))"; }
-		$query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
+	if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') or (e.description LIKE '%".sqlescape($keyword)."%'))"; }
+	$query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
+	
+	$result = DBQuery($query ); 
+
+	if ($type == "rss") {
+		echo '<?xml version="1.0"?>',"\n";
+		echo '<rss version="0.91">',"\n";
+		echo "<channel>\n";
+		echo "    <title>".$_SESSION['CALENDAR_TITLE']."</title>\n";
+		if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
+		else { $day = substr($timebegin,8,2); }
+		if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
+		else { $month = substr($timebegin,5,2); }
+		$date = $month."/".$day."/".substr($timebegin,0,4);
+		echo "    <description>".$date."</description>\n";
+
+		echo "    <link>".$calendarurl."?calendarid=".$_SESSION['CALENDAR_ID']."</link>\n\n";
+		for ($i=0; $i < $result->numRows(); $i++) {
+			$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			disassemble_timestamp($event);
+			echo "    <item>\n";
+			echo "      <title>",text2xmltext($event['title']),"</title>\n";
+			echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
+			echo "      <description>";
+			if ($event['wholedayevent']==0) {
+				echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']), ": ";
+			}
+			else {
+				echo "All day: ";
+			}
+			echo text2xmltext($event['category_name']),"</description>\n";
+			echo "    </item>\n";
+		} // end: for ($i=0; $i < $result->numRows(); $i++)
 		
-		$result = DBQuery($query ); 
-
-		if ($type == "rss") {
-			echo '<?xml version="1.0"?>',"\n";
-			echo '<rss version="0.91">',"\n";
-			echo "<channel>\n";
-			echo "    <title>".$_SESSION['CALENDAR_TITLE']."</title>\n";
-			if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
-			else { $day = substr($timebegin,8,2); }
-			if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
-			else { $month = substr($timebegin,5,2); }
-			$date = $month."/".$day."/".substr($timebegin,0,4);
-			echo "    <description>".$date."</description>\n";
-
-			echo "    <link>".$calendarurl."?calendarid=".$_SESSION['CALENDAR_ID']."</link>\n\n";
-			for ($i=0; $i < $result->numRows(); $i++) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-				disassemble_timestamp($event);
-				echo "    <item>\n";
-				echo "      <title>",text2xmltext($event['title']),"</title>\n";
-				echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
-				echo "      <description>";
-				if ($event['wholedayevent']==0) {
-					echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']), ": ";
-				}
-				else {
-					echo "All day: ";
-				}
-				echo text2xmltext($event['category_name']),"</description>\n";
-				echo "    </item>\n";
-			} // end: for ($i=0; $i < $result->numRows(); $i++)
-			
-			echo "  </channel>\n";
-			echo "</rss>\n";
-		} // end: if ($type == "rss")
-		if ($type == "rss1_0") { 
-			echo '<?xml version="1.0"?>',"\n";
+		echo "  </channel>\n";
+		echo "</rss>\n";
+	} // end: if ($type == "rss")
+	if ($type == "rss1_0") { 
+		echo '<?xml version="1.0"?>',"\n";
 ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 				 xmlns:rss091="http://purl.org/rss/1.0/modules/rss091/"
@@ -271,7 +271,7 @@ $categoryidlist = $_GET['categoryidlist'];
 				echo "    <recordchangedtime>",substr($event['recordchangedtime'],0,19),"</recordchangedtime>\n";
 				echo "    <recordchangeduser>",$event['recordchangeduser'],"</recordchangeduser>\n";
 				echo "  </event>\n";
-			} // end: for ($i=0; $i < $result->numRows(); $i++) {
+			} // end: for ($i=0; $i < $result->numRows(); $i++)
 			echo "</events>\n";
 		} // end: elseif ($type == "xml")
 		elseif ($type == "ical") {

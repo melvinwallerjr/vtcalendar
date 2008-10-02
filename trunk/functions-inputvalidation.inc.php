@@ -33,6 +33,9 @@ function isValidInput($value, $type) {
 	elseif ($type=='categoryid') {
 		if (is_numeric($value) && $value>=0 && $value<=100000) { return TRUE; }
 	}
+	elseif ($type=='categoryidlist') {
+		return preg_match('/^[0-9]+(,[0-9]+)*$/', $value) == 0;
+	}
 	elseif ($type=='category_name') {
 		if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constCategory_nameMaxLength.'}$/i',$value)) { return TRUE; }
 	}

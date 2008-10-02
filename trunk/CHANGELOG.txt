@@ -1,20 +1,37 @@
-2.3.0 (released September 10, 2008)
+2.3.0 Alpha (not yet released)
 --------------------------------
-- Changed to use CSS to style the pages
+
+Note: The list below is a work-in-progress. 
+
+Major:
+- New "Upcoming" tab that shows all un-expired events in the next 365 days (can be modified in config.inc.php).
+- Most styling has been moved to CSS.
+- New admin screen for colors, with greatly expanded control over the calendar's colors.
+- HTTP authentication (if you have a script somewhere that does some sort of custom auth).
+- Upcoming events can be displayed on other Web sites by inserting one line of JavaScript into the site. See http://www.howard.edu/calendar/public-export/instructions.php for details.
+- A wizard upgrades the database as necessary between versions (including 2.2.2 to 2.3.0).
+
+Minor:
+- Friendly error messages displayed for DB errors and missing external components (e.g. DB.php).
+- "My Submitted Events" screen now shows events for one month at a time, avoiding a huge list of all events. 
+- "Manage Calendars" screen can now show total events for each calendar. Also shows total upcoming events, to determine if a calendar is not being used.
+- No longer necessary to re-login when switching calendars. 
+- Main admins no longer need to be sponsors in order to view a calendar. 
+- Main admins can become any sponsor for a calendar on-the-fly. 
+- More user-friendly admin screen and add/edit event form.
+- Mini-calendar column can be toggled to be on left or right. Having it on the right helps users with low resolutions.
+- More fine grained control of LDAP authentication.
+- New weekday repeating event choices (e.g. every sunday).
 - Forced 'calendarid' in links to make sure calendar the right calendar is displayed when multiple calendars are being used by one person.
-- Added more LDAP options on config.inc.php.
 - "ROBOT" meta-tag added to header to so that spiders only index the event pages, and not the day/week/month views.
 - The page title (<title>) now includes specific information about the page. For example, when looking a day's events, it will read "Day: Wednesday, September 10, 2008" rather than just "Day". Events will include the event title.
-- Column with mini-calendar can now be toggled to appear on the right if desired.
-- Mini-calendar now uses AJAX-like calls to avoid refreshing the entire page when clicking the small << >> buttons next to the month name.
+- Page title can now have a string appended to the beginning and end for all calendars. 
 - Duration of the event now appears with the start time in day/week view.
 - Events now fade to gray when their end-time has passed, or if the next day is reached in the case of "all day" events.
 - Added message to approval page that the event will also be submitted to default calendar (if applicable).
-- Major redesign to the page that displays when clicking the "Update" tab to make it more user-friendly.
-- Major redesign to the create/edit event page to make it more user-friendly.
 - When a new calendar is created, only one category is created named "General".
-- New weekday repeating event choices (e.g. every sunday).
-- For more detailed changes see CHANGELOG-DETAILED.txt
+
+For more detailed changes see the SVN log at http://vtcalendar.svn.sourceforge.net/viewvc/vtcalendar/trunk/
 
 2.2.2 (released May 24, 2005)
 --------------------------------

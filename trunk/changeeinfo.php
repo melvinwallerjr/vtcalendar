@@ -61,7 +61,6 @@ if (isset($_POST['event'])) {
 	if (isset($_POST['event']['location'])) { setVar($event['location'],$_POST['event']['location'],'location'); } else { unset($event['location']); }
 	if (isset($_POST['event']['price'])) { setVar($event['price'],$_POST['event']['price'],'price'); } else { unset($event['price']); }
 	if (isset($_POST['event']['description'])) { setVar($event['description'],$_POST['event']['description'],'description'); } else { unset($event['description']); }
-	if (isset($_POST['event']['url'])) { setVar($event['url'],$_POST['event']['url'],'url'); } else { unset($event['url']); }
 	if (isset($_POST['event']['sponsorid'])) { setVar($event['sponsorid'],$_POST['event']['sponsorid'],'sponsorid'); } else { unset($event['sponsorid']); }
 	if (isset($_POST['event']['displayedsponsor'])) { setVar($event['displayedsponsor'],$_POST['event']['displayedsponsor'],'displayedsponsor'); } else { unset($event['displayedsponsor']); }
 	if (isset($_POST['event']['displayedsponsorurl'])) { setVar($event['displayedsponsorurl'],$_POST['event']['displayedsponsorurl'],'url'); } else { unset($event['displayedsponsorurl']); }
@@ -230,7 +229,6 @@ function passeventvalues($event,$sponsorid,$repeat) {
 	echo '<INPUT type="hidden" name="event[contact_name]" value="',HTMLSpecialChars($event['contact_name']),"\">\n";
 	echo '<INPUT type="hidden" name="event[contact_phone]" value="',HTMLSpecialChars($event['contact_phone']),"\">\n";
 	echo '<INPUT type="hidden" name="event[contact_email]" value="',HTMLSpecialChars($event['contact_email']),"\">\n";
-	echo '<INPUT type="hidden" name="event[url]" value="',HTMLSpecialChars($event['url']),"\">\n";
 	echo '<INPUT type="hidden" name="event[displayedsponsor]" value="',HTMLSpecialChars($event['displayedsponsor']),"\">\n";
 	echo '<INPUT type="hidden" name="event[displayedsponsorurl]" value="',HTMLSpecialChars($event['displayedsponsorurl']),"\">\n";
 	echo '<INPUT type="hidden" name="event[showondefaultcal]" value="',HTMLSpecialChars($event['showondefaultcal']),"\">\n";

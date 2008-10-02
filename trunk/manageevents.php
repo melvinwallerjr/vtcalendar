@@ -21,7 +21,7 @@ $today['timestamp_daybegin']=datetime2timestamp($today['year'],$today['month'],$
 
 // Output list with events
 $query =
-	"SELECT calendarid = 'default' as isdefaultcal, calendarid as calendarid, id AS id,approved,rejectreason,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,url"
+	"SELECT calendarid = 'default' as isdefaultcal, calendarid as calendarid, id AS id,approved,rejectreason,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email"
 	." FROM vtcal_event WHERE sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."'"
 	." AND timebegin >= '".sqlescape($startTimestamp)."' AND timeend < '".sqlescape($endTimestamp)."'"
 	." ORDER BY timebegin DESC, wholedayevent DESC, id, isdefaultcal";

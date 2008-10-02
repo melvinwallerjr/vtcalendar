@@ -91,11 +91,6 @@
 			$ical.= iCalPrintMultipleLines($event['contact_email']);
 			$ical.= "\\n".CRLF;
 		}
-		if (!(empty($event['url']) || $event['url']=="http://")) {
-			$ical.= " ".lang('for_more_info_visit').":\\n ".CRLF." ";
-			$ical.= iCalPrintMultipleLines($event['url']);
-			$ical.= "\\n".CRLF;
-		}
 	
 		if (!empty($event['location'])) {
 			$ical.= "LOCATION:".$event['location'].CRLF;

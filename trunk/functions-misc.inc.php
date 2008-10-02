@@ -134,7 +134,6 @@ function removeslashes(&$event) {
 		$event['contact_name']=stripslashes($event['contact_name']);
 		$event['contact_phone']=stripslashes($event['contact_phone']);
 		$event['contact_email']=stripslashes($event['contact_email']);
-		$event['url']=stripslashes($event['url']);
 		$event['displayedsponsor']=stripslashes($event['displayedsponsor']);
 		$event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
 	}

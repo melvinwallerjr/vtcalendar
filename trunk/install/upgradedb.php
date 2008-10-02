@@ -59,6 +59,8 @@ if (isset($Success)) {
 		?><div class="Success"><b>Success:</b> All upgrades were applied successfully!</div><?php
 	}
 	
+	?><p>&lt;&lt; <a href="index.php">Return to the VTCalendar Installation page.</a></p><?php
+	
 	$versionRecorded = (file_put_contents("../VERSION-DBCHECKED.txt", VERSION) !== false);
 	
 	if (!$versionRecorded) {
@@ -94,6 +96,63 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 				
 				// Check the current table data vs the final table data.
 				$changes = CheckTables();
+				
+				?><h3>Records</h3><blockquote><?php
+				
+				// Check if the default calendar records exist
+				$result =& DBQuery("SELECT id FROM vtcal_calendar WHERE id='default'");
+				if (is_string($result)) {
+					echo "<div class='Error'><b>Error:</b> Could not SELECT from vtcal_calendat to determine if default calendar exists: " . $result . "</div>";
+				}
+				else {
+					if ($result->numRows() == 0) {
+						echo "<div class='Create Record'><b>Insert Record:</b> The <b>default calendar</b> is missing and will be created.</div>";
+						$FinalSQL .= "INSERT INTO vtcal_calendar "
+							. "(id, name, title, header, footer, viewauthrequired, forwardeventdefault) "
+							. "VALUES ('default', 'Default Calendar', 'Events Calendar', '', '', 0, 0);\n\n";
+						$changes++;
+					}
+					else {
+						echo "<div class='Success'><b>OK:</b> Default calendar exists.</div>";
+					}
+					$result->free();
+				}
+				
+				// Check if the default calendar has categories
+				$result =& DBQuery("SELECT id FROM vtcal_category WHERE calendarid='default'");
+				if (is_string($result)) {
+					echo "<div class='Error'><b>Error:</b> Could not SELECT from vtcal_category to determine if categories exist for the default: " . $result . "</div>";
+				}
+				else {
+					if ($result->numRows() == 0) {
+						echo "<div class='Create Record'><b>Insert Record:</b> The default calendar is missing <b>categories</b>, so one will be created.</div>";
+						$FinalSQL .= "INSERT INTO vtcal_category (calendarid, name) VALUES ('default', 'General');\n\n";
+						$changes++;
+					}
+					else {
+						echo "<div class='Success'><b>OK:</b> At least one category exists for the default calendar.</div>";
+					}
+					$result->free();
+				}
+				
+				// Check if the default calendar has an admin sponsor.
+				$result =& DBQuery("SELECT id FROM vtcal_sponsor WHERE calendarid='default' AND admin='1'");
+				if (is_string($result)) {
+					echo "<div class='Error'><b>Error:</b> Could not SELECT from vtcal_sponsor to determine if the admin sponsor exists for the default calendar: " . $result . "</div>";
+				}
+				else {
+					if ($result->numRows() == 0) {
+						echo "<div class='Create Record'><b>Insert Record:</b> The default calendar is missing the <b>admin sponsor</b>, so it will be created.</div>";
+						$FinalSQL .= "INSERT INTO vtcal_sponsor (calendarid, name, url, email, admin) VALUES ('default', 'Administration', '', '', 1);\n\n";
+						$changes++;
+					}
+					else {
+						echo "<div class='Success'><b>OK:</b> The admin sponsor exists for the default calendar.</div>";
+					}
+					$result->free();
+				}
+				
+				?></blockquote><?php
 		
 				?><h2><a name="Upgrade"></a>Upgrade Database:</h2>
 				<form action="upgradedb.php" method="post" onsubmit="return verifyUpgrade();">
@@ -127,6 +186,7 @@ elseif ($Submit_Preview && defined("DATABASE")) {
 				
 				?></blockquote></form><?php
 			}
+			
 			DBClose();
 		}
 	}

@@ -66,7 +66,7 @@ else {
 		document.write('<td style="padding-right: 8px;"><img src="success32.png" class="png" width="32" height="32" alt=""/></td><td>Your version of VTCalendar (' + InstalledVTCalendarVersion + ') is <b>up-to-date</b>.</td>');
 	}
 	else if (Result == "NEWER") {
-		document.write('<td style="padding-right: 8px;"><img src="help32.png" class="png" width="32" height="32" alt=""/></td><td>Your version of VTCalendar (' + InstalledVTCalendarVersion + ') is <b>newer than the latest release version (' + document.LatestVTCalendarVersion + ')</b>.<br/>You may be running a alpha or beta build, which are not recommended for production.</td>');
+		document.write('<td style="padding-right: 8px;"><img src="warning32.png" class="png" width="32" height="32" alt=""/></td><td>Your version of VTCalendar (' + InstalledVTCalendarVersion + ') is <b>newer than the latest release version (' + document.LatestVTCalendarVersion + ')</b>.<br/>You may be running a alpha or beta build, which are not recommended for production.</td>');
 	}
 	else if (Result == "OLDER") {
 		document.write('<td style="padding-right: 8px;"><img src="down32.png" class="png" width="32" height="32" alt=""/></td><td>Your version of VTCalendar is ' + InstalledVTCalendarVersion + ' but a <b>newer version (' + document.LatestVTCalendarVersion + ') is available</b>.<br/>Visit <a href="http://vtcalendar.sourceforge.net/" target="_blank">http://vtcalendar.sourceforge.net/</a> for details.</td>');

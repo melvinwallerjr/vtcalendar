@@ -150,7 +150,15 @@ elseif (COLUMNSIDE == "RIGHT") {
 
 </tr>
 </table>
-<table id="PoweredBy" width="100%" border="0" cellpadding="4" cellspacing="0"><tr><td align="right">Powered by <a href="http://vtcalendar.sourceforge.net/" target="_blank">VTCalendar</a> <?php if (defined("VERSION")) echo VERSION; ?>.</td></tr></table>
+<table id="PoweredBy" width="100%" border="0" cellpadding="4" cellspacing="0"><tr><td align="right">Powered by <a href="http://vtcalendar.sourceforge.net/" target="_blank">VTCalendar</a> <?php
+	if (defined("VERSION")) {
+		echo VERSION;
+		if (defined("VERSION_EXTENSION")) {
+			echo VERSION_EXTENSION;
+		}
+	}
+		
+	?>.</td></tr></table>
 
 <?php
 

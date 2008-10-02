@@ -103,7 +103,6 @@ $lang['month_page_header'] = 'Month';
 //event view
 $lang['event_page_header'] = 'Event';
 $lang['to'] = 'to'; //3:00 pm to 4:00 pm
-$lang['more_information'] = 'More information...';
 $lang['location'] = 'Location';
 $lang['price'] = 'Price';
 $lang['sponsor'] = 'Sponsor';

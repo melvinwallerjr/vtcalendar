@@ -27,7 +27,7 @@ require_once('application.inc.php');
 	if (!isset($keyword)) { $keyword=""; }
 
 	/* print list with events */
-	$query = "SELECT e.id,e.timebegin,e.timeend,e.sponsorid,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS category_id,c.name AS category_name,e.displayedsponsor AS sponsor_name, e.displayedsponsorurl AS sponsor_url FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id";
+	$query = "SELECT e.id,e.timebegin,e.timeend,e.sponsorid,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS category_id,c.name AS category_name,e.displayedsponsor AS sponsor_name, e.displayedsponsorurl AS sponsor_url FROM vtcal_event_public e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id";
 	if (!empty($eventid))  { $query.= " AND e.id='".sqlescape($eventid)."'"; }
 	if (!empty($timebegin)) { $query.= " AND e.timebegin >= '".sqlescape($timebegin)."'"; }
 	if (!empty($timeend)) { $query.= " AND e.timeend <= '".sqlescape($timeend)."'"; }

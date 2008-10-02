@@ -59,7 +59,6 @@ function saveevent() {
 	if (!(strlen($event['contact_name']) <= constContact_nameMaxLength)) { feedback(lang('import_error_contact_name').": ".htmlentities($event['contact_name']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['contact_phone']) <= constContact_phoneMaxLength)) { feedback(lang('import_error_contact_phone').": ".htmlentities($event['contact_phone']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['contact_email']) <= constEmailMaxLength)) { feedback(lang('import_error_contact_email').": ".htmlentities($event['contact_email']),FEEDBACKNEG); $error = true; }
-	if (!(strlen($event['url']) <= constUrlMaxLength && checkurl($event['url']))) { feedback(lang('import_error_contact_url').": ".htmlentities($event['url']),FEEDBACKNEG); $error = true; }
 
 	// save all the data of the previous event in the array
 	if (!$error) {
@@ -95,7 +94,6 @@ function xmlstartelement_importevent($parser, $element, $attrs) {
 		$event['contact_name']="";
 		$event['contact_phone']="";
 		$event['contact_email']="";
-		$event['url']="";
 	}
 	
 	$firstelement = 0;
@@ -154,9 +152,6 @@ function xmlcharacterdata_importevent($parser, $data) {
 	}
 	elseif (strtolower($xmlcurrentelement)=="contact_email") {
 		$event['contact_email'] .= $data;
-	}
-	elseif (strtolower($xmlcurrentelement)=="url") {
-		$event['url'] .= $data;
 	}
 } // end: function characterdata_importevents
 

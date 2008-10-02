@@ -28,7 +28,6 @@ function defaultevent(&$event,$sponsorid) {
 	$event['contact_name']="";
 	$event['contact_phone']="";
 	$event['contact_email']="";
-	$event['url']="http://";
 	$event['displayedsponsor'] = "";
 	$event['displayedsponsorurl'] = ""; //$sponsor['url'];
 
@@ -112,7 +111,6 @@ function checkevent(&$event,&$repeat) {
 		checkeventdate($event, $repeat) &&
 		checkeventtime($event) &&
 		($event['categoryid']>=1) &&
-		(!isset($event['url']) || checkURL(urldecode($event['url']))) &&
 		checkURL(urldecode($event['displayedsponsorurl'])) &&
 		($_SESSION['CALENDAR_ID'] == "default" || !isset($event['showondefaultcal']) || $event['showondefaultcal']==0 || $event['showincategory']!=0);
 }
@@ -603,28 +601,6 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 ?>"> <I><?php echo lang('contact_email_example'); ?></I>
 		</TD>
 	</TR>
-	<?php /*
-	<TR>
-		<TD class="bodytext" valign="top">
-			<strong><?php echo lang('event_page_web_address'); ?>:</strong>
-		</TD>
-		<TD class="bodytext" valign="top">
-<?php
-	if ($check && isset($event['url']) && !checkURL($event['url']) && !$defaultButtonPressed) {
-		feedback(lang('url_invalid'),FEEDBACKNEG);
-	}
-?>
-			<INPUT type="text" size="50" name="event[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
-	if (isset($event['url'])) {
-		if ($check) { $event['url']=$event['url']; }
-		echo HTMLSpecialChars($event['url']);
-	}
-?>">
-			<BR>
-			<I><?php echo lang('event_page_url_example'); ?></I><BR>
-		</TD>
-	</TR>
-	*/ ?>
 	</table>
 	</div>
 	<?php

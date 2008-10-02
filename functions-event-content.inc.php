@@ -27,9 +27,6 @@ function print_event($event, $linkfeatures=true) {
 				if (!empty($event['description'])) {
 					?><p id="EventDescription"><?php echo str_replace("\r", "<br>", make_clickable(htmlentities($event['description']))); ?></p><?php
 				}
-				if (!empty($event['url']) && $event['url'] != "http://") {
-					?><div id="EventURL"><a href="<?php echo htmlentities($event['url']),"\">",lang('more_information');?></a></div><?php
-				} // end: if (!empty($event['url'])) {
 				?>
 				
 				<div id="EventDetailPadding"><table id="EventDetail" border="0" cellpadding="6" cellspacing="0"><?php 

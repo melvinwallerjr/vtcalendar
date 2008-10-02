@@ -93,7 +93,7 @@ if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $typ
 	if (!isset($categoryid)) { $categoryid=0; }
 	if (!isset($keyword)) { $keyword=""; }
 
-	$query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,e.url,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
+	$query = "SELECT e.recordchangedtime,e.recordchangeduser,e.repeatid,e.id AS id,e.timebegin,e.timeend,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.url AS sponsor_url FROM vtcal_event_public e, vtcal_category c, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 
 	if (!empty($eventid))  { $query.= " AND e.id='".sqlescape($eventid)."'"; }
 	if (!empty($timebegin)) { 
@@ -267,7 +267,7 @@ if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $typ
 				echo "    <contact_name>",text2xmltext($event['contact_name']),"</contact_name>\n";
 				echo "    <contact_phone>",text2xmltext($event['contact_phone']),"</contact_phone>\n";
 				echo "    <contact_email>",text2xmltext($event['contact_email']),"</contact_email>\n";
-				echo "    <url>",text2xmltext($event['url']),"</url>\n";
+				echo "    <url></url>\n";
 				echo "    <recordchangedtime>",substr($event['recordchangedtime'],0,19),"</recordchangedtime>\n";
 				echo "    <recordchangeduser>",$event['recordchangeduser'],"</recordchangeduser>\n";
 				echo "  </event>\n";

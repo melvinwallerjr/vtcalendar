@@ -28,8 +28,7 @@ function pageheader($title, $navbaractive) {
 			document.write("<s"+"cript type=\"text/javascript\" src=\"scripts/main.js\"></s"+"cript>");
 		}
 		//--></script>
-		<!--[if lt IE 7]><script type="text/javascript" src="scripts/iepngfix_tilebg.js"></script>
-		<style type="text/css">img, .png { behavior: url(scripts/iepngfix.htc); }</style><![endif]-->
+		<!--[if lt IE 7]><style type="text/css">img, .png { behavior: url(scripts/iepngfix.htc); }</style><![endif]-->
 		<!--<link href="stylesheet.php" rel="stylesheet" type="text/css">-->
 		<link href="calendar.css.php" rel="stylesheet" type="text/css" media="screen">
 		<link href="print.css" rel="stylesheet" type="text/css" media="print">

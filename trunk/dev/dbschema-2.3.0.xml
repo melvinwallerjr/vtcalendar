@@ -154,7 +154,6 @@
 	<Field Name="contact_name" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_phone" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_email" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="url" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangedtime" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangeduser" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="approved" Type="int(11)" NotNull="false" AutoIncrement="false"/>
@@ -185,7 +184,6 @@
 	<Field Name="contact_name" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_phone" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_email" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="url" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangedtime" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangeduser" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="displayedsponsor" Type="text" NotNull="false" AutoIncrement="false"/>
@@ -304,7 +302,6 @@
 	<Field Name="contact_name" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_phone" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="contact_email" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="url" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangedtime" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangeduser" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="displayedsponsor" Type="text" NotNull="false" AutoIncrement="false"/>

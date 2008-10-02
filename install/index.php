@@ -5,7 +5,8 @@
 <title>VTCalendar Installation</title>
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
 <link href="styles.css" type="text/css" rel="stylesheet" />
-<!--[if lt IE 7]><style type="text/css">.png { behavior: url(../scripts/png.htc); }</style><![endif]-->
+<!--[if lt IE 7]><script type="text/javascript" src="iepngfix_tilebg.js"></script>
+<style type="text/css">.png { behavior: url(../scripts/iepngfix.htc); }</style><![endif]-->
 </head>
 
 <body>

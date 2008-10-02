@@ -112,7 +112,7 @@ function checkevent(&$event,&$repeat) {
 		checkeventdate($event, $repeat) &&
 		checkeventtime($event) &&
 		($event['categoryid']>=1) &&
-		checkURL(urldecode($event['url'])) &&
+		(!isset($event['url']) || checkURL(urldecode($event['url']))) &&
 		checkURL(urldecode($event['displayedsponsorurl'])) &&
 		($_SESSION['CALENDAR_ID'] == "default" || !isset($event['showondefaultcal']) || $event['showondefaultcal']==0 || $event['showincategory']!=0);
 }

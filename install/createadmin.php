@@ -59,29 +59,45 @@ if (isset($Form_DSN)) {
 	}
 	
 	if ($Submit_Create) {
+		
 		if (AUTH_DB) {
 			if (!AUTH_LDAP && !AUTH_HTTP && trim($Form_CREATEADMIN_USERNAME) == "") {
 				$FormErrors[count($FormErrors)] = "You must enter the <b>Main Admin Username</b>.";
 			}
-			if (trim($Form_CREATEADMIN_USERNAME) != "" && preg_match(REGEXVALIDUSERID, $Form_CREATEADMIN_USERNAME) == 0) {
-				$FormErrors[count($FormErrors)] = "The username '<code>" . $Form_CREATEADMIN_USERNAME . "</code>' must match the User ID Regular Expression.";
+			
+			// If a username was submitted...
+			if (trim($Form_CREATEADMIN_USERNAME) != "") {
+			
+				// Fail if it does not match the RegEx.
+				if (preg_match(REGEXVALIDUSERID, $Form_CREATEADMIN_USERNAME) == 0) {
+					$FormErrors[count($FormErrors)] = "The username '<code>" . $Form_CREATEADMIN_USERNAME . "</code>' must match the User ID Regular Expression.";
+				}
 				
-			}
-			if (trim($Form_CREATEADMIN_USERNAME) != "" && trim($Form_CREATEADMIN_PASSWORD) == "") {
-				$FormErrors[count($FormErrors)] = "You must enter the <b>Main Admin Password</b> along with the Main Admin Username.";
+				// Otherwise, add it to the list of accounts to grant main admin access.
+				else {
+					$AccountList[count($AccountList)] = $Form_CREATEADMIN_USERNAME;
+				}
+				
+				// Make sure the password was also submitted.
+				if (trim($Form_CREATEADMIN_PASSWORD) == "") {
+					$FormErrors[count($FormErrors)] = "You must enter the <b>Main Admin Password</b> along with the Main Admin Username.";
+				}
 			}
 		}
+		
 		if (AUTH_LDAP || AUTH_HTTP) {
 			if (!AUTH_DB && trim($Form_MAINADMINS) == "") {
 				$FormErrors[count($FormErrors)] = "You must enter the <b>Accounts to Add as Main Admins</b>.";
 			}
 		}
+		
 		if (AUTH_DB && (AUTH_LDAP || AUTH_HTTP)) {
 			if (trim($Form_CREATEADMIN_USERNAME) == "" && trim($Form_MAINADMINS) == "") {
 				$FormErrors[count($FormErrors)] = "You must enter the <b>Main Admin Username/Password</b> and/or the <b>Accounts to Add as Main Admins</b>.";
 			}
 		}
 		
+		// Process the list of accoutns to give main admin access to.
 		ProcessMainAdminAccountList($Form_MAINADMINS, $AccountList);
 	}
 }

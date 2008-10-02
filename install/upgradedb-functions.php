@@ -44,7 +44,7 @@ function GetTableData(&$TableData, $TableName) {
 			$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);
 			
 			$TableData[$TableName]['Fields'][$record['Field']]['Type'] = $record['Type'];
-			$TableData[$TableName]['Fields'][$record['Field']]['NotNull'] = strtolower($record['Null']) == "no";
+			$TableData[$TableName]['Fields'][$record['Field']]['NotNull'] = strtolower($record['Null']) != "yes";
 			$TableData[$TableName]['Fields'][$record['Field']]['AutoIncrement'] = strpos($record['Extra'],"auto_increment") !== false;
 		}
 		$result->free();

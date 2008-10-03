@@ -34,17 +34,24 @@ $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,str
 
 // translates text into XML text, writing entity names like "&amp;" instead of "&"
 function text2xmltext($text) {
-	$text = htmlentities($text);
-	$text = ereg_replace("\'","&apos;",$text);
-	return $text;
-} // end: function txt2xmltxt
+	return htmlspecialchars(ereg_replace("\'","&apos;",$text));
+}
 
-// outputs everything depending in the params in XML format
-if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $type == "rss1_0" || $type == "vxml") ) {
-	
+// Check if the submitted data is valid
+$doExport = isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $type == "rss1_0" || $type == "vxml");
+
+// Display the form if we are not doing the export.
+if (!$doExport) {
+	if (!defined("NOEXPORTFORM")) {
+		require("export-form.inc.php");
+	}
+}
+
+// Otherwise, output the export data
+else {
 	// determine which sponsors to show
 	if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
-		$displayedsponsor = $_SESSION["AUTH_SPONSORID"]
+		$displayedsponsor = $_SESSION["AUTH_SPONSORID"];
 	}
 	elseif ($sponsortype == "specific") {
 		$displayedsponsor = $specificsponsor; 
@@ -54,7 +61,7 @@ if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $typ
 	}
 
 	// if the starting point not passed as a param then use defaults
-	if (isset($eventid)) {
+	if (!isset($timebegin)) {
 		$timebegin = "";
 		$timeend = "";
 	}
@@ -129,236 +136,33 @@ if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $typ
 	if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') or (e.description LIKE '%".sqlescape($keyword)."%'))"; }
 	$query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
 	
-	$result = DBQuery($query ); 
-
-	if ($type == "rss") {
-		echo '<?xml version="1.0"?>',"\n";
-		echo '<rss version="0.91">',"\n";
-		echo "<channel>\n";
-		echo "    <title>".$_SESSION['CALENDAR_TITLE']."</title>\n";
-		if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
-		else { $day = substr($timebegin,8,2); }
-		if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
-		else { $month = substr($timebegin,5,2); }
-		$date = $month."/".$day."/".substr($timebegin,0,4);
-		echo "    <description>".$date."</description>\n";
-
-		echo "    <link>".$calendarurl."?calendarid=".$_SESSION['CALENDAR_ID']."</link>\n\n";
-		for ($i=0; $i < $result->numRows(); $i++) {
-			$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-			disassemble_timestamp($event);
-			echo "    <item>\n";
-			echo "      <title>",text2xmltext($event['title']),"</title>\n";
-			echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
-			echo "      <description>";
-			if ($event['wholedayevent']==0) {
-				echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']), ": ";
-			}
-			else {
-				echo "All day: ";
-			}
-			echo text2xmltext($event['category_name']),"</description>\n";
-			echo "    </item>\n";
-		} // end: for ($i=0; $i < $result->numRows(); $i++)
-		
-		echo "  </channel>\n";
-		echo "</rss>\n";
-	} // end: if ($type == "rss")
-	if ($type == "rss1_0") { 
-		echo '<?xml version="1.0"?>',"\n";
-?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-				 xmlns:rss091="http://purl.org/rss/1.0/modules/rss091/"
-				 xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
-				 xmlns:dc="http://purl.org/dc/elements/1.1/"
-				 xmlns="http://purl.org/rss/1.0/">
-
-<channel rdf:about="<?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?>">
-	<link><?php echo $calendarurl; ?>?calendarid=<?php echo $_SESSION['CALENDAR_ID']; ?></link>
-<?php
-	if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
-	else { $day = substr($timebegin,8,2); }
-	if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
-	else { $month = substr($timebegin,5,2); }
-	$date = $month."/".$day."/".substr($timebegin,0,4);
-?>
-	<description><?php echo $date; ?></description>
-	<title><?php echo $_SESSION['CALENDAR_TITLE']; ?></title>
-	<items>
-		<rdf:Seq>
-<?php
-	for ($i=0; $i < $result->numRows(); $i++) {
-		$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-		echo "      <rdf:li resource=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."\"/>\n";
-	}
-?>
-		</rdf:Seq>
-	</items>
-</channel>
-<?php    
-			for ($i=0; $i < $result->numRows(); $i++) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-				disassemble_timestamp($event);
-				echo "    <item rdf:about=\"".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."\">\n";
-				echo "      <link>".$calendarurl."main.php?view=event&amp;calendarid=".$_SESSION['CALENDAR_ID']."&amp;eventid=".$event['id']."</link>\n";
-				echo "      <title>",text2xmltext($event['title']),"</title>\n";
-				echo "      <description>";
-				if ($event['wholedayevent']==0) {
-					echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']), ": ";
-				}
-				else {
-					echo "All day: ";
-				}
-				echo text2xmltext($event['category_name']),"</description>\n";
-				echo "    </item>\n";
-			} // end: for ($i=0; $i < $result->numRows(); $i++)
-
-			echo "</rdf:RDF>\n";
-		} // end: if ($type == "rss1_0")
+	echo $query;
+	exit;
+	$result =& DBQuery($query ); 
+	
+	if (!is_string($result)) {
+		if ($type == "rss") {
+			Header("Content-Type: text/xml");
+			echo GenerateRSS($result, $_SESSION['CALENDAR_ID'], $_SESSION['CALENDAR_TITLE'], $calendarurl, $timebegin);
+		}
+		if ($type == "rss1_0") { 
+			Header("Content-Type: text/xml");
+			echo GenerateRSS1_0($result, $_SESSION['CALENDAR_ID'], $_SESSION['CALENDAR_TITLE'], $calendarurl, $timebegin);
+		}
 		elseif ($type == "xml") {
-			echo '<?xml version="1.0"?>',"\n";
-			echo "<events>\n";
-			for ($i=0; $i < $result->numRows(); $i++) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-
-				unset($repeat);
-				// read in repeatid if necessary
-				if (!empty($event['repeatid'])) {
-//          $queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['repeatid'])."'";
-					$queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
-					$repeatresult = DBQuery($queryRepeat ); 
-					if ( $repeatresult->numRows () > 0 ) {
-						$repeat = $repeatresult->fetchRow(DB_FETCHMODE_ASSOC,0);
-					}
-				}
-
-				// convert some data fields
-				$date = substr($event['timebegin'],0,10);
-				$timebegin = substr($event['timebegin'],11,5);
-				$timeend = substr($event['timeend'],11,5);
-				
-				// output XML code
-				echo "  <event>\n";
-				echo "    <eventid>",$event['id'],"</eventid>\n";
-				echo "    <sponsorid>",$event['sponsorid'],"</sponsorid>\n";
-				echo "    <inputsponsor>",text2xmltext($event['sponsor_name']),"</inputsponsor>\n";
-				echo "    <displayedsponsor>",text2xmltext($event['displayedsponsor']),"</displayedsponsor>\n";
-				echo "    <displayedsponsorurl>",text2xmltext($event['displayedsponsorurl']),"</displayedsponsorurl>\n";
-				echo "    <date>",$date,"</date>\n";
-				echo "    <timebegin>",$timebegin,"</timebegin>\n";
-				echo "    <timeend>",$timeend,"</timeend>\n";
-				echo "    <repeat_vcaldef>";
-				if (!empty($repeat['repeatdef'])) { echo $repeat['repeatdef']; }
-				echo "</repeat_vcaldef>\n";
-				echo "    <repeat_startdate>";
-				if (!empty($repeat['startdate'])) { echo substr($repeat['startdate'],0,10); }
-				echo "</repeat_startdate>\n";
-				echo "    <repeat_enddate>";
-				if (!empty($repeat['enddate'])) { echo substr($repeat['enddate'],0,10); }
-				echo "</repeat_enddate>\n";
-				echo "    <categoryid>",$event['categoryid'],"</categoryid>\n";
-				echo "    <category>",text2xmltext($event['category_name']),"</category>\n";
-				echo "    <title>",text2xmltext($event['title']),"</title>\n";
-				echo "    <description>",text2xmltext($event['description']),"</description>\n";
-				echo "    <location>",text2xmltext($event['location']),"</location>\n";
-				echo "    <price>",text2xmltext($event['price']),"</price>\n";
-				echo "    <contact_name>",text2xmltext($event['contact_name']),"</contact_name>\n";
-				echo "    <contact_phone>",text2xmltext($event['contact_phone']),"</contact_phone>\n";
-				echo "    <contact_email>",text2xmltext($event['contact_email']),"</contact_email>\n";
-				echo "    <url></url>\n";
-				echo "    <recordchangedtime>",substr($event['recordchangedtime'],0,19),"</recordchangedtime>\n";
-				echo "    <recordchangeduser>",$event['recordchangeduser'],"</recordchangeduser>\n";
-				echo "  </event>\n";
-			} // end: for ($i=0; $i < $result->numRows(); $i++)
-			echo "</events>\n";
-		} // end: elseif ($type == "xml")
+			Header("Content-Type: text/xml");
+			echo GenerateXML($result, $_SESSION['CALENDAR_ID'], $_SESSION['CALENDAR_TITLE'], $calendarurl, $timebegin);
+		}
 		elseif ($type == "ical") {
-			$icalname = "calendar";
-			if ($categoryid != 0) {
-				if ($result->numRows() > 0) {
-					$event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-					$icalname = str_replace(array(" ","-","/"),"_",$event['category_name']);
-				}
-			}
-			else {
-				$icalname = str_replace(array(" ","-","/"),"_",$_SESSION['CALENDAR_NAME']);
-			}
 			Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"".$icalname.".ics\"");
 			Header("Content-disposition: attachment; filename=".$icalname.".ics");
-			echo getICalHeader();
-
-			// this is for Apple iCal since it does not take the calendar name from the .ics file name
-			if ($result->numRows() > 0) {
-				echo "X-WR-CALNAME;VALUE=TEXT:".$icalname.CRLF;	
-			}
-
-			for ($i=0; $i < $result->numRows(); $i++) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-				echo getICalFormat($event);
-			} // end: for ($i=0; $i < $result->numRows(); $i++)
-			echo getICalFooter();	
-	} // end: elseif ($type == "ical")
+			echo GenerateICal($result, $_SESSION['CALENDAR_ID'], $_SESSION['CALENDAR_NAME'], $calendarurl, $timebegin);
+		}
 		elseif ($type == "vxml") {
-			echo '<?xml version="1.0"?>',"\n";
-			echo '<vxml version="2.0">
-	<form>
-		<block>
-			<prompt>
-				';
-		echo lang('vxml_welcome')." ";
-		echo '<break size="medium"/>',"\n";
-		$iNumEvents = $result->numRows();
-		if ($iNumEvents > 0) {
-			echo lang('vxml_there_are'),' ',$iNumEvents,' ',lang('vxml_events_for_today'),' ',date("F j", NOW);
+			echo GenerateVXML($result);
 		}
-		else {
-				echo lang('vxml_no_more_events'),' ',date("F j", NOW);
-		}
-		
-		if (date("j", NOW) == "1") { echo "st"; }
-		elseif (date("j", NOW) == "2") { echo "nd"; }
-		elseif (date("j", NOW) == "3") { echo "rd"; }
-		else { echo "th"; }
-		echo ".\n";
-		
-		echo '<break size="medium"/>',"\n";
-
-			for ($i=0; $i < $iNumEvents; $i++) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-		
-		if ($event['wholedayevent'] == '1') {
-			echo lang('all_day');
-		}
-		else {
-			$aTimeBegin = timestamp2datetime($event['timebegin']);
-			echo $aTimeBegin['hour'];
-			if ($aTimeBegin['min'] != "00") {
-				echo " ",$aTimeBegin['min'];
-			}
-			echo strtoupper($aTimeBegin['ampm']),"\n";
-				}
-		echo '<break size="small"/>',"\n";
-				
-				echo $event['title'],"\n";
-				
-				echo '<break size="large"/>',"\n";
-			} // end: for ($i=0; $i < $result->numRows(); $i++)
-
-			echo '<break size="large"/>',"\n";
-		echo lang('vxml_goodbye'),"\n";
-
-		echo '
-			</prompt>
-	</block>
-	</form>
-</vxml>
-';
-		} // end: elseif ($type == "vxml")
-	
-	} // end: elseif ($type == "xml" || $type == "rss")
-	elseif (!defined("NOEXPORTFORM")) { // display form
-		require("export-form.php");
 	}
-	
-	DBclose();
+}
+
+DBclose();
 ?>

@@ -76,7 +76,7 @@ function insertintoevent($eventid, &$event) {
 }
 
 function insertintoeventsql($calendarid, $eventid, &$event) {
-	$changed = date("Y-m-d H:i:s");
+	$changed = date("Y-m-d H:i:s", NOW);
 	$query = "INSERT INTO vtcal_event (calendarid,id,approved,rejectreason,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,recordchangedtime,recordchangeduser,showondefaultcal,showincategory) ";
 	$query.= "VALUES ('".sqlescape($calendarid)."','".sqlescape($eventid)."',0,'";
 	if (!empty($event['rejectreason'])) {
@@ -105,7 +105,7 @@ function insertintoeventsql($calendarid, $eventid, &$event) {
 }
 
 function insertintoevent_public(&$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "INSERT INTO vtcal_event_public (calendarid,id,timebegin,timeend,repeatid,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,recordchangedtime,recordchangeduser) VALUES ";
 	$query.= "('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($event['id'])."','";
 	$query.= sqlescape($event['timebegin'])."','";
@@ -126,7 +126,7 @@ function insertintoevent_public(&$event) {
 }
 
 function updateevent($eventid, &$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "UPDATE vtcal_event SET approved=0, rejectreason='".sqlescape($event['rejectreason']);
 	$query.= "',timebegin='".sqlescape($event['timebegin'])."',timeend='".sqlescape($event['timeend']);
 	$query.= "',repeatid='".sqlescape($event['repeatid'])."',sponsorid='".sqlescape($event['sponsorid']);
@@ -146,7 +146,7 @@ function updateevent($eventid, &$event) {
 }
 
 function updateevent_public($eventid, &$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "UPDATE vtcal_event_public SET timebegin='".sqlescape($event['timebegin']);
 	$query.= "',timeend='".sqlescape($event['timeend'])."',repeatid='".sqlescape($event['repeatid']);
 	$query.= "',sponsorid='".sqlescape($event['sponsorid'])."',displayedsponsor='".sqlescape($event['displayedsponsor']);
@@ -165,7 +165,7 @@ function updateevent_public($eventid, &$event) {
 }
 
 function insertintotemplate($template_name, &$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "INSERT INTO vtcal_template (calendarid,name,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,recordchangedtime,recordchangeduser) ";
 	$query.= "VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($template_name);
 	$query.= "','".sqlescape($event['sponsorid'])."','".sqlescape($event['displayedsponsor']);
@@ -182,7 +182,7 @@ function insertintotemplate($template_name, &$event) {
 }
 
 function updatetemplate($templateid, $template_name, &$event) {
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "UPDATE vtcal_template SET name='".sqlescape($template_name)."',sponsorid='".sqlescape($event['sponsorid']);
 	$query.= "',displayedsponsor='".sqlescape($event['displayedsponsor'])."',displayedsponsorurl='".sqlescape($event['displayedsponsorurl']);
 	$query.= "',title='".sqlescape($event['title'])."',wholedayevent='".sqlescape($event['wholedayevent']);
@@ -202,7 +202,7 @@ function insertintorepeat($repeatid, &$event, &$repeat) {
 	$repeat['startdate'] = datetime2timestamp($event['timebegin_year'],$event['timebegin_month'],$event['timebegin_day'],0,0,"am");
 	$repeat['enddate'] = datetime2timestamp($event['timeend_year'],$event['timeend_month'],$event['timeend_day'],0,0,"am");
 	$repeatdef = repeatinput2repeatdef($event,$repeat);
-	$changed = date ("Y-m-d H:i:s");
+	$changed = date ("Y-m-d H:i:s", NOW);
 
 	// write record into repeat table
 	$query = "INSERT INTO vtcal_event_repeat (calendarid,id,repeatdef,startdate,enddate,recordchangedtime,recordchangeduser) ";

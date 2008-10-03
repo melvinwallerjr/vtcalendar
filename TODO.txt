@@ -20,6 +20,8 @@ X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.
 X Add colors to vtcal_colors for new CSS
 - Expand AUTH_HTTP_CACHE to LDAP
 - Improve the way AUTH_HTTP checks if the authentication was successful or not successful by also checking the body text.
+- Allow events to be flagged private so that you can only see them if you log in.
+- "Send event to a friend" form.
 
 
 OLD TODO:

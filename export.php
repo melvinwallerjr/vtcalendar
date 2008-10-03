@@ -4,6 +4,11 @@ header("Cache-control: private");
 require_once('application.inc.php');
 require_once("icalendar.inc.php");
 
+// translates text into XML text, writing entity names like "&amp;" instead of "&"
+function text2xmltext($text) {
+	return htmlspecialchars(ereg_replace("\'","&apos;",$text));
+}
+
 if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
 if (isset($_GET['type'])) { setVar($type,$_GET['type'],'type'); } else { unset($type); }
 if (isset($_GET['sponsortype'])) { setVar($sponsortype,$_GET['sponsortype'],'sponsortype'); } else { unset($sponsortype); }
@@ -21,20 +26,15 @@ if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'catego
 if (isset($_GET['categoryidlist'])) { setVar($categoryidlist,$_GET['categoryidlist'],'categoryidlist'); } else { unset($categoryidlist); }
 if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
 if (isset($_GET['specificsponsor'])) { setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); } else { unset($specificsponsor); }
+
+if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
+$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
 		
 if (!viewauthorized()) { exit; }
 
 if (isset($cancel)) {
 	redirect2URL("update.php");
 	exit;
-}
-
-if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
-$calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
-
-// translates text into XML text, writing entity names like "&amp;" instead of "&"
-function text2xmltext($text) {
-	return htmlspecialchars(ereg_replace("\'","&apos;",$text));
 }
 
 // Check if the submitted data is valid

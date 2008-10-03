@@ -1,15 +1,15 @@
 <?php
-if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
+if (!defined("ALLOWINCLUDES")) { exit; }
 
 // determine today's date
 $today = Decode_Date_US(date("m/d/Y", NOW));
 
 // check if some input params are set, and if not set them to default
-if (!isset($timebegin_year))  { $timebegin_year = $today['year']; }
-if (!isset($timebegin_month)) { $timebegin_month = $today['month']; }
-if (!isset($timebegin_day))   { $timebegin_day = $today['day']; }
+if (!isset($timebegin_year)) $timebegin_year = $today['year'];
+if (!isset($timebegin_month)) $timebegin_month = $today['month'];
+if (!isset($timebegin_day)) $timebegin_day = $today['day'];
 
-if (!isset($timeend_year))    { $timeend_year = $timebegin_year; }
+if (!isset($timeend_year)) $timeend_year = $timebegin_year;
 if (!isset($timeend_month)) {
 	$timeend_month = $timebegin_month+6;
 	if ($timeend_month >= 13) {

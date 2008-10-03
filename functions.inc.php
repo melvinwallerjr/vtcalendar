@@ -189,13 +189,13 @@ function checkeventtime(&$event)
 function checkevent(&$event,&$repeat)
 function inputrecurrences(&$event,&$repeat,$check)
 function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetime,&$repeat,$copy) */
-require("functions-inputdata-event.inc.php");
+require_once("functions-inputdata-event.inc.php");
 
 
 /* Functions used to output the event template form and process data related to it.
 ----------------------------------------------------
 function inputtemplatedata(&$event,$sponsorid,$check,$template_name) */
-require("functions-inputdata-template.inc.php");
+require_once("functions-inputdata-template.inc.php");
 
 
 /* Functions used to process XML
@@ -204,5 +204,14 @@ function parsexml($xmlfile, $xmlstartelementhandler, $xmlendelementhandler, $xml
 function xmlerror($xml_parser)
 function xmlstartelement($parser, $element, $attrs)
 function xmlendelement($parser, $element) */
-require("functions-xml.inc.php");
+require_once("functions-xml.inc.php");
+
+/* Functions export data into various formats
+----------------------------------------------------
+function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin)
+function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin)
+function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin)
+function GenerateICal(&$result, $calendarID, $calendarName, $calendarurl, $timebegin)
+function GenerateVXML(&$result) */
+require_once("functions-export.inc.php");
 ?>

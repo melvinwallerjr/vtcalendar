@@ -41,17 +41,15 @@ function text2xmltext($text) {
 
 // outputs everything depending in the params in XML format
 if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $type == "rss1_0" || $type == "vxml") ) {
+	
 	// determine which sponsors to show
 	if ($sponsortype=="self" && !empty($_SESSION["AUTH_SPONSORID"])) { 
-		// read sponsor name from DB
-		$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
-		$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-		$displayedsponsor = $s['name']; 
+		$displayedsponsor = $_SESSION["AUTH_SPONSORID"]
 	}
 	elseif ($sponsortype == "specific") {
 		$displayedsponsor = $specificsponsor; 
 	}
-	else { // elseif ($sponsortype == "all")
+	else {
 		$displayedsponsor = ""; 
 	}
 
@@ -358,7 +356,7 @@ if (isset($type) && ($type == "xml" || $type == "rss" || $type == "ical" || $typ
 		} // end: elseif ($type == "vxml")
 	
 	} // end: elseif ($type == "xml" || $type == "rss")
-	else { // display form
+	elseif (!defined("NOEXPORTFORM")) { // display form
 		// determine today's date
 		$today = Decode_Date_US(date("m/d/Y"));
 	
@@ -440,10 +438,7 @@ for ($i=0; $i<$result->numRows(); $i++) {
 			<input type="radio" name="sponsortype" value="all" checked> <?php echo lang('all'); ?><br>
 <?php
 	if (!empty($_SESSION["AUTH_SPONSORID"])) {
-		// read sponsor name from DB
-		$result = DBQuery("SELECT name FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($_SESSION["AUTH_SPONSORID"])."'" ); 
-		$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-		echo '<input type="radio" name="sponsortype" value="self"> ',htmlentities($s['name']),"<br>\n";
+		echo '<input type="radio" name="sponsortype" value="self"> ',$_SESSION["AUTH_SPONSORNAME"],"<br>\n";
 	}
 ?>
 				<input type="radio" name="sponsortype" value="specific"> <?php echo lang('specific_sponsor'); ?>

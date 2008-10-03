@@ -125,9 +125,9 @@ $lang['subscribe_page_header'] = 'Subscribe';
 
 //filter view
 $lang['filter_page_header'] = 'Filter';
-$lang['select_categories'] = 'Select the event categories you want to have displayed:';
-$lang['select_unselect'] = 'select/unselect all';
-$lang['apply_filter'] = 'Apply filter';
+$lang['select_categories'] = 'Select the event categories you would like events displayed for:';
+$lang['select_unselect'] = 'Select/Unselect All';
+$lang['apply_filter'] = 'Apply Filter';
 
 //update view
 $lang['update_page_header'] = 'Login';
@@ -148,7 +148,7 @@ If your calendar software cannot subscribe to a whole category of events, you sh
 still be able to download individual events by clicking on the link 
 &quot;'.$lang['copy_event_to_pda'].'&quot; which you will find
 on each page that lists event details.';
-$lang['whole_calendar'] = 'whole calendar';
+$lang['whole_calendar'] = 'Entire calendar';
 
 // ================================== Login-protected interface =====================================
 
@@ -191,6 +191,7 @@ $lang['approve_all_events'] = 'Approve ALL events';
 $lang['date'] = 'Date';
 $lang['time'] = 'Time';
 $lang['category'] = 'Category';
+$lang['categories'] = 'Categories';
 $lang['title'] = 'Title';
 $lang['description'] = 'Description';
 $lang['approve'] = 'Approve';

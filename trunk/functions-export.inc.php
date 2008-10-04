@@ -27,7 +27,7 @@ function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timeb
 			$resultString .= "<link>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</link>\n";
 			$resultString .= "<description>";
 			if ($event['wholedayevent']==0) {
-				$resultString .= text2xmltext(timestring($event['timebegin_hour'].$event['timebegin_min'].$event['timebegin_ampm']). ": ");
+				$resultString .= text2xmltext(timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']). ": ");
 			}
 			else {
 				$resultString .= "All day: ";
@@ -88,7 +88,7 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 			$resultString .= "<title>".text2xmltext($event['title'])."</title>\n";
 			$resultString .= "<description>";
 			if ($event['wholedayevent']==0) {
-				$resultString .= text2xmltext(timestring($event['timebegin_hour'].$event['timebegin_min'].$event['timebegin_ampm']). ": ");
+				$resultString .= text2xmltext(timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']). ": ");
 			}
 			else {
 				$resultString .= "All day: ";
@@ -100,7 +100,7 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 		$result->free();
 	}
 
-	echo "</rdf:RDF>\n";
+	$resultString .= "</rdf:RDF>\n";
 	
 	return $resultString;
 }
@@ -224,7 +224,7 @@ function GenerateVXML(&$result) {
 	elseif (date("j", NOW) == "2") { $resultString .= "nd"; }
 	elseif (date("j", NOW) == "3") { $resultString .= "rd"; }
 	else { $resultString .= "th"; }
-	echo ".\n";
+	$resultString .= ".\n";
 	
 	$resultString .= '<break size="medium"/>'."\n";
 

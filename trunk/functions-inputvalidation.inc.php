@@ -282,7 +282,7 @@ function isValidInput($value, $type) {
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,2000}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='view') {
-		if ($value=='upcoming' || $value=='day' || $value=='week' || $value=='month' || $value=='search' || $value=='searchresults' || $value=='event' || $value=='subscribe' || $value=='filter') { return TRUE; }
+		return ($value=='upcoming' || $value=='day' || $value=='week' || $value=='month' || $value=='search' || $value=='searchresults' || $value=='event' || $value=='subscribe' || $value=='filter' || $value=='export');
 	}
 	elseif ($type=='wholedayevent') {
 		if ($value=='0' || $value=='1') { return TRUE; }

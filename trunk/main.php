@@ -129,6 +129,9 @@ elseif ( $view == "subscribe" ) {
 elseif ( $view == "filter" ) { 
 	pageheader(lang('filter_page_header').$basetitle, "Filter");
 }
+elseif ( $view == "export" ) { 
+	pageheader("CHANGE THIS".$basetitle, "Export");
+}
 
 // Output the calendar table.
 ?>

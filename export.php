@@ -9,28 +9,28 @@ function text2xmltext($text) {
 	return htmlspecialchars(ereg_replace("\'","&apos;",$text));
 }
 
-if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_GET['type'])) { setVar($type,$_GET['type'],'type'); } else { unset($type); }
-if (isset($_GET['sponsortype'])) { setVar($sponsortype,$_GET['sponsortype'],'sponsortype'); } else { unset($sponsortype); }
-if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
-if (isset($_GET['timebegin'])) { setVar($timebegin,$_GET['timebegin'],'timebegin'); } else { unset($timebegin); }
-if (isset($_GET['timebegin_year'])) { setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
-if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
-if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
-if (isset($_GET['timeend'])) { setVar($timeend,$_GET['timeend'],'timeend'); } else { unset($timeend); }
-if (isset($_GET['timeend_year'])) { setVar($timeend_year,$_GET['timeend_year'],'timeend_year'); } else { unset($timeend_year); }
-if (isset($_GET['timeend_month'])) { setVar($timeend_month,$_GET['timeend_month'],'timeend_month'); } else { unset($timeend_month); }
-if (isset($_GET['timeend_day'])) { setVar($timeend_day,$_GET['timeend_day'],'timeend_day'); } else { unset($timeend_day); }
-if (isset($_GET['rangedays'])) { setVar($rangedays,$_GET['rangedays'],'rangedays'); } else { unset($rangedays); }
-if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
-if (isset($_GET['categoryidlist'])) { setVar($categoryidlist,$_GET['categoryidlist'],'categoryidlist'); } else { unset($categoryidlist); }
-if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
-if (isset($_GET['specificsponsor'])) { setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); } else { unset($specificsponsor); }
+if (isset($_GET['cancel'])) setVar($cancel,$_GET['cancel'],'cancel'); else unset($cancel);
+if (isset($_GET['type'])) setVar($type,$_GET['type'],'type'); else unset($type);
+if (isset($_GET['sponsortype'])) setVar($sponsortype,$_GET['sponsortype'],'sponsortype'); else unset($sponsortype);
+if (isset($_GET['eventid'])) setVar($eventid,$_GET['eventid'],'eventid'); else unset($eventid);
+if (isset($_GET['timebegin'])) setVar($timebegin,$_GET['timebegin'],'timebegin'); else unset($timebegin);
+if (isset($_GET['timebegin_year'])) setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); else unset($timebegin_year);
+if (isset($_GET['timebegin_month'])) setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); else unset($timebegin_month);
+if (isset($_GET['timebegin_day'])) setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); else unset($timebegin_day);
+if (isset($_GET['timeend'])) setVar($timeend,$_GET['timeend'],'timeend'); else unset($timeend);
+if (isset($_GET['timeend_year'])) setVar($timeend_year,$_GET['timeend_year'],'timeend_year'); else unset($timeend_year);
+if (isset($_GET['timeend_month'])) setVar($timeend_month,$_GET['timeend_month'],'timeend_month'); else unset($timeend_month);
+if (isset($_GET['timeend_day'])) setVar($timeend_day,$_GET['timeend_day'],'timeend_day'); else unset($timeend_day);
+if (isset($_GET['rangedays'])) setVar($rangedays,$_GET['rangedays'],'rangedays'); else unset($rangedays);
+if (isset($_GET['categoryid'])) setVar($categoryid,$_GET['categoryid'],'categoryid'); else unset($categoryid);
+if (isset($_GET['categoryidlist'])) setVar($categoryidlist,$_GET['categoryidlist'],'categoryidlist'); else unset($categoryidlist);
+if (isset($_GET['keyword'])) setVar($keyword,$_GET['keyword'],'keyword'); else unset($keyword);
+if (isset($_GET['specificsponsor'])) setVar($specificsponsor,$_GET['specificsponsor'],'specificsponsor'); else unset($specificsponsor);
 
 if ( isset($_SERVER["HTTPS"]) ) { $calendarurl = "https"; } else { $calendarurl = "http"; } 
 $calendarurl .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/";
 		
-if (!viewauthorized()) { exit; }
+if (!viewauthorized()) exit;
 
 if (isset($cancel)) {
 	redirect2URL("update.php");
@@ -60,15 +60,15 @@ else {
 		$displayedsponsor = ""; 
 	}
 
-	// if the starting point not passed as a param then use defaults
-	if (!isset($timebegin)) {
+	// Ignore the date range if the event ID is specified.
+	if (isset($eventid)) {
 		$timebegin = "";
 		$timeend = "";
 	}
 	else {
 		// determine today's date
 		$today = Decode_Date_US(date("m/d/Y", NOW));
-		if ($timebegin == "now") {
+		if (isset($timebegin) && $timebegin == "now") {
 			$timebegin = date("Y-m-d H:i:s", NOW);
 		}
 		elseif (!isset($timebegin) || $timebegin=="today") {
@@ -93,7 +93,7 @@ else {
 			$timeendrange = Add_Delta_Days($timebeginrange['month'],$timebeginrange['day'],$timebeginrange['year'],$rangedays);
 			$timeend = datetime2timestamp($timeendrange['year'],$timeendrange['month'],$timeendrange['day'],11,59,"pm");
 		}
-	} // end: if (isset($eventid))
+	}
 
 	if (!isset($categoryid)) { $categoryid=0; }
 	if (!isset($keyword)) { $keyword=""; }
@@ -136,8 +136,6 @@ else {
 	if (!empty($keyword)) { $query.= " AND ((e.title LIKE '%".sqlescape($keyword)."%') or (e.description LIKE '%".sqlescape($keyword)."%'))"; }
 	$query.= " ORDER BY e.timebegin ASC, e.wholedayevent DESC";
 	
-	echo $query;
-	exit;
 	$result =& DBQuery($query ); 
 	
 	if (!is_string($result)) {
@@ -159,6 +157,7 @@ else {
 			echo GenerateICal($result, $_SESSION['CALENDAR_ID'], $_SESSION['CALENDAR_NAME'], $calendarurl, $timebegin);
 		}
 		elseif ($type == "vxml") {
+			Header("Content-Type: text/xml");
 			echo GenerateVXML($result);
 		}
 	}

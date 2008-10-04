@@ -130,7 +130,7 @@ elseif ( $view == "filter" ) {
 	pageheader(lang('filter_page_header').$basetitle, "Filter");
 }
 elseif ( $view == "export" ) { 
-	pageheader("CHANGE THIS".$basetitle, "Export");
+	pageheader(lang('export_page_header').$basetitle, "Export");
 }
 
 // Output the calendar table.

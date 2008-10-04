@@ -1,4 +1,4 @@
-<div style="padding: 10px; padding-bottom: 0;">SOME DESCRIPTION</div>
+<div style="padding: 10px; padding-bottom: 0;"><?php echo lang('export_description'); ?></div>
 
 <form id="ExportForm" name="ExportForm" method="get" action="main.php" class="HideHTML">
 

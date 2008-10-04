@@ -73,14 +73,20 @@ function checkAll(myForm, id, state) {
 					<p><?php echo lang('export_dates_description'); ?></p>
 					<table  border="0" cellspacing="0" cellpadding="4">
 				    	<tr>
-				    		<td><?php echo lang('export_dates_from'); ?>:</td>
+				    		<td><b><?php echo lang('export_dates_from'); ?>:</b></td>
 				    		<td><input name="timebegin" type="text" id="timebegin"></td>
-				    		<td>(<?php echo lang('export_dates_from_leaveblank'); ?>)</td>
 				    	</tr>
 				    	<tr>
-				    		<td><?php echo lang('export_dates_to'); ?>:</td>
+				    		<td>&nbsp;</td>
+				    		<td><?php echo lang('export_dates_from_description'); ?></td>
+				    	</tr>
+				    	<tr>
+				    		<td><b><?php echo lang('export_dates_to'); ?>:</b></td>
 				    		<td><input name="timeend" type="text" id="timeend"></td>
-				    		<td>(<?php echo lang('export_dates_to_leaveblank'); ?>)</td>
+				    	</tr>
+				    	<tr>
+				    		<td>&nbsp;</td>
+				    		<td><?php echo lang('export_dates_to_description'); ?></td>
 				    	</tr>
 				   	</table>
 				</blockquote>

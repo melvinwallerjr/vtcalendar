@@ -46,11 +46,11 @@ $lang['export_dates'] = 'Dates';
 $lang['export_dates_description'] = 'The dates below must be in <code>yyyy-mm-dd</code> format (e.g. 2008-03-31).';
 
 $lang['export_dates_from'] = 'From';
-$lang['export_dates_from_leaveblank'] = 'Leave blank for no start date';
+$lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format, or enter &quot;Today&quot; to use today\'s date.';
 $lang['export_dates_from_error'] = 'You must either enter a &quot;'. $lang['export_dates_from'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_from'].'&quot; date.';
 
 $lang['export_dates_to'] = 'To';
-$lang['export_dates_to_leaveblank'] = 'Leave blank for no end date';
+$lang['export_dates_to_description'] = 'Leave blank for no end date, enter a date in <code>YYYY-MM-DD</code> format, or enter a number to represent the number of days after the &quot;'.$lang['export_dates_from'].'&quot; date.';
 $lang['export_dates_to_error'] = 'You must either enter a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date.';
 
 $lang['export_categories'] = 'Categories';

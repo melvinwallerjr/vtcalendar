@@ -34,7 +34,8 @@ function isValidInput($value, $type) {
 		if (is_numeric($value) && $value>=0 && $value<=100000) { return TRUE; }
 	}
 	elseif ($type=='categoryidlist') {
-		return preg_match('/^[0-9]+(,[0-9]+)*$/', $value) == 0;
+		// TODO: is '== 1' correct? This was '== 0' but that didn't seem to make sense.
+		return preg_match('/^[0-9]+(,[0-9]+)*$/', $value) == 1;
 	}
 	elseif ($type=='category_name') {
 		if (preg_match('/^['.constValidTextCharWithSpacesRegEx.']{1,'.constCategory_nameMaxLength.'}$/i',$value)) { return TRUE; }
@@ -186,9 +187,6 @@ function isValidInput($value, $type) {
 	elseif ($type=='price') {
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constPriceMaxLength.'}$/',$value)) { return TRUE; }
 	}
-	elseif ($type=='rangedays') {
-		if (is_numeric($value) && $value>=1 && $value<=100000) { return TRUE; }
-	}
 	elseif ($type=='reject') {
 		if ($value=='1') { return TRUE; }
 	}
@@ -222,14 +220,8 @@ function isValidInput($value, $type) {
 	elseif ($type=='showondefaultcal') {
 		if ($value=='0' || $value='1') { return TRUE; }
 	}
-	elseif ($type=='specificsponsor') {
-		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constSpecificsponsorMaxLength.'}$/',$value)) { return TRUE; }
-	}
 	elseif ($type=='sponsorid') {
 		if ($value=='all' || (is_numeric($value) && $value>=1 && $value<=100000)) { return TRUE; }
-	}
-	elseif ($type=='sponsortype') {
-		if ($value=='all' || $value='self' || $value='specific') { return TRUE; }
 	}
 	elseif ($type=='sponsor_admins') { // needs refinement, allow newlines
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,500}$/',$value)) { return TRUE; }
@@ -277,9 +269,6 @@ function isValidInput($value, $type) {
 	elseif ($type=='title') {
 		if (preg_match('/^['.constValidTextCharFullRegEx.']{1,'.constTitleMaxLength.'}$/',$value)) { return TRUE; }
 	}
-	elseif ($type=='type') {
-		if ($value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
-	}
 	elseif ($type=='viewauthrequired') {
 		if ($value=='0' || $value=='1') { return TRUE; }
 	}
@@ -300,6 +289,60 @@ function isValidInput($value, $type) {
 	}
 	elseif ($type=='page') {
 		if (is_numeric($value) && $value > 0) { return TRUE; }
+	}
+	
+	/* =========================================================
+	                      Generic Types
+	========================================================= */
+	
+	// Used for two radio <input> where one is yes and the other is no.
+	elseif ($type=='boolean') {
+		if ($value === '1' || $value === '0') { return TRUE; }
+	}
+	
+	// Used for a checkbox <input> where it does not submit a value if not checked.
+	elseif ($type=='boolean_checkbox') {
+		if ($value === '1') { return TRUE; }
+	}
+	
+	elseif ($type=='int') {
+		return preg_match("/^-?[0-9]+$/", $value) === 1;
+	}
+	
+	elseif ($type=='int_gte1') {
+		if (preg_match("/^[0-9]+$/", $value) && intval($value) >= 1) { return TRUE; }
+	}
+	
+	/* =========================================================
+	                   Export Page Validation
+	========================================================= */
+	
+	elseif ($type=='type') {
+		if ($value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
+	}
+	elseif ($type=='rangedays') {
+		if (is_numeric($value) && $value>=1 && $value<=100000) { return TRUE; }
+	}
+	elseif ($type=='sponsortype') {
+		if ($value=='all' || $value='self' || $value='specific') { return TRUE; }
+	}
+	elseif ($type=='specificsponsor') {
+		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constSpecificsponsorMaxLength.'}$/',$value)) { return TRUE; }
+	}
+	elseif ($type=='htmltype') {
+		if ($value == 'table' || $value == 'paragraph') { return TRUE; }
+	}
+	elseif ($type=='dateformat') {
+		return preg_match("/^(huge|long|normal|short|tiny|micro)$/", $value) === 1;
+	}
+	elseif ($type=='timedisplay') {
+		return preg_match("/^(start|startendlong|startendnormal|startendtiny|startdurationlong|startdurationnormal|startdurationshort)$/", $value) === 1;
+	}
+	elseif ($type=='timeformat') {
+		return preg_match("/^(huge|long|normal|short)$/", $value) === 1;
+	}
+	elseif ($type=='durationformat') {
+		return preg_match("/^(long|normal|short|tiny|micro)$/", $value) === 1;
 	}
 	
 	return FALSE;

@@ -192,46 +192,46 @@ pagefooter();
 DBclose();
 	
 function passeventtimevalues($event,$repeat) {
-	echo '<INPUT type="hidden" name="event[timebegin_year]" value="',HTMLSpecialChars($event['timebegin_year']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timebegin_month]" value="',HTMLSpecialChars($event['timebegin_month']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timebegin_day]" value="',HTMLSpecialChars($event['timebegin_day']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timebegin_hour]" value="',HTMLSpecialChars($event['timebegin_hour']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timebegin_min]" value="',HTMLSpecialChars($event['timebegin_min']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timebegin_ampm]" value="',HTMLSpecialChars($event['timebegin_ampm']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_year]" value="',HTMLSpecialChars($event['timeend_year']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_month]" value="',HTMLSpecialChars($event['timeend_month']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_day]" value="',HTMLSpecialChars($event['timeend_day']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_hour]" value="',HTMLSpecialChars($event['timeend_hour']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_min]" value="',HTMLSpecialChars($event['timeend_min']),"\">\n";
-	echo '<INPUT type="hidden" name="event[timeend_ampm]" value="',HTMLSpecialChars($event['timeend_ampm']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_year]" value="',HTMLSpecialChars($event['timebegin_year']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_month]" value="',HTMLSpecialChars($event['timebegin_month']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_day]" value="',HTMLSpecialChars($event['timebegin_day']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_hour]" value="',HTMLSpecialChars($event['timebegin_hour']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_min]" value="',HTMLSpecialChars($event['timebegin_min']),"\">\n";
+	echo '<input type="hidden" name="event[timebegin_ampm]" value="',HTMLSpecialChars($event['timebegin_ampm']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_year]" value="',HTMLSpecialChars($event['timeend_year']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_month]" value="',HTMLSpecialChars($event['timeend_month']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_day]" value="',HTMLSpecialChars($event['timeend_day']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_hour]" value="',HTMLSpecialChars($event['timeend_hour']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_min]" value="',HTMLSpecialChars($event['timeend_min']),"\">\n";
+	echo '<input type="hidden" name="event[timeend_ampm]" value="',HTMLSpecialChars($event['timeend_ampm']),"\">\n";
 	if (!empty($event['repeatid'])) {
-		echo '<INPUT type="hidden" name="event[repeatid]" value="',$event['repeatid'],"\">\n";
+		echo '<input type="hidden" name="event[repeatid]" value="',$event['repeatid'],"\">\n";
 	}
-	echo '<INPUT type="hidden" name="repeat[mode]" value="',HTMLSpecialChars($repeat['mode']),'">',"\n";
-	if (!empty($repeat['interval1'])) { echo '<INPUT type="hidden" name="repeat[interval1]" value="',$repeat['interval1'],'">',"\n"; }
- 	if (!empty($repeat['frequency1'])) { echo '<INPUT type="hidden" name="repeat[frequency1]" value="',$repeat['frequency1'],'">',"\n"; }
-	if (!empty($repeat['interval2'])) { echo '<INPUT type="hidden" name="repeat[interval2]" value="',$repeat['interval2'],'">',"\n"; }
-	if (!empty($repeat['frequency2modifier1'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier1]" value="',$repeat['frequency2modifier1'],'">',"\n"; }
-	if (!empty($repeat['frequency2modifier2'])) { echo '<INPUT type="hidden" name="repeat[frequency2modifier2]" value="',$repeat['frequency2modifier2'],'">',"\n"; }
+	echo '<input type="hidden" name="repeat[mode]" value="',HTMLSpecialChars($repeat['mode']),'">',"\n";
+	if (!empty($repeat['interval1'])) { echo '<input type="hidden" name="repeat[interval1]" value="',$repeat['interval1'],'">',"\n"; }
+ 	if (!empty($repeat['frequency1'])) { echo '<input type="hidden" name="repeat[frequency1]" value="',$repeat['frequency1'],'">',"\n"; }
+	if (!empty($repeat['interval2'])) { echo '<input type="hidden" name="repeat[interval2]" value="',$repeat['interval2'],'">',"\n"; }
+	if (!empty($repeat['frequency2modifier1'])) { echo '<input type="hidden" name="repeat[frequency2modifier1]" value="',$repeat['frequency2modifier1'],'">',"\n"; }
+	if (!empty($repeat['frequency2modifier2'])) { echo '<input type="hidden" name="repeat[frequency2modifier2]" value="',$repeat['frequency2modifier2'],'">',"\n"; }
 }
 
 function passeventvalues($event,$sponsorid,$repeat) {
 	// pass the values
-//  echo '<INPUT type="hidden" name="event[rejectreason]" value="',HTMLSpecialChars($event['rejectreason']),"\">\n";
+//  echo '<input type="hidden" name="event[rejectreason]" value="',HTMLSpecialChars($event['rejectreason']),"\">\n";
 	passeventtimevalues($event,$repeat);
-	echo '<INPUT type="hidden" name="event[sponsorid]" value="',HTMLSpecialChars($event['sponsorid']),"\">\n";
-	echo '<INPUT type="hidden" name="event[title]" value="',HTMLSpecialChars($event['title']),"\">\n";
-	echo '<INPUT type="hidden" name="event[wholedayevent]" value="',HTMLSpecialChars($event['wholedayevent']),"\">\n";
-	echo '<INPUT type="hidden" name="event[categoryid]" value="',HTMLSpecialChars($event['categoryid']),"\">\n";
-	echo '<INPUT type="hidden" name="event[description]" value="',HTMLSpecialChars($event['description']),"\">\n";
-	echo '<INPUT type="hidden" name="event[location]" value="',HTMLSpecialChars($event['location']),"\">\n";
-	echo '<INPUT type="hidden" name="event[price]" value="',HTMLSpecialChars($event['price']),"\">\n";
-	echo '<INPUT type="hidden" name="event[contact_name]" value="',HTMLSpecialChars($event['contact_name']),"\">\n";
-	echo '<INPUT type="hidden" name="event[contact_phone]" value="',HTMLSpecialChars($event['contact_phone']),"\">\n";
-	echo '<INPUT type="hidden" name="event[contact_email]" value="',HTMLSpecialChars($event['contact_email']),"\">\n";
-	echo '<INPUT type="hidden" name="event[displayedsponsor]" value="',HTMLSpecialChars($event['displayedsponsor']),"\">\n";
-	echo '<INPUT type="hidden" name="event[displayedsponsorurl]" value="',HTMLSpecialChars($event['displayedsponsorurl']),"\">\n";
-	echo '<INPUT type="hidden" name="event[showondefaultcal]" value="',HTMLSpecialChars($event['showondefaultcal']),"\">\n";
-	echo '<INPUT type="hidden" name="event[showincategory]" value="',HTMLSpecialChars($event['showincategory']),"\">\n";
+	echo '<input type="hidden" name="event[sponsorid]" value="',HTMLSpecialChars($event['sponsorid']),"\">\n";
+	echo '<input type="hidden" name="event[title]" value="',HTMLSpecialChars($event['title']),"\">\n";
+	echo '<input type="hidden" name="event[wholedayevent]" value="',HTMLSpecialChars($event['wholedayevent']),"\">\n";
+	echo '<input type="hidden" name="event[categoryid]" value="',HTMLSpecialChars($event['categoryid']),"\">\n";
+	echo '<input type="hidden" name="event[description]" value="',HTMLSpecialChars($event['description']),"\">\n";
+	echo '<input type="hidden" name="event[location]" value="',HTMLSpecialChars($event['location']),"\">\n";
+	echo '<input type="hidden" name="event[price]" value="',HTMLSpecialChars($event['price']),"\">\n";
+	echo '<input type="hidden" name="event[contact_name]" value="',HTMLSpecialChars($event['contact_name']),"\">\n";
+	echo '<input type="hidden" name="event[contact_phone]" value="',HTMLSpecialChars($event['contact_phone']),"\">\n";
+	echo '<input type="hidden" name="event[contact_email]" value="',HTMLSpecialChars($event['contact_email']),"\">\n";
+	echo '<input type="hidden" name="event[displayedsponsor]" value="',HTMLSpecialChars($event['displayedsponsor']),"\">\n";
+	echo '<input type="hidden" name="event[displayedsponsorurl]" value="',HTMLSpecialChars($event['displayedsponsorurl']),"\">\n";
+	echo '<input type="hidden" name="event[showondefaultcal]" value="',HTMLSpecialChars($event['showondefaultcal']),"\">\n";
+	echo '<input type="hidden" name="event[showincategory]" value="',HTMLSpecialChars($event['showincategory']),"\">\n";
 } // end: function passeventvalues
 ?>

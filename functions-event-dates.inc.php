@@ -2,46 +2,46 @@
 // display input fields for a date (month, day, year)
 function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar) {
 	$unknownvalue = "???"; // this is printed when the value of input field is unspecified
-	echo "<SELECT name=\"",$monthvar,"\" id=\"",$monthvar,"\">\n";
+	echo "<select name=\"",$monthvar,"\" id=\"",$monthvar,"\">\n";
 
 	//if ($month==0) {
-	//  echo "<OPTION selected value=\"0\">",$unknownvalue,"</OPTION>\n";
+	//  echo "<option selected value=\"0\">",$unknownvalue,"</option>\n";
 	//}
 	/* print list with months and select the one read from the DB */
 	$currentmonth = date("n", NOW);
 	for ($i=1; $i<=12; $i++) {
-		print '<OPTION ';
+		print '<option ';
 		if ($month==$i) { echo "selected "; }
 		if ($currentmonth==$i && $month==0) { echo "selected "; }
-		echo "value=\"$i\">",Month_to_Text($i),"</OPTION>\n";
+		echo "value=\"$i\">",Month_to_Text($i),"</option>\n";
 	}
-	echo "</SELECT>\n";
-	echo "<SELECT name=\"",$dayvar,"\" id=\"",$dayvar,"\">\n";
+	echo "</select>\n";
+	echo "<select name=\"",$dayvar,"\" id=\"",$dayvar,"\">\n";
 
 	// if ($day==0) {
-	// echo "<OPTION selected value=\"0\">",$unknownvalue,"</OPTION>\n";
+	// echo "<option selected value=\"0\">",$unknownvalue,"</option>\n";
 	//}
 
 	// print list with days and select the one read from the DB
 	$currentday = date("j", NOW);
 	for ($i=1;$i<=31;$i++) {
-		echo "<OPTION ";
+		echo "<option ";
 		if ($day==$i) { echo "selected "; }
 		if ($currentday==$i && $day==0) { echo "selected "; }
-		echo "value=\"",$i,"\">",$i,"</OPTION>\n";
+		echo "value=\"",$i,"\">",$i,"</option>\n";
 	}
-	echo "</SELECT>\n";
-	echo "<SELECT name=\"",$yearvar,"\" id=\"",$yearvar,"\">\n";
+	echo "</select>\n";
+	echo "<select name=\"",$yearvar,"\" id=\"",$yearvar,"\">\n";
 
 	// print list with years and select the one read from the DB
 	$currentyear = date("Y", NOW);
-	if (!empty($year) && $year < $currentyear) { echo "<OPTION selected value=\"",$year,"\">",$year,"</OPTION>\n"; }
+	if (!empty($year) && $year < $currentyear) { echo "<option selected value=\"",$year,"\">",$year,"</option>\n"; }
 	for ($i=$currentyear;$i<=$currentyear+3;$i++) {
-		echo "<OPTION ";
+		echo "<option ";
 		if ($year==$i) { echo "selected "; }
-		echo "value=\"",$i,"\">",$i,"</OPTION>\n";
+		echo "value=\"",$i,"\">",$i,"</option>\n";
 	}
-	echo "</SELECT>\n";
+	echo "</select>\n";
 	
 	if (!isset($GLOBALS['popupCalendarJavascriptIsLoaded'])) {
 		 $calendarLanguageFile = 'scripts/jscalendar/lang/calendar-'.LANGUAGE.'.js';

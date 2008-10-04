@@ -34,16 +34,16 @@ require_once('application.inc.php');
 	pageheader(lang('delete_main_admin'), "");
 	contentsection_begin(lang('delete_main_admin'));
 ?>
-<FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<B><?php echo lang('delete_main_admin_confirm'); ?> &quot;<?php echo $mainuserid; ?>&quot;</B>
-	<BR>
-	<BR>
-	<INPUT type="hidden" name="mainuserid" value="<?php echo $mainuserid; ?>">
-	<INPUT type="hidden" name="deleteconfirmed" value="1">
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-	<BR>
-</FORM>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<b><?php echo lang('delete_main_admin_confirm'); ?> &quot;<?php echo $mainuserid; ?>&quot;</b>
+	<br>
+	<br>
+	<input type="hidden" name="mainuserid" value="<?php echo $mainuserid; ?>">
+	<input type="hidden" name="deleteconfirmed" value="1">
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<br>
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

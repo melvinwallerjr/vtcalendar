@@ -124,18 +124,18 @@ if (isset($save) && isset($duration) && ($duration==1 || $duration==2 ||$duratio
 pageheader(lang('delete_inactive_sponsors'), "Update");
 contentsection_begin(lang('delete_inactive_sponsors'));
 ?>
-<FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php echo lang('delete_inactive_sponsors_message'); ?> 
 <select name="duration">
 <option value="1" selected><?php echo lang('delete_inactive_sponsors_year'); ?></option>
 <option value="2"><?php echo lang('delete_inactive_sponsors_2years'); ?></option>
 <option value="3"><?php echo lang('delete_inactive_sponsors_3years'); ?></option>
 </select>.
-	<BR>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+	<br>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

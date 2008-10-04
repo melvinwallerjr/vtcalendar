@@ -22,39 +22,39 @@ function displaylogin($errormsg="") {
 	contentsection_begin(lang('login'));
 
 	if (!empty($errormsg)) {
-		echo "<BR>\n";
+		echo "<br>\n";
 		feedback($errormsg,1);
 	}
 	?>
-	<DIV>
+	<div>
 	<?php @(readfile('static-includes/loginform-pre.txt')); ?>
-	<FORM method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
+	<form method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
 	<?php
 	if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($eventid),"\">\n"; }
 	if (isset($httpreferer)) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($httpreferer),"\">\n"; }
 	if (isset($authsponsorid)) { echo "<input type=\"hidden\" name=\"authsponsorid\" value=\"",htmlentities($authsponsorid),"\">\n"; }
 	?>
-		<TABLE border="0" cellspacing="1" cellpadding="3">
-			<TR>
-				<TD class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></TD>
-				<TD align="left"><INPUT type="text" name="login_userid" value=""></TD>
-			</TR>
-			<TR>
-				<TD class="inputbox" align="right"><b><?php echo lang('password'); ?></b></TD>
-				<TD align="left"><INPUT type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></TD>
-			</TR>
-			<TR>
-				<TD class="inputbox">&nbsp;</TD>
-				<TD align="left"><INPUT type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></TD>
-			</TR>
-		</TABLE>
+		<table border="0" cellspacing="1" cellpadding="3">
+			<tr>
+				<td class="inputbox" align="right" nowrap><b><?php echo lang('user_id'); ?>:</b></td>
+				<td align="left"><input type="text" name="login_userid" value=""></td>
+			</tr>
+			<tr>
+				<td class="inputbox" align="right"><b><?php echo lang('password'); ?></b></td>
+				<td align="left"><input type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></td>
+			</tr>
+			<tr>
+				<td class="inputbox">&nbsp;</td>
+				<td align="left"><input type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></td>
+			</tr>
+		</table>
 		<p><a href="helpsignup.php" target="newWindow" onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a></p>
-	</FORM>
+	</form>
 	<script language="JavaScript1.2"><!--
 		document.loginform.login_userid.focus();
 	//--></script>
 	<?php @(readfile('static-includes/xloginform-post.txt')); ?>
-	</DIV>
+	</div>
 	<?php
 	contentsection_end();
 
@@ -134,7 +134,7 @@ function displaynotauthorized() {
 	echo lang('error_not_authorized_message'); ?><br>
 	<br>
 			<a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
-	<BR><?php
+	<br><?php
 	contentsection_end();
 
 	pagefooter();

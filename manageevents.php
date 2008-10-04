@@ -149,14 +149,14 @@ else {
 					<td <?php if ($_SESSION['CALENDAR_ID'] != "default" && $event['isdefaultcal'] == 1) { echo 'style="padding-top: 0; padding-bottom: 7px;" colspan="2"'; } ?> bgcolor="<?php echo $color; ?>" valign="top">
 						<?php
 						if ($event['approved'] == -1) {
-							echo '<FONT color="red"><B>rejected</B></FONT>';
-							if (!empty($event['rejectreason'])) { echo "<BR><B>Reason:</B> ",htmlentities($event['rejectreason']); }
+							echo '<font color="red"><b>rejected</b></font>';
+							if (!empty($event['rejectreason'])) { echo "<br><b>Reason:</b> ",htmlentities($event['rejectreason']); }
 						}
 						elseif ($event['approved'] == 0) {
-							echo '<FONT color="blue">',lang('submitted_for_approval'),'</FONT><br>';
+							echo '<font color="blue">',lang('submitted_for_approval'),'</font><br>';
 						}
 						elseif ($event['approved'] == 1) {
-							echo '<FONT color="green">',lang('approved'),'</FONT><br>';
+							echo '<font color="green">',lang('approved'),'</font><br>';
 						}
 						?></td>
 					<?php
@@ -180,13 +180,13 @@ else {
 		<br><b><?php echo lang('status_info_message'); ?></b><br>
 		<table border="0" cellspacing="0" cellpadding="3">
 		<tr>
-			<td><FONT color="red"><B><?php echo lang('rejected'); ?></B></FONT></td>
+			<td><font color="red"><b><?php echo lang('rejected'); ?></b></font></td>
 			<td><?php echo lang('rejected_explanation'); ?></td>
 		<tr>
-			<td><FONT color="blue"><?php echo lang('submitted_for_approval'); ?></FONT></td>
+			<td><font color="blue"><?php echo lang('submitted_for_approval'); ?></font></td>
 			<td><?php echo lang('submitted_for_approval_explanation'); ?></td>
 		<tr>
-			<td><FONT color="green"><?php echo lang('approved'); ?></FONT></td>
+			<td><font color="green"><?php echo lang('approved'); ?></font></td>
 			<td><?php echo lang('approved_explanation'); ?></td>
 		</tr></table>
 		

@@ -10,7 +10,7 @@
 
 	disassemble_timestamp($event);
 
-	echo '<SPAN class="bodytext">';
+	echo '<span class="bodytext">';
 	if (!empty($event['repeatid'])) {
 		readinrepeat($event['repeatid'],$event,$repeat);
 		echo lang('recurring_event'),": ";
@@ -19,28 +19,28 @@
 			$event['timebegin_month'],
 			$event['timebegin_day'],
 			$repeatdef);
-		echo "<BR>";
+		echo "<br>";
 	}
-	echo '</SPAN>';
+	echo '</span>';
 ?>
-<BR>
-<FORM method="post" action="approval.php">
+<br>
+<form method="post" action="approval.php">
 	<?php echo lang('reason_for_rejection'); ?>
-	<BR>
-	<TEXTAREA name="rejectreason" rows="2" cols="50" wrap=virtual></TEXTAREA>
-	<INPUT type="hidden" name="eventid" value="<?php echo $eventid; ?>">
-	<BR>
+	<br>
+	<textarea name="rejectreason" rows="2" cols="50" wrap=virtual></textarea>
+	<input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
+	<br>
 <?php
 	if (!empty($event['repeatid']) && num_unapprovedevents($event['repeatid']) > 1) {
-		echo '<INPUT type="submit" name="rejectconfirmedall" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;">';
+		echo '<input type="submit" name="rejectconfirmedall" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;">';
 	} 
 	else {
-		echo '<INPUT type="submit" name="rejectconfirmedthis" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;">';
+		echo '<input type="submit" name="rejectconfirmedthis" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;">';
 	} 
 ?>
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
-<BR>
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
+<br>
 <?php
 	contentsection_end();
 	pagefooter();

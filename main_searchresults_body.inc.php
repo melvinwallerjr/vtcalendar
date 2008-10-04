@@ -1,10 +1,10 @@
 <?php
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 ?>
-<FORM method="get" action="main.php" style="margin: 0; padding: 0;">
+<form method="get" action="main.php" style="margin: 0; padding: 0;">
 <input type="hidden" name="calendarid" value="<?php echo htmlentities($_SESSION['CALENDAR_ID']) ?>">
 <input type="hidden" name="view" value="search">
-<p><INPUT type="submit" value="&laquo; <?php echo lang('back_to_prev_page'); ?>"></p>
+<p><input type="submit" value="&laquo; <?php echo lang('back_to_prev_page'); ?>"></p>
 <table id="DayTable" width="100%" cellpadding="6" cellspacing="0" border="0">
 <?php
 if (isset($timebegin_year)) { // details was called from the searchform
@@ -190,4 +190,4 @@ DBQuery("INSERT INTO vtcal_searchlog (calendarid,time,ip,numresults,keyword) VAL
 }*/
 ?>
 </table>
-</FORM>
+</form>

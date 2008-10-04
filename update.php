@@ -46,26 +46,26 @@ if ( isset($fbid) ) {
 	<td valign="top">
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">Event Options:</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><A href="addevent.php"><?php echo lang('add_new_event'); ?></A></dt>
+				<dt><a href="addevent.php"><?php echo lang('add_new_event'); ?></a></dt>
 				<dd>Add a new event to the calendar.</dd>
-				<dt><A href="manageevents.php"><?php echo lang('manage_events'); ?></A></dt>
+				<dt><a href="manageevents.php"><?php echo lang('manage_events'); ?></a></dt>
 				<dd style="padding-bottom: 4px;">View events that have been submitted, and see if they have been approved.</dd>
-				<dt><A href="managetemplates.php"><?php echo lang('manage_templates'); ?></A></dt>
+				<dt><a href="managetemplates.php"><?php echo lang('manage_templates'); ?></a></dt>
 				<dd style="padding-bottom: 4px;">Create templates to easily add new events with similar information.</dd>
 			</dl>
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">Backup &amp; Restore:</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><A href="export.php"><?php echo lang('export_events'); ?></A></dt>
+				<dt><a href="export.php"><?php echo lang('export_events'); ?></a></dt>
 				<dd>Export events to a file you can save on your computer as a backup, or to transfer to another calendar.</dd>
-				<dt><A href="import.php"><?php echo lang('import_events'); ?></A></dt>
+				<dt><a href="import.php"><?php echo lang('import_events'); ?></a></dt>
 				<dd>Import an XML file that contains events as a batch.</dd>
 			</dl>
 		
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 8px;"><?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?> Options:&nbsp;</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><A href="changehomepage.php"><?php echo lang('change_homepage'); ?></A></dt>
+				<dt><a href="changehomepage.php"><?php echo lang('change_homepage'); ?></a></dt>
 				<dd>Change the default homepage address for &quot;<?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?>&quot;.</dd>
-				<dt><A href="changeemail.php"><?php echo lang('change_email'); ?></A></dt>
+				<dt><a href="changeemail.php"><?php echo lang('change_email'); ?></a></dt>
 				<dd>Change the default e-mail for &quot;<?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?>&quot;.</dd>
 			</dl>
 		
@@ -74,7 +74,7 @@ if ( isset($fbid) ) {
 			?>
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 8px;">User <?php echo $_SESSION["AUTH_USERID"]; ?>'s Options:&nbsp;</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><A href="changeuserpassword.php"><?php echo lang('change_password_of_user'); ?></A></dt>
+				<dt><a href="changeuserpassword.php"><?php echo lang('change_password_of_user'); ?></a></dt>
 				<dd>Change the password you use when logging in to the calendar.</dd>
 			</dl>
 			<?php
@@ -125,7 +125,7 @@ if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 	<td valign="top" style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">
 		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('main_administrators_options'); ?>:&nbsp;</h2>
 		<dl style="margin-top: 0; padding-top: 2px;">
-			<dt><?php	if ( AUTH_DB ) { ?><A href="manageusers.php"><?php echo lang('manage_users'); ?></A> <?php echo AUTH_DB_NOTICE; ?><?php } ?></dt>
+			<dt><?php	if ( AUTH_DB ) { ?><a href="manageusers.php"><?php echo lang('manage_users'); ?></a> <?php echo AUTH_DB_NOTICE; ?><?php } ?></dt>
 			<dd>Add, edit and remove user accounts from the database.</dd>
 		</dl>
 		<dl>

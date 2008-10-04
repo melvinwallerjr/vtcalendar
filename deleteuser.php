@@ -36,17 +36,17 @@ require_once('application.inc.php');
 	pageheader(lang('delete_user'), "Update");
 	contentsection_begin(lang('delete_user'));
 ?>
-<FORM method="post" action="deleteuser.php">
-	<B><?php echo lang('delete_user_confirm'); ?> &quot;<?php echo $userid; ?>&quot;</B>
-	<BR>
-	<BR>
-	<INPUT type="hidden" name="userid" value="<?php echo $userid; ?>">
-	<INPUT type="hidden" name="deleteconfirmed" value="1">
-	<INPUT type="submit" name="deleteuser" value="<?php echo lang('ok_button_text'); ?>">
+<form method="post" action="deleteuser.php">
+	<b><?php echo lang('delete_user_confirm'); ?> &quot;<?php echo $userid; ?>&quot;</b>
+	<br>
+	<br>
+	<input type="hidden" name="userid" value="<?php echo $userid; ?>">
+	<input type="hidden" name="deleteconfirmed" value="1">
+	<input type="submit" name="deleteuser" value="<?php echo lang('ok_button_text'); ?>">
 	&nbsp;
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-	<BR>
-</FORM>
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<br>
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

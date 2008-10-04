@@ -158,13 +158,13 @@ if ($sponsor['admin']) {
 	echo "<br>";
 }
 ?>
-<TABLE border="0" cellpadding="2" cellspacing="0">
-	<TR>
-		<TD class="bodytext" valign="top">
+<table border="0" cellpadding="2" cellspacing="0">
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('sponsor_name'); ?></strong>
 			<span class="WarningText">*</span>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 		if ( isset($check) ) {
 			if (empty($sponsor['name'])) {
@@ -175,49 +175,49 @@ if ($sponsor['admin']) {
 			}
 		}
 ?>
-			<INPUT type="text" size="50" name="sponsor[name]" maxlength=<?php echo constSponsor_nameMaxLength; ?>  value="<?php
+			<input type="text" size="50" name="sponsor[name]" maxlength=<?php echo constSponsor_nameMaxLength; ?>  value="<?php
 		if ( isset($check) ) { $sponsor['name']=stripslashes($sponsor['name']); }
 		if ( isset($sponsor['name']) ) { echo HTMLSpecialChars($sponsor['name']); }
-?>"> <I><?php echo lang('sponsor_name_example'); ?></I><BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+?>"> <i><?php echo lang('sponsor_name_example'); ?></i><br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('email'); ?></strong>
 			<span class="WarningText">*</span>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if (isset($check) && (empty($sponsor['email']))) {
 		feedback(lang('choose_email'),FEEDBACKNEG);
 	}
 ?>
-			<INPUT type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+			<input type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
 	if ( isset($check) ) { $sponsor['email']=stripslashes($sponsor['email']); }
 	if ( isset($sponsor['email'])) { echo HTMLSpecialChars($sponsor['email']); }
 ?>">
-			<I><?php echo lang('email_example'); ?></I><BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+			<i><?php echo lang('email_example'); ?></i><br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('homepage'); ?></strong>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if ( isset($check) && !checkURL($sponsor['url']) ) {
 		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
-			<INPUT type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
+			<input type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
 	if ( isset($check) ) { $sponsor['url']=stripslashes($sponsor['url']); }
 	if ( isset($sponsor['url']) ) { echo HTMLSpecialChars($sponsor['url']); }
 ?>">
-			<I><?php echo lang('url_example'); ?></I><BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+			<i><?php echo lang('url_example'); ?></i><br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php
 				if ($sponsor['admin']) {
 					echo lang('administrative_members');
@@ -225,8 +225,8 @@ if ($sponsor['admin']) {
 					echo lang('sponsor_members');
 				}
 			?></strong>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if (!empty($addPIDError)) {    
 		feedback($addPIDError,1);
@@ -249,17 +249,17 @@ if ($sponsor['admin']) {
 		}
 		?></textarea><br>
 		<i><?php echo lang('administrative_members_example'); ?></i>
-		</TD>
-	</TR>
-</TABLE>
+		</td>
+	</tr>
+</table>
 	<input type="hidden" name="check" value="1">
 <?php
 	if ( isset ($id) ) { echo '<input type="hidden" name="id" value="',$id,'">'; }
 ?>
-	<BR>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<br>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
 	contentsection_end();

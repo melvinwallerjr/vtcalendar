@@ -37,23 +37,23 @@ require_once('application.inc.php');
 	pageheader(lang('change_homepage'), "Update");
 	contentsection_begin(lang('change_homepage'));
 ?>
-<p><B><?php echo lang('change_homepage_label'); ?></B><BR>
-<I><?php echo lang('change_homepage_example'); ?></I></p>
-<FORM method="post" action="changehomepage.php">
+<p><b><?php echo lang('change_homepage_label'); ?></b><br>
+<i><?php echo lang('change_homepage_example'); ?></i></p>
+<form method="post" action="changehomepage.php">
 <?php
 	if (!checkURL($sponsor['url'])) {
 		feedback(lang('url_invalid'),FEEDBACKNEG);
 ?>
-	<BR>
+	<br>
 <?php
 	} /* end: if ($checkURL($sponsor[url])) */
 ?>
-	<INPUT type="text" name="sponsor_url" maxlength="<?php echo constUrlMaxLength; ?>" size="60" value="<?php echo HTMLSpecialChars($sponsor['url']); ?>">
-	<BR>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+	<input type="text" name="sponsor_url" maxlength="<?php echo constUrlMaxLength; ?>" size="60" value="<?php echo HTMLSpecialChars($sponsor['url']); ?>">
+	<br>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

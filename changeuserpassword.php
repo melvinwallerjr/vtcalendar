@@ -41,27 +41,27 @@ require_once('application.inc.php');
 
 	contentsection_begin(lang('change_password'));
 ?>
-<FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<TABLE border="0" cellpadding="2" cellspacing="0">
-		<TR>
-			<TD class="bodytext" valign="top">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<table border="0" cellpadding="2" cellspacing="0">
+		<tr>
+			<td class="bodytext" valign="top">
 				<b><?php echo lang('old_password'); ?></b>
-			</TD>
-			<TD class="bodytext" valign="top">
+			</td>
+			<td class="bodytext" valign="top">
 <?php
 		if (isset($save) && $oldpw_error) {
 			feedback(lang('old_password_wrong'),FEEDBACKNEG);
 		}
 ?>
-				<INPUT type="password" name="user_oldpassword" maxlength="20" size="20" value="">
-				<I>&nbsp;<?php echo lang('case_sensitive'); ?></I>
-			</TD>
-		</TR>
-		<TR>
-			<TD class="bodytext" valign="top">
+				<input type="password" name="user_oldpassword" maxlength="20" size="20" value="">
+				<i>&nbsp;<?php echo lang('case_sensitive'); ?></i>
+			</td>
+		</tr>
+		<tr>
+			<td class="bodytext" valign="top">
 				<b><?php echo lang('new_password'); ?></b>
-			</TD>
-			<TD class="bodytext" valign="top">
+			</td>
+			<td class="bodytext" valign="top">
 <?php
 	if (isset($save)) {
 		if ($newpw_error == 1) {
@@ -72,24 +72,24 @@ require_once('application.inc.php');
 		} // end: if ($newpw_error == 2)
 	} // end: if (isset($save))
 ?>
-				<INPUT type="password" name="user_newpassword1" maxlength="20" size="20" value="">
-				<I>&nbsp;<?php echo lang('case_sensitive'); ?></I>
-			</TD>
-		</TR>
-		<TR>
-			<TD class="bodytext" valign="top">
-				<b><?php echo lang('new_password'); ?></b><BR><?php echo lang('password_repeated'); ?>
-			</TD>
-			<TD class="bodytext" valign="top">
-				<INPUT type="password" name="user_newpassword2" maxlength="20" size="20" value="">
-				<I>&nbsp;<?php echo lang('case_sensitive'); ?></I>
-			</TD>
-		</TR>
-	</TABLE>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+				<input type="password" name="user_newpassword1" maxlength="20" size="20" value="">
+				<i>&nbsp;<?php echo lang('case_sensitive'); ?></i>
+			</td>
+		</tr>
+		<tr>
+			<td class="bodytext" valign="top">
+				<b><?php echo lang('new_password'); ?></b><br><?php echo lang('password_repeated'); ?>
+			</td>
+			<td class="bodytext" valign="top">
+				<input type="password" name="user_newpassword2" maxlength="20" size="20" value="">
+				<i>&nbsp;<?php echo lang('case_sensitive'); ?></i>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

@@ -123,13 +123,13 @@ require_once('application.inc.php');
 ?>
 <br>
 <form method="post" action="editcalendar.php">
-<TABLE border="0" cellpadding="2" cellspacing="0">
-	<TR>
-		<TD class="bodytext" valign="top">
+<table border="0" cellpadding="2" cellspacing="0">
+	<tr>
+		<td class="bodytext" valign="top">
 			<?php echo lang('calendar_id'); ?>:
 			<span class="WarningText">*</span>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['id']) || !isValidInput($cal['id'],'calendarid')) {
@@ -143,10 +143,10 @@ require_once('application.inc.php');
 <?php
 	if ( isset ($new) ) { 
 ?>
-	<INPUT type="text" size="20" name="cal[id]" maxlength=<?php echo constCalendaridMAXLENGTH; ?> value="<?php
+	<input type="text" size="20" name="cal[id]" maxlength=<?php echo constCalendaridMAXLENGTH; ?> value="<?php
 	if ( isset($check) ) { $cal['id']=stripslashes($cal['id']); }
 	if ( isset($cal['id']) ) { echo HTMLSpecialChars($cal['id']); }
-?>"> <I><?php echo lang('calendar_id_example'); ?></I>
+?>"> <i><?php echo lang('calendar_id_example'); ?></i>
 <?php
 	} // end: else: if ( isset ($cal['id']) )
 	else {
@@ -154,15 +154,15 @@ require_once('application.inc.php');
 		echo "<b>".$cal['id']."</b>\n"; 
 	}
 ?>
-<BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+<br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<?php echo lang('calendar_name'); ?>:
 			<span class="WarningText">*</span>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['name']) || !isValidInput($cal['name'],'calendarname')) {
@@ -170,17 +170,17 @@ require_once('application.inc.php');
 		}
 	}
 ?>
-			<INPUT type="text" size="50" name="cal[name]" maxlength=<?php echo constCalendarnameMAXLENGTH; ?>  value="<?php
+			<input type="text" size="50" name="cal[name]" maxlength=<?php echo constCalendarnameMAXLENGTH; ?>  value="<?php
 	if ( isset($check) ) { $cal['name']=stripslashes($cal['name']); }
 	if ( isset($cal['name']) ) { echo HTMLSpecialChars($cal['name']); }
-?>"> <I><?php echo lang('calendar_name_example'); ?></I><BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+?>"> <i><?php echo lang('calendar_name_example'); ?></i><br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<?php echo lang('administrators'); ?><br>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 <?php
 	if (!empty($addPIDError)) {    
 		feedback($addPIDError,1);
@@ -209,14 +209,14 @@ require_once('application.inc.php');
 		}
 		?></textarea><br>
 		<i><?php echo lang('administrators_example'); ?></i>
-		</TD>
-	</TR>
+		</td>
+	</tr>
 <?php
 	if ( !isset($cal['id']) || $cal['id'] != "default" ) {
 ?>
-	<TR>
-		<TD class="bodytext" valign="top">&nbsp;</TD>
-		<TD class="bodytext" valign="top">
+	<tr>
+		<td class="bodytext" valign="top">&nbsp;</td>
+		<td class="bodytext" valign="top">
 <?php
 	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='default'" ); 
 	$c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
@@ -233,8 +233,8 @@ require_once('application.inc.php');
 			<?php echo lang('also_display_on_calendar_notice'); ?></td>
 				</tr>
 			</table>
-		</TD>
-	</TR>
+		</td>
+	</tr>
 <?php
 	} // end: if ( $cal['id'] != "default" ) {
 ?>	
@@ -247,12 +247,12 @@ require_once('application.inc.php');
 		echo '<input type="hidden" name="new" value="1">';
 	}
 ?>		
-		<BR>
-		<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-		<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+		<br>
+		<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+		<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 		</td>
 	</tr>
-</TABLE>
+</table>
 </form>
 <?php
 	contentsection_end();

@@ -107,7 +107,7 @@ else {
 	else {
 		?>
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" style="margin: 0; padding: 0;">
-			<INPUT type="submit" name="approveallevents" value="<?php echo lang('approve_all_events'); ?>">
+			<input type="submit" name="approveallevents" value="<?php echo lang('approve_all_events'); ?>">
 			<input type="hidden" name="eventidlist" value="<?php
 				// read first event if one exists
 				$ievent = 0;

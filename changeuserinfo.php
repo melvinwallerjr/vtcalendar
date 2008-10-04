@@ -106,17 +106,17 @@ require_once('application.inc.php');
 		$user = $result->fetchRow(DB_FETCHMODE_ASSOC);
 	} // end if: "if (isset($userid))"
 ?>
-<FORM method="post" action="changeuserinfo.php">
+<form method="post" action="changeuserinfo.php">
 <?php
 	// set the allowed length for the input fields
 	$maxlength_id = 50;
 ?>
-<TABLE border="0" cellpadding="2" cellspacing="0">
-	<TR>
-		<TD class="bodytext" valign="baseline">
+<table border="0" cellpadding="2" cellspacing="0">
+	<tr>
+		<td class="bodytext" valign="baseline">
 			<b><?php echo lang('user_id'); ?>:<span class="WarningText">*</span></b>
-		</TD>
-		<TD class="bodytext" valign="baseline">
+		</td>
+		<td class="bodytext" valign="baseline">
 <?php
 	if (!empty($chooseuser)) {
 		echo "<b>".$userid."</b>";
@@ -130,35 +130,35 @@ require_once('application.inc.php');
 		}
 		
 	 echo AUTH_DB_USER_PREFIX;	
-?><INPUT type="text" size="10" name="userid" maxlength=<?php echo $maxlength_id; ?>  value="<?php
+?><input type="text" size="10" name="userid" maxlength=<?php echo $maxlength_id; ?>  value="<?php
 	if (isset($check) && $check) { $userid=stripslashes($userid); }
 	if (isset($userid)) { echo HTMLSpecialChars(substr($userid,strlen(AUTH_DB_USER_PREFIX))); }
-?>"> <I>(e.g. <?php echo AUTH_DB_USER_PREFIX; ?>jsmith)</I>
+?>"> <i>(e.g. <?php echo AUTH_DB_USER_PREFIX; ?>jsmith)</i>
 <?php
 	} // end: else: if (!empty($userid))
 ?>
-<BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="baseline">
+<br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="baseline">
 			<b><?php echo lang('password'); ?><span class="WarningText">*</span></b>
-		</TD>
-		<TD class="bodytext" valign="baseline">
+		</td>
+		<td class="bodytext" valign="baseline">
 <?php
 	if (isset($check) && $check && (empty($user['password']))) {
 		feedback(lang('choose_password'),FEEDBACKNEG);
 	}
 ?>
-			<INPUT type="password" size="14" name="user[password]" maxlength=<?php echo constPasswordMaxLength; ?>  value="<?php if (!empty($chooseuser)) { echo "#nochange$"; } ?>"> <BR>
-		</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="baseline">
+			<input type="password" size="14" name="user[password]" maxlength=<?php echo constPasswordMaxLength; ?>  value="<?php if (!empty($chooseuser)) { echo "#nochange$"; } ?>"> <br>
+		</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="baseline">
 			<b><?php echo lang('email'); ?></b>
-		</TD>
-		<TD class="bodytext" valign="baseline">
-			<INPUT type="text" size="20" name="user[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+		</td>
+		<td class="bodytext" valign="baseline">
+			<input type="text" size="20" name="user[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
 	if (isset($user) && isset($user['email'])) {
 		if (isset($check) && $check) { 
 			$user['email']=stripslashes($user['email']); 
@@ -166,21 +166,21 @@ require_once('application.inc.php');
 		echo HTMLSpecialChars($user['email']);
 	}
 ?>">
-			<I><?php echo lang('email_example'); ?></I><BR>
-		</TD>
-	</TR>
-</TABLE>
-<INPUT type="hidden" name="check" value="1">
-<BR>
+			<i><?php echo lang('email_example'); ?></i><br>
+		</td>
+	</tr>
+</table>
+<input type="hidden" name="check" value="1">
+<br>
 <?php
  if (!empty($chooseuser)) { 
-	 echo "<INPUT type=\"hidden\" name=\"chooseuser\" value=\"1\">\n"; 
-	 if (!empty($userid)) { echo "<INPUT type=\"hidden\" name=\"userid\" value=\"$userid\">\n"; }
+	 echo "<input type=\"hidden\" name=\"chooseuser\" value=\"1\">\n"; 
+	 if (!empty($userid)) { echo "<input type=\"hidden\" name=\"userid\" value=\"$userid\">\n"; }
  }
 ?>
-<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

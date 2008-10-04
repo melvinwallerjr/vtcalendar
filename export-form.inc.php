@@ -44,11 +44,11 @@ contentsection_begin(lang('export_events'));
 				<option value="vxml">VoiceXML 2.0</option>
 			</select></td>
 	</tr>
-	<TR>
-		<TD class="bodytext" valign="top">
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('category'); ?>:</strong>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 				<?php
 				$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 				
@@ -56,31 +56,31 @@ contentsection_begin(lang('export_events'));
 					// TODO: Need DB failed message.
 				}
 				else {
-					echo '<SELECT name="categoryid" size="1">';
+					echo '<select name="categoryid" size="1">';
 					
 					// print list with categories from the DB
-					echo "<OPTION ";
+					echo "<option ";
 					if (empty($categoryid) || $categoryid==0) {
 						echo "selected ";
 					}
-					echo "value=\"0\">all</OPTION>\n";
+					echo "value=\"0\">all</option>\n";
 					
 					for ($i=0; $i<$result->numRows(); $i++) {
 						$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-						echo "<OPTION ";
+						echo "<option ";
 						if (!empty($categoryid) && $categoryid==$category['id']) { echo "selected "; }
-						echo "value=\"",htmlentities($category['id']),"\">",htmlentities($category['name']),"</OPTION>\n";
+						echo "value=\"",htmlentities($category['id']),"\">",htmlentities($category['name']),"</option>\n";
 					}
 					
-					echo '</SELECT>';
+					echo '</select>';
 				}
-				?></TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+				?></td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('sponsor'); ?>:</strong>
-		</TD>
-		<TD class="bodytext" valign="top">
+		</td>
+		<td class="bodytext" valign="top">
 			<input type="radio" name="sponsortype" value="all" checked> <?php echo lang('all'); ?><br>
 <?php
 	if (!empty($_SESSION["AUTH_SPONSORID"])) {
@@ -95,7 +95,7 @@ contentsection_begin(lang('export_events'));
 				$result = "disabled";
 				
 				if (is_string($result)) {
-					?><INPUT type="text" size="28" maxlength="<?php echo constSpecificsponsorMaxLength; ?>" name="specificsponsor" value=""><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i><?php echo lang('specific_sponsor_example'); ?></i><?php
+					?><input type="text" size="28" maxlength="<?php echo constSpecificsponsorMaxLength; ?>" name="specificsponsor" value=""><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i><?php echo lang('specific_sponsor_example'); ?></i><?php
 				}
 				else {
 					echo '<select name="specificsponsor" id="specificsponsor">';
@@ -113,93 +113,93 @@ contentsection_begin(lang('export_events'));
 					echo '</select>';
 				}
 				?>
-			</TD>
-	</TR>
-	<TR>
-		<TD class="bodytext" valign="top">
+			</td>
+	</tr>
+	<tr>
+		<td class="bodytext" valign="top">
 			<strong><?php echo lang('date'); ?>:</strong>
-		</TD>
-		<TD class="bodytext" valign="top">
-			<TABLE border="0">
-				<TR>
-					<TD class="bodytext" valign="top"><?php echo lang('from'); ?>:</TD>
-					<TD class="bodytext" valign="top">
-						<SELECT name="timebegin_month" size="1">
+		</td>
+		<td class="bodytext" valign="top">
+			<table border="0">
+				<tr>
+					<td class="bodytext" valign="top"><?php echo lang('from'); ?>:</td>
+					<td class="bodytext" valign="top">
+						<select name="timebegin_month" size="1">
 <?php
 // print list with months
 for ($i=1; $i<=12; $i++) {
-	print '<OPTION ';
+	print '<option ';
 	if ($timebegin_month==$i) { echo "selected "; }
-	echo "value=\"$i\">",Month_to_Text($i),"</OPTION>\n";
+	echo "value=\"$i\">",Month_to_Text($i),"</option>\n";
 }
 ?>
-					</SELECT>
-				</TD>
-				<TD class="bodytext" valign="top">
-					<SELECT name="timebegin_day" size="1">
+					</select>
+				</td>
+				<td class="bodytext" valign="top">
+					<select name="timebegin_day" size="1">
 <?php
 // print list with days
 for ($i=1; $i<=31; $i++) {
-	echo "<OPTION ";
+	echo "<option ";
 	if ($timebegin_day==$i) { echo "selected "; }
-	echo "value=\"$i\">$i</OPTION>\n";
+	echo "value=\"$i\">$i</option>\n";
 }
 ?>
-				</SELECT>
-			</TD>
-			<TD class="bodytext" valign="top">
-				<SELECT name="timebegin_year" size="1">
+				</select>
+			</td>
+			<td class="bodytext" valign="top">
+				<select name="timebegin_year" size="1">
 <?php
 // print list with years
 for ($i=date("Y", NOW)-1; $i<=date("Y", NOW)+3; $i++) {
-	echo "<OPTION ";
+	echo "<option ";
 	if ($timebegin_year==$i) { echo "selected "; }
-	echo "value=\"$i\">$i</OPTION>\n";
+	echo "value=\"$i\">$i</option>\n";
 }
 ?>
-				</SELECT>
-			</TD>
-		</TR>
-		<TR>
-			<TD class="bodytext" valign="top"><?php echo lang('to'); ?>:</TD>
-			<TD class="bodytext" valign="top">
-				<SELECT name="timeend_month" size="1">
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="bodytext" valign="top"><?php echo lang('to'); ?>:</td>
+			<td class="bodytext" valign="top">
+				<select name="timeend_month" size="1">
 <?php
 // print list with months
 for ($i=1; $i<=12; $i++) {
-	print '<OPTION ';
+	print '<option ';
 	if ($timeend_month==$i) { echo "selected "; }
-	echo "value=\"$i\">",Month_to_Text($i),"</OPTION>\n";
+	echo "value=\"$i\">",Month_to_Text($i),"</option>\n";
 }
 ?>
-				</SELECT>
-			</TD>
-			<TD>
-				<SELECT name="timeend_day" size="1">
+				</select>
+			</td>
+			<td>
+				<select name="timeend_day" size="1">
 <?php
 // print list with days
 for ($i=1; $i<=31; $i++) {
-	echo "<OPTION ";
+	echo "<option ";
 	if ($timeend_day==$i) { echo "selected "; }
-	echo "value=\"$i\">$i</OPTION>\n";
+	echo "value=\"$i\">$i</option>\n";
 }
 ?>
-				</SELECT>
-			</TD>
-			<TD class="bodytext" valign="top">
-				<SELECT name="timeend_year" size="1">
+				</select>
+			</td>
+			<td class="bodytext" valign="top">
+				<select name="timeend_year" size="1">
 <?php
 // print list with years
 for ($i=date("Y", NOW)-1; $i<=date("Y", NOW)+3; $i++) {
-	echo "<OPTION ";
+	echo "<option ";
 	if ($timeend_year==$i) { echo "selected "; }
-	echo "value=\"$i\">$i</OPTION>\n";
+	echo "value=\"$i\">$i</option>\n";
 }
 ?>
-				</SELECT>
-			</TD>
-		</TR>
-	</TABLE>
+				</select>
+			</td>
+		</tr>
+	</table>
 </table>
 
 <p><?php echo lang('export_message'); ?></p>

@@ -320,6 +320,9 @@ function isValidInput($value, $type) {
 	elseif ($type=='type') {
 		if ($value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
 	}
+	elseif ($type='exportformat') {
+		if ($value=="html" || $value=="js" || $value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
+	}
 	elseif ($type=='rangedays') {
 		if (is_numeric($value) && $value>=1 && $value<=100000) { return TRUE; }
 	}

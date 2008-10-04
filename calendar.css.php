@@ -601,6 +601,14 @@ td.EventDetail-Label {
 }
 
 /*===================================
+             Export View
+===================================*/
+
+#ExportForm.HideHTML .HTMLOnly {
+	display: none;
+}
+
+/*===================================
             Misc Styles
 ===================================*/
 
@@ -746,3 +754,4 @@ div#MenuButton a:hover, div#MenuButton a:focus {
 	background-repeat: no-repeat;
 	background-position: 0 3px;
 }
+

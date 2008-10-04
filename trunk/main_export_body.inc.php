@@ -1,6 +1,6 @@
 <div style="padding: 10px; padding-bottom: 0;">SOME DESCRIPTION</div>
 
-<form id="ExportForm" name="ExportForm" method="get" action="main.php">
+<form id="ExportForm" name="ExportForm" method="get" action="main.php" class="HideHTML">
 
 <input type="hidden" name="view" value="export">
 
@@ -23,6 +23,21 @@ function checkAll(myForm, id, state) {
 		}
 	}
 }
+
+function ToggleHTMLSections() {
+	if (document.getElementById) {
+		var oForm = document.getElementById("ExportForm");
+		var oHTML = document.getElementById("format_html");
+		if (oForm && oHTML) {
+			if (oHTML.checked) {
+				oForm.className = "";
+			}
+			else {
+				oForm.className = "HideHTML";
+			}
+		}
+	}
+}
 //]]> -->
 </script>
 
@@ -34,29 +49,35 @@ function checkAll(myForm, id, state) {
 	<blockquote>
 		<table  border="0" cellpadding="2" cellspacing="0">
 	    	<tr>
-	    		<td><input name="format" type="radio" value="html" id="format_html" <?php if (isset($Form_format) && $Form_format == "html") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_html">HTML</label></td>
-	    	</tr>
+	    		<td colspan="2"><b><?php echo lang('export_format_standard'); ?>:</b></td>
+	   		</tr>
 	    	<tr>
-	    		<td><input name="format" type="radio" value="js" id="format_js" <?php if (isset($Form_format) && $Form_format == "js") echo "CHECKED"; ?>></td>
-		   		<td><label for="format_js">JavaScript Array (e.g. <code>vtcalevents[0]['date']</code>)</td>
-	    	</tr>
-	    	<tr>
-	    		<td><input name="format" type="radio" value="xml" id="format_xml" <?php if (isset($Form_format) && $Form_format == "xml") echo "CHECKED"; ?>></td>
+	    		<td><input name="format" type="radio" value="xml" id="format_xml" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "xml") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_xml">VTCalendar (XML) </td>
 	   		</tr>
 	    	<tr>
-	    		<td><input name="format" type="radio" value="rss" id="format_rss" <?php if (isset($Form_format) && $Form_format == "rss") echo "CHECKED"; ?>></td>
+	    		<td><input name="format" type="radio" value="rss" id="format_rss" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "rss") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_rss">RSS 0.91 (XML) </td>
 	   		</tr>
 	    	<tr>
-	    		<td><input name="format" type="radio" value="rss1_0" id="format_rss1_0" <?php if (isset($Form_format) && $Form_format == "rss1_0") echo "CHECKED"; ?>></td>
+	    		<td><input name="format" type="radio" value="rss1_0" id="format_rss1_0" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "rss1_0") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_rss1_0">RSS 1.0 (XML) </td>
 	   		</tr>
 	    	<tr>
-	    		<td><input name="format" type="radio" value="vxml" id="format_vxml" <?php if (isset($Form_format) && $Form_format == "vxml") echo "CHECKED"; ?>></td>
+	    		<td><input name="format" type="radio" value="vxml" id="format_vxml" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "vxml") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_vxml">VoiceXML 2.0 (XML) </td>
 	   		</tr>
+	    	<tr>
+	    		<td colspan="2" style="padding-top: 16px;"><b><?php echo lang('export_format_advanced'); ?>:</b></td>
+	   		</tr>
+	    	<tr>
+	    		<td><input name="format" type="radio" value="html" id="format_html" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "html") echo "CHECKED"; ?>></td>
+	    		<td><label for="format_html">HTML</label></td>
+	    	</tr>
+	    	<tr>
+	    		<td><input name="format" type="radio" value="js" id="format_js" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "js") echo "CHECKED"; ?>></td>
+		   		<td><label for="format_js">JavaScript Array (e.g. <code>vtcalevents[0]['date']</code>)</td>
+	    	</tr>
 	    </table>
 	</blockquote>
 	
@@ -95,6 +116,7 @@ function checkAll(myForm, id, state) {
 	<p><b><?php echo lang('export_categories'); ?>:</b></p>
 	
 	<blockquote>
+		<p><?php echo lang('export_categories_description'); ?>:</p>
 		<p><a href="javascript:checkAll(document.ExportForm,'categories',true);"><?php echo lang('select_unselect'); ?></a></p>
 		<table border="0" cellspacing="0" cellpadding="4"><tr><td valign="top">
 		<table border="0" cellspacing="0" cellpadding="1">
@@ -146,7 +168,7 @@ function checkAll(myForm, id, state) {
 	</blockquote>
 
 	<p><input type="Submit" name="createexport" value="<?php echo lang('export_submit'); ?>">
-		<span><?php echo lang('export_keepscrolling'); ?></span></p>
+		<span class="HTMLOnly"><?php echo lang('export_keepscrolling'); ?></span></p>
 </div>
 
 <div class="HTMLOnly">
@@ -190,12 +212,12 @@ function checkAll(myForm, id, state) {
 	<p><b><?php echo lang('export_dateformat'); ?>:</b></p>
 	<blockquote>
 		<select name="dateformat">
-			<option value="huge" <?php if (isset($Form_dateformat) && $Form_dateformat == 'huge') echo "selected"; ?>>Wednesday, October 25, 2006</option>
-			<option value="long" <?php if (isset($Form_dateformat) && $Form_dateformat == 'long') echo "selected"; ?>>Wed, October 25, 2006</option>
-			<option value="normal" <?php if (isset($Form_dateformat) && $Form_dateformat == 'normal') echo "selected"; ?>>October 25, 2006</option>
-			<option value="short" <?php if (isset($Form_dateformat) && $Form_dateformat == 'short') echo "selected"; ?>>Oct. 25, 2006</option>
-			<option value="tiny" <?php if (isset($Form_dateformat) && $Form_dateformat == 'tiny') echo "selected"; ?>>Oct 25 '06</option>
-			<option value="micro" <?php if (isset($Form_dateformat) && $Form_dateformat == 'micro') echo "selected"; ?>>Oct 25</option>
+			<option value="huge" <?php if (isset($Form_dateformat) && $Form_dateformat == 'huge') echo "selected"; ?>><?php echo lang('wednesday'); ?>, <?php echo lang('october'); ?> 25, 2006</option>
+			<option value="long" <?php if (isset($Form_dateformat) && $Form_dateformat == 'long') echo "selected"; ?>><?php echo lang('wed'); ?>, <?php echo lang('october'); ?> 25, 2006</option>
+			<option value="normal" <?php if (isset($Form_dateformat) && $Form_dateformat == 'normal') echo "selected"; ?>><?php echo lang('october'); ?> 25, 2006</option>
+			<option value="short" <?php if (isset($Form_dateformat) && $Form_dateformat == 'short') echo "selected"; ?>><?php echo lang('oct'); ?>. 25, 2006</option>
+			<option value="tiny" <?php if (isset($Form_dateformat) && $Form_dateformat == 'tiny') echo "selected"; ?>><?php echo lang('oct'); ?> 25 '06</option>
+			<option value="micro" <?php if (isset($Form_dateformat) && $Form_dateformat == 'micro') echo "selected"; ?>><?php echo lang('oct'); ?> 25</option>
 		</select>
 	</blockquote>
 	
@@ -218,7 +240,7 @@ function checkAll(myForm, id, state) {
 					<table border="0" cellpadding="0" cellspacing="2">
 						<tr>
 							<td><input type="radio" id="timedisplay_StartEndLong" name="timedisplay" value="startendlong"></td>
-							<td><label for="timedisplay_StartEndLong">12:00pm to 12:30pm</label></td>
+							<td><label for="timedisplay_StartEndLong">12:00pm <?php echo lang('export_output_to'); ?> 12:30pm</label></td>
 						</tr>
 						<tr>
 							<td><input type="radio" id="timedisplay_StartEndNormal" name="timedisplay" value="startendnormal"></td>
@@ -234,15 +256,15 @@ function checkAll(myForm, id, state) {
 					<table border="0" cellpadding="0" cellspacing="2">
 						<tr>
 							<td><input type="radio" id="timedisplay_StartDurationLong" name="timedisplay" value="startdurationlong"></td>
-							<td><label for="timedisplay_StartDurationLong">12:00pm for 2 hours</label></td>
+							<td><label for="timedisplay_StartDurationLong">12:00pm <?php echo lang('export_output_for'); ?> 2 <?php echo lang('export_output_hours'); ?></label></td>
 						</tr>
 						<tr>
 							<td><input type="radio" id="timedisplay_StartDurationNormal" name="timedisplay" value="startdurationnormal"></td>
-							<td><label for="timedisplay_StartDurationNormal">12:00pm (2 hours)</label></td>
+							<td><label for="timedisplay_StartDurationNormal">12:00pm (2 <?php echo lang('export_output_hours'); ?>)</label></td>
 						</tr>
 						<tr>
 							<td><input type="radio" id="timedisplay_StartDurationShort" name="timedisplay" value="startdurationshort"></td>
-							<td><label for="timedisplay_StartDurationShort">12:00pm 2 hours</label></td>
+							<td><label for="timedisplay_StartDurationShort">12:00pm 2 <?php echo lang('export_output_hours'); ?></label></td>
 						</tr>
 					</table>
 				</td>
@@ -254,9 +276,9 @@ function checkAll(myForm, id, state) {
 			<option value="startendlong" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendlong') echo "selected"; ?>>12:00pm to 12:30pm</option>
 			<option value="startendnormal" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendnormal') echo "selected"; ?>>12:00pm - 12:30pm</option>
 			<option value="startendtiny" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendtiny') echo "selected"; ?>>12:00pm-12:30pm</option>
-			<option value="startdurationlong" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationlong') echo "selected"; ?>>12:00pm for 2 hours</option>
-			<option value="startdurationnormal" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationnormal') echo "selected"; ?>>12:00pm (2 hours)</option>
-			<option value="startdurationshort" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationshort') echo "selected"; ?>>12:00pm 2 hours</option>
+			<option value="startdurationlong" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationlong') echo "selected"; ?>>12:00pm for 2 <?php echo lang('export_output_hours'); ?></option>
+			<option value="startdurationnormal" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationnormal') echo "selected"; ?>>12:00pm (2 <?php echo lang('export_output_hours'); ?>)</option>
+			<option value="startdurationshort" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationshort') echo "selected"; ?>>12:00pm 2 <?php echo lang('export_output_hours'); ?></option>
 		</select>
 		-->
 	</blockquote>
@@ -282,11 +304,11 @@ function checkAll(myForm, id, state) {
 	
 	<blockquote>
 		<select name="durationformat">
-			<option value="long" <?php if (isset($Form_durationformat) && $Form_durationformat == 'long') echo "selected"; ?>>2 hours 30 minutes</option>
-			<option value="normal" <?php if (isset($Form_durationformat) && $Form_durationformat == 'normal') echo "selected"; ?>>2 hours 30 min</option>
-			<option value="short" <?php if (isset($Form_durationformat) && $Form_durationformat == 'short') echo "selected"; ?>>2 hrs 30 min</option>
-			<option value="tiny" <?php if (isset($Form_durationformat) && $Form_durationformat == 'tiny') echo "selected"; ?>>2hrs 30min</option>
-			<option value="micro" <?php if (isset($Form_durationformat) && $Form_durationformat == 'micro') echo "selected"; ?>>2hr 30m</option>
+			<option value="long" <?php if (isset($Form_durationformat) && $Form_durationformat == 'long') echo "selected"; ?>>2 <?php echo lang('export_output_hours'); ?> 30 <?php echo lang('export_output_minutes'); ?></option>
+			<option value="normal" <?php if (isset($Form_durationformat) && $Form_durationformat == 'normal') echo "selected"; ?>>2 <?php echo lang('export_output_hours'); ?> 30 <?php echo lang('export_output_min'); ?></option>
+			<option value="short" <?php if (isset($Form_durationformat) && $Form_durationformat == 'short') echo "selected"; ?>>2 <?php echo lang('export_output_hrs'); ?> 30 <?php echo lang('export_output_min'); ?></option>
+			<option value="tiny" <?php if (isset($Form_durationformat) && $Form_durationformat == 'tiny') echo "selected"; ?>>2<?php echo lang('export_output_hrs'); ?> 30<?php echo lang('export_output_min'); ?></option>
+			<option value="micro" <?php if (isset($Form_durationformat) && $Form_durationformat == 'micro') echo "selected"; ?>>2<?php echo lang('export_output_hr'); ?> 30<?php echo lang('export_output_m'); ?></option>
 		</select>
 	</blockquote>
 </div>
@@ -359,4 +381,7 @@ function checkAll(myForm, id, state) {
 
 
 </form>
+<script type="text/javascript">
+ToggleHTMLSections();
+</script>
 </td></tr></table>

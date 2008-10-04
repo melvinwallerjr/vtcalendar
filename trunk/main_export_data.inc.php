@@ -21,6 +21,16 @@ $lang['export_leaveblank'] = 'Leave blank for no maximum';
 $lang['export_show'] = 'Show';
 $lang['export_hide'] = 'Hide';
 
+// Output text
+$lang['export_output_for'] = 'for';
+$lang['export_output_to'] = 'to';
+$lang['export_output_hours'] = 'hours';
+$lang['export_output_hrs'] = 'hrs';
+$lang['export_output_hr'] = 'hr';
+$lang['export_output_minutes'] = 'minutes';
+$lang['export_output_min'] = 'min';
+$lang['export_output_m'] = 'm';
+
 // Submit button for export
 $lang['export_submit'] = 'Preview the Export';
 
@@ -34,6 +44,8 @@ $lang['export_resetform'] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>- or -</b>&nbsp;&n
 $lang['export_settings'] = 'Export Settings';
 
 $lang['export_format'] = 'Export Format';
+$lang['export_format_standard'] = 'Standard';
+$lang['export_format_advanced'] = 'Advanced';
 $lang['export_format_error'] = 'You must select the &quot;'.$lang['export_format'].'&quot;';
 
 $lang['export_maxevents'] = 'Maximum Events Returned';
@@ -52,7 +64,7 @@ $lang['export_dates_to_description'] = 'Leave blank for no end date, enter a dat
 $lang['export_dates_to_error'] = 'You must either enter a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date.';
 
 $lang['export_categories'] = 'Categories';
-//$lang['export_categories_all'] = 'Select/Unselect All';
+$lang['export_categories_description'] = 'Select the event categories you would like to export events for';
 $lang['export_categories_error'] = 'You must select one or more categories.';
 
 $lang['export_sponsor'] = 'Sponsor';

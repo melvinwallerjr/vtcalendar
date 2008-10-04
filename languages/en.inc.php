@@ -3,6 +3,9 @@ $lang['encoding'] = 'ISO-8859-1';
 
 // ================================== public interface =====================================
 
+$lang['yes'] = 'Yes';
+$lang['no'] = 'No';
+
 $lang['upcoming'] = 'Upcoming';
 $lang['day'] = 'Day';
 $lang['week'] = 'Week';
@@ -30,7 +33,6 @@ $lang['filter_events'] = 'Filter Events';
 
 // Filter
 $lang['showing_filtered_events'] = 'Showing only filtered events';
-
 
 $lang['AM'] = 'AM';
 $lang['am'] = 'am';

@@ -1,10 +1,11 @@
 <?php
 define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
+require_once('../functions.inc.php');
+require_once('functions.inc.php');
+
 @(include_once('../config.inc.php')) or die('config.inc.php was not found. See: <a href="../install/">VTCalendar Configuration</a> installer.');
 require_once('../config-defaults.inc.php');
 require_once('../constants.inc.php');
-require_once('../functions.inc.php');
-require_once('functions.inc.php');
 require_once('defaults_and_constants.inc.php');
 
 $errors = 0;
@@ -202,7 +203,7 @@ if ($errors > 0 && isset($_GET['createexport']) && $_GET['createexport'] != "") 
 				In the example in step 1, the calendar ID would be &quot;mycal&quot;.</li>
 			<li>Paste the calendar ID into the box below.</li>
 	</ol>
-	<p><input name="calendarid" type="text" id="calendarid" size="40" value="<?php echo $_GET['calendarid']; ?>"> <font color="#CC0000">* Required</font></p>
+	<p><input name="calendarid" type="text" id="calendarid" size="40" value="<?php if (isset($_GET['calendarid'])) echo $_GET['calendarid']; ?>"> <font color="#CC0000">* Required</font></p>
 </blockquote>
 
 <p><b>Maximum Events Returned: </b></p>

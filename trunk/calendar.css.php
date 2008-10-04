@@ -64,6 +64,14 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 	border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
 }
+#CalendarBlock div.FormSectionHeader h3 {
+	margin: 0;
+	padding: 0;
+}
+
+#CalendarBlock label {
+	cursor: pointer;
+}
 
 /*===================================
              Top Navi Bar

@@ -1,6 +1,4 @@
 <?php
-require_once('application.inc.php');
-
 $Submit_CreateExport = isset($_GET['createexport']);
 
 // Defaults
@@ -43,7 +41,7 @@ $lang['export_maxevents_description'] = 'The maximum number of upcoming events t
 $lang['export_maxevents_error'] = 'You must either enter a number for &quot;' . $lang['export_maxevents'] . '&quot; or leave it blank.';
 
 $lang['export_dates'] = 'Dates';
-$lang['export_dates_description'] = 'The dates below must be in <code>yyyy-mm-dd</code> format (e.g. 2008-03-31).';
+$lang['export_dates_description'] = 'The start and end date for which you want events.';
 
 $lang['export_dates_from'] = 'From';
 $lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format, or enter &quot;Today&quot; to use today\'s date.';
@@ -115,7 +113,7 @@ $lang['export_maxlocationchars_error'] = 'You must either enter a number for &qu
 if (isset($_GET['format'])) setVar($format,$_GET['format'],'exportformat');
 if (isset($_GET['maxevents']) && !setVar($maxevents,$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
 
-if (isset($_GET['timebegin']) && isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $timebegin = $_GET['timebegin']; else $FormErrors['timebegin'] = lang('export_dates_from_error');
+if (isset($_GET['timebegin']) && (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin'))) $timebegin = $_GET['timebegin']; else $FormErrors['timebegin'] = lang('export_dates_from_error');
 if (isset($_GET['timeend']) && isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $timeend = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 
 if (isset($_GET['allcategories']) && !setVar($allcategories,$_GET['allcategories'],'boolean_checkbox')) unset($allcategories);
@@ -138,6 +136,4 @@ if (isset($_GET['showlocation'])) setVar($showlocation,$_GET['showlocation'],'bo
 if (isset($_GET['showallday'])) setVar($showallday,$_GET['showallday'],'boolean');
 if (isset($_GET['maxtitlecharacters'])) setVar($maxtitlecharacters,$_GET['maxtitlecharacters'],'int_gte1');
 if (isset($_GET['maxlocationcharacters'])) setVar($maxlocationcharacters,$_GET['maxlocationcharacters'],'int_gte1');
-
-require('export-new-form.inc.php');
 ?>

@@ -115,9 +115,9 @@ require_once('application.inc.php');
 	pageheader(lang('delete_event'), "Update");
 	contentsection_begin(lang('delete_event'));
 ?>
-<FORM method="post" action="deleteevent.php">
+<form method="post" action="deleteevent.php">
 <?php
-		echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
+		echo '<input type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
 
 		if (isset($check)) { // ask for delete confirmation
 			$query = "SELECT e.id AS eventid,e.timebegin,e.timeend,e.sponsorid,e.title,e.location,e.description,e.contact_name,e.contact_email,e.contact_phone,e.price,e.displayedsponsor,e.displayedsponsorurl,e.wholedayevent,e.repeatid,e.categoryid,c.id,c.name AS category_name FROM vtcal_event e, vtcal_category c WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.id='".sqlescape($eventid)."'";
@@ -134,7 +134,7 @@ require_once('application.inc.php');
 
 				print_event($event);  
 ?>
-		<BR>
+		<br>
 <?php
 		if (!empty($event['repeatid'])) {
 			echo '<span class="NotificationText">';
@@ -151,25 +151,25 @@ require_once('application.inc.php');
 		$repeat['mode'] = 0;
 	}
 ?>
-	<BR>
-	<BR>
-	<B><?php echo lang('delete_event_confirm'); ?></B>
-	<BR>
-	<BR>
-	<INPUT type="hidden" name="eventid" value="<?php echo $eventid; ?>">
-	<INPUT type="hidden" name="deleteconfirmed" value="1">
-	<INPUT type="submit" name="deletethis" value="<?php echo lang('button_delete_this_event'); ?>">
+	<br>
+	<br>
+	<b><?php echo lang('delete_event_confirm'); ?></b>
+	<br>
+	<br>
+	<input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
+	<input type="hidden" name="deleteconfirmed" value="1">
+	<input type="submit" name="deletethis" value="<?php echo lang('button_delete_this_event'); ?>">
 <?php
 	if ($repeat['mode'] > 0) {
-		echo '&nbsp;<INPUT type="submit" name="deleteall" value="',lang('button_delete_all_recurrences'),'">';
+		echo '&nbsp;<input type="submit" name="deleteall" value="',lang('button_delete_all_recurrences'),'">';
 	}
 
 		} // end: if (isset($check))
 ?>
 	&nbsp;
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-	<BR>
-</FORM>
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<br>
+</form>
 <?php
 	contentsection_end();
 	pagefooter();

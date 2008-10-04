@@ -36,22 +36,22 @@ require_once('application.inc.php');
 	pageheader(lang('change_email'), "Update");
 	contentsection_begin(lang('change_email'));
 ?>
-<p><B><?php echo lang('change_email_label'); ?></B></p>
-<FORM method="post" action="changeemail.php">
+<p><b><?php echo lang('change_email_label'); ?></b></p>
+<form method="post" action="changeemail.php">
 <?php
 	if (!checkemail($sponsor["email"])) {
 		feedback(lang('email_invalid'),FEEDBACKNEG);
 ?>
-	<BR>
+	<br>
 <?php
 	} /* end: if ($checkemail($sponsor["email"])) */
 ?>
-	<INPUT type="text" name="sponsor_email" maxlength="100" size="60" value="<?php echo HTMLSpecialChars($sponsor["email"]); ?>">
-	<BR>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+	<input type="text" name="sponsor_email" maxlength="100" size="60" value="<?php echo HTMLSpecialChars($sponsor["email"]); ?>">
+	<br>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 	contentsection_end();
 

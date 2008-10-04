@@ -45,16 +45,16 @@ else {
 pageheader(lang('add_new_template'), "Update");
 contentsection_begin(lang('add_new_template'));
 ?>
-<BR>
-<FORM method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<br>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php
 	if (!isset($check)) { $check=0; }
 	inputtemplatedata($event,$_SESSION["AUTH_SPONSORID"],$check,$template_name);
 ?>
- <BR>
- <INPUT type="submit" name="savetemplate" value="<?php echo lang('ok_button_text'); ?>">
- <INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
-</FORM>
+ <br>
+ <input type="submit" name="savetemplate" value="<?php echo lang('ok_button_text'); ?>">
+ <input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+</form>
 <?php
 contentsection_end();
 pagefooter();

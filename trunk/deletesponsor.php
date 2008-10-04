@@ -70,10 +70,10 @@ require_once('application.inc.php');
 <?php
 	if ( isset ($id) ) { echo '<input type="hidden" name="id" value="'.$id.'">'; }
 ?>	
-	<BR>
-	<BR>
-	<INPUT type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">&nbsp;&nbsp;&nbsp;&nbsp;
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<br>
+	<br>
+	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 </form>
 <?php
 	contentsection_end();

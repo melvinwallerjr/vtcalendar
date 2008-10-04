@@ -8,7 +8,7 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
 if (isset($eventid)) {
 	if (isset($copy) && $copy == 1) {
 		pageheader(lang('copy_event'), "Update");
-		echo "<INPUT type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n";
+		echo "<input type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n";
 	} else {
 		pageheader(lang('update_event'), "Update");
 	}
@@ -72,11 +72,11 @@ inputeventbuttons($httpreferer);
 
 if (!isset($check)) { $check = 0; }
 inputeventdata($event,$event['sponsorid'],1,$check,1,$repeat,$copy);
-echo '<INPUT type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
-if (isset($eventid)) { echo "<INPUT type=\"hidden\" name=\"eventid\" value=\"",$event['id'],"\">\n"; }
-echo '<INPUT type="hidden" name="event[repeatid]" value="', isset($event['repeatid']) ? HTMLSpecialChars($event['repeatid']) : "" ,"\">\n";
-if (!$_SESSION['AUTH_ISCALENDARADMIN']) { echo "<INPUT type=\"hidden\" name=\"event[sponsorid]\" value=\"",$event['sponsorid'],"\">\n"; }
-if (isset($copy)) { echo "<INPUT type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n"; }
+echo '<input type="hidden" name="httpreferer" value="',$httpreferer,'">',"\n";
+if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",$event['id'],"\">\n"; }
+echo '<input type="hidden" name="event[repeatid]" value="', isset($event['repeatid']) ? HTMLSpecialChars($event['repeatid']) : "" ,"\">\n";
+if (!$_SESSION['AUTH_ISCALENDARADMIN']) { echo "<input type=\"hidden\" name=\"event[sponsorid]\" value=\"",$event['sponsorid'],"\">\n"; }
+if (isset($copy)) { echo "<input type=\"hidden\" name=\"copy\" value=\"",$copy,"\">\n"; }
 
 inputeventbuttons($httpreferer);
 echo "</form>\n";
@@ -85,8 +85,8 @@ contentsection_end();
 
 function inputeventbuttons($httpreferer) {
 	?>
-	<p><INPUT type="submit" name="preview" value="<?php echo lang('preview_event'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>"  onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
+	<p><input type="submit" name="preview" value="<?php echo lang('preview_event'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>"  onclick="location.href = '<?php echo $httpreferer; ?>'; return false;"></p>
 	<?php
 }
 ?>

@@ -234,7 +234,7 @@ if ($showinputbox) {
 	<?php echo lang('enter_import_url_example'); ?><br>
 	<br>
 	<input type="submit" name="startimport" value="<?php echo lang('ok_button_text'); ?>">
-	<INPUT type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
+	<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>">
 	</form>
 	<?php
 } // end: if ($showinputbox)

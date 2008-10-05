@@ -12,8 +12,8 @@ if (!isset($_GET['year']) || !setVar($year,$_GET['year'],'timebegin_year')) { $y
 if (!isset($_GET['month']) || !setVar($month,$_GET['month'],'timebegin_month')) { $month = date("n", NOW); }
 
 // Create timestamps for the selected month.
-$startTimestamp = datetime2timestamp($year, $month, 1, $day_beg_h, 0, "am");
-$endTimestamp = datetime2timestamp($year + ($month == 12 ? 1 : 0), $month + ($month == 12 ? -11 : 1), 1, $day_beg_h, 0, "am");
+$startTimestamp = datetime2timestamp($year, $month, 1, DAY_BEG_H, 0, "am");
+$endTimestamp = datetime2timestamp($year + ($month == 12 ? 1 : 0), $month + ($month == 12 ? -11 : 1), 1, DAY_BEG_H, 0, "am");
 
 $ievent = 0;
 $today = Decode_Date_US(date("m/d/Y", NOW));

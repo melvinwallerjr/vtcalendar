@@ -81,28 +81,4 @@ if ( $_SERVER["HTTP_USER_AGENT"] == "Mozilla/4.0 (compatible; MSIE 5.22; Mac_Pow
 else { 
 	$enableViewMonth = true; 
 }
-
-/* ============================================================
-     Set up the week starting day and time display format.
-============================================================ */
-
-// Sets variable to according to week starting day specified in "config.inc.php".
-// Sunday is default week starting day if WEEK_STARTING_DAY isn't defined in "config.inc.php'
-if (WEEK_STARTING_DAY == 0 || WEEK_STARTING_DAY == 1 ) {
-		$week_start = WEEK_STARTING_DAY;
-}
-else {
-	$week_start = 0;  
-}
-
-if (USE_AMPM == false) {
-	$use_ampm = false;
-	$day_beg_h = 0; // if 0:00 - 23:00 time format is used, appropriate day start/end hours will be passed to datetime2timestamp funtions where calculating day edges
-	$day_end_h = 23;
-}
-else {
-	$use_ampm = true;
-	$day_beg_h = 0;
-	$day_end_h = 11;
-}
 ?>

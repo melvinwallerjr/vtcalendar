@@ -18,8 +18,8 @@ else {
 }
 
 // Create timestamps for the selected range.
-//$rangestartTimestamp = $rangestart . " " . $day_beg_h . ":00:00";
-//$rangeendTimestamp = $rangeend . " " . $day_end_h . ":59:59";
+//$rangestartTimestamp = $rangestart . " " . DAY_BEG_H . ":00:00";
+//$rangeendTimestamp = $rangeend . " " . DAY_END_H . ":59:59";
 
 pageheader(lang('searched_keywords'), "Update");
 contentsection_begin(lang('searched_keywords'),true);

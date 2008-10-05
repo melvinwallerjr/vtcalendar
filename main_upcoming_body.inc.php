@@ -116,7 +116,7 @@ if (SHOW_UPCOMING_TAB) {
 				// Time of the Event
 				if ($event['wholedayevent']==0) {
 					echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-					if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
+					if ( ! ($event['timeend_hour']==DAY_END_H && $event['timeend_min']==59) ) {
 						echo "<br><i>";
 						echo timenumber2timelabel($event_timeend_num - $event_timebegin_num);
 						echo "</i>";

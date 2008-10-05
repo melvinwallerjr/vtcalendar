@@ -1,7 +1,6 @@
 <?php
 // checks the input against regular expressions
 function isValidInput($value, $type) {
-	global $use_ampm;
 	if (!isset($value)) { 
 		return FALSE; 
 	}
@@ -258,7 +257,7 @@ function isValidInput($value, $type) {
 		if (is_numeric($value) && $value>=1 && $value<=31) { return TRUE; }
 	}
 	elseif ($type=='timebegin_hour' || $type=='timeend_hour') {
-		if (is_numeric($value) && ( ($value>=1 && $value<=12 && $use_ampm) || ($value>=0 && $value<=23 && !$use_ampm) )) { return TRUE; }
+		if (is_numeric($value) && ( ($value>=1 && $value<=12 && USE_AMPM) || ($value>=0 && $value<=23 && !USE_AMPM) )) { return TRUE; }
 	}
 	elseif ($type=='timebegin_min' || $type=='timeend_min') {
 		if (is_numeric($value) && $value>=0 && $value<=59) { return TRUE; }

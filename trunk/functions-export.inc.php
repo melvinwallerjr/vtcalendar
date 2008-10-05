@@ -1,6 +1,13 @@
 <?php
-function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin) {
+// translates text into XML text, writing entity names like "&amp;" instead of "&"
+function text2xmltext($text) {
+	return htmlspecialchars(ereg_replace("\'","&apos;",$text));
+}
+
+function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin = NULL) {
 	$resultString = "";
+	
+	if ($timebegin === NULL) $timebegin = date("Y-m-d 00:00:00", NOW);
 	
 	$resultString .= '<?xml version="1.0"?>'."\n";
 	$resultString .= '<rss version="0.91">'."\n";
@@ -105,7 +112,7 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 	return $resultString;
 }
 
-function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin) {
+function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl) {
 	$resultString = "";
 	
 	$resultString .= '<?xml version="1.0"?>'."\n";

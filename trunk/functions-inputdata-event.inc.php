@@ -81,29 +81,23 @@ function checkstartenddate($startdate_month, $startdate_day, $startdate_year, $e
 } // end: function checkstartenddate
 
 function checkeventtime(&$event) {
-	if ($event['wholedayevent']==1) {
-		return 1;
-	}
-	else {
-		/* create two temporary variables to compare times */
-		$timebegin_hour = $event['timebegin_hour'];
-		if (strlen($timebegin_hour) == 1) { $timebegin_hour = "0".$timebegin_hour; }
-		elseif ($timebegin_hour == "12") { $timebegin_hour = "00"; }
-		$timebegin_min = $event['timebegin_min'];
-		if (strlen($timebegin_min) == 1) { $timebegin_min = "0".$timebegin_min; }
-		$timebegin = $event['timebegin_ampm'].$timebegin_hour.$timebegin_min;
-		
-		if (isset($event['timeend_hour'])) {
-			$timeend_hour = $event['timeend_hour'];
-			if (strlen($timeend_hour) == 1) { $timeend_hour = "0".$timeend_hour; }
-			elseif ($timeend_hour == "12") { $timeend_hour = "00"; }
-			$timeend_min = $event['timeend_min'];
-			if (strlen($timeend_min) == 1) { $timeend_min = "0".$timeend_min; }
-			$timeend = $event['timeend_ampm'].$timeend_hour.$timeend_min;
-		}
+	// Times are ignored for whole day events.
+	if ($event['wholedayevent']==1) return true;
+	
+	if (isset($event['timeend_hour'])) {
+		// Fail if the end time is not valid.
+		if (!checktime($event['timeend_hour'],$event['timeend_min'])) return false;
 
-		return(checktime($event['timebegin_hour'],$event['timebegin_min']));
+		// Create two temporary variables to compare times.
+		$timebegin = sprintf("%s%02s%02s", $event['timebegin_ampm'], $event['timebegin_hour'], $event['timebegin_min']);
+		$timeend = sprintf("%s%02s%02s", $event['timeend_ampm'], $event['timeend_hour'], $event['timeend_min']);
+
+		// Fail if the beginning time is the same as or after the ending time.
+		if (strtolower($timebegin) >= strtolower($timeend)) return false;
 	}
+	
+	// Return if the beginning time is valid.
+	return(checktime($event['timebegin_hour'],$event['timebegin_min']));
 }
 
 function checkevent(&$event,&$repeat) {

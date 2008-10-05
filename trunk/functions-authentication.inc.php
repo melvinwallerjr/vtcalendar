@@ -293,7 +293,7 @@ function logUserIn() {
 	
 	// Get username/password POST values.
 	if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
-		setVar($userid, strtolower($_POST['login_userid']), 'userid');
+		if (!setVar($userid, strtolower($_POST['login_userid']), 'userid')) unset($userid);
 		$password = $_POST['login_password'];
 	}
 	else {
@@ -355,7 +355,7 @@ function authorized() {
 	
 	// Get sponsor related URL values
 	if (isset($_GET['authsponsorid'])) {
-		setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
+		if (!setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid')) unset($authsponsorid);
 		if ($authsponsorid === NULL) unset($authsponsorid);
 		unset($_SESSION["AUTH_SPONSORNAME"]);
 		unset($_SESSION["AUTH_SPONSORID"]);

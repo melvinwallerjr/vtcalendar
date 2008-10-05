@@ -6,9 +6,14 @@ require_once('application.inc.php');
 
 	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
-	if (isset($_POST['cal']) && isset($_POST['cal']['id'])) { setVar($cal['id'],$_POST['cal']['id'],'calendarid'); }
-	elseif (isset($_GET['cal']) && isset($_GET['cal']['id'])) { setVar($cal['id'],$_GET['cal']['id'],'calendarid'); } 
-	else { unset($cal); }
+	if (isset($_POST['cal']) {
+		if (!isset($_POST['cal']['id']) || !setVar($cal['id'],$_POST['cal']['id'],'calendarid')) {
+			if (!isset($_GET['cal']['id']) || !setVar($cal['id'],$_GET['cal']['id'],'calendarid')) unset($cal['id']);
+		}
+	}
+	else {
+		unset($cal);
+	}
 
 
 	if (isset($cancel)) {

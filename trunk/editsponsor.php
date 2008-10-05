@@ -7,19 +7,14 @@ require_once('application.inc.php');
 	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
 	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
-	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } 
-	else { 
+	if (!isset($_POST['id']) || !setVar($id,$_POST['id'],'sponsorid')) { 
 		if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'sponsorid')) unset($id);
 	}
 	if (isset($_POST['sponsor'])) { 
-		if (isset($_POST['sponsor']['name'])) { setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name'); } 
-		else { unset($sponsor['name']); }
-		if (isset($_POST['sponsor']['email'])) { setVar($sponsor['email'],$_POST['sponsor']['email'],'email'); } 
-		else { unset($sponsor['email']); }
-		if (isset($_POST['sponsor']['url'])) { setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url'); } 
-		else { unset($sponsor['url']); }
-		if (isset($_POST['sponsor']['admins'])) { setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins'); } 
-		else { unset($sponsor['admins']); }
+		if (!isset($_POST['sponsor']['name']) || !setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name')) unset($sponsor['name']);
+		if (!isset($_POST['sponsor']['email']) || !setVar($sponsor['email'],$_POST['sponsor']['email'],'email')) unset($sponsor['email']);
+		if (!isset($_POST['sponsor']['url']) || !setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url')) unset($sponsor['url']);
+		if (!isset($_POST['sponsor']['admins']) || !setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins')) unset($sponsor['admins']);
 	}
 	else {
 		unset($sponsor);

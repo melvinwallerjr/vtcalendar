@@ -8,8 +8,7 @@ require_once('application.inc.php');
 	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
 	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 	if (!isset($_POST['deleteconfirmed']) || !setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed')) unset($deleteconfirmed);
-	if (isset($_POST['mainuserid'])) { setVar($mainuserid,$_POST['mainuserid'],'userid'); } 
-	else {   
+	if (!isset($_POST['mainuserid']) || !setVar($mainuserid,$_POST['mainuserid'],'userid')) {   
 		if (!isset($_GET['mainuserid']) || !setVar($mainuserid,$_GET['mainuserid'],'userid')) unset($mainuserid);
 	}
 

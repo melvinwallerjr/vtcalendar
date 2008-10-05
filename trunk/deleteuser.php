@@ -7,8 +7,7 @@ require_once('application.inc.php');
 	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (!isset($_POST['deleteuser']) || !setVar($deleteuser,$_POST['deleteuser'],'deleteuser')) unset($deleteuser);
 	if (!isset($_POST['deleteconfirmed']) || !setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed')) unset($deleteconfirmed);
-	if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } 
-	else { 
+	if (!isset($_POST['userid']) || !setVar($userid,$_POST['userid'],'userid')) { 
 		if (!isset($_GET['userid']) || !setVar($userid,$_GET['userid'],'userid')) unset($userid);
 	}
 

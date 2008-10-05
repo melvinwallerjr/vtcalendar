@@ -8,8 +8,7 @@ if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unse
 if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
 if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 if (isset($_POST['category'])) { 
-	if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } 
-	else { unset($category['name']); }
+	if (!isset($_POST['category']['name']) || !setVar($category['name'],$_POST['category']['name'],'category_name')) unset($category['name']);
 }
 else {
 	unset($category);

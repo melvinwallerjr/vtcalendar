@@ -9,8 +9,7 @@ if (!isset($_POST['eventidlist']) || !setVar($eventidlist,$_POST['eventidlist'],
 if (!isset($_GET['approveall']) || !setVar($approveall,$_GET['approveall'],'approveall')) unset($approveall);
 if (!isset($_GET['approvethis']) || !setVar($approvethis,$_GET['approvethis'],'approvethis')) unset($approvethis);
 if (!isset($_GET['reject']) || !setVar($reject,$_GET['reject'],'reject')) unset($reject);
-if (isset($_POST['eventid'])) { setVar($eventid,$_POST['eventid'],'eventid'); } 
-else {
+if (!isset($_POST['eventid']) || !setVar($eventid,$_POST['eventid'],'eventid')) {
 	if (!isset($_GET['eventid']) || !setVar($eventid,$_GET['eventid'],'eventid')) unset($eventid);
 }
 if (!isset($_POST['rejectreason']) || !setVar($rejectreason,$_POST['rejectreason'],'rejectreason')) unset($rejectreason);

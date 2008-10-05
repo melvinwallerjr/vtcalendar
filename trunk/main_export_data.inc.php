@@ -148,7 +148,7 @@ $lang['export_preview_url'] = 'Export URL';
 $lang['export_preview_url_text'] = 'The URL below will export events based on the settings you provided.';
 
 $lang['export_preview_js'] = 'JavaScript Code';
-$lang['export_preview_js_text'] = 'The code below can be copy/pasted into your Web site to automatically display events based on the settings you provided.';
+$lang['export_preview_js_text'] = 'The HTML code below can be copy/pasted into your Web site to automatically load event data or display events based on the settings you provided.';
 
 $lang['export_preview_raw'] = 'Raw Export Preview';
 $lang['export_preview_raw_text'] = 'The window below shows the raw output for the exported events.';

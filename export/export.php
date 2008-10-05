@@ -19,6 +19,9 @@ require_once('../constants.inc.php');
 require_once('functions.inc.php');
 require_once('../main_export_data.inc.php');
 
+echo isset($_GET['spoon']['aa']);
+exit;
+
 // ==========================================================
 // Get the calendar ID from the query string
 // ==========================================================

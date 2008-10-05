@@ -3,7 +3,7 @@
 
 require_once('application.inc.php');
 
-if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
+if (!isset($_GET['sponsorid']) || !setVar($sponsorid,$_GET['sponsorid'],'sponsorid')) unset($sponsorid);
 if (isset($_GET['type'])) { $type = $_GET['type']; } else { unset($type); }
 
 if (!isset($sponsorid)) {

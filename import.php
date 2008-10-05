@@ -1,9 +1,9 @@
 <?php
 require_once('application.inc.php');
 
-if (isset($_GET['cancel'])) { setVar($cancel,$_GET['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_GET['importurl'])) { setVar($importurl,$_GET['importurl'],'importurl'); } else { unset($importurl); }
-if (isset($_GET['startimport'])) { setVar($startimport,$_GET['startimport'],'startimport'); } else { unset($startimport); }
+if (!isset($_GET['cancel']) || !setVar($cancel,$_GET['cancel'],'cancel')) unset($cancel);
+if (!isset($_GET['importurl']) || !setVar($importurl,$_GET['importurl'],'importurl')) unset($importurl);
+if (!isset($_GET['startimport']) || !setVar($startimport,$_GET['startimport'],'startimport')) unset($startimport);
 
 if (!authorized()) { exit; }
 

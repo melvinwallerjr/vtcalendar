@@ -1,13 +1,13 @@
 <?php
 require_once('application.inc.php');
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-	if (isset($_POST['keyword'])) { setVar($keyword,$_POST['keyword'],'keyword'); } else { unset($keyword); }
-	if (isset($_POST['featuretext'])) { setVar($featuretext,$_POST['featuretext'],'featuretext'); } else { unset($featuretext); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
+	if (!isset($_POST['keyword']) || !setVar($keyword,$_POST['keyword'],'keyword')) unset($keyword);
+	if (!isset($_POST['featuretext']) || !setVar($featuretext,$_POST['featuretext'],'featuretext')) unset($featuretext);
 	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'searchkeywordid'); } else { 
-		if (isset($_GET['id'])) { setVar($id,$_GET['id'],'searchkeywordid'); } else { unset($id); }
+		if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'searchkeywordid')) unset($id);
  }
 
 	if (!authorized()) { exit; }

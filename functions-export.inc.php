@@ -366,7 +366,6 @@ function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 	}
 	
 	return $resultString;
-	
 }
 
 function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {

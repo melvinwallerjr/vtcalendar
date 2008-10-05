@@ -6,12 +6,12 @@ require_once('session_start.inc.php');
 require_once('application.inc.php');
 	require_once("icalendar.inc.php");
 
-	if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
-	if (isset($_GET['timebegin'])) { setVar($timebegin,$_GET['timebegin'],'timebegin'); } else { unset($timebegin); }
-	if (isset($_GET['timeend'])) { setVar($timeend,$_GET['timeend'],'timeend'); } else { unset($timeend); }
-	if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
-	if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
-	if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
+	if (!isset($_GET['eventid']) || !setVar($eventid,$_GET['eventid'],'eventid')) unset($eventid);
+	if (!isset($_GET['timebegin']) || !setVar($timebegin,$_GET['timebegin'],'timebegin')) unset($timebegin);
+	if (!isset($_GET['timeend']) || !setVar($timeend,$_GET['timeend'],'timeend')) unset($timeend);
+	if (!isset($_GET['categoryid']) || !setVar($categoryid,$_GET['categoryid'],'categoryid')) unset($categoryid);
+	if (!isset($_GET['sponsorid']) || !setVar($sponsorid,$_GET['sponsorid'],'sponsorid')) unset($sponsorid);
+	if (!isset($_GET['keyword']) || !setVar($keyword,$_GET['keyword'],'keyword')) unset($keyword);
 
 	if (!viewauthorized()) { exit; }
 

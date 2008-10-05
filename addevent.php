@@ -3,11 +3,11 @@ require_once('application.inc.php');
 
 if (!authorized()) { exit; }
 
-if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_POST['httpreferer'])) { setVar($httpreferer,$_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
-if (isset($_GET['timebegin_year'])) { setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
-if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
-if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
+if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+if (!isset($_POST['httpreferer']) || !setVar($httpreferer,$_POST['httpreferer'],'httpreferer')) unset($httpreferer);
+if (!isset($_GET['timebegin_year']) || !setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year')) unset($timebegin_year);
+if (!isset($_GET['timebegin_month']) || !setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month')) unset($timebegin_month);
+if (!isset($_GET['timebegin_day']) || !setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day')) unset($timebegin_day);
 
 if (isset($_POST['cancel'])) {
 	redirect2URL("update.php");

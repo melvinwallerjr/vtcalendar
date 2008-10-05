@@ -4,13 +4,12 @@ require_once('application.inc.php');
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['deleteuser'])) { setVar($deleteuser,$_POST['deleteuser'],'deleteuser'); } else { unset($deleteuser); }
-	if (isset($_POST['deleteconfirmed'])) { setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed'); } else { unset($deleteconfirmed); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['deleteuser']) || !setVar($deleteuser,$_POST['deleteuser'],'deleteuser')) unset($deleteuser);
+	if (!isset($_POST['deleteconfirmed']) || !setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed')) unset($deleteconfirmed);
 	if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } 
 	else { 
-		if (isset($_GET['userid'])) { setVar($userid,$_GET['userid'],'userid'); } 
-		else { unset($userid); }
+		if (!isset($_GET['userid']) || !setVar($userid,$_GET['userid'],'userid')) unset($userid);
 	}
 
 	if (isset($cancel)) {

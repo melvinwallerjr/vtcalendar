@@ -1,23 +1,17 @@
 <?php
 require_once('application.inc.php');
 
-	if (isset($_POST['httpreferer'])) { setVar($httpreferer,$_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
+	if (!isset($_POST['httpreferer']) || !setVar($httpreferer,$_POST['httpreferer'],'httpreferer')) unset($httpreferer);
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } 
 	else { 
-		if (isset($_GET['check'])) { setVar($check,$_GET['check'],'check'); } 
-		else {
-			unset($check); 
-		}
+		if (!isset($_GET['check']) || !setVar($check,$_GET['check'],'check')) unset($check);
 	}
-	if (isset($_POST['deleteconfirmed'])) { setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed'); } else { unset($deleteconfirmed); }
-	if (isset($_POST['deletethis'])) { setVar($deletethis,$_POST['deletethis'],'deletethis'); } else { unset($deletethis); }
-	if (isset($_POST['deleteall'])) { setVar($deleteall,$_POST['deleteall'],'deleteall'); } else { unset($deleteall); }
+	if (!isset($_POST['deleteconfirmed']) || !setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed')) unset($deleteconfirmed);
+	if (!isset($_POST['deletethis']) || !setVar($deletethis,$_POST['deletethis'],'deletethis')) unset($deletethis);
+	if (!isset($_POST['deleteall']) || !setVar($deleteall,$_POST['deleteall'],'deleteall')) unset($deleteall);
 	if (isset($_POST['eventid'])) { setVar($eventid,$_POST['eventid'],'eventid'); } else { 
-		if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } 
-		else { 
-			unset($eventid); 
-		}
+		if (!isset($_GET['eventid']) || !setVar($eventid,$_GET['eventid'],'eventid')) unset($eventid);
 	}
 
 	if (!authorized()) { exit; }

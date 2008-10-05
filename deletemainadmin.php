@@ -4,13 +4,13 @@ require_once('application.inc.php');
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISMAINADMIN']) { exit; } // additional security
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-	if (isset($_POST['deleteconfirmed'])) { setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed'); } else { unset($deleteconfirmed); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
+	if (!isset($_POST['deleteconfirmed']) || !setVar($deleteconfirmed,$_POST['deleteconfirmed'],'deleteconfirmed')) unset($deleteconfirmed);
 	if (isset($_POST['mainuserid'])) { setVar($mainuserid,$_POST['mainuserid'],'userid'); } 
 	else {   
-		if (isset($_GET['mainuserid'])) { setVar($mainuserid,$_GET['mainuserid'],'userid'); } else { unset($mainuserid); }
+		if (!isset($_GET['mainuserid']) || !setVar($mainuserid,$_GET['mainuserid'],'userid')) unset($mainuserid);
 	}
 
 	if (isset($cancel)) {

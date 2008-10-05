@@ -4,18 +4,18 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-if (isset($_POST['approveallevents'])) { setVar($approveallevents,$_POST['approveallevents'],'approveallevents'); } else { unset($approveallevents); }
-if (isset($_POST['eventidlist'])) { setVar($eventidlist,$_POST['eventidlist'],'eventidlist'); } else { unset($eventidlist); }
-if (isset($_GET['approveall'])) { setVar($approveall,$_GET['approveall'],'approveall'); } else { unset($approveall); }
-if (isset($_GET['approvethis'])) { setVar($approvethis,$_GET['approvethis'],'approvethis'); } else { unset($approvethis); }
-if (isset($_GET['reject'])) { setVar($reject,$_GET['reject'],'reject'); } else { unset($reject); }
+if (!isset($_POST['approveallevents']) || !setVar($approveallevents,$_POST['approveallevents'],'approveallevents')) unset($approveallevents);
+if (!isset($_POST['eventidlist']) || !setVar($eventidlist,$_POST['eventidlist'],'eventidlist')) unset($eventidlist);
+if (!isset($_GET['approveall']) || !setVar($approveall,$_GET['approveall'],'approveall')) unset($approveall);
+if (!isset($_GET['approvethis']) || !setVar($approvethis,$_GET['approvethis'],'approvethis')) unset($approvethis);
+if (!isset($_GET['reject']) || !setVar($reject,$_GET['reject'],'reject')) unset($reject);
 if (isset($_POST['eventid'])) { setVar($eventid,$_POST['eventid'],'eventid'); } 
 else {
-	if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
+	if (!isset($_GET['eventid']) || !setVar($eventid,$_GET['eventid'],'eventid')) unset($eventid);
 }
-if (isset($_POST['rejectreason'])) { setVar($rejectreason,$_POST['rejectreason'],'rejectreason'); } else { unset($rejectreason); }
-if (isset($_POST['rejectconfirmedall'])) { setVar($rejectconfirmedall,$_POST['rejectconfirmedall'],'rejectconfirmedall'); } else { unset($rejectconfirmedall); }
-if (isset($_POST['rejectconfirmedthis'])) { setVar($rejectconfirmedthis,$_POST['rejectconfirmedthis'],'rejectconfirmedthis'); } else { unset($rejectconfirmedthis); }
+if (!isset($_POST['rejectreason']) || !setVar($rejectreason,$_POST['rejectreason'],'rejectreason')) unset($rejectreason);
+if (!isset($_POST['rejectconfirmedall']) || !setVar($rejectconfirmedall,$_POST['rejectconfirmedall'],'rejectconfirmedall')) unset($rejectconfirmedall);
+if (!isset($_POST['rejectconfirmedthis']) || !setVar($rejectconfirmedthis,$_POST['rejectconfirmedthis'],'rejectconfirmedthis')) unset($rejectconfirmedthis);
 
 // Approve all events.
 if (isset($approveallevents)) {

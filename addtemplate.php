@@ -3,10 +3,10 @@ require_once('application.inc.php');
 
 if (!authorized()) { exit; }
 
-if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-if (isset($_POST['template_name'])) { setVar($template_name,$_POST['template_name'],'template_name'); } else { unset($template_name); }
-if (isset($_POST['savetemplate'])) { setVar($savetemplate,$_POST['savetemplate'],'savetemplate'); } else { unset($savetemplate); }
+if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
+if (!isset($_POST['template_name']) || !setVar($template_name,$_POST['template_name'],'template_name')) unset($template_name);
+if (!isset($_POST['savetemplate']) || !setVar($savetemplate,$_POST['savetemplate'],'savetemplate')) unset($savetemplate);
 if (isset($_POST['event'])) {
 	if (isset($_POST['event']['categoryid'])) { setVar($event['categoryid'],$_POST['event']['categoryid'],'categoryid'); } else { unset($event['categoryid']); }
 	if (isset($_POST['event']['title'])) { setVar($event['title'],$_POST['event']['title'],'title'); } else { unset($event['title']); }
@@ -19,7 +19,10 @@ if (isset($_POST['event'])) {
 	if (isset($_POST['event']['contact_name'])) { setVar($event['contact_name'],$_POST['event']['contact_name'],'contact_name'); } else { unset($event['contact_name']); }
 	if (isset($_POST['event']['contact_phone'])) { setVar($event['contact_phone'],$_POST['event']['contact_phone'],'contact_phone'); } else { unset($event['contact_phone']); }
 	if (isset($_POST['event']['contact_email'])) { setVar($event['contact_email'],$_POST['event']['contact_email'],'contact_email'); } else { unset($event['contact_email']); }
-} // end: if (isset($_POST['event'])) {
+}
+else {
+	unset ($event);
+}
 
 if (isset($cancel)) {
 	redirect2URL("managetemplates.php");

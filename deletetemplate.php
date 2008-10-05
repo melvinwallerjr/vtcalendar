@@ -1,7 +1,7 @@
 <?php
 require_once('application.inc.php');
 
-	if (isset($_GET['templateid'])) { setVar($templateid,$_GET['templateid'],'templateid'); } else { unset($templateid); }
+	if (!isset($_GET['templateid']) || !setVar($templateid,$_GET['templateid'],'templateid')) unset($templateid);
 
 	if (!authorized()) { exit; }
 

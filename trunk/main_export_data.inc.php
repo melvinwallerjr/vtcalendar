@@ -37,6 +37,8 @@ $lang['export_output_m'] = 'm';
 // Submit button for export
 $lang['export_submit'] = 'Preview the Export';
 
+$lang['export_errorsfound'] = 'Some errors were found with the information you submited.<br>Scroll down to view the errors.';
+
 // Message after the first submit button (only if HTML was selected)
 $lang['export_keepscrolling'] = ' or keep scrolling down for more HTML settings.';
 
@@ -49,38 +51,38 @@ $lang['export_settings'] = 'Export Settings';
 $lang['export_format'] = 'Export Format';
 $lang['export_format_standard'] = 'Standard';
 $lang['export_format_advanced'] = 'Advanced';
-$lang['export_format_error'] = 'You must select the &quot;'.$lang['export_format'].'&quot;';
+$lang['export_format_error'] = 'You must select one of the &quot;'.$lang['export_format'].'&quot; below.';
 
 $lang['export_maxevents'] = 'Maximum Events Returned';
-$lang['export_maxevents_description'] = 'The maximum number of upcoming events that will be returned by this script.';
-$lang['export_maxevents_error'] = 'You must either enter a number for &quot;' . $lang['export_maxevents'] . '&quot; or leave it blank.';
+$lang['export_maxevents_description'] = 'To avoid excessively large output, you can specify the maximum number of events.';
+$lang['export_maxevents_error'] = 'You must either enter a number below or leave it blank.';
 
 $lang['export_dates'] = 'Dates';
 $lang['export_dates_description'] = 'The start and end date for which you want events.';
 
 $lang['export_dates_from'] = 'From';
-$lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format, or enter &quot;today&quot; to use today\'s date.';
+$lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format,<br>or enter &quot;today&quot; to use today\'s date.';
 $lang['export_dates_from_error'] = 'You must either enter a &quot;'. $lang['export_dates_from'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_from'].'&quot; date.';
 
 $lang['export_dates_to'] = 'To';
-$lang['export_dates_to_description'] = 'Leave blank for no end date, enter a date in <code>YYYY-MM-DD</code> format, or enter a number to represent the number of days after the &quot;'.$lang['export_dates_from'].'&quot; date.';
-$lang['export_dates_to_error'] = 'You must either enter a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date.';
+$lang['export_dates_to_description'] = 'Leave blank for no end date, enter a date in <code>YYYY-MM-DD</code> format,<br>or enter a number to represent the number of days after the &quot;'.$lang['export_dates_from'].'&quot; date.';
+$lang['export_dates_to_error'] = 'You must enter either a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date.';
 
 $lang['export_categories'] = 'Categories';
-$lang['export_categories_description'] = 'Select the event categories you would like to export events for';
+$lang['export_categories_description'] = 'Choose the event categories you would like to export events for';
 $lang['export_categories_error'] = 'You must select one or more categories.';
 
 $lang['export_sponsor'] = 'Sponsor';
 $lang['export_sponsor_all'] = 'All sponsors';
 $lang['export_sponsor_specific'] = 'Specific sponsor';
 $lang['export_sponsor_specific_description'] = 'case-insensitive substring search, e.g. school of the arts';
-$lang['export_sponsor_error'] = 'You must either select &quot;'.$lang['export_sponsor_all'].'&quot; or select &quot;'.$lang['export_sponsor_specific'].'&quot; and enter sponsor search text.';
+$lang['export_sponsor_error'] = 'You must either select &quot;'.$lang['export_sponsor_all'].'&quot; or enter the specific sponsor to search for.';
 
 // Header of second section of export
 $lang['export_htmlsettings'] = 'General HTML Settings';
 
 $lang['export_keepcategoryfilter'] = 'Keep Category Filter in VTCalendar';
-$lang['export_keepcategoryfilter_description'] = 'When events are clicked, and users go to the full VTCalendar screen, the category filter is not maintained.<br>Check the box below if you would like to pass the category filter to VTCalendar so the day, week, month, etc. views are also filtered.<br>This will be ignored if you did selected &quot;All categories&quot; in the previous section.';
+$lang['export_keepcategoryfilter_description'] = 'When events are clicked, and users go to the full VTCalendar screen, the category filter is not maintained. Check the box below if you would like to pass the category filter to VTCalendar so the day, week, month, etc. views are also filtered. This will be ignored if you did selected &quot;All categories&quot; in the previous section.';
 
 $lang['export_htmltype'] = 'HTML Type';
 $lang['export_htmltype_description'] = 'For the HTML export formats (including HTML via JavaScript), the output can either be a series of paragraphs or rows in a single table.';
@@ -119,26 +121,27 @@ $lang['export_showallday_description'] = 'If an event is all day (aka: it does n
 
 $lang['export_maxtitlechars'] = 'Maximum Characters for the Title';
 $lang['export_maxtitlechars_description'] = 'If you have a limited amount of space on your Web site, you may limit the length of the event title.<br>Any titles that are beyond this length will be truncated and an ellipse (...) will be added to the end.';
-$lang['export_maxtitlechars_error'] = 'You must either enter a number for &quot;' . $lang['export_maxtitlechars'] . '&quot; or leave it blank.';
+$lang['export_maxtitlechars_error'] = 'You must enter either a number below or leave it blank.';
 
 $lang['export_maxlocationchars'] = 'Maximum Characters for the Location';
 $lang['export_maxlocationchars_description'] = 'If you have a limited amount of space on your Web site, you may limit the length of the event location.<br>Any locations that are beyond this length will be truncated and an ellipse (...) will be added to the end.';
-$lang['export_maxlocationchars_error'] = 'You must either enter a number for &quot;' . $lang['export_maxlocationchars'] . '&quot; or leave it blank.';
+$lang['export_maxlocationchars_error'] = 'You must enter either a number below or leave it blank.';
 
 if (isset($_GET['format'])) setVar($Form_format,$_GET['format'],'exportformat');
 if ($Submit_CreateExport && !isset($Form_format)) $FormErrors['format'] = lang('export_format_error');
 
-if (isset($_GET['maxevents']) && !setVar($Form_maxevents,$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
+if (!empty($_GET['maxevents']) && !setVar($Form_maxevents,$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
 
-if (isset($_GET['timebegin']) && (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin'))) $Form_timebegin = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
-if (isset($_GET['timeend']) && (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend'))) $Form_timeend = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
+if (!empty($_GET['timebegin'])) if (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $Form_timebegin = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
+if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $Form_timeend = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 
 if (isset($_GET['allcategories']) && !setVar($Form_allcategories,$_GET['allcategories'],'boolean_checkbox')) unset($Form_allcategories);
 if (isset($_GET['categories']) && !setVar($Form_categories,$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
+if ($Submit_CreateExport && !isset($Form_categories)) $FormErrors['categories'] = lang('export_categories_error');
 
 if (isset($_GET['sponsor'])) setVar($Form_sponsor,$_GET['sponsor'],'sponsortype');
-if (isset($_GET['specificsponsor'])) setVar($Form_specificsponsor,$_GET['specificsponsor'],'specificsponsor');
-if ($Form_sponsor == "specific" && empty($Form_specificsponsor)) $FormErrors['specificsponsor'] = lang('export_sponsor_error');
+if (isset($_GET['specificsponsor'])) setVar($Form_specificsponsor,trim($_GET['specificsponsor']),'specificsponsor');
+if ($Form_sponsor == "specific" && empty($Form_specificsponsor)) $FormErrors['sponsor'] = lang('export_sponsor_error');
 
 if (isset($Form_format) && $Form_format == "html") {
 	if (isset($_GET['keepcategoryfilter'])) setVar($Form_keepcategoryfilter,$_GET['keepcategoryfilter'],'boolean_checkbox');
@@ -153,7 +156,7 @@ if (isset($Form_format) && $Form_format == "html") {
 	if (isset($_GET['showdatetime'])) setVar($Form_showdatetime,$_GET['showdatetime'],'boolean');
 	if (isset($_GET['showlocation'])) setVar($Form_showlocation,$_GET['showlocation'],'boolean');
 	if (isset($_GET['showallday'])) setVar($Form_showallday,$_GET['showallday'],'boolean');
-	if (isset($_GET['maxtitlecharacters']) && !setVar($Form_maxtitlecharacters,$_GET['maxtitlecharacters'],'int_gte1')) $FormErrors['maxtitlecharacters'] = lang('export_maxtitlechars_error');
-	if (isset($_GET['maxlocationcharacters']) && !setVar($Form_maxlocationcharacters,$_GET['maxlocationcharacters'],'int_gte1')) $FormErrors['maxlocationcharacters'] = lang('export_maxlocationchars_error');
+	if (!empty($_GET['maxtitlecharacters'])) if (!setVar($Form_maxtitlecharacters,$_GET['maxtitlecharacters'],'int_gte1')) $FormErrors['maxtitlecharacters'] = lang('export_maxtitlechars_error');
+	if (!empty($_GET['maxlocationcharacters'])) if (!setVar($Form_maxlocationcharacters,$_GET['maxlocationcharacters'],'int_gte1')) $FormErrors['maxlocationcharacters'] = lang('export_maxlocationchars_error');
 }
 ?>

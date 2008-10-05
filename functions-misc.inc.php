@@ -155,7 +155,7 @@ function checkemail($email) {
 }
 
 // Run a sanity check on incoming request variables and set particular variables if checks are passed
-function setVar(&$var,$value,$type) {
+function setVar(&$var,$value,$type,$default=NULL) {
 	// Since we are using the ISO-8859-1 we must handle characters from 127 to 159, which are invalid.
 	// These typically come from Microsoft word or from other Web sites.
 	$badchars = array(
@@ -204,8 +204,8 @@ function setVar(&$var,$value,$type) {
 		}
 	}
 	
-	// unless something is explicitly allowed unset the variable
-	$var = NULL;
+	// Set the var to the default if the value was invalid.
+	$var = $default;
 	return false;
 }
 

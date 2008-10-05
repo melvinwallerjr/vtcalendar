@@ -92,13 +92,15 @@ function checkeventtime(&$event) {
 		$timebegin_min = $event['timebegin_min'];
 		if (strlen($timebegin_min) == 1) { $timebegin_min = "0".$timebegin_min; }
 		$timebegin = $event['timebegin_ampm'].$timebegin_hour.$timebegin_min;
-
-		$timeend_hour = $event['timeend_hour'];
-		if (strlen($timeend_hour) == 1) { $timeend_hour = "0".$timeend_hour; }
-		elseif ($timeend_hour == "12") { $timeend_hour = "00"; }
-		$timeend_min = $event['timeend_min'];
-		if (strlen($timeend_min) == 1) { $timeend_min = "0".$timeend_min; }
-		$timeend = $event['timeend_ampm'].$timeend_hour.$timeend_min;
+		
+		if (isset($event['timeend_hour'])) {
+			$timeend_hour = $event['timeend_hour'];
+			if (strlen($timeend_hour) == 1) { $timeend_hour = "0".$timeend_hour; }
+			elseif ($timeend_hour == "12") { $timeend_hour = "00"; }
+			$timeend_min = $event['timeend_min'];
+			if (strlen($timeend_min) == 1) { $timeend_min = "0".$timeend_min; }
+			$timeend = $event['timeend_ampm'].$timeend_hour.$timeend_min;
+		}
 
 		return(checktime($event['timebegin_hour'],$event['timebegin_min']));
 	}
@@ -110,7 +112,7 @@ function checkevent(&$event,&$repeat) {
 		checkeventdate($event, $repeat) &&
 		checkeventtime($event) &&
 		($event['categoryid']>=1) &&
-		checkURL(urldecode($event['displayedsponsorurl'])) &&
+		(empty($event['displayedsponsorurl']) || checkURL(urldecode($event['displayedsponsorurl']))) &&
 		($_SESSION['CALENDAR_ID'] == "default" || !isset($event['showondefaultcal']) || $event['showondefaultcal']==0 || $event['showincategory']!=0);
 }
 

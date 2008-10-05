@@ -44,28 +44,27 @@ function Day_of_Week($month,$day,$year) {
 
 /* converts 0..6 to Sun..Sat */
 function Day_of_Week_Abbreviation($dow) {
-				 global $lang;
-		if ($dow==0){
-									 return lang('sun');
-								} 
-								if ($dow==1){
-									 return lang('mon');
-								}
-								if ($dow==2){
-									 return lang('tue');
-								}
-								if ($dow==3){
-									 return lang('wed');
-								}
-								if ($dow==4){
-									 return lang('thu');
-								}
-								if ($dow==5){
-									 return lang('fri');
-								}
-								if ($dow==6){
-									return lang('sat');
-								}
+	if ($dow==0){
+		 return lang('sun');
+	} 
+	if ($dow==1){
+		 return lang('mon');
+	}
+	if ($dow==2){
+		 return lang('tue');
+	}
+	if ($dow==3){
+		 return lang('wed');
+	}
+	if ($dow==4){
+		 return lang('thu');
+	}
+	if ($dow==5){
+		 return lang('fri');
+	}
+	if ($dow==6){
+		return lang('sat');
+	}
 }
 
 /* calculates the difference in days between two dates */
@@ -94,49 +93,82 @@ function Add_Delta_Days($month,$day,$year,$delta) {
 
 /* converts 1..12 to January..December */
 function Month_to_Text($month) {
-					 global $lang;
-					 if ($month==1){
-							return lang('january');
-					 }
-					 if ($month==2){
-							return lang('february');
-					 }
-					 if ($month==3){
-							return lang('march');
-					 }
-					 if ($month==4){
-							return lang('april');
-					 }
-					 if ($month==5){
-							return lang('may');
-					 }
-					 if ($month==6){
-							return lang('june');
-					 }
-					 if ($month==7){
-							return lang('july');
-					 }
-					 if ($month==8){
-							return lang('august');
-					 } 
-					 if ($month==9){
-							return lang('september');
-					 }
-					 if ($month==10){
-							return lang('october');
-					 }
-					 if ($month==11){
-							return lang('november');
-					 }
-					 if ($month==12){
-							return lang('december');
-				 }
-
+	if ($month==1){
+		return lang('january');
+	}
+	if ($month==2){
+		return lang('february');
+	}
+	if ($month==3){
+		return lang('march');
+	}
+	if ($month==4){
+		return lang('april');
+	}
+	if ($month==5){
+		return lang('may');
+	}
+	if ($month==6){
+		return lang('june');
+	}
+	if ($month==7){
+		return lang('july');
+	}
+	if ($month==8){
+		return lang('august');
+	} 
+	if ($month==9){
+		return lang('september');
+	}
+	if ($month==10){
+		return lang('october');
+	}
+	if ($month==11){
+		return lang('november');
+	}
+	if ($month==12){
+		return lang('december');
+	}
 }
 
 /* converts 1..12 to Jan..Dec */
 function Month_to_Text_Abbreviation($month) {
-	return substr(date("F", mktime(0,0,0,$month,1,2000)),0,3);
+	if ($month==1){
+		return lang('jan');
+	}
+	if ($month==2){
+		return lang('feb');
+	}
+	if ($month==3){
+		return lang('mar');
+	}
+	if ($month==4){
+		return lang('apr');
+	}
+	if ($month==5){
+		return lang('may_short');
+	}
+	if ($month==6){
+		return lang('jun');
+	}
+	if ($month==7){
+		return lang('jul');
+	}
+	if ($month==8){
+		return lang('aug');
+	} 
+	if ($month==9){
+		return lang('sep');
+	}
+	if ($month==10){
+		return lang('oct');
+	}
+	if ($month==11){
+		return lang('nov');
+	}
+	if ($month==12){
+		return lang('dec');
+	}
 }
 
 /* converts 0..6 to Sunday..Saturday */

@@ -93,7 +93,7 @@ switch($FormData['format']) {
 		break;
 	case "rss2_0":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
-		echo GenerateRSS2_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
+		echo GenerateRSS2_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL, BASEURL.EXPORTURL.'?'.http_build_query($_GET));
 		break;
 	case "xml":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");

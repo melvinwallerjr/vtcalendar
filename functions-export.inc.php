@@ -67,7 +67,7 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 	// Header
 	$resultString .= '<?xml version="1.0"?>' . "\n"
 		. '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'
-		. ' xmlns:rss091="http://purl.org/rss/1.0/modules/rss091/"'
+		. ' xmlns:rss091="http://purl.org/rss/1.0/modules/rss091#"'
 		. ' xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"'
 		. ' xmlns:dc="http://purl.org/dc/elements/1.1/"'
 		. ' xmlns="http://purl.org/rss/1.0/">' . "\n"
@@ -116,19 +116,28 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 	return $resultString;
 }
 
-function GenerateRSS2_0(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin = NULL) {
+function GenerateRSS2_0(&$result, $calendarID, $calendarTitle, $calendarurl, $selfurl = "", $timebegin = NULL) {
 	$resultString = "";
 	
 	if ($timebegin === NULL) $timebegin = date("Y-m-d 00:00:00", NOW);
 	
 	$resultString .= '<?xml version="1.0"?>'."\n";
-	$resultString .= '<rss version="2.0">'."\n";
+	$resultString .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'."\n";
 	$resultString .= "<channel>\n";
 	$resultString .= "<title>".text2xmltext($calendarTitle)."</title>\n";
 	$resultString .= "<link>".text2xmltext($calendarurl)."?calendarid=".text2xmltext($calendarID)."</link>\n";
 	$resultString .= "<pubDate>".gmdate("r", NOW)."</pubDate>\n";
 	$resultString .= "<lastBuildDate>".gmdate("r", NOW)."</lastBuildDate>\n";
 	$resultString .= "<generator>VTCalendar".(defined("VERSION") ? " ".VERSION : "")."</generator>\n";
+	$resultString .= '<atom:link href="'.text2xmltext($selfurl).'" rel="self" type="application/rss+xml" />'."\n";
+	
+	if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
+	else { $day = substr($timebegin,8,2); }
+	if (substr($timebegin,5,1) == "0") { $month = substr($timebegin,6,1); } 
+	else { $month = substr($timebegin,5,2); }
+	$date = $month."/".$day."/".substr($timebegin,0,4);
+	
+	$resultString .= "<description>".text2xmltext($date)."</description>\n";
 	
 	if (defined("CACHEMINUTES"))
 		$resultString .= "<ttl>".CACHEMINUTES."</ttl>\n";
@@ -141,6 +150,7 @@ function GenerateRSS2_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 			$resultString .= "<item>\n";
 			$resultString .= "<title>".Month_to_Text_Abbreviation($event['timebegin_month'])." ".$event['timebegin_day'].": ".text2xmltext($event['title'])."</title>\n";
 			$resultString .= "<link>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</link>\n";
+			$resultString .= "<guid>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</guid>\n";
 			$resultString .= "<category>".text2xmltext($event['category_name'])."</category>\n";
 			$resultString .= "<description>&lt;em&gt;";
 			if ($event['wholedayevent']==0) {

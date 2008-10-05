@@ -96,7 +96,7 @@ function isValidInput($value, $type) {
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constDisplayedsponsorMaxLength.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='duration') {
-		if ($value=='1' || $value='2' || $value='3') { return TRUE; }
+		if ($value=='1' || $value=='2' || $value=='3') { return TRUE; }
 	}
 	elseif ($type=='edit') { // 'Go back and make changes' button
 		if (strlen($value) > 1) { return TRUE; }
@@ -218,7 +218,7 @@ function isValidInput($value, $type) {
 		if (is_numeric($value) && $value>=0 && $value<=100000) { return TRUE; }
 	}
 	elseif ($type=='showondefaultcal') {
-		if ($value=='0' || $value='1') { return TRUE; }
+		if ($value=='0' || $value=='1') { return TRUE; }
 	}
 	elseif ($type=='sponsorid') {
 		if ($value=='all' || (is_numeric($value) && $value>=1 && $value<=100000)) { return TRUE; }
@@ -320,14 +320,14 @@ function isValidInput($value, $type) {
 	elseif ($type=='type') {
 		if ($value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
 	}
-	elseif ($type='exportformat') {
-		if ($value=="html" || $value=="js" || $value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="vxml") { return TRUE; }
+	elseif ($type=='exportformat') {
+		if ($value=="html" || $value=="js" || $value=="xml" || $value=="rss" || $value=="ical" || $value=="rss1_0" || $value=="rss2_0" || $value=="vxml") { return TRUE; }
 	}
 	elseif ($type=='rangedays') {
 		if (is_numeric($value) && $value>=1 && $value<=100000) { return TRUE; }
 	}
 	elseif ($type=='sponsortype') {
-		if ($value=='all' || $value='self' || $value='specific') { return TRUE; }
+		if ($value == 'all' || $value == 'self' || $value == 'specific') { return TRUE; }
 	}
 	elseif ($type=='specificsponsor') {
 		if (preg_match('/^['.constValidTextCharWithWhitespaceRegEx.']{1,'.constSpecificsponsorMaxLength.'}$/',$value)) { return TRUE; }

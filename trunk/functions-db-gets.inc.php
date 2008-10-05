@@ -4,7 +4,7 @@
 // Returns a number if more than one row was found.
 // Returns a string of a DB error occurred.
 function getCalendarData($calendarid) {
-	$result = DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'");
+	$result =& DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($calendarid)."'");
 	
 	if ( is_string($result) ) {
 		return $result;

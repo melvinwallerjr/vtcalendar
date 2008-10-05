@@ -3,10 +3,10 @@ require_once('application.inc.php');
 
 	if (!authorized()) { exit; }
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['sponsor_email'])) { setVar($sponsor_email,$_POST['sponsor_email'],'sponsor_email'); } else { unset($sponsor_email); }
-
+	if (isset($_POST['cancel']) && !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (isset($_POST['save']) && !setVar($save,$_POST['save'],'save')) unset($save);
+	if (isset($_POST['sponsor_email']) && !setVar($sponsor_email,$_POST['sponsor_email'],'sponsor_email')) unset($sponsor_email);
+	
 	if (isset($cancel)) {
 		redirect2URL("update.php");
 		exit;

@@ -1,7 +1,7 @@
 <?php
 require_once('application.inc.php');
 
-	if (isset($_GET['id'])) { setVar($id,$_GET['id'],'searchkeywordid'); } else { unset($id); }
+	if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'searchkeywordid')) unset($id);
 
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security

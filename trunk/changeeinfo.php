@@ -5,30 +5,27 @@ require_once('application.inc.php');
      Get the data passed via the query string and form
 ========================================================== */
 
-if (isset($_POST['choosetemplate'])) { setVar($choosetemplate, $_POST['choosetemplate'],'choosetemplate'); } else { unset($choosetemplate); }
-if (isset($_POST['preview'])) { setVar($preview, $_POST['preview'],'preview'); } else { unset($preview); }
-if (isset($_POST['savethis'])) { setVar($savethis, $_POST['savethis'],'savethis'); } else { unset($savethis); }
-if (isset($_POST['edit'])) { setVar($edit, $_POST['edit'],'edit'); } else { unset($edit); }
+if (!isset($_POST['choosetemplate']) || !setVar($choosetemplate, $_POST['choosetemplate'],'choosetemplate')) unset($choosetemplate);
+if (!isset($_POST['preview']) || !setVar($preview, $_POST['preview'],'preview')) unset($preview);
+if (!isset($_POST['savethis']) || !setVar($savethis, $_POST['savethis'],'savethis')) unset($savethis);
+if (!isset($_POST['edit']) || !setVar($edit, $_POST['edit'],'edit')) unset($edit);
 if (isset($_POST['eventid'])) { setVar($eventid, $_POST['eventid'],'eventid'); }
 else { 
-	if (isset($_GET['eventid'])) { setVar($eventid, $_GET['eventid'],'eventid'); } 
-	else {
-		unset($eventid); 
-	}
+	if (!isset($_GET['eventid']) || !setVar($eventid, $_GET['eventid'],'eventid')) unset($eventid);
 }
-if (isset($_POST['cancel'])) { setVar($cancel, $_POST['cancel'],'cancel'); } else { unset($cancel); }
+if (!isset($_POST['cancel']) || !setVar($cancel, $_POST['cancel'],'cancel')) unset($cancel);
 
 // If the event is a copy of the passed eventid. '1' is true. Any other value is false.
 if (isset($_POST['copy'])) { setVar($copy, $_POST['copy'],'copy'); } 
 elseif (isset($_GET['copy'])) { setVar($copy, $_GET['copy'],'copy'); } 
 else { $copy = 0; }
 
-if (isset($_POST['check'])) { setVar($check, $_POST['check'],'check'); } else { unset($check); }
-if (isset($_POST['templateid'])) { setVar($templateid, $_POST['templateid'],'templateid'); } else { unset($templateid); }
-if (isset($_POST['httpreferer'])) { setVar($httpreferer, $_POST['httpreferer'],'httpreferer'); } else { unset($httpreferer); }
-if (isset($_GET['timebegin_year'])) { setVar($timebegin_year, $_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
-if (isset($_GET['timebegin_month'])) { setVar($timebegin_month, $_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
-if (isset($_GET['timebegin_day'])) { setVar($timebegin_day, $_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
+if (!isset($_POST['check']) || !setVar($check, $_POST['check'],'check')) unset($check);
+if (!isset($_POST['templateid']) || !setVar($templateid, $_POST['templateid'],'templateid')) unset($templateid);
+if (!isset($_POST['httpreferer']) || !setVar($httpreferer, $_POST['httpreferer'],'httpreferer')) unset($httpreferer);
+if (!isset($_GET['timebegin_year']) || !setVar($timebegin_year, $_GET['timebegin_year'],'timebegin_year')) unset($timebegin_year);
+if (!isset($_GET['timebegin_month']) || !setVar($timebegin_month, $_GET['timebegin_month'],'timebegin_month')) unset($timebegin_month);
+if (!isset($_GET['timebegin_day']) || !setVar($timebegin_day, $_GET['timebegin_day'],'timebegin_day')) unset($timebegin_day);
 if (isset($_POST['repeat'])) {
 	if (isset($_POST['repeat']['mode'])) { setVar($repeat['mode'], $_POST['repeat']['mode'],'mode'); } else { unset($repeat['mode']); }
 	if (isset($_POST['repeat']['interval1'])) { setVar($repeat['interval1'], $_POST['repeat']['interval1'],'interval1'); } else { unset($repeat['interval1']); }

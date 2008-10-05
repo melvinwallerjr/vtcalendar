@@ -7,11 +7,11 @@ require_once('application.inc.php');
 		redirect2URL("update.php");
 	}
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['user_oldpassword'])) { setVar($user_oldpassword,$_POST['user_oldpassword'],'password'); } else { unset($user_oldpassword); }
-	if (isset($_POST['user_newpassword1'])) { setVar($user_newpassword1,$_POST['user_newpassword1'],'password'); } else { unset($user_newpassword1); }
-	if (isset($_POST['user_newpassword2'])) { setVar($user_newpassword2,$_POST['user_newpassword2'],'password'); } else { unset($user_newpassword2); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['user_oldpassword']) || !setVar($user_oldpassword,$_POST['user_oldpassword'],'password')) unset($user_oldpassword);
+	if (!isset($_POST['user_newpassword1']) || !setVar($user_newpassword1,$_POST['user_newpassword1'],'password')) unset($user_newpassword1);
+	if (!isset($_POST['user_newpassword2']) || !setVar($user_newpassword2,$_POST['user_newpassword2'],'password')) unset($user_newpassword2);
 
 	if (isset($cancel)) {
 		redirect2URL("update.php");

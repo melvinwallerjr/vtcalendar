@@ -4,14 +4,14 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-if (isset($_POST['users'])) { setVar($users,$_POST['users'],'users'); } else { unset($users); }
-if (isset($_POST['title'])) { setVar($title,$_POST['title'],'calendarTitle'); } else { unset($title); }
-if (isset($_POST['header'])) { setVar($header,$_POST['header'],'calendarHeader'); } else { unset($header); }
-if (isset($_POST['footer'])) { setVar($footer,$_POST['footer'],'calendarFooter'); } else { unset($footer); }
-if (isset($_POST['viewauthrequired'])) { setVar($viewauthrequired,$_POST['viewauthrequired'],'viewauthrequired'); } else { unset($viewauthrequired); }
-if (isset($_POST['forwardeventdefault'])) { setVar($forwardeventdefault,$_POST['forwardeventdefault'],'forwardeventdefault'); } else { unset($forwardeventdefault); }
+if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+if (!isset($_POST['users']) || !setVar($users,$_POST['users'],'users')) unset($users);
+if (!isset($_POST['title']) || !setVar($title,$_POST['title'],'calendarTitle')) unset($title);
+if (!isset($_POST['header']) || !setVar($header,$_POST['header'],'calendarHeader')) unset($header);
+if (!isset($_POST['footer']) || !setVar($footer,$_POST['footer'],'calendarFooter')) unset($footer);
+if (!isset($_POST['viewauthrequired']) || !setVar($viewauthrequired,$_POST['viewauthrequired'],'viewauthrequired')) unset($viewauthrequired);
+if (!isset($_POST['forwardeventdefault']) || !setVar($forwardeventdefault,$_POST['forwardeventdefault'],'forwardeventdefault')) unset($forwardeventdefault);
 	 
 if (isset($cancel)) {
 redirect2URL("update.php");

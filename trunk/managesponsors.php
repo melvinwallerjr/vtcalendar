@@ -4,9 +4,9 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-if (isset($_POST['edit'])) { setVar($edit,$_POST['edit'],'edit'); } else { unset($edit); }
-if (isset($_POST['delete'])) { setVar($delete,$_POST['delete'],'delete'); } else { unset($delete); }
-if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } else { unset($id); }
+if (!isset($_POST['edit']) || !setVar($edit,$_POST['edit'],'edit')) unset($edit);
+if (!isset($_POST['delete']) || !setVar($delete,$_POST['delete'],'delete')) unset($delete);
+if (!isset($_POST['id']) || !setVar($id,$_POST['id'],'sponsorid')) unset($id);
 
 if ( isset($edit) ) {
 	redirect2URL("editsponsor.php?id=".$id); exit;

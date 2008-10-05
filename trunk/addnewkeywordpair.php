@@ -4,11 +4,11 @@ require_once('application.inc.php');
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
-	if (isset($_POST['keyword'])) { setVar($keyword,$_POST['keyword'],'keyword'); } else { unset($keyword); }
-	if (isset($_POST['alternativekeyword'])) { setVar($alternativekeyword,$_POST['alternativekeyword'],'keyword'); } else { unset($alternativekeyword); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
+	if (!isset($_POST['keyword']) || !setVar($keyword,$_POST['keyword'],'keyword')) unset($keyword);
+	if (!isset($_POST['alternativekeyword']) || !setVar($alternativekeyword,$_POST['alternativekeyword'],'keyword')) unset($alternativekeyword);
 
 	if (isset($cancel)) {
 		redirect2URL("managesearchkeywords.php");

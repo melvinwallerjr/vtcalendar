@@ -3,9 +3,9 @@ require_once('application.inc.php');
 
 if (!authorized()) { exit; }
 
-if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_POST['duration'])) { setVar($duration,$_POST['duration'],'duration'); } else { unset($duration); }
+if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+if (!isset($_POST['duration']) || !setVar($duration,$_POST['duration'],'duration')) unset($duration);
 
 if (isset($cancel)) {
 	redirect2URL("update.php");

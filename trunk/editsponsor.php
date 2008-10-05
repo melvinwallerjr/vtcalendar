@@ -4,13 +4,12 @@ require_once('application.inc.php');
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } 
 	else { 
-		if (isset($_GET['id'])) { setVar($id,$_GET['id'],'sponsorid'); } 
-		else { unset($id); }
+		if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'sponsorid')) unset($id);
 	}
 	if (isset($_POST['sponsor'])) { 
 		if (isset($_POST['sponsor']['name'])) { setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name'); } 
@@ -21,6 +20,9 @@ require_once('application.inc.php');
 		else { unset($sponsor['url']); }
 		if (isset($_POST['sponsor']['admins'])) { setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins'); } 
 		else { unset($sponsor['admins']); }
+	}
+	else {
+		unset($sponsor);
 	}
 
 	if (isset($cancel)) {

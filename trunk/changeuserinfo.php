@@ -4,25 +4,25 @@ require_once('application.inc.php');
 	if (!authorized()) { exit; }
 	if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-	if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-	if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-	if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
+	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 	if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } 
 	else { 
-		if (isset($_GET['userid'])) { setVar($userid,$_GET['userid'],'userid'); } 
-		else { unset($userid); }
+		if (!isset($_GET['userid']) || !setVar($userid,$_GET['userid'],'userid')) unset($userid);
 	}
 	if (isset($_POST['chooseuser'])) { setVar($chooseuser,$_POST['chooseuser'],'chooseuser'); } 
 	else { 
-		if (isset($_GET['chooseuser'])) { setVar($chooseuser,$_GET['chooseuser'],'chooseuser'); } 
-		else { unset($chooseuser); }
+		if (!isset($_GET['chooseuser']) || !setVar($chooseuser,$_GET['chooseuser'],'chooseuser')) unset($chooseuser);
 	}
 	if (isset($_POST['user'])) { 
 		if (isset($_POST['user']['password'])) { setVar($user['password'],$_POST['user']['password'],'password'); } 
 		else { unset($user['password']); }
 		if (isset($_POST['user']['email'])) { setVar($user['email'],$_POST['user']['email'],'email'); } 
 		else { unset($user['email']); }
-		
+	}
+	else {
+		unset($user);
 	}
 
 	// prepend the prefix when creating new users

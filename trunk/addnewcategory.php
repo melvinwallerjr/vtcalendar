@@ -4,12 +4,15 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-if (isset($_POST['cancel'])) { setVar($cancel,$_POST['cancel'],'cancel'); } else { unset($cancel); }
-if (isset($_POST['save'])) { setVar($save,$_POST['save'],'save'); } else { unset($save); }
-if (isset($_POST['check'])) { setVar($check,$_POST['check'],'check'); } else { unset($check); }
+if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
+if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
+if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 if (isset($_POST['category'])) { 
 	if (isset($_POST['category']['name'])) { setVar($category['name'],$_POST['category']['name'],'category_name'); } 
-else { unset($category['name']); }
+	else { unset($category['name']); }
+}
+else {
+	unset($category);
 }
 
 if (isset($cancel)) {

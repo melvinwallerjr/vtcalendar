@@ -6,8 +6,8 @@ $today = Decode_Date_US(date("m/d/Y", NOW));
 //$today['dow_text'] = Day_of_Week_Abbreviation(Day_of_Week($today['month'],$today['day'],$today['year']));
 
 // If a username and password was submitted via POST, then assign them to $userid and $password.
-//--if (isset($_POST['userid'])) { setVar($userid,$_POST['userid'],'userid'); } else { unset($userid); }
-//--if (isset($_POST['password'])) { setVar($password,$_POST['password'],'password'); } else { unset($password); }
+//--if (!isset($_POST['userid']) || !setVar($userid,$_POST['userid'],'userid')) unset($userid);
+//--if (!isset($_POST['password']) || !setVar($password,$_POST['password'],'password')) unset($password);
 
 // If the current view is set, then assign it to $view (also validates it).
 // If it is not set, then attempt to assign the session variable 'view' to $view.
@@ -22,22 +22,22 @@ if (isset($_GET['view'])) { setVar($view,$_GET['view'],'view'); } else {
 $_SESSION['PREVIOUS_VIEW'] = $view;
 
 // If any of the following GET variables are set, then assign them to their respective variables.
-if (isset($_GET['eventid'])) { setVar($eventid,$_GET['eventid'],'eventid'); } else { unset($eventid); }
-if (isset($_GET['timebegin'])) { setVar($timebegin,$_GET['timebegin'],'timebegin'); } else { unset($timebegin); }
-if (isset($_GET['timebegin_year'])) { setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year'); } else { unset($timebegin_year); }
-if (isset($_GET['timebegin_month'])) { setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month'); } else { unset($timebegin_month); }
-if (isset($_GET['timebegin_day'])) { setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day'); } else { unset($timebegin_day); }
-if (isset($_GET['timeend'])) { setVar($timeend,$_GET['timeend'],'timeend'); } else { unset($timeend); }
-if (isset($_GET['timeend_year'])) { setVar($timeend_year,$_GET['timeend_year'],'timeend_year'); } else { unset($timeend_year); }
-if (isset($_GET['timeend_month'])) { setVar($timeend_month,$_GET['timeend_month'],'timeend_month'); } else { unset($timeend_month); }
-if (isset($_GET['timeend_day'])) { setVar($timeend_day,$_GET['timeend_day'],'timeend_day'); } else { unset($timeend_day); }
-if (isset($_GET['categoryid'])) { setVar($categoryid,$_GET['categoryid'],'categoryid'); } else { unset($categoryid); }
-if (isset($_GET['sponsorid'])) { setVar($sponsorid,$_GET['sponsorid'],'sponsorid'); } else { unset($sponsorid); }
-if (isset($_GET['keyword'])) { setVar($keyword,$_GET['keyword'],'keyword'); } else { unset($keyword); }
-if (isset($_GET['categoryfilter'])) { setVar($CategoryFilter,$_GET['categoryfilter'],'categoryfilter'); } else { unset($CategoryFilter); }
-if (isset($_GET['littlecal'])) { setVar($littlecal,$_GET['littlecal'],'littlecal'); } else { unset($littlecal); }
-if (isset($_GET['oldview'])) { setVar($oldview,$_GET['oldview'],'view'); } else { unset($oldview); }
-if (isset($_GET['page'])) { setVar($page,$_GET['page'],'page'); } else { unset($page); }
+if (!isset($_GET['eventid']) || !setVar($eventid,$_GET['eventid'],'eventid')) unset($eventid);
+if (!isset($_GET['timebegin']) || !setVar($timebegin,$_GET['timebegin'],'timebegin')) unset($timebegin);
+if (!isset($_GET['timebegin_year']) || !setVar($timebegin_year,$_GET['timebegin_year'],'timebegin_year')) unset($timebegin_year);
+if (!isset($_GET['timebegin_month']) || !setVar($timebegin_month,$_GET['timebegin_month'],'timebegin_month')) unset($timebegin_month);
+if (!isset($_GET['timebegin_day']) || !setVar($timebegin_day,$_GET['timebegin_day'],'timebegin_day')) unset($timebegin_day);
+if (!isset($_GET['timeend']) || !setVar($timeend,$_GET['timeend'],'timeend')) unset($timeend);
+if (!isset($_GET['timeend_year']) || !setVar($timeend_year,$_GET['timeend_year'],'timeend_year')) unset($timeend_year);
+if (!isset($_GET['timeend_month']) || !setVar($timeend_month,$_GET['timeend_month'],'timeend_month')) unset($timeend_month);
+if (!isset($_GET['timeend_day']) || !setVar($timeend_day,$_GET['timeend_day'],'timeend_day')) unset($timeend_day);
+if (!isset($_GET['categoryid']) || !setVar($categoryid,$_GET['categoryid'],'categoryid')) unset($categoryid);
+if (!isset($_GET['sponsorid']) || !setVar($sponsorid,$_GET['sponsorid'],'sponsorid')) unset($sponsorid);
+if (!isset($_GET['keyword']) || !setVar($keyword,$_GET['keyword'],'keyword')) unset($keyword);
+if (!isset($_GET['categoryfilter']) || !setVar($CategoryFilter,$_GET['categoryfilter'],'categoryfilter')) unset($CategoryFilter);
+if (!isset($_GET['littlecal']) || !setVar($littlecal,$_GET['littlecal'],'littlecal')) unset($littlecal);
+if (!isset($_GET['oldview']) || !setVar($oldview,$_GET['oldview'],'view')) unset($oldview);
+if (!isset($_GET['page']) || !setVar($page,$_GET['page'],'page')) unset($page);
 
 // Make sure the current view is allowed or possible.
 if ( $view == "month" && !$enableViewMonth ) { $view="week"; }

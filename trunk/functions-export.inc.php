@@ -30,7 +30,7 @@ function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timeb
 			disassemble_timestamp($event);
 			
 			$resultString .= "<item>\n";
-			$resultString .= "<title>".text2xmltext($event['title'])."</title>\n";
+			$resultString .= "<title>".Month_to_Text_Abbreviation($event['timebegin_month'])." ".$event['timebegin_day'].": ".text2xmltext($event['title'])."</title>\n";
 			$resultString .= "<link>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</link>\n";
 			$resultString .= "<description>";
 			if ($event['wholedayevent']==0) {
@@ -39,20 +39,24 @@ function GenerateRSS(&$result, $calendarID, $calendarTitle, $calendarurl, $timeb
 			else {
 				$resultString .= "All day: ";
 			}
-			$resultString .= text2xmltext($event['category_name'])."</description>\n";
+			$resultString .= text2xmltext($event['category_name']);
+			
+			$resultString .= "</description>\n";
 			$resultString .= "</item>\n";
 		}
 		$result->free();
 	}
-		
+	
 	$resultString .= "</channel>\n";
 	$resultString .= "</rss>\n";
 	
 	return $resultString;
 }
 
-function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin) {
+function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin = NULL) {
 	$resultString = "";
+	
+	if ($timebegin === NULL) $timebegin = date("Y-m-d 00:00:00", NOW);
 	
 	if (substr($timebegin,8,1) == "0") { $day = substr($timebegin,9,1); } 
 	else { $day = substr($timebegin,8,2); }
@@ -74,25 +78,25 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 		. '<title>'. text2xmltext($calendarTitle) . "</title>\n"
 		. "<items>\n"
 		. "<rdf:Seq>\n";
-
+	
 	if (!is_string($result)) {
 		for ($i=0; $i < $result->numRows(); $i++) {
 			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			$resultString .= '<rdf:li resource="'.text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."\"/>\n";
 		}
 	}
-
+	
 	$resultString .= "</rdf:Seq>\n"
 		. "</items>\n"
 		. "</channel>\n";
-		
+	
 	if (!is_string($result)) {
 		for ($i=0; $i < $result->numRows(); $i++) {
 			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			disassemble_timestamp($event);
 			$resultString .= "<item rdf:about=\"".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."\">\n";
 			$resultString .= "<link>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</link>\n";
-			$resultString .= "<title>".text2xmltext($event['title'])."</title>\n";
+			$resultString .= "<title>".Month_to_Text_Abbreviation($event['timebegin_month'])." ".$event['timebegin_day'].": ".text2xmltext($event['title'])."</title>\n";
 			$resultString .= "<description>";
 			if ($event['wholedayevent']==0) {
 				$resultString .= text2xmltext(timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']). ": ");
@@ -109,6 +113,56 @@ function GenerateRSS1_0(&$result, $calendarID, $calendarTitle, $calendarurl, $ti
 
 	$resultString .= "</rdf:RDF>\n";
 	
+	return $resultString;
+}
+
+function GenerateRSS2_0(&$result, $calendarID, $calendarTitle, $calendarurl, $timebegin = NULL) {
+	$resultString = "";
+	
+	if ($timebegin === NULL) $timebegin = date("Y-m-d 00:00:00", NOW);
+	
+	$resultString .= '<?xml version="1.0"?>'."\n";
+	$resultString .= '<rss version="2.0">'."\n";
+	$resultString .= "<channel>\n";
+	$resultString .= "<title>".text2xmltext($calendarTitle)."</title>\n";
+	$resultString .= "<link>".text2xmltext($calendarurl)."?calendarid=".text2xmltext($calendarID)."</link>\n";
+	$resultString .= "<pubDate>".gmdate("r", NOW)."</pubDate>\n";
+	$resultString .= "<lastBuildDate>".gmdate("r", NOW)."</lastBuildDate>\n";
+	$resultString .= "<generator>VTCalendar".(defined("VERSION") ? " ".VERSION : "")."</generator>\n";
+	
+	if (defined("CACHEMINUTES"))
+		$resultString .= "<ttl>".CACHEMINUTES."</ttl>\n";
+		
+	if (!is_string($result)) {
+		for ($i=0; $i < $result->numRows(); $i++) {
+			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			disassemble_timestamp($event);
+			
+			$resultString .= "<item>\n";
+			$resultString .= "<title>".Month_to_Text_Abbreviation($event['timebegin_month'])." ".$event['timebegin_day'].": ".text2xmltext($event['title'])."</title>\n";
+			$resultString .= "<link>".text2xmltext($calendarurl)."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id'])."</link>\n";
+			$resultString .= "<category>".text2xmltext($event['category_name'])."</category>\n";
+			$resultString .= "<description>&lt;em&gt;";
+			if ($event['wholedayevent']==0) {
+				$resultString .= text2xmltext(timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']). ": ");
+			}
+			else {
+				$resultString .= "All day: ";
+			}
+			$resultString .= text2xmltext($event['category_name']).'&lt;/em&gt;';
+	
+			if ($event['description'] != "") {
+				$resultString .= text2xmltext('<br/>' . preg_replace("/((\r\n)|[\r\n])/", "<br/>", make_clickable($event['description'])));
+			}
+			
+			$resultString .= "</description>\n";
+			$resultString .= "</item>\n";
+		}
+		$result->free();
+	}
+	
+	$resultString .= "</channel>\n";
+	$resultString .= "</rss>\n";
 	return $resultString;
 }
 

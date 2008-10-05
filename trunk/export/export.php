@@ -7,6 +7,7 @@ define("CACHEMINUTES", 5);
 define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
 
 @(include_once('DB.php')) or die('');
+@(include_once('../version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
 @(include_once('../config.inc.php')) or die('');
 require_once('../config-defaults.inc.php');
 require_once('../functions.inc.php');
@@ -74,31 +75,37 @@ if (is_string( $result =& DBQuery($query) ) ) {
 // ==========================================================
 
 // Set the expiration of the returned data.
-Header("Expires: " . gmdate("D, d M Y H:i:s", time() + (CACHEMINUTES*60)) . " GMT");
+//Header("Expires: " . gmdate("D, d M Y H:i:s", time() + (CACHEMINUTES*60)) . " GMT");
 
 // Set that this file was last updated right now.
-Header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
+//Header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
+
+if (isset($_GET['raw'])) Header("Content-Type: text/plain");
 
 switch($FormData['format']) {
 	case "rss":
-		//Header("Content-Type: text/xml");
-		echo GenerateRSS($result, $CalendarID, $calendardata['title'], BASEURL);
+		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
+		echo GenerateRSS($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
 		break;
 	case "rss1_0":
-		Header("Content-Type: text/xml");
-		echo GenerateRSS1_0($result, $CalendarID, $calendardata['title'], BASEURL);
+		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
+		echo GenerateRSS1_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
+		break;
+	case "rss2_0":
+		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
+		echo GenerateRSS2_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
 		break;
 	case "xml":
-		Header("Content-Type: text/xml");
-		echo GenerateXML($result, $CalendarID, $calendardata['title'], BASEURL);
+		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
+		echo GenerateXML($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
 		break;
 	case "ical":
-		Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"export.ics\"");
-		Header("Content-disposition: attachment; filename=export.ics");
-		echo GenerateICal($result, $CalendarID, $calendardata['name'], BASEURL);
+		if (!isset($_GET['raw'])) Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"export.ics\"");
+		if (!isset($_GET['raw'])) Header("Content-disposition: attachment; filename=export.ics");
+		echo GenerateICal($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
 		break;
 	case "vxml":
-		Header("Content-Type: text/xml");
+		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
 		echo GenerateVXML($result);
 		break;
 	default:
@@ -115,7 +122,7 @@ switch($FormData['format']) {
  * @return string the query.
  */
 function BuildExportQuery($CalendarID, &$FormData) {
-	$query = "SELECT e.id, e.timebegin, e.timeend, e.title, e.wholedayevent, e.categoryid, e.location, c.name as category_name, s.name as sponsor_name FROM vtcal_event_public e, vtcal_sponsor s, vtcal_category c WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
+	$query = "SELECT e.id, e.description, e.timebegin, e.timeend, e.title, e.wholedayevent, e.categoryid, e.location, c.name as category_name, s.name as sponsor_name FROM vtcal_event_public e, vtcal_sponsor s, vtcal_category c WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 	
 	// Filter by date.
 	if (isset($FormData['timebegin'])) {

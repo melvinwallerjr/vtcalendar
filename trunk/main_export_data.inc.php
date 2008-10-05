@@ -1,4 +1,10 @@
 <?php
+/* =======================================
+WARNING: This file should not use anything
+exclusive to main.php or main_body.inc.php
+since it is included in export/export.php.
+======================================= */
+
 $Submit_CreateExport = isset($_GET['createexport']);
 
 // Defaults
@@ -14,7 +20,7 @@ $FormData['showlocation'] = '1';
 $FormData['showallday'] = '1';
 $FormData['specificsponsor'] = '';
 
-// Make a copy of the defaults so they can be removed from the query string to make things simplier.
+// Make a copy of the defaults so they can be removed from the query string to make things simpler.
 $FormDataDefaults = $FormData;
 
 // An aray of error messages.
@@ -130,6 +136,20 @@ $lang['export_maxtitlechars_error'] = 'You must enter either a number below or l
 $lang['export_maxlocationchars'] = 'Maximum Characters for the Location';
 $lang['export_maxlocationchars_description'] = 'If you have a limited amount of space on your Web site, you may limit the length of the event location.<br>Any locations that are beyond this length will be truncated and an ellipse (...) will be added to the end.';
 $lang['export_maxlocationchars_error'] = 'You must enter either a number below or leave it blank.';
+
+$lang['export_preview_return'] = 'Return to the Form';
+
+$lang['export_preview_download'] = 'Download Exported Events';
+$lang['export_preview_download_text'] = 'To save the exported events, <a href="%URL%" onclick="return false;">right-click this link</a> (CTRL-click on a Mac) and select &quot;Save Target As...&quot; or &quot;Save Link As...&quot;';
+
+$lang['export_preview_url'] = 'Export URL';
+$lang['export_preview_url_text'] = 'The URL below will export events based on the settings you provided.';
+
+$lang['export_preview_js'] = 'JavaScript Code';
+$lang['export_preview_js_text'] = 'The code below can be copy/pasted into your Web site to automatically display events based on the settings you provided.';
+
+$lang['export_preview_raw'] = 'Raw Export Preview';
+$lang['export_preview_raw_text'] = 'The window below shows the raw output for the exported events.';
 
 if (isset($_GET['format'])) setVar($FormData['format'],$_GET['format'],'exportformat');
 if ($Submit_CreateExport && !isset($FormData['format'])) $FormErrors['format'] = lang('export_format_error');

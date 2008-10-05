@@ -7,15 +7,19 @@ require_once('application.inc.php');
 	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
 	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
-	if (isset($_POST['new'])) { setVar($new,$_POST['new'],'check'); } else { 
+	if (!isset($_POST['new']) || !setVar($new,$_POST['new'],'check')) { 
 		if (!isset($_GET['new']) || !setVar($new,$_GET['new'],'check')) unset($new);
 	}
-	if (isset($_GET['cal']) && isset($_GET['cal']['id'])) { setVar($cal['id'],$_GET['cal']['id'],'calendarid'); } else { unset($cal); }
-	if (isset($_POST['cal'])) { 
-		if (isset($_POST['cal']['id'])) { setVar($cal['id'],$_POST['cal']['id'],'calendarid'); } else { unset($cal['id']); }
-		if (isset($_POST['cal']['name'])) { setVar($cal['name'],$_POST['cal']['name'],'calendarname'); } else { unset($cal['name']); }
-		if (isset($_POST['cal']['admins'])) { setVar($cal['admins'],$_POST['cal']['admins'],'users'); } else { unset($cal['admins']); }
-		if (isset($_POST['cal']['forwardeventdefault'])) { setVar($cal['forwardeventdefault'],$_POST['cal']['forwardeventdefault'],'forwardeventdefault'); } else { unset($cal['forwardeventdefault']); }
+	if (isset($_GET['cal'])) {
+		// Unset cal since we want nothing set but the id.
+		unset($cal);
+		if (!isset($_GET['cal']['id']) || !setVar($cal['id'],$_GET['cal']['id'],'calendarid')) unset($cal['id']);
+	}
+	elseif (isset($_POST['cal'])) { 
+		if (!isset($_POST['cal']['id']) || !setVar($cal['id'],$_POST['cal']['id'],'calendarid')) unset($cal['id']);
+		if (!isset($_POST['cal']['name']) || !setVar($cal['name'],$_POST['cal']['name'],'calendarname')) unset($cal['name']);
+		if (!isset($_POST['cal']['admins']) || !setVar($cal['admins'],$_POST['cal']['admins'],'users')) unset($cal['admins']);
+		if (!isset($_POST['cal']['forwardeventdefault']) || !setVar($cal['forwardeventdefault'],$_POST['cal']['forwardeventdefault'],'forwardeventdefault')) unset($cal['forwardeventdefault']);
 	}
 	else {
 		unset($cal);

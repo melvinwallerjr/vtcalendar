@@ -6,7 +6,7 @@ require_once('application.inc.php');
 	if (!isset($_POST['check']) || !setVar($check,$_POST['check'],'check')) unset($check);
 	if (!isset($_POST['keyword']) || !setVar($keyword,$_POST['keyword'],'keyword')) unset($keyword);
 	if (!isset($_POST['featuretext']) || !setVar($featuretext,$_POST['featuretext'],'featuretext')) unset($featuretext);
-	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'searchkeywordid'); } else { 
+	if (!isset($_POST['id']) || !setVar($id,$_POST['id'],'searchkeywordid')) { 
 		if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'searchkeywordid')) unset($id);
  }
 

@@ -12,7 +12,7 @@ $today = Decode_Date_US(date("m/d/Y", NOW));
 // If the current view is set, then assign it to $view (also validates it).
 // If it is not set, then attempt to assign the session variable 'view' to $view.
 // Otherwise, unset $view.
-if (isset($_GET['view'])) { setVar($view,$_GET['view'],'view'); } else { 
+if (!isset($_GET['view']) || !setVar($view,$_GET['view'],'view')) { 
 	if (!empty($_SESSION['PREVIOUS_VIEW'])) { $view = $_SESSION['PREVIOUS_VIEW']; }
 	elseif (SHOW_UPCOMING_TAB) { $view = "upcoming"; }
 	else { $view = "day"; } 

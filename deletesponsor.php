@@ -7,8 +7,7 @@ require_once('application.inc.php');
 	if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save);
 	if (!isset($_POST['cancel']) || !setVar($cancel,$_POST['cancel'],'cancel')) unset($cancel);
 	if (!isset($_POST['deleteevents']) || !setVar($deleteevents,$_POST['deleteevents'],'deleteevents')) unset($deleteevents);
-	if (isset($_POST['id'])) { setVar($id,$_POST['id'],'sponsorid'); } 
-	else { 
+	if (!isset($_POST['id']) || !setVar($id,$_POST['id'],'sponsorid')) { 
 		if (!isset($_GET['id']) || !setVar($id,$_GET['id'],'sponsorid')) unset($id);
 	}
 	if (!isset($_POST['newsponsorid']) || !setVar($newsponsorid,$_POST['newsponsorid'],'sponsorid')) unset($newsponsorid);

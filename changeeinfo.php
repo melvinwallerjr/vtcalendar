@@ -9,16 +9,15 @@ if (!isset($_POST['choosetemplate']) || !setVar($choosetemplate, $_POST['chooset
 if (!isset($_POST['preview']) || !setVar($preview, $_POST['preview'],'preview')) unset($preview);
 if (!isset($_POST['savethis']) || !setVar($savethis, $_POST['savethis'],'savethis')) unset($savethis);
 if (!isset($_POST['edit']) || !setVar($edit, $_POST['edit'],'edit')) unset($edit);
-if (isset($_POST['eventid'])) { setVar($eventid, $_POST['eventid'],'eventid'); }
-else { 
+if (!isset($_POST['eventid']) || !setVar($eventid, $_POST['eventid'],'eventid')) { 
 	if (!isset($_GET['eventid']) || !setVar($eventid, $_GET['eventid'],'eventid')) unset($eventid);
 }
 if (!isset($_POST['cancel']) || !setVar($cancel, $_POST['cancel'],'cancel')) unset($cancel);
 
 // If the event is a copy of the passed eventid. '1' is true. Any other value is false.
-if (isset($_POST['copy'])) { setVar($copy, $_POST['copy'],'copy'); } 
-elseif (isset($_GET['copy'])) { setVar($copy, $_GET['copy'],'copy'); } 
-else { $copy = 0; }
+if (!isset($_POST['copy']) || !setVar($copy, $_POST['copy'],'copy')) {
+	if (!isset($_GET['copy']) || !setVar($copy, $_GET['copy'],'copy')) { $copy = 0; }
+}
 
 if (!isset($_POST['check']) || !setVar($check, $_POST['check'],'check')) unset($check);
 if (!isset($_POST['templateid']) || !setVar($templateid, $_POST['templateid'],'templateid')) unset($templateid);
@@ -27,12 +26,12 @@ if (!isset($_GET['timebegin_year']) || !setVar($timebegin_year, $_GET['timebegin
 if (!isset($_GET['timebegin_month']) || !setVar($timebegin_month, $_GET['timebegin_month'],'timebegin_month')) unset($timebegin_month);
 if (!isset($_GET['timebegin_day']) || !setVar($timebegin_day, $_GET['timebegin_day'],'timebegin_day')) unset($timebegin_day);
 if (isset($_POST['repeat'])) {
-	if (isset($_POST['repeat']['mode'])) { setVar($repeat['mode'], $_POST['repeat']['mode'],'mode'); } else { unset($repeat['mode']); }
-	if (isset($_POST['repeat']['interval1'])) { setVar($repeat['interval1'], $_POST['repeat']['interval1'],'interval1'); } else { unset($repeat['interval1']); }
-	if (isset($_POST['repeat']['interval2'])) { setVar($repeat['interval2'], $_POST['repeat']['interval2'],'interval2'); } else { unset($repeat['interval2']); }
-	if (isset($_POST['repeat']['frequency1'])) { setVar($repeat['frequency1'], $_POST['repeat']['frequency1'],'frequency1'); } else { unset($repeat['frequency1']); }
-	if (isset($_POST['repeat']['frequency2modifier1'])) { setVar($repeat['frequency2modifier1'], $_POST['repeat']['frequency2modifier1'],'frequency2modifier1'); } else { unset($repeat['frequency2modifier1']); }
-	if (isset($_POST['repeat']['frequency2modifier2'])) { setVar($repeat['frequency2modifier2'], $_POST['repeat']['frequency2modifier2'],'frequency2modifier2'); } else { unset($repeat['frequency2modifier2']); }
+	if (!isset($_POST['repeat']['mode']) || !setVar($repeat['mode'], $_POST['repeat']['mode'],'mode')) unset($repeat['mode']);
+	if (!isset($_POST['repeat']['interval1']) || !setVar($repeat['interval1'], $_POST['repeat']['interval1'],'interval1')) unset($repeat['interval1']);
+	if (!isset($_POST['repeat']['interval2']) || !setVar($repeat['interval2'], $_POST['repeat']['interval2'],'interval2')) unset($repeat['interval2']);
+	if (!isset($_POST['repeat']['frequency1']) || !setVar($repeat['frequency1'], $_POST['repeat']['frequency1'],'frequency1')) unset($repeat['frequency1']);
+	if (!isset($_POST['repeat']['frequency2modifier1']) || !setVar($repeat['frequency2modifier1'], $_POST['repeat']['frequency2modifier1'],'frequency2modifier1')) unset($repeat['frequency2modifier1']);
+	if (!isset($_POST['repeat']['frequency2modifier2']) || !setVar($repeat['frequency2modifier2'], $_POST['repeat']['frequency2modifier2'],'frequency2modifier2')) unset($repeat['frequency2modifier2']);
 }
 else {
 	unset($repeat);
@@ -40,33 +39,33 @@ else {
 
 // The data about the event.
 if (isset($_POST['event'])) {
-	if (isset($_POST['event']['timebegin_year'])) { setVar($event['timebegin_year'],$_POST['event']['timebegin_year'],'timebegin_year'); } else { unset($event['timebegin_year']); }
-	if (isset($_POST['event']['timebegin_month'])) { setVar($event['timebegin_month'],$_POST['event']['timebegin_month'],'timebegin_month'); } else { unset($event['timebegin_month']); }
-	if (isset($_POST['event']['timebegin_day'])) { setVar($event['timebegin_day'],$_POST['event']['timebegin_day'],'timebegin_day'); } else { unset($event['timebegin_day']); }
-	if (isset($_POST['event']['timebegin_hour'])) { setVar($event['timebegin_hour'],$_POST['event']['timebegin_hour'],'timebegin_hour'); } else { unset($event['timebegin_hour']); }
-	if (isset($_POST['event']['timebegin_min'])) { setVar($event['timebegin_min'],$_POST['event']['timebegin_min'],'timebegin_min'); } else { unset($event['timebegin_min']); }
-	if (isset($_POST['event']['timebegin_ampm'])) { setVar($event['timebegin_ampm'],$_POST['event']['timebegin_ampm'],'timebegin_ampm'); } else { unset($event['timebegin_ampm']); }
-	if (isset($_POST['event']['timeend_year'])) { setVar($event['timeend_year'],$_POST['event']['timeend_year'],'timeend_year'); } else { unset($event['timeend_year']); }
-	if (isset($_POST['event']['timeend_month'])) { setVar($event['timeend_month'],$_POST['event']['timeend_month'],'timeend_month'); } else { unset($event['timeend_month']); }
-	if (isset($_POST['event']['timeend_day'])) { setVar($event['timeend_day'],$_POST['event']['timeend_day'],'timeend_day'); } else { unset($event['timeend_day']); }
-	if (isset($_POST['event']['timeend_hour'])) { setVar($event['timeend_hour'],$_POST['event']['timeend_hour'],'timeend_hour'); } else { unset($event['timeend_hour']); }
-	if (isset($_POST['event']['timeend_min'])) { setVar($event['timeend_min'],$_POST['event']['timeend_min'],'timeend_min'); } else { unset($event['timeend_min']); }
-	if (isset($_POST['event']['timeend_ampm'])) { setVar($event['timeend_ampm'],$_POST['event']['timeend_ampm'],'timeend_ampm'); } else { unset($event['timeend_ampm']); }
-	if (isset($_POST['event']['wholedayevent'])) { setVar($event['wholedayevent'],$_POST['event']['wholedayevent'],'wholedayevent'); } else { unset($event['wholedayevent']); }
-	if (isset($_POST['event']['categoryid'])) { setVar($event['categoryid'],$_POST['event']['categoryid'],'categoryid'); } else { unset($event['categoryid']); }
-	if (isset($_POST['event']['title'])) { setVar($event['title'],$_POST['event']['title'],'title'); } else { unset($event['title']); }
-	if (isset($_POST['event']['location'])) { setVar($event['location'],$_POST['event']['location'],'location'); } else { unset($event['location']); }
-	if (isset($_POST['event']['price'])) { setVar($event['price'],$_POST['event']['price'],'price'); } else { unset($event['price']); }
-	if (isset($_POST['event']['description'])) { setVar($event['description'],$_POST['event']['description'],'description'); } else { unset($event['description']); }
-	if (isset($_POST['event']['sponsorid'])) { setVar($event['sponsorid'],$_POST['event']['sponsorid'],'sponsorid'); } else { unset($event['sponsorid']); }
-	if (isset($_POST['event']['displayedsponsor'])) { setVar($event['displayedsponsor'],$_POST['event']['displayedsponsor'],'displayedsponsor'); } else { unset($event['displayedsponsor']); }
-	if (isset($_POST['event']['displayedsponsorurl'])) { setVar($event['displayedsponsorurl'],$_POST['event']['displayedsponsorurl'],'url'); } else { unset($event['displayedsponsorurl']); }
-	if (isset($_POST['event']['showincategory'])) { setVar($event['showincategory'],$_POST['event']['showincategory'],'categoryid'); } else { unset($event['showincategory']); }
-	if (isset($_POST['event']['showondefaultcal'])) { setVar($event['showondefaultcal'],$_POST['event']['showondefaultcal'],'showondefaultcal'); } else { unset($event['showondefaultcal']); }
-	if (isset($_POST['event']['contact_name'])) { setVar($event['contact_name'],$_POST['event']['contact_name'],'contact_name'); } else { unset($event['contact_name']); }
-	if (isset($_POST['event']['contact_phone'])) { setVar($event['contact_phone'],$_POST['event']['contact_phone'],'contact_phone'); } else { unset($event['contact_phone']); }
-	if (isset($_POST['event']['contact_email'])) { setVar($event['contact_email'],$_POST['event']['contact_email'],'contact_email'); } else { unset($event['contact_email']); }
-	if (isset($_POST['event']['repeatid'])) { setVar($event['repeatid'],$_POST['event']['repeatid'],'repeatid'); } else { unset($event['repeatid']); }
+	if (!isset($_POST['event']['timebegin_year']) || !setVar($event['timebegin_year'],$_POST['event']['timebegin_year'],'timebegin_year')) unset($event['timebegin_year']);
+	if (!isset($_POST['event']['timebegin_month']) || !setVar($event['timebegin_month'],$_POST['event']['timebegin_month'],'timebegin_month')) unset($event['timebegin_month']);
+	if (!isset($_POST['event']['timebegin_day']) || !setVar($event['timebegin_day'],$_POST['event']['timebegin_day'],'timebegin_day')) unset($event['timebegin_day']);
+	if (!isset($_POST['event']['timebegin_hour']) || !setVar($event['timebegin_hour'],$_POST['event']['timebegin_hour'],'timebegin_hour')) unset($event['timebegin_hour']);
+	if (!isset($_POST['event']['timebegin_min']) || !setVar($event['timebegin_min'],$_POST['event']['timebegin_min'],'timebegin_min')) unset($event['timebegin_min']);
+	if (!isset($_POST['event']['timebegin_ampm']) || !setVar($event['timebegin_ampm'],$_POST['event']['timebegin_ampm'],'timebegin_ampm')) unset($event['timebegin_ampm']);
+	if (!isset($_POST['event']['timeend_year']) || !setVar($event['timeend_year'],$_POST['event']['timeend_year'],'timeend_year')) unset($event['timeend_year']);
+	if (!isset($_POST['event']['timeend_month']) || !setVar($event['timeend_month'],$_POST['event']['timeend_month'],'timeend_month')) unset($event['timeend_month']);
+	if (!isset($_POST['event']['timeend_day']) || !setVar($event['timeend_day'],$_POST['event']['timeend_day'],'timeend_day')) unset($event['timeend_day']);
+	if (!isset($_POST['event']['timeend_hour']) || !setVar($event['timeend_hour'],$_POST['event']['timeend_hour'],'timeend_hour')) unset($event['timeend_hour']);
+	if (!isset($_POST['event']['timeend_min']) || !setVar($event['timeend_min'],$_POST['event']['timeend_min'],'timeend_min')) unset($event['timeend_min']);
+	if (!isset($_POST['event']['timeend_ampm']) || !setVar($event['timeend_ampm'],$_POST['event']['timeend_ampm'],'timeend_ampm')) unset($event['timeend_ampm']);
+	if (!isset($_POST['event']['wholedayevent']) || !setVar($event['wholedayevent'],$_POST['event']['wholedayevent'],'wholedayevent')) unset($event['wholedayevent']);
+	if (!isset($_POST['event']['categoryid']) || !setVar($event['categoryid'],$_POST['event']['categoryid'],'categoryid')) unset($event['categoryid']);
+	if (!isset($_POST['event']['title']) || !setVar($event['title'],$_POST['event']['title'],'title')) unset($event['title']);
+	if (!isset($_POST['event']['location']) || !setVar($event['location'],$_POST['event']['location'],'location')) unset($event['location']);
+	if (!isset($_POST['event']['price']) || !setVar($event['price'],$_POST['event']['price'],'price')) unset($event['price']);
+	if (!isset($_POST['event']['description']) || !setVar($event['description'],$_POST['event']['description'],'description')) unset($event['description']);
+	if (!isset($_POST['event']['sponsorid']) || !setVar($event['sponsorid'],$_POST['event']['sponsorid'],'sponsorid')) unset($event['sponsorid']);
+	if (!isset($_POST['event']['displayedsponsor']) || !setVar($event['displayedsponsor'],$_POST['event']['displayedsponsor'],'displayedsponsor')) unset($event['displayedsponsor']);
+	if (!isset($_POST['event']['displayedsponsorurl']) || !setVar($event['displayedsponsorurl'],$_POST['event']['displayedsponsorurl'],'url')) unset($event['displayedsponsorurl']);
+	if (!isset($_POST['event']['showincategory']) || !setVar($event['showincategory'],$_POST['event']['showincategory'],'categoryid')) unset($event['showincategory']);
+	if (!isset($_POST['event']['showondefaultcal']) || !setVar($event['showondefaultcal'],$_POST['event']['showondefaultcal'],'showondefaultcal')) unset($event['showondefaultcal']);
+	if (!isset($_POST['event']['contact_name']) || !setVar($event['contact_name'],$_POST['event']['contact_name'],'contact_name')) unset($event['contact_name']);
+	if (!isset($_POST['event']['contact_phone']) || !setVar($event['contact_phone'],$_POST['event']['contact_phone'],'contact_phone')) unset($event['contact_phone']);
+	if (!isset($_POST['event']['contact_email']) || !setVar($event['contact_email'],$_POST['event']['contact_email'],'contact_email')) unset($event['contact_email']);
+	if (!isset($_POST['event']['repeatid']) || !setVar($event['repeatid'],$_POST['event']['repeatid'],'repeatid')) unset($event['repeatid']);
 	if (isset($_POST['event']['defaultallsponsor'])) { $event['defaultallsponsor'] = true; } else { unset($event['defaultallsponsor']); }
 	if (isset($_POST['event']['defaultdisplayedsponsor'])) { $event['defaultdisplayedsponsor'] = true; } else { unset($event['defaultdisplayedsponsor']); }
 	if (isset($_POST['event']['defaultdisplayedsponsorurl'])) { $event['defaultdisplayedsponsorurl'] = true; } else { unset($event['defaultdisplayedsponsorurl']); }

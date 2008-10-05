@@ -108,8 +108,16 @@ switch($FormData['format']) {
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
 		echo GenerateVXML($result);
 		break;
+	case "html":
+		if (!isset($_GET['raw'])) Header("Content-Type: text/html");
+		echo GenerateHTML($result);
+		break;
+	case "js":
+		if (!isset($_GET['raw'])) Header("Content-Type: application/x-javascript");
+		echo GenerateJSArray($result, $CalendarID, BASEURL);
+		break;
 	default:
-		echo "fail";
+		echo "Format not supported";
 }
 
 
@@ -122,7 +130,7 @@ switch($FormData['format']) {
  * @return string the query.
  */
 function BuildExportQuery($CalendarID, &$FormData) {
-	$query = "SELECT e.id, e.description, e.timebegin, e.timeend, e.title, e.wholedayevent, e.categoryid, e.location, c.name as category_name, s.name as sponsor_name FROM vtcal_event_public e, vtcal_sponsor s, vtcal_category c WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
+	$query = "SELECT e.id, e.description, e.timebegin, e.timeend, e.title, e.wholedayevent, e.categoryid, e.location, e.displayedsponsor, e.sponsorid, c.name as category_name, s.name as sponsor_name FROM vtcal_event_public e, vtcal_sponsor s, vtcal_category c WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 	
 	// Filter by date.
 	if (isset($FormData['timebegin'])) {

@@ -327,4 +327,45 @@ function GenerateVXML(&$result) {
 	
 	return $resultString;
 }
+
+function GenerateJSArray(&$result, $calendarID, $calendarurl) {
+	$resultString = "";
+	
+	$fields = explode(',', 'title,link,timebegin,timeend,wholedayevent,location,sponsorid,sponsor_name,displayedsponsor,categoryid,category_name,description');
+	$resultString .= "document.VTCal_EventFields = ['".implode("','", $fields)."'];\n";
+	
+	$resultString .= 'function VTCal_GetFieldIndex(field) {'."\n";
+	$resultString .= "\t".'switch (field) {'."\n";
+	for ($i=0; $i < count($fields); $i++) {
+		$resultString .= "\t\tcase '".$fields[$i]."': return " . $i . ";\n";
+	}
+	$resultString .= "\t\tdefault: return -1;\n";
+	$resultString .= "\t}\n";
+	$resultString .= "}\n";
+	
+	$resultString .= "document.VTCal_EventData = [];\n";
+	
+	if (!is_string($result)) {
+		for ($i=0; $i < $result->numRows(); $i++) {
+			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
+			
+			$resultString .= "document.VTCal_EventData[".$i."] = ["
+				."'".escapeJavaScriptString($event['title'])."'"
+				.",'".escapeJavaScriptString($calendarurl."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id']))."'"
+				.",'".escapeJavaScriptString($event['timebegin'])."'"
+				.",'".escapeJavaScriptString($event['timeend'])."'"
+				.",'".escapeJavaScriptString($event['wholedayevent'])."'"
+				.",'".escapeJavaScriptString($event['location'])."'"
+				.",'".escapeJavaScriptString($event['sponsorid'])."'"
+				.",'".escapeJavaScriptString($event['sponsor_name'])."'"
+				.",'".escapeJavaScriptString($event['displayedsponsor'])."'"
+				.",'".escapeJavaScriptString($event['categoryid'])."'"
+				.",'".escapeJavaScriptString($event['category_name'])."'"
+				.",'".escapeJavaScriptString($event['description'])."'];\n";
+		}
+	}
+	
+	return $resultString;
+	
+}
 ?>

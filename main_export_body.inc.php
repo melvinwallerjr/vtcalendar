@@ -14,7 +14,7 @@ if (!$Submit_CreateExport || count($FormErrors) != 0) {
 
 if ($Submit_CreateExport && count($FormErrors) == 0) {
 
-	echo '<table border="0" cellspacing="0" cellpadding="10"><tr><td>';
+	echo '<table border="0" cellspacing="0" cellpadding="10" width="100%"><tr><td>';
 	
 	// Create the query string and output hidden <input> so that we can return to the form.
 	$URL = BASEURL.EXPORTURL."?calendarid=" . $_SESSION['CALENDAR_ID'];
@@ -46,7 +46,7 @@ if ($Submit_CreateExport && count($FormErrors) == 0) {
 	<?php echo lang('export_preview_url_text'); ?><br>
 	<input type="text" readonly="readonly" value="<?php echo htmlentities($URL); ?>" style="width: 100%" onfocus="this.select();" onclick="this.select(); this.focus();"></p>
 	
-	<?php if ($FormData['format'] == 'html' && $FormData['jshtml'] == '1') { ?>
+	<?php if ($FormData['format'] == 'js' || ($FormData['format'] == 'html' && $FormData['jshtml'] == '1')) { ?>
 	<p><b><?php echo lang('export_preview_js'); ?>:</b><br>
 	<?php echo lang('export_preview_js_text'); ?><br>
 	<input type="text" readonly="readonly" value="<?php echo htmlentities('<script type="text/javascript" src="'.htmlentities($URL).'"></script>'); ?>" style="width: 100%" onfocus="this.select();" onclick="this.select(); this.focus();"></p>

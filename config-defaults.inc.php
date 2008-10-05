@@ -211,6 +211,10 @@ if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME",
 
 // END GENERATED
 
+// Config: Export URL Extension
+// The URL extension to the export script. Must NOT being with a slash (/).
+if (!defined("EXPORTURL")) define("EXPORTURL", 'export/export.php');
+
 // ---------- The following functions allow you to customize processing based on your database -------
 
 /*// escapes a value to make it safe for a SQL query

@@ -13,7 +13,7 @@ if ($Submit_CreateExport && count($FormErrors) == 0) {
 	echo '<table border="0" cellspacing="0" cellpadding="10"><tr><td>';
 	
 	// Create the query string and output hidden <input> so that we can return to the form.
-	$URL = BASEURL."export/export.php?calendarid=" . $_SESSION['CALENDAR_ID'];
+	$URL = BASEURL.EXPORTURL."?calendarid=" . $_SESSION['CALENDAR_ID'];
 	foreach($FormData as $key => $val) {
 		// Output separate <input> if the value is an array.
 		if (is_array($val)) {
@@ -30,34 +30,26 @@ if ($Submit_CreateExport && count($FormErrors) == 0) {
 	}
 	?>
 	
-	<div><input type="submit" value="&lt;&lt; Return to the Form"></div>
+	<div><input type="submit" value="&lt;&lt; <?php echo lang('export_preview_return'); ?>"></div>
 	
-	<p><b>Download Exported Events:</b><br>
-	To save the exported events, <a href="<?php echo htmlentities($URL); ?>" onclick="return false;">right click this link</a> and select "Save Target As..." or "Save Link As..."</p>
+	<p><b><?php echo lang('export_preview_download'); ?>:</b><br>
+	<?php echo str_replace('%URL%', htmlentities($URL), lang('export_preview_download_text')); ?></p>
 	
-	<p><b>Export URL:</b><br>
-	The URL below will export events based on the settings you provided.<br>
-	<input type="text" readonly="readonly" value="<?php echo htmlentities($URL); ?>" style="width: 100%"></p>
+	<p><b><?php echo lang('export_preview_url'); ?>:</b><br>
+	<?php echo lang('export_preview_url_text'); ?><br>
+	<input type="text" readonly="readonly" value="<?php echo htmlentities($URL); ?>" style="width: 100%" onfocus="this.select();" onclick="this.select(); this.focus();"></p>
 	
 	<?php if ($FormData['format'] == 'html' && $FormData['jshtml'] == '1') { ?>
-	<p><b>JavaScript Code:</b><br>
-	The code below can be copy/pasted into your Web site to automatically display events based on the settings you provided.<br>
-	<input type="text" readonly="readonly" value="<?php echo htmlentities('<script type="text/javascript" src="'.htmlentities($URL).'"></script>'); ?>" style="width: 100%"></p>
+	<p><b><?php echo lang('export_preview_js'); ?>:</b><br>
+	<?php echo lang('export_preview_js_text'); ?><br>
+	<input type="text" readonly="readonly" value="<?php echo htmlentities('<script type="text/javascript" src="'.htmlentities($URL).'"></script>'); ?>" style="width: 100%" onfocus="this.select();" onclick="this.select(); this.focus();"></p>
 	<?php } ?>
 	
-	<p><b>Raw Export Preview:</b><br>
-	The window below shows the raw output for the exported events.<br>
+	<p><b><?php echo lang('export_preview_raw'); ?>:</b><br>
+	<?php echo lang('export_preview_raw_text'); ?><br>
 	<iframe style="margin-top: 4px; background-color: #FFFFFF;" src="<?php echo $URL; ?>&raw=1" width="99%" height="400" framebordder="1"><p><a href="<?php echo $URL; ?>&raw=1" target="_blank">Test the URL</a></p></iframe></p>
 
 	<?php
-	
-	// Right click to save link
-	
-	// Export URL
-	
-	// Export Preview (depends on browser)
-	
-	// Raw Export Preview
 	
 	echo '</td></tr></table>';
 

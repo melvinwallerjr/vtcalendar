@@ -215,6 +215,11 @@ if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME",
 // The URL extension to the export script. Must NOT being with a slash (/).
 if (!defined("EXPORTURL")) define("EXPORTURL", 'export/export.php');
 
+define("DAY_BEG_H", 0);
+
+// if 0:00 - 23:00 time format is used, appropriate day start/end hours will be used in datetime2timestamp functions where calculating day edges
+define("DAY_END_H", (USE_AMPM ? 11 : 23));
+
 // ---------- The following functions allow you to customize processing based on your database -------
 
 /*// escapes a value to make it safe for a SQL query

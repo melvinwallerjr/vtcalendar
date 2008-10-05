@@ -36,8 +36,7 @@ function defaultevent(&$event,$sponsorid) {
 
 /* checks the validity of the time 1am-12pm or 0:00-23:00 */
 function checktime($hour,$min) {
-	 global $use_ampm;
-	 if ($use_ampm){
+	 if (USE_AMPM){
 			return
 				 (($hour>0) && ($hour<=12)) &&
 				 (($min>=0) && ($min<=59));
@@ -221,7 +220,6 @@ function inputrecurrences(&$event,&$repeat,$check) {
 /* print out the event input form and use the provided parameter as preset */
 function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetime,&$repeat,$copy) {
 	/* now printing the HTML code for the input form */
-	global $use_ampm;
 	$unknownvalue = "???"; /* this is printed when the value of input field is unspecified */
 
 	// the value of the radio box when user chooses recurring event
@@ -348,7 +346,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 				echo "<option selected value=\"0\">",$unknownvalue,"</option>\n";
 			}
 			// print list with hours and select the one read from the DB
-			if($use_ampm){
+			if(USE_AMPM){
 				$start_hour=1;
 				$end_hour=12;
 			}else{
@@ -379,7 +377,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			</select>
 			<?php 
 	
-			if($use_ampm){
+			if(USE_AMPM){
 				?><select name="event[timebegin_ampm]" size="1" onclick="setRadioButton('timedevent',true);">
 					<option value="am"<?php if (isset($event['timebegin_ampm']) && $event['timebegin_ampm']=="am") {echo "selected"; } ?>>am</option>
 					<option value="pm"<?php if (isset($event['timebegin_ampm']) && $event['timebegin_ampm']=="pm") {echo "selected "; } ?>>pm</option>
@@ -399,7 +397,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			echo "value=\"0\">$unknownvalue</option>\n";
 			
 			// print list with hours and select the one read from the DB
-			if($use_ampm){
+			if(USE_AMPM){
 				$start_hour=1;
 				$end_hour=12;
 			}else{
@@ -429,7 +427,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			</select>
 			<?php
 			
-			if($use_ampm){
+			if(USE_AMPM){
 				?><select name="event[timeend_ampm]" size="1" onclick="setRadioButton('timedevent',true);">
 				<option value="am" <?php if (isset ($event['timeend_ampm']) && $event['timeend_ampm']=="am") {echo "selected "; } ?>>am</option>
 				<option value="pm" <?php if (isset($event['timeend_ampm']) && $event['timeend_ampm']=="pm") {echo "selected "; } ?>>pm</option>

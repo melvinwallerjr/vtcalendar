@@ -14,8 +14,8 @@ if (!isset($rangestart)) {
 }
 
 // Create the start and end timestamps.
-$rangestartTimestamp = datetime2timestamp(date("Y", $rangestart), date("m", $rangestart), date("d", $rangestart), $day_beg_h, 0, "am");
-$rangeendTimestamp = datetime2timestamp(date("Y", $rangeend), date("m", $rangeend), date("d", $rangeend), $day_end_h, 59, "pm");
+$rangestartTimestamp = datetime2timestamp(date("Y", $rangestart), date("m", $rangestart), date("d", $rangestart), DAY_BEG_H, 0, "am");
+$rangeendTimestamp = datetime2timestamp(date("Y", $rangeend), date("m", $rangeend), date("d", $rangeend), DAY_END_H, 59, "pm");
 
 pageheader(lang('view_search_log'), "Update");
 contentsection_begin(lang('view_search_log'),true);

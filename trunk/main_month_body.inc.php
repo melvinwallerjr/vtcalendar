@@ -39,7 +39,7 @@
 		<table id="MonthTable" width="100%" border="0" cellpadding="3" cellspacing="0">
 			<thead>
 				<tr align="center">
-					<?php if($week_start == 0){?>
+					<?php if(WEEK_STARTING_DAY == 0){?>
 					<td><strong><?php echo lang('sunday');?></strong></td>
 					<?php } ?>
 					<td><strong><?php echo lang('monday');?></strong></td>
@@ -48,7 +48,7 @@
 					<td><strong><?php echo lang('thursday');?></strong></td>
 					<td><strong><?php echo lang('friday');?></strong></td>
 					<td><strong><?php echo lang('saturday');?></strong></td>
-					<?php if($week_start == 1){?>
+					<?php if(WEEK_STARTING_DAY == 1){?>
 					<td><strong><?php echo lang('sunday');?></strong></td>
 					<?php } ?>
 				</tr>

@@ -1,6 +1,5 @@
 <?php
 function print_event($event, $linkfeatures=true) {
-	global $lang, $day_end_h;
 	?>
 	<table id="EventTable" width="100%" border="0" cellpadding="6" cellspacing="0">
 		<tr>
@@ -9,7 +8,7 @@ function print_event($event, $linkfeatures=true) {
 				<?php 
 					if ($event['wholedayevent']==0) {
 						echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-						if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
+						if ( ! ($event['timeend_hour']==DAY_END_H && $event['timeend_min']==59) ) {
 							echo "<br>",lang('to'),"<br>";
 							echo timestring($event['timeend_hour'],$event['timeend_min'],$event['timeend_ampm']);
 						}

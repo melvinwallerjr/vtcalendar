@@ -49,7 +49,7 @@ else {
 		}
 		echo ' nowrap>';
 		echo "<div><b>";
-		echo Day_of_Week_to_Text(($weekday+$week_start)%7); // use modulus 7 as week can begin with Sunday or Monday
+		echo Day_of_Week_to_Text(($weekday+WEEK_STARTING_DAY)%7); // use modulus 7 as week can begin with Sunday or Monday
 		echo "<br>\n";
 		echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")), $queryStringExtension ,'">' . week_header_date_format($iday['day'],Month_to_Text($iday['month']),0,3) . "</a></b></div>";
 
@@ -158,7 +158,6 @@ else {
 
 // prints one event in the format of the week view
 function print_week_event(&$event) {
-	global $day_end_h;
 	disassemble_timestamp($event);
 	$event_timebegin  = timestamp2datetime($event['timebegin']);
 	$event_timeend    = timestamp2datetime($event['timeend']);
@@ -168,7 +167,7 @@ function print_week_event(&$event) {
 	echo '<div class="WeekEvent-Time">';
 	if ($event['wholedayevent']==0) {
 		echo timestring($event['timebegin_hour'],$event['timebegin_min'],$event['timebegin_ampm']);
-		if ( ! ($event['timeend_hour']==$day_end_h && $event['timeend_min']==59) ) {
+		if ( ! ($event['timeend_hour']==DAY_END_H && $event['timeend_min']==59) ) {
 			echo ' ('. $event['timelabel'] .')';
 		}
 	}

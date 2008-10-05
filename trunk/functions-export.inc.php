@@ -331,7 +331,7 @@ function GenerateVXML(&$result) {
 function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 	$resultString = "";
 	
-	$fields = explode(',', 'title,link,timebegin,timeend,wholedayevent,location,sponsorid,sponsor_name,displayedsponsor,categoryid,category_name,description');
+	$fields = explode(' ', 'title link timebegin timeend wholedayevent location sponsorid sponsor_name displayedsponsor categoryid category_name description');
 	$resultString .= "document.VTCal_EventFields = ['".implode("','", $fields)."'];\n";
 	
 	$resultString .= 'function VTCal_GetFieldIndex(field) {'."\n";
@@ -354,7 +354,7 @@ function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 				.",'".escapeJavaScriptString($calendarurl."main.php?view=event&amp;calendarid=".text2xmltext($calendarID)."&amp;eventid=".text2xmltext($event['id']))."'"
 				.",'".escapeJavaScriptString($event['timebegin'])."'"
 				.",'".escapeJavaScriptString($event['timeend'])."'"
-				.",'".escapeJavaScriptString($event['wholedayevent'])."'"
+				.",".($event['wholedayevent'] == '1' ? 'true' : 'false')
 				.",'".escapeJavaScriptString($event['location'])."'"
 				.",'".escapeJavaScriptString($event['sponsorid'])."'"
 				.",'".escapeJavaScriptString($event['sponsor_name'])."'"
@@ -367,5 +367,151 @@ function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 	
 	return $resultString;
 	
+}
+
+function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
+	$resultString = "";
+	$linkCategoryFilter = isset($FormData['categories']) && isset($FormData['keepcategoryfilter']) ? "&categoryfilter=" . urlencode(implode(',', $FormData['categories'])) : '';
+	var_dump($FormData);
+	if ($FormData['htmltype'] == "paragraph") {
+		if ($result->numRows() == 0) {
+			$resultString = '<p class="VTCAL_NoEvents"><i>There are no upcoming events.</i></p>';
+		}
+		else {
+			$ievent = 0;
+			while ($ievent < $result->numRows()) {
+				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
+				
+				$resultString = $resultString.'<p><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$linkCategoryFilter.'"';
+				
+				if (isset($FormData['maxtitlecharacters']) && ($FormData['maxtitlecharacters'] < strlen($event['title']))) {
+					$resultString = $resultString.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$FormData['maxtitlecharacters']))).'</a>...</b>';
+				}
+				else {
+					$resultString = $resultString.'>'.htmlentities($event['title']).'</a></b>';
+				}
+				
+				if ($FormData['showdatetime'] == "Y") {
+					$resultString = $resultString."<br>\n";
+					$resultString = $resultString.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin'])));
+					
+					$ReturnTime = FormatTimeDisplay($event, $FormData);
+					if ($FormData['showallday'] == "Y" || ($FormData['showallday'] == "N" && $ReturnTime != "All Day")) {
+						$resultString = $resultString.' - '.htmlentities($ReturnTime);
+					}
+				}
+				
+				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+					$resultString = $resultString."<br>\n<i";
+					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
+						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';
+					}
+					else {
+						$resultString = $resultString.'>'.htmlentities($event['location']);
+					}
+					$resultString = $resultString.'</i>';
+				}
+				$resultString = $resultString."</p>\n\n";
+				
+				$ievent++;
+			}
+		}
+	}
+	elseif ($FormData['htmltype'] == "table") {
+		$resultString = $resultString.'<table class="VTCAL" border="0" cellspacing="0" cellpadding="4">'."\n\n";
+		
+		if ($result->numRows() == 0) {
+			$resultString = $resultString.'<tr><td class="VTCAL_NoEvents" colspan="2">There are no upcoming events.</td></tr>';
+		}
+		else {
+			$ievent = 0;
+			while ($ievent < $result->numRows()) {
+				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
+				
+				$resultString = $resultString."<tr>\n";
+				
+				if ($FormData['showdatetime'] == "Y") {
+					$resultString = $resultString.'<td class="VTCAL_DateTime" valign="top">'.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin'])));
+					
+					$ReturnTime = FormatTimeDisplay($event, $FormData);
+					if ($FormData['showallday'] == "Y" || ($FormData['showallday'] == "N" && $ReturnTime != "All Day")) {
+						$resultString = $resultString.'<br><span>'.htmlentities($ReturnTime)."</span>";
+					}
+					
+					$resultString = $resultString."</td>\n";
+				}
+				
+				$resultString = $resultString.'<td class="VTCAL_TitleLocation" valign="top"><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$$linkCategoryFilter.'"';
+				
+				if (isset($FormData['maxtitlecharacters']) && ($FormData['maxtitlecharacters'] < strlen($event['title']))) {
+					$resultString = $resultString.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$FormData['maxtitlecharacters']))).'</a>...</b>';
+				}
+				else {
+					$resultString = $resultString.'>'.htmlentities($event['title']).'</a></b>';
+				}
+					
+				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+					$resultString = $resultString."<br>\n<i";
+					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
+						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';
+					}
+					else {
+						$resultString = $resultString.'>'.htmlentities($event['location']);
+					}
+					$resultString = $resultString.'</i>';
+				}
+				
+				$resultString = $resultString."</td>\n</tr>\n\n";
+				
+				$ievent++;
+			}
+		}
+		
+		$resultString = $resultString."</table>\n\n";
+	}
+	elseif ($FormData['htmltype'] == "MAINSITE") {
+		if ($result->numRows() == 0) {
+			$resultString = '<p align="center"><i>No upcoming events.</i></p>';
+		}
+		else {
+			$ievent = 0;
+			while ($ievent < $result->numRows()) {
+				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
+				
+				$resultString = $resultString.'<p id="VTCAL_EventNum'.($ievent+1).'"><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$$linkCategoryFilter.'">';
+				$resultString = $resultString.'<b>'.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin']))).
+					'<br>'.htmlentities(FormatTimeDisplay($event, $FormData))."<b><br></b></b>\n";
+				
+				$resultString = $resultString.'<span><u';
+				if (isset($FormData['maxtitlecharacters']) && ($FormData['maxtitlecharacters'] < strlen($event['title']))) {
+					$resultString = $resultString.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$FormData['maxtitlecharacters']))).'...';
+				}
+				else {
+					$resultString = $resultString.'>'.htmlentities($event['title']);
+				}
+				$resultString = $resultString."</u><br>\n";
+				
+				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+					$resultString = $resultString."<i";
+					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
+						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';
+					}
+					else {
+						$resultString = $resultString.'>'.htmlentities($event['location']);
+					}
+					$resultString = $resultString.'</i>';
+				}
+				else {
+					$resultString = $resultString.'<i>&nbsp;</i>';
+				}
+				
+				$resultString = $resultString."</span></a></p>\n\n";
+				
+				$ievent++;
+			}
+		}
+	}
+	
+	return $resultString;
 }
 ?>

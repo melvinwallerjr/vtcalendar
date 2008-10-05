@@ -2,6 +2,12 @@
 
 <form id="ExportForm" name="ExportForm" method="get" action="main.php" class="HideHTML">
 
+<?php
+if (count($FormErrors) > 0) {
+	?><p style="padding: 8px;"><img src="install/failed32.png" class="png" width="32" height="32" alt="" align="left"> <b><?php echo lang('export_errorsfound'); ?></b></p><?php
+}
+?>
+
 <input type="hidden" name="view" value="export">
 
 <script language="JavaScript" type="text/javascript"><!-- //<![CDATA[
@@ -38,6 +44,20 @@ function ToggleHTMLSections() {
 		}
 	}
 }
+function SpecificSponsorChanged() {
+	if (document.getElementById) {
+		var oAll = document.getElementById("sponsor_all");
+		var oSpecific = document.getElementById("sponsor_specific");
+		var oText = document.getElementById("specificsponsor");
+		
+		if (oText.value.replace(/^\s+|\s+$/g,"") == "") {
+			oAll.checked = true;
+		}
+		else {
+			oSpecific.checked = true;
+		}
+	}
+}
 //]]> -->
 </script>
 
@@ -47,7 +67,8 @@ function ToggleHTMLSections() {
 	<p><b><?php echo lang('export_format'); ?></b></p>
 	
 	<blockquote>
-		<table  border="0" cellpadding="2" cellspacing="0">
+		<?php if (isset($FormErrors['format'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['format'].'</p>'; ?>
+		<table border="0" cellpadding="2" cellspacing="0">
 	    	<tr>
 	    		<td colspan="2"><b><?php echo lang('export_format_standard'); ?>:</b></td>
 	   		</tr>
@@ -62,6 +83,10 @@ function ToggleHTMLSections() {
 	    	<tr>
 	    		<td><input name="format" type="radio" value="rss1_0" id="format_rss1_0" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "rss1_0") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_rss1_0">RSS 1.0 (XML) </td>
+	   		</tr>
+	    	<tr>
+	    		<td><input name="format" type="radio" value="rss2_0" id="format_rss2_0" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "rss2_0") echo "CHECKED"; ?>></td>
+	    		<td><label for="format_rss2_0">RSS 2.0 (XML) </td>
 	   		</tr>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="vxml" id="format_vxml" onclick="ToggleHTMLSections();" <?php if (isset($Form_format) && $Form_format == "vxml") echo "CHECKED"; ?>></td>
@@ -84,6 +109,7 @@ function ToggleHTMLSections() {
 	<p><b><?php echo lang('export_maxevents'); ?>: </b></p>
 	
 	<blockquote>
+		<?php if (isset($FormErrors['maxevents'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['maxevents'].'</p>'; ?>
 		<p><?php echo lang('export_maxevents_description'); ?></p>
 		<p><input name="maxevents" type="text" id="maxevents" value="<?php if (isset($Form_maxevents)) echo $Form_maxevents; ?>">
 			 (<?php echo lang('export_leaveblank'); ?>)</p>
@@ -93,6 +119,8 @@ function ToggleHTMLSections() {
 	
 	<blockquote>
 		<p><?php echo lang('export_dates_description'); ?></p>
+		<?php if (isset($FormErrors['timebegin'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['timebegin'].'</p>'; ?>
+		<?php if (isset($FormErrors['timeend'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['timeend'].'</p>'; ?>
 		<table  border="0" cellspacing="0" cellpadding="4">
 	    	<tr>
 	    		<td style="padding-bottom: 2px;"><b><?php echo lang('export_dates_from'); ?>:</b></td>
@@ -117,6 +145,7 @@ function ToggleHTMLSections() {
 	
 	<blockquote>
 		<p><?php echo lang('export_categories_description'); ?>:</p>
+		<?php if (isset($FormErrors['categories'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['categories'].'</p>'; ?>
 		<p><a href="javascript:checkAll(document.ExportForm,'categories',true);"><?php echo lang('select_unselect'); ?></a></p>
 		<table border="0" cellspacing="0" cellpadding="4"><tr><td valign="top">
 		<table border="0" cellspacing="0" cellpadding="1">
@@ -153,15 +182,16 @@ function ToggleHTMLSections() {
 	<p><b><?php echo lang('export_sponsor'); ?>:</b></p>
 	
 	<blockquote>
-		<table border="0" cellspacing="0" cellpadding="4">
+		<?php if (isset($FormErrors['sponsor'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['sponsor'].'</p>'; ?>
+		<table border="0" cellspacing="0" cellpadding="2">
 	    	<tr>
-	    		<td><input name="sponsor" type="radio" value="all" <?php if ($Form_sponsor == "all") echo "CHECKED"; ?>></td>
+	    		<td><input name="sponsor" id="sponsor_all" type="radio" value="all" <?php if ($Form_sponsor == "all") echo "CHECKED"; ?>></td>
 	    		<td><?php echo lang('export_sponsor_all'); ?></td>
 	    	</tr>
 	    	<tr>
-	    		<td valign="top"><input name="sponsor" type="radio" value="specific" <?php if ($Form_sponsor == "specific") echo "CHECKED"; ?>></td>
+	    		<td valign="top"><input name="sponsor" id="sponsor_specific" type="radio" value="specific" <?php if ($Form_sponsor == "specific") echo "CHECKED"; ?>></td>
 	    		<td><?php echo lang('export_sponsor_specific'); ?>: 
-	    			<input name="specificsponsor" type="text" id="specificsponsor" value=" <?php if (!empty($Form_specificsponsor)) echo htmlentities($Form_specificsponsor); ?>"><br>
+	    			<input name="specificsponsor" type="text" id="specificsponsor" onchange="SpecificSponsorChanged()" onkeyup="SpecificSponsorChanged()" value="<?php if (!empty($Form_specificsponsor)) echo htmlentities($Form_specificsponsor); ?>"><br>
 	    			(<?php echo lang('export_sponsor_specific_description'); ?>)</td>
 	   		</tr>
 	   	</table>
@@ -233,21 +263,21 @@ function ToggleHTMLSections() {
 			<tr>
 				<td style="padding-right: 8px;" valign="top">
 					<table border="0" cellpadding="0" cellspacing="2">
-						<tr><td><input type="radio" id="timedisplay_Start"  name="timedisplay" value="start"></td><td><label for="timedisplay_Start">12:00pm</label></td></tr>
+						<tr><td><input type="radio" id="timedisplay_Start"  name="timedisplay" value="start" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'start') echo "checked"; ?>></td><td><label for="timedisplay_Start">12:00pm</label></td></tr>
 					</table>
 				</td>
 				<td style="padding-left: 8px; border-left: 1px solid #666666;" valign="top">
 					<table border="0" cellpadding="0" cellspacing="2">
 						<tr>
-							<td><input type="radio" id="timedisplay_StartEndLong" name="timedisplay" value="startendlong"></td>
+							<td><input type="radio" id="timedisplay_StartEndLong" name="timedisplay" value="startendlong" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendlong') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartEndLong">12:00pm <?php echo lang('export_output_to'); ?> 12:30pm</label></td>
 						</tr>
 						<tr>
-							<td><input type="radio" id="timedisplay_StartEndNormal" name="timedisplay" value="startendnormal"></td>
+							<td><input type="radio" id="timedisplay_StartEndNormal" name="timedisplay" value="startendnormal" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendnormal') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartEndNormal">12:00pm - 12:30pm</label></td>
 						</tr>
 						<tr>
-							<td><input type="radio" id="timedisplay_StartEndTiny" name="timedisplay" value="startendtiny"></td>
+							<td><input type="radio" id="timedisplay_StartEndTiny" name="timedisplay" value="startendtiny" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startendtiny') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartEndTiny">12:00pm-12:30pm</label></td>
 						</tr>
 					</table>
@@ -255,15 +285,15 @@ function ToggleHTMLSections() {
 				<td style="padding-left: 8px; border-left: 1px solid #666666;" valign="top">
 					<table border="0" cellpadding="0" cellspacing="2">
 						<tr>
-							<td><input type="radio" id="timedisplay_StartDurationLong" name="timedisplay" value="startdurationlong"></td>
+							<td><input type="radio" id="timedisplay_StartDurationLong" name="timedisplay" value="startdurationlong" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationlong') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartDurationLong">12:00pm <?php echo lang('export_output_for'); ?> 2 <?php echo lang('export_output_hours'); ?></label></td>
 						</tr>
 						<tr>
-							<td><input type="radio" id="timedisplay_StartDurationNormal" name="timedisplay" value="startdurationnormal"></td>
+							<td><input type="radio" id="timedisplay_StartDurationNormal" name="timedisplay" value="startdurationnormal" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationnormal') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartDurationNormal">12:00pm (2 <?php echo lang('export_output_hours'); ?>)</label></td>
 						</tr>
 						<tr>
-							<td><input type="radio" id="timedisplay_StartDurationShort" name="timedisplay" value="startdurationshort"></td>
+							<td><input type="radio" id="timedisplay_StartDurationShort" name="timedisplay" value="startdurationshort" <?php if (isset($Form_timedisplay) && $Form_timedisplay == 'startdurationshort') echo "checked"; ?>></td>
 							<td><label for="timedisplay_StartDurationShort">12:00pm 2 <?php echo lang('export_output_hours'); ?></label></td>
 						</tr>
 					</table>
@@ -363,12 +393,14 @@ function ToggleHTMLSections() {
 	
 	<p><b><?php echo lang('export_maxtitlechars'); ?>:</b></p>
 	<blockquote>
+		<?php if (isset($FormErrors['maxtitlecharacters'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['maxtitlecharacters'].'</p>'; ?>
 		<p><?php echo lang('export_maxtitlechars_description'); ?></p>
 		<p><input name="maxtitlecharacters" type="text" id="maxtitlecharacters" value=""> (<?php echo lang('export_leaveblank'); ?>)</p>
 	</blockquote>
 	
 	<p><b><?php echo lang('export_maxlocationchars'); ?>:</b></p>
 	<blockquote>
+		<?php if (isset($FormErrors['maxlocationcharacters'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['maxlocationcharacters'].'</p>'; ?>
 		<p><?php echo lang('export_maxlocationchars_description'); ?></p>
 		<p><input name="maxlocationcharacters" type="text" id="maxlocationcharacters" value=""> (<?php echo lang('export_leaveblank'); ?>)</p>
 	</blockquote>
@@ -383,5 +415,6 @@ function ToggleHTMLSections() {
 </form>
 <script type="text/javascript">
 ToggleHTMLSections();
+SpecificSponsorChanged();
 </script>
 </td></tr></table>

@@ -608,6 +608,12 @@ td.EventDetail-Label {
 	display: none;
 }
 
+#ExportForm p.FormError {
+	padding: 4px;
+	background-color: #EEEEEE;
+	border-top: 2px solid <?php echo $_SESSION['COLOR_TEXT_WARNING']; ?>;
+}
+
 /*===================================
             Misc Styles
 ===================================*/

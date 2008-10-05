@@ -61,7 +61,7 @@ $lang['export_settings'] = 'Export Settings';
 $lang['export_format'] = 'Export Format';
 $lang['export_format_standard'] = 'Standard';
 $lang['export_format_advanced'] = 'Advanced';
-$lang['export_format_error'] = 'You must select one of the &quot;'.$lang['export_format'].'&quot; below.';
+$lang['export_format_error'] = 'You must select an &quot;'.$lang['export_format'].'&quot; below.';
 
 $lang['export_maxevents'] = 'Maximum Events Returned';
 $lang['export_maxevents_description'] = 'To avoid excessively large output, you can specify the maximum number of events.';

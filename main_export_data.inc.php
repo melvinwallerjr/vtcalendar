@@ -2,17 +2,17 @@
 $Submit_CreateExport = isset($_GET['createexport']);
 
 // Defaults
-$Form_AllCategories = '1';
-$Form_sponsor = 'all';
-$Form_htmltype = 'table';
-$Form_jshtml = '1';
-$Form_dateformat = 'normal';
-$Form_timedisplay = 'startdurationnormal';
-$Form_timeformat = 'normal';
-$Form_durationformat = 'normal';
-$Form_showdatetime = '1';
-$Form_showlocation = '1';
-$Form_showallday = '1';
+$FormData['AllCategories'] = '1';
+$FormData['sponsor'] = 'all';
+$FormData['htmltype'] = 'table';
+$FormData['jshtml'] = '1';
+$FormData['dateformat'] = 'normal';
+$FormData['timedisplay'] = 'startdurationnormal';
+$FormData['timeformat'] = 'normal';
+$FormData['durationformat'] = 'normal';
+$FormData['showdatetime'] = '1';
+$FormData['showlocation'] = '1';
+$FormData['showallday'] = '1';
 
 $FormErrors = array();
 
@@ -128,37 +128,37 @@ $lang['export_maxlocationchars'] = 'Maximum Characters for the Location';
 $lang['export_maxlocationchars_description'] = 'If you have a limited amount of space on your Web site, you may limit the length of the event location.<br>Any locations that are beyond this length will be truncated and an ellipse (...) will be added to the end.';
 $lang['export_maxlocationchars_error'] = 'You must enter either a number below or leave it blank.';
 
-if (isset($_GET['format'])) setVar($Form_format,$_GET['format'],'exportformat');
-if ($Submit_CreateExport && !isset($Form_format)) $FormErrors['format'] = lang('export_format_error');
+if (isset($_GET['format'])) setVar($FormData['format'],$_GET['format'],'exportformat');
+if ($Submit_CreateExport && !isset($FormData['format'])) $FormErrors['format'] = lang('export_format_error');
 
-if (!empty($_GET['maxevents']) && !setVar($Form_maxevents,$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
+if (!empty($_GET['maxevents']) && !setVar($FormData['maxevents'],$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
 
-if (!empty($_GET['timebegin'])) if (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $Form_timebegin = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
-if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $Form_timeend = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
+if (!empty($_GET['timebegin'])) if (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
+if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $FormData['timeend'] = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 
-if (isset($_GET['allcategories']) && !setVar($Form_allcategories,$_GET['allcategories'],'boolean_checkbox')) unset($Form_allcategories);
-if (isset($_GET['categories']) && !setVar($Form_categories,$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
-if ($Submit_CreateExport && !isset($Form_categories)) $FormErrors['categories'] = lang('export_categories_error');
-if (count($Form_categories) == $numcategories) unset($Form_categories);
+if (isset($_GET['allcategories']) && !setVar($FormData['allcategories'],$_GET['allcategories'],'boolean_checkbox')) unset($FormData['allcategories']);
+if (isset($_GET['categories']) && !setVar($FormData['categories'],$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
+if ($Submit_CreateExport && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
+if (count($FormData['categories']) == $numcategories) unset($FormData['categories']);
 
-if (isset($_GET['sponsor'])) setVar($Form_sponsor,$_GET['sponsor'],'sponsortype');
-if (isset($_GET['specificsponsor'])) setVar($Form_specificsponsor,trim($_GET['specificsponsor']),'specificsponsor');
-if ($Form_sponsor == "specific" && empty($Form_specificsponsor)) $FormErrors['sponsor'] = lang('export_sponsor_error');
+if (isset($_GET['sponsor'])) setVar($FormData['sponsor'],$_GET['sponsor'],'sponsortype');
+if (isset($_GET['specificsponsor'])) setVar($FormData['specificsponsor'],trim($_GET['specificsponsor']),'specificsponsor');
+if ($FormData['sponsor'] == "specific" && empty($FormData['specificsponsor'])) $FormErrors['sponsor'] = lang('export_sponsor_error');
 
-if (isset($Form_format) && $Form_format == "html") {
-	if (isset($_GET['keepcategoryfilter'])) setVar($Form_keepcategoryfilter,$_GET['keepcategoryfilter'],'boolean_checkbox');
-	if (isset($_GET['htmltype'])) setVar($Form_htmltype,$_GET['htmltype'],'htmltype');
-	if (isset($_GET['jshtml']) && !setVar($Form_jshtml,$_GET['jshtml'],'boolean_checkbox')) unset($Form_jshtml);
+if (isset($FormData['format']) && $FormData['format'] == "html") {
+	if (isset($_GET['keepcategoryfilter'])) setVar($FormData['keepcategoryfilter'],$_GET['keepcategoryfilter'],'boolean_checkbox');
+	if (isset($_GET['htmltype'])) setVar($FormData['htmltype'],$_GET['htmltype'],'htmltype');
+	if (isset($_GET['jshtml']) && !setVar($FormData['jshtml'],$_GET['jshtml'],'boolean_checkbox')) unset($FormData['jshtml']);
 	
-	if (isset($_GET['dateformat'])) setVar($Form_dateformat,$_GET['dateformat'],'dateformat');
-	if (isset($_GET['timedisplay'])) setVar($Form_timedisplay,$_GET['timedisplay'],'timedisplay');
-	if (isset($_GET['timeformat'])) setVar($Form_timeformat,$_GET['timeformat'],'timeformat');
-	if (isset($_GET['durationformat'])) setVar($Form_durationformat,$_GET['durationformat'],'durationformat');
+	if (isset($_GET['dateformat'])) setVar($FormData['dateformat'],$_GET['dateformat'],'dateformat');
+	if (isset($_GET['timedisplay'])) setVar($FormData['timedisplay'],$_GET['timedisplay'],'timedisplay');
+	if (isset($_GET['timeformat'])) setVar($FormData['timeformat'],$_GET['timeformat'],'timeformat');
+	if (isset($_GET['durationformat'])) setVar($FormData['durationformat'],$_GET['durationformat'],'durationformat');
 	
-	if (isset($_GET['showdatetime'])) setVar($Form_showdatetime,$_GET['showdatetime'],'boolean');
-	if (isset($_GET['showlocation'])) setVar($Form_showlocation,$_GET['showlocation'],'boolean');
-	if (isset($_GET['showallday'])) setVar($Form_showallday,$_GET['showallday'],'boolean');
-	if (!empty($_GET['maxtitlecharacters'])) if (!setVar($Form_maxtitlecharacters,$_GET['maxtitlecharacters'],'int_gte1')) $FormErrors['maxtitlecharacters'] = lang('export_maxtitlechars_error');
-	if (!empty($_GET['maxlocationcharacters'])) if (!setVar($Form_maxlocationcharacters,$_GET['maxlocationcharacters'],'int_gte1')) $FormErrors['maxlocationcharacters'] = lang('export_maxlocationchars_error');
+	if (isset($_GET['showdatetime'])) setVar($FormData['showdatetime'],$_GET['showdatetime'],'boolean');
+	if (isset($_GET['showlocation'])) setVar($FormData['showlocation'],$_GET['showlocation'],'boolean');
+	if (isset($_GET['showallday'])) setVar($FormData['showallday'],$_GET['showallday'],'boolean');
+	if (!empty($_GET['maxtitlecharacters'])) if (!setVar($FormData['maxtitlecharacters'],$_GET['maxtitlecharacters'],'int_gte1')) $FormErrors['maxtitlecharacters'] = lang('export_maxtitlechars_error');
+	if (!empty($_GET['maxlocationcharacters'])) if (!setVar($FormData['maxlocationcharacters'],$_GET['maxlocationcharacters'],'int_gte1')) $FormErrors['maxlocationcharacters'] = lang('export_maxlocationchars_error');
 }
 ?>

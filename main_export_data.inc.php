@@ -2,7 +2,6 @@
 $Submit_CreateExport = isset($_GET['createexport']);
 
 // Defaults
-$FormData['AllCategories'] = '1';
 $FormData['sponsor'] = 'all';
 $FormData['htmltype'] = 'table';
 $FormData['jshtml'] = '1';
@@ -13,12 +12,16 @@ $FormData['durationformat'] = 'normal';
 $FormData['showdatetime'] = '1';
 $FormData['showlocation'] = '1';
 $FormData['showallday'] = '1';
+$FormData['specificsponsor'] = '';
 
+// Make a copy of the defaults so they can be removed from the query string to make things simplier.
+$FormDataDefaults = $FormData;
+
+// An aray of error messages.
 $FormErrors = array();
 
 $lang['export_page_header'] = 'Export Events';
-$lang['export_form_description'] = 'CHANGE THIS form';
-$lang['export_preview_description'] = 'CHANGE THIS preview';
+$lang['export_form_description'] = 'CHANGE THIS';
 
 // Generic messages
 $lang['export_leaveblank'] = 'Leave blank for no maximum';
@@ -136,13 +139,13 @@ if (!empty($_GET['maxevents']) && !setVar($FormData['maxevents'],$_GET['maxevent
 if (!empty($_GET['timebegin'])) if (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
 if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $FormData['timeend'] = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 
-if (isset($_GET['allcategories']) && !setVar($FormData['allcategories'],$_GET['allcategories'],'boolean_checkbox')) unset($FormData['allcategories']);
 if (isset($_GET['categories']) && !setVar($FormData['categories'],$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
 if ($Submit_CreateExport && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
-if (count($FormData['categories']) == $numcategories) unset($FormData['categories']);
+if (isset($FormData['categories']) && count($FormData['categories']) == $numcategories) unset($FormData['categories']);
 
 if (isset($_GET['sponsor'])) setVar($FormData['sponsor'],$_GET['sponsor'],'sponsortype');
 if (isset($_GET['specificsponsor'])) setVar($FormData['specificsponsor'],trim($_GET['specificsponsor']),'specificsponsor');
+if ($FormData['sponsor'] == "all") $FormData['specificsponsor'] = '';
 if ($FormData['sponsor'] == "specific" && empty($FormData['specificsponsor'])) $FormErrors['sponsor'] = lang('export_sponsor_error');
 
 if (isset($FormData['format']) && $FormData['format'] == "html") {

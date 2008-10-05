@@ -10,7 +10,10 @@ define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. 
 @(include_once('../version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
 @(include_once('../config.inc.php')) or die('');
 require_once('../config-defaults.inc.php');
+
+$FUNCINCLUDE = array_flip(explode(' ', 'dates dates-generic inputvalidation db-generic db-gets export misc'));
 require_once('../functions.inc.php');
+
 require_once('../languages/'.LANGUAGE.'.inc.php');
 require_once('../constants.inc.php');
 require_once('functions.inc.php');
@@ -110,7 +113,7 @@ switch($FormData['format']) {
 		break;
 	case "html":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/html");
-		echo GenerateHTML($result);
+		echo GenerateHTML($result, $CalendarID, BASEURL, $FormData);
 		break;
 	case "js":
 		if (!isset($_GET['raw'])) Header("Content-Type: application/x-javascript");

@@ -31,209 +31,6 @@ function dbtime2tick($dbtime) {
 	return mktime($hour, $min, $sec, $month, $day, $year);
 }
 
-function createHTML(&$result, $config) {
-	$ReturnData = "";
-	
-	if ($config['HTMLTemplate'] == "PARAGRAPH") {
-		if ($result->numRows() == 0) {
-			$ReturnData = '<p class="VTCAL_NoEvents"><i>There are no upcoming events.</i></p>';
-		}
-		else {
-			$ievent = 0;
-			while ($ievent < $result->numRows()) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
-				
-				$ReturnData = $ReturnData.'<p><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($config['CalendarID']).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$config['LinkFilterQueryString'].'"';
-				
-				if (isset($config['MaxTitleCharacters']) && ($config['MaxTitleCharacters'] < strlen($event['title']))) {
-					$ReturnData = $ReturnData.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$config['MaxTitleCharacters']))).'</a>...</b>';
-				}
-				else {
-					$ReturnData = $ReturnData.'>'.htmlentities($event['title']).'</a></b>';
-				}
-				
-				if ($config['ShowDateTime'] == "Y") {
-					$ReturnData = $ReturnData."<br>\n";
-					if ($config['CombineRepeating'] == "Y" && $event['repeatdef'] != "") {
-						$ReturnData = $ReturnData.createRepeatString($event['startdate'],$event['enddate'],$event['startdate_year'],$event['startdate_month'],$event['startdate_day'],$event['repeatdef'],$config);
-					}
-					else {
-						$ReturnData = $ReturnData.htmlentities(FormatDate($config['DateFormat'], dbtime2tick($event['timebegin'])));
-						
-						$ReturnTime = FormatTimeDisplay($event, $config);
-						if ($config['ShowAllDay'] == "Y" || ($config['ShowAllDay'] == "N" && $ReturnTime != "All Day")) {
-							$ReturnData = $ReturnData.' - '.htmlentities($ReturnTime);
-						}
-					}
-				}
-				
-				if ($event['location'] != "" && $config['ShowLocation'] == "Y") {
-					$ReturnData = $ReturnData."<br>\n<i";
-					if (isset($config['MaxLocationCharacters']) && ($config['MaxLocationCharacters'] < strlen($event['location']))) {
-						$ReturnData = $ReturnData.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$config['MaxLocationCharacters']))).'...';
-					}
-					else {
-						$ReturnData = $ReturnData.'>'.htmlentities($event['location']);
-					}
-					$ReturnData = $ReturnData.'</i>';
-				}
-				$ReturnData = $ReturnData."</p>\n\n";
-				
-				$ievent++;
-			}
-		}
-	}
-	elseif ($config['HTMLTemplate'] == "TABLE") {
-		$ReturnData = $ReturnData.'<table class="VTCAL" border="0" cellspacing="0" cellpadding="4">'."\n\n";
-		
-		if ($result->numRows() == 0) {
-			$ReturnData = $ReturnData.'<tr><td class="VTCAL_NoEvents" colspan="2">There are no upcoming events.</td></tr>';
-		}
-		else {
-			$ievent = 0;
-			while ($ievent < $result->numRows()) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
-				
-				$ReturnData = $ReturnData."<tr>\n";
-				
-				if ($config['ShowDateTime'] == "Y") {
-					$ReturnData = $ReturnData.'<td class="VTCAL_DateTime" valign="top">'.htmlentities(FormatDate($config['DateFormat'], dbtime2tick($event['timebegin'])));
-					
-					$ReturnTime = FormatTimeDisplay($event, $config);
-					if ($config['ShowAllDay'] == "Y" || ($config['ShowAllDay'] == "N" && $ReturnTime != "All Day")) {
-						$ReturnData = $ReturnData.'<br><span>'.htmlentities($ReturnTime)."</span>";
-					}
-					
-					$ReturnData = $ReturnData."</td>\n";
-				}
-				
-				$ReturnData = $ReturnData.'<td class="VTCAL_TitleLocation" valign="top"><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($config['CalendarID']).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$config['LinkFilterQueryString'].'"';
-				
-				if (isset($config['MaxTitleCharacters']) && ($config['MaxTitleCharacters'] < strlen($event['title']))) {
-					$ReturnData = $ReturnData.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$config['MaxTitleCharacters']))).'</a>...</b>';
-				}
-				else {
-					$ReturnData = $ReturnData.'>'.htmlentities($event['title']).'</a></b>';
-				}
-					
-				if ($event['location'] != "" && $config['ShowLocation'] == "Y") {
-					$ReturnData = $ReturnData."<br>\n<i";
-					if (isset($config['MaxLocationCharacters']) && ($config['MaxLocationCharacters'] < strlen($event['location']))) {
-						$ReturnData = $ReturnData.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$config['MaxLocationCharacters']))).'...';
-					}
-					else {
-						$ReturnData = $ReturnData.'>'.htmlentities($event['location']);
-					}
-					$ReturnData = $ReturnData.'</i>';
-				}
-				
-				$ReturnData = $ReturnData."</td>\n</tr>\n\n";
-				
-				$ievent++;
-			}
-		}
-		
-		$ReturnData = $ReturnData."</table>\n\n";
-	}
-	elseif ($config['HTMLTemplate'] == "MAINSITE") {
-		if ($result->numRows() == 0) {
-			$ReturnData = '<p align="center"><i>No upcoming events.</i></p>';
-		}
-		else {
-			$ievent = 0;
-			while ($ievent < $result->numRows()) {
-				$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
-				
-				$ReturnData = $ReturnData.'<p id="VTCAL_EventNum'.($ievent+1).'"><a href="'.BASEURL.'main.php?calendarid='.urlencode($config['CalendarID']).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$config['LinkFilterQueryString'].'">';
-				$ReturnData = $ReturnData.'<b>'.htmlentities(FormatDate($config['DateFormat'], dbtime2tick($event['timebegin']))).
-					'<br>'.htmlentities(FormatTimeDisplay($event, $config))."<b><br></b></b>\n";
-				
-				$ReturnData = $ReturnData.'<span><u';
-				if (isset($config['MaxTitleCharacters']) && ($config['MaxTitleCharacters'] < strlen($event['title']))) {
-					$ReturnData = $ReturnData.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$config['MaxTitleCharacters']))).'...';
-				}
-				else {
-					$ReturnData = $ReturnData.'>'.htmlentities($event['title']);
-				}
-				$ReturnData = $ReturnData."</u><br>\n";
-				
-				if ($event['location'] != "" && $config['ShowLocation'] == "Y") {
-					$ReturnData = $ReturnData."<i";
-					if (isset($config['MaxLocationCharacters']) && ($config['MaxLocationCharacters'] < strlen($event['location']))) {
-						$ReturnData = $ReturnData.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$config['MaxLocationCharacters']))).'...';
-					}
-					else {
-						$ReturnData = $ReturnData.'>'.htmlentities($event['location']);
-					}
-					$ReturnData = $ReturnData.'</i>';
-				}
-				else {
-					$ReturnData = $ReturnData.'<i>&nbsp;</i>';
-				}
-				
-				$ReturnData = $ReturnData."</span></a></p>\n\n";
-				
-				$ievent++;
-			}
-		}
-	}
-	
-	return $ReturnData;
-}
-
-function createText(&$result, $config) {
-	return "";
-}
-
-function createXML(&$result, $config) {
-	$ReturnData = '<?xml version="1.0" encoding="ISO-8859-1"?>'."\n";
-	$ReturnData = $ReturnData.'<Calendar '.
-		'ID="'.xmlEscape($config['CalendarID']).'"'.
-		' RequestTime="'.xmlSchemaDate(constCurrentTick).'"'.
-		' MaxEvents="'.xmlEscape($config['MaxEvents']).'"'.
-		">\n";
-	$ievent = 0;
-	while ($ievent < $result->numRows()) {
-		$event = $result->fetchRow(DB_FETCHMODE_ASSOC,$ievent);
-		
-		$ReturnData = $ReturnData."\t<Event".
-			' ID="'.xmlEscape($event['id']).'"'.
-			' URL="'.xmlEscape(BASEURL.'main.php?calendarid='.urlencode($config['CalendarID']).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin'])).$config['LinkFilterQueryString'].'"'.
-			">\n";
-		
-		$ReturnData = $ReturnData."\t\t<Title";
-		if (isset($config['MaxTitleCharacters']) && ($config['MaxTitleCharacters'] < strlen($event['title']))) {
-			$ReturnData = $ReturnData.' Full="'.xmlEscape($event['title']).'">'.xmlEscape(substr($event['title'],0,$config['MaxTitleCharacters']));
-		}
-		else {
-			$ReturnData = $ReturnData.'>'.xmlEscape($event['title']);
-		}
-		$ReturnData = $ReturnData."</Title>\n";
-		
-		if ($config['ShowDateTime'] == "Y") {
-			$ReturnData = $ReturnData."\t\t<Date>".xmlEscape(FormatDate($config['DateFormat'], dbtime2tick($event['timebegin'])))."</Date>\n";
-			$ReturnData = $ReturnData."\t\t<Time>".xmlEscape(FormatTimeDisplay($event, $config))."</Time>\n";
-		}
-		
-		if ($event['location'] != "" && $config['ShowLocation'] == "Y") {
-			$ReturnData = $ReturnData."\t\t<Location";
-			if (isset($config['MaxLocationCharacters']) && ($config['MaxLocationCharacters'] < strlen($event['location']))) {
-				$ReturnData = $ReturnData.' Full="'.xmlEscape($event['location']).'">'.xmlEscape(substr($event['location'],0,$config['MaxLocationCharacters']));
-			}
-			else {
-				$ReturnData = $ReturnData.'>'.xmlEscape($event['location']);
-			}
-			$ReturnData = $ReturnData."</Location>\n";
-		}
-
-		$ReturnData = $ReturnData."\t</Event>\n";
-		$ievent++;
-	}
-	$ReturnData = $ReturnData.'</Calendar>';
-	
-	return $ReturnData;
-}
-
 /*
 Huge - Wednesday, October 25, 2006
 Long - Wed, October 25, 2006
@@ -281,7 +78,7 @@ StartDurationLong = 12:00pm for 2 hours
 StartDurationNormal = 12:00pm (2 hours)
 StartDurationShort = 12:00pm 2 hours
 */
-function FormatTimeDisplay(&$event, $config) {
+function FormatTimeDisplay(&$event, &$FormData) {
 	$starttick = dbtime2tick($event['timebegin']);
 	$endtick = dbtime2tick($event['timeend']);
 	
@@ -289,26 +86,26 @@ function FormatTimeDisplay(&$event, $config) {
 		return "All Day";
 	}
 	else {
-		if ($config['TimeDisplay'] == "start" || substr($event['timeend'], 11, 5) == "23:59") {
-			return FormatTime($config['TimeFormat'], $starttick);
+		if ($FormData['timedisplay'] == "start" || substr($event['timeend'], 11, 5) == "23:59") {
+			return FormatTime($FormData['timeformat'], $starttick);
 		}
-		elseif ($config['TimeDisplay'] == "startendlong") {
-			return FormatTime($config['TimeFormat'], $starttick)." to ".FormatTime($config['TimeFormat'], $endtick);
+		elseif ($FormData['timedisplay'] == "startendlong") {
+			return FormatTime($FormData['timeformat'], $starttick)." to ".FormatTime($FormData['timeformat'], $endtick);
 		}
-		elseif ($config['TimeDisplay'] == "startendnormal") {
-			return FormatTime($config['TimeFormat'], $starttick)." - ".FormatTime($config['TimeFormat'], $endtick);
+		elseif ($FormData['timedisplay'] == "startendnormal") {
+			return FormatTime($FormData['timeformat'], $starttick)." - ".FormatTime($FormData['timeformat'], $endtick);
 		}
-		elseif ($config['TimeDisplay'] == "startendshort") {
-			return FormatTime($config['TimeFormat'], $starttick)."-".FormatTime($config['TimeFormat'], $endtick);
+		elseif ($FormData['timedisplay'] == "startendshort") {
+			return FormatTime($FormData['timeformat'], $starttick)."-".FormatTime($FormData['timeformat'], $endtick);
 		}
-		elseif ($config['TimeDisplay'] == "startdurationlong") {
-			return FormatTime($config['TimeFormat'], $starttick)." for ".FormatDuration($config['DurationFormat'], $endtick-$starttick);
+		elseif ($FormData['timedisplay'] == "startdurationlong") {
+			return FormatTime($FormData['timeformat'], $starttick)." for ".FormatDuration($FormData['durationformat'], $endtick-$starttick);
 		}
-		elseif ($config['TimeDisplay'] == "startdurationnormal") {
-			return FormatTime($config['TimeFormat'], $starttick)." (".FormatDuration($config['DurationFormat'], $endtick-$starttick).")";
+		elseif ($FormData['timedisplay'] == "startdurationnormal") {
+			return FormatTime($FormData['timeformat'], $starttick)." (".FormatDuration($FormData['durationformat'], $endtick-$starttick).")";
 		}
-		elseif ($config['TimeDisplay'] == "startdurationshort") {
-			return FormatTime($config['TimeFormat'], $starttick)." ".FormatDuration($config['DurationFormat'], $endtick-$starttick);
+		elseif ($FormData['timedisplay'] == "startdurationshort") {
+			return FormatTime($FormData['timeformat'], $starttick)." ".FormatDuration($FormData['durationformat'], $endtick-$starttick);
 		}
 	}
 }

@@ -17,7 +17,8 @@ $Form_showallday = '1';
 $FormErrors = array();
 
 $lang['export_page_header'] = 'Export Events';
-$lang['export_description'] = 'CHANGE THIS';
+$lang['export_form_description'] = 'CHANGE THIS form';
+$lang['export_preview_description'] = 'CHANGE THIS preview';
 
 // Generic messages
 $lang['export_leaveblank'] = 'Leave blank for no maximum';
@@ -138,6 +139,7 @@ if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || 
 if (isset($_GET['allcategories']) && !setVar($Form_allcategories,$_GET['allcategories'],'boolean_checkbox')) unset($Form_allcategories);
 if (isset($_GET['categories']) && !setVar($Form_categories,$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
 if ($Submit_CreateExport && !isset($Form_categories)) $FormErrors['categories'] = lang('export_categories_error');
+if (count($Form_categories) == $numcategories) unset($Form_categories);
 
 if (isset($_GET['sponsor'])) setVar($Form_sponsor,$_GET['sponsor'],'sponsortype');
 if (isset($_GET['specificsponsor'])) setVar($Form_specificsponsor,trim($_GET['specificsponsor']),'specificsponsor');

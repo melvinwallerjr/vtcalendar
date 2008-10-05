@@ -30,6 +30,7 @@ function datetime2timestamp($year, $month, $day, $hour, $min, $ampm) {
 /* converts a timestamp "1999-09-16 18:57:00" to a date/time format */
 function timestamp2datetime($timestamp) {
 	 global $use_ampm;
+	 
 	/* split the date/time field-info into its parts */
 	/* format returned by postgres is "1999-09-10 07:30:00" */
 	$datetime['year']  = substr($timestamp,0,4);

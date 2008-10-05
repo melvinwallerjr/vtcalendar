@@ -71,12 +71,14 @@ $lang['export_dates'] = 'Dates';
 $lang['export_dates_description'] = 'The start and end date for which you want events.';
 
 $lang['export_dates_from'] = 'From';
-$lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format,<br>or enter &quot;today&quot; to use today\'s date.';
-$lang['export_dates_from_error'] = 'You must either enter a &quot;'. $lang['export_dates_from'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_from'].'&quot; date.';
+$lang['export_dates_from_description'] = 'Leave blank for no start date, enter a date in <code>YYYY-MM-DD</code> format,<br>enter &quot;today&quot; to use today\'s date, or enter &quot;upcoming&quot; to only show upcoming events.';
+$lang['export_dates_from_error'] = 'You must either a &quot;'. $lang['export_dates_from'] .'&quot; date in <code>yyyy-mm-dd</code> format, leave it blank for no &quot;'.$lang['export_dates_from'].'&quot; date, enter &quot;today&quot; to use today\'s date, or enter &quot;upcoming&quot; to only show upcoming events.';
 
 $lang['export_dates_to'] = 'To';
 $lang['export_dates_to_description'] = 'Leave blank for no end date, enter a date in <code>YYYY-MM-DD</code> format,<br>or enter a number to represent the number of days after the &quot;'.$lang['export_dates_from'].'&quot; date.';
-$lang['export_dates_to_error'] = 'You must enter either a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format or leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date.';
+$lang['export_dates_to_error'] = 'You must a &quot;'. $lang['export_dates_to'] .'&quot; date in <code>yyyy-mm-dd</code> format, leave it blank for no &quot;'.$lang['export_dates_to'].'&quot; date, or enter a number to represent the number of days after the &quot;'.$lang['export_dates_from'].'&quot; date.';
+
+$lang['export_dates_missingfrom'] = 'If you enter a &quot;'. $lang['export_dates_to'] .'&quot; date you must also enter a &quot;'. $lang['export_dates_from'] .'&quot; date.';
 
 $lang['export_categories'] = 'Categories';
 $lang['export_categories_description'] = 'Choose the event categories you would like to export events for';
@@ -156,12 +158,13 @@ if ($Submit_CreateExport && !isset($FormData['format'])) $FormErrors['format'] =
 
 if (!empty($_GET['maxevents']) && !setVar($FormData['maxevents'],$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
 
-if (!empty($_GET['timebegin'])) if (strtolower($_GET['timebegin']) == "today" || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
+if (!empty($_GET['timebegin'])) if (preg_match('/^(today|upcoming)$/', $_GET['timebegin']) == 1 || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
 if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $FormData['timeend'] = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
+if (empty($_GET['timebegin']) && !empty($_GET['timeend'])) $FormErrors['timeend'] = lang('export_dates_missingfrom');
 
 if (isset($_GET['categories']) && !setVar($FormData['categories'],$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
 if ($Submit_CreateExport && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
-if (isset($FormData['categories']) && count($FormData['categories']) == $numcategories) unset($FormData['categories']);
+if (isset($FormData['categories']) && is_string($FormData['categories'])) $FormData['categories'] = explode(",", $FormData['categories']);
 
 if (isset($_GET['sponsor'])) setVar($FormData['sponsor'],$_GET['sponsor'],'sponsortype');
 if (isset($_GET['specificsponsor'])) setVar($FormData['specificsponsor'],trim($_GET['specificsponsor']),'specificsponsor');

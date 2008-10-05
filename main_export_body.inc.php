@@ -1,6 +1,10 @@
 <?php
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
+// Unset the selected categories if they are all selected.
+// This prevents a huge query string in the export URL.
+if (isset($FormData['categories']) && count($FormData['categories']) == $numcategories) unset($FormData['categories']);
+
 if (!$Submit_CreateExport || count($FormErrors) != 0) {
 	echo '<div style="padding: 10px; padding-bottom: 0;">' . lang('export_preview_description') .'</div>';
 }
@@ -17,10 +21,13 @@ if ($Submit_CreateExport && count($FormErrors) == 0) {
 	foreach($FormData as $key => $val) {
 		// Output separate <input> if the value is an array.
 		if (is_array($val)) {
+			$qsList = "";
 			foreach ($val as $arrayval) {
-				$URL .= '&' .urlencode($key) . '=' . urlencode($arrayval);
+				if ($qsList != "") $qsList .= ",";
+				$qsList .= $arrayval;
 				echo "\n".'<input type="hidden" name="'.htmlentities($key).'[]" value="'.htmlentities($arrayval).'">';
 			}
+			$URL .= '&' .urlencode($key) . '=' . urlencode($qsList);
 		}
 		// Otherwise, output the value if it does not match the default (assuming there was a default).
 		elseif (!isset($FormDataDefaults[$key]) || $val != $FormDataDefaults[$key]) {

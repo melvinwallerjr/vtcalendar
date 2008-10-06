@@ -159,6 +159,12 @@ if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
 // Defines the offset to GMT, can be positive or negative
 if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", 5);
 
+// Config: Timezone
+// Example: America/New_York
+// The timezone in which the calendar will set the local time for. All new events, logs, etc will be affected by this setting.
+// For a list of supported timezone identifiers see http://us.php.net/manual/en/timezones.php
+if (!defined("TIMEZONE")) define("TIMEZONE", '');
+
 // Config: Week Starting Day
 // Defines the week starting day
 // Allowable values - 0 for "Sunday" or 1 for "Monday"
@@ -241,6 +247,13 @@ if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);
 // If 00:00 - 23:00 time format is used, appropriate day start/end hours will be used in datetime2timestamp functions where calculating day edges
 define("DAY_BEG_H", 0);
 define("DAY_END_H", (USE_AMPM ? 11 : 23));
+
+// Make sure the TIMEZONE is not set or is valid.
+if (TIMEZONE != '') {
+	if (!(function_exists("date_default_timezone_set") ? @(date_default_timezone_set(TIMEZONE)) : @(putenv("TZ=".TIMEZONE)))) {
+		exit("TIMEZONE in config.inc.php was set to an invalid identifier.");
+	}
+}
 
 // ---------- The following functions allow you to customize processing based on your database -------
 

@@ -28,6 +28,7 @@ $Form_BASEDOMAIN = '';
 $Form_BASEURL = '';
 $Form_SECUREBASEURL = '';
 $Form_TIMEZONE_OFFSET = '5';
+$Form_TIMEZONE = '';
 $Form_WEEK_STARTING_DAY = '0';
 $Form_USE_AMPM = true;
 $Form_COLUMNSIDE = 'RIGHT';
@@ -79,6 +80,7 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_BASEURL = $_POST['BASEURL'];
 	$Form_SECUREBASEURL = $_POST['SECUREBASEURL'];
 	$Form_TIMEZONE_OFFSET = $_POST['TIMEZONE_OFFSET'];
+	$Form_TIMEZONE = $_POST['TIMEZONE'];
 	$Form_WEEK_STARTING_DAY = $_POST['WEEK_STARTING_DAY'];
 	$Form_USE_AMPM = isset($_POST['USE_AMPM']);
 	$Form_COLUMNSIDE = $_POST['COLUMNSIDE'];
@@ -252,6 +254,13 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Example: -5'."\n";
 	$ConfigOutput .= '// Defines the offset to GMT, can be positive or negative'."\n";
 	$ConfigOutput .= 'define("TIMEZONE_OFFSET", \''. escapephpstring($GLOBALS['Form_TIMEZONE_OFFSET']) .'\');'."\n\n";
+
+	// Output Timezone
+	$ConfigOutput .= '// Config: Timezone'."\n";
+	$ConfigOutput .= '// Example: America/New_York'."\n";
+	$ConfigOutput .= '// The timezone in which the calendar will set the local time for. All new events, logs, etc will be affected by this setting.'."\n";
+	$ConfigOutput .= '// For a list of supported timezone identifiers see http://us.php.net/manual/en/timezones.php'."\n";
+	$ConfigOutput .= 'define("TIMEZONE", \''. escapephpstring($GLOBALS['Form_TIMEZONE']) .'\');'."\n\n";
 
 	// Output Week Starting Day
 	$ConfigOutput .= '// Config: Week Starting Day'."\n";

@@ -371,7 +371,7 @@ function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 	$resultString = "";
 	$linkCategoryFilter = isset($FormData['categories']) && isset($FormData['keepcategoryfilter']) ? "&categoryfilter=" . urlencode(implode(',', $FormData['categories'])) : '';
-	var_dump($FormData);
+	
 	if ($FormData['htmltype'] == "paragraph") {
 		if ($result->numRows() == 0) {
 			$resultString = '<p class="VTCAL_NoEvents"><i>There are no upcoming events.</i></p>';
@@ -390,17 +390,17 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 					$resultString = $resultString.'>'.htmlentities($event['title']).'</a></b>';
 				}
 				
-				if ($FormData['showdatetime'] == "Y") {
+				if ($FormData['showdatetime'] == '1') {
 					$resultString = $resultString."<br>\n";
 					$resultString = $resultString.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin'])));
 					
 					$ReturnTime = FormatTimeDisplay($event, $FormData);
-					if ($FormData['showallday'] == "Y" || ($FormData['showallday'] == "N" && $ReturnTime != "All Day")) {
+					if ($FormData['showallday'] == '1' || ($FormData['showallday'] == '0' && $ReturnTime != "All Day")) {
 						$resultString = $resultString.' - '.htmlentities($ReturnTime);
 					}
 				}
 				
-				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+				if ($event['location'] != "" && $FormData['showlocation'] == '1') {
 					$resultString = $resultString."<br>\n<i";
 					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
 						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';
@@ -429,18 +429,18 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 				
 				$resultString = $resultString."<tr>\n";
 				
-				if ($FormData['showdatetime'] == "Y") {
+				if ($FormData['showdatetime'] == '1') {
 					$resultString = $resultString.'<td class="VTCAL_DateTime" valign="top">'.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin'])));
 					
 					$ReturnTime = FormatTimeDisplay($event, $FormData);
-					if ($FormData['showallday'] == "Y" || ($FormData['showallday'] == "N" && $ReturnTime != "All Day")) {
+					if ($FormData['showallday'] == '1' || ($FormData['showallday'] == '0' && $ReturnTime != "All Day")) {
 						$resultString = $resultString.'<br><span>'.htmlentities($ReturnTime)."</span>";
 					}
 					
 					$resultString = $resultString."</td>\n";
 				}
 				
-				$resultString = $resultString.'<td class="VTCAL_TitleLocation" valign="top"><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$$linkCategoryFilter.'"';
+				$resultString = $resultString.'<td class="VTCAL_TitleLocation" valign="top"><b><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$linkCategoryFilter.'"';
 				
 				if (isset($FormData['maxtitlecharacters']) && ($FormData['maxtitlecharacters'] < strlen($event['title']))) {
 					$resultString = $resultString.' title="'.htmlentities($event['title']).'">'.htmlentities(trim(substr($event['title'],0,$FormData['maxtitlecharacters']))).'</a>...</b>';
@@ -449,7 +449,7 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 					$resultString = $resultString.'>'.htmlentities($event['title']).'</a></b>';
 				}
 					
-				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+				if ($event['location'] != "" && $FormData['showlocation'] == '1') {
 					$resultString = $resultString."<br>\n<i";
 					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
 						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';
@@ -490,7 +490,7 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 				}
 				$resultString = $resultString."</u><br>\n";
 				
-				if ($event['location'] != "" && $FormData['showlocation'] == "Y") {
+				if ($event['location'] != "" && $FormData['showlocation'] == '1') {
 					$resultString = $resultString."<i";
 					if (isset($FormData['maxlocationcharacters']) && ($FormData['maxlocationcharacters'] < strlen($event['location']))) {
 						$resultString = $resultString.' title="'.htmlentities($event['location']).'">'.htmlentities(trim(substr($event['location'],0,$FormData['maxlocationcharacters']))).'...';

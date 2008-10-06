@@ -1,26 +1,37 @@
 <?php
 // Make sure this script does not take a long time to execute.
 set_time_limit(10);
+define("DOEXPORT", true);
 
-define("CACHEMINUTES", 5);
+// Validate the user if the export is flagged as being an admin export.
+if (isset($_GET['adminexport']) || isset($_POST['adminexport'])) {
+	define("IS_ADMIN_EXPORT", true);
+	define("HIDELOGIN", true);
+	require_once('../application.inc.php');
+	
+	// Exit if the user is not authenticated or is not a man admin.
+	if (!authorized() || !$_SESSION['AUTH_ISCALENDARADMIN']) exit;
+}
+else {
+	define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
+	@(include_once('DB.php')) or die('');
+	@(include_once('../version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
+	@(include_once('../config.inc.php')) or die('');
+	require_once('../config-defaults.inc.php');
+	
+	$FUNCINCLUDE = array_flip(explode(' ', 'dates dates-generic inputvalidation db-generic db-gets export misc'));
+	require_once('../functions.inc.php');
+	
+	require_once('../languages/'.LANGUAGE.'.inc.php');
+	require_once('../constants.inc.php');
+}
 
-define("ALLOWINCLUDES", TRUE); // Allows this file to include other files (e.g. config.inc.php).
-
-@(include_once('DB.php')) or die('');
-@(include_once('../version.inc.php')); // TODO: Should this fail if the file cannot be loaded?
-@(include_once('../config.inc.php')) or die('');
-require_once('../config-defaults.inc.php');
-
-$FUNCINCLUDE = array_flip(explode(' ', 'dates dates-generic inputvalidation db-generic db-gets export misc'));
-require_once('../functions.inc.php');
-
-require_once('../languages/'.LANGUAGE.'.inc.php');
-require_once('../constants.inc.php');
-require_once('functions.inc.php');
+require_once('export-functions.inc.php');
 require_once('../main_export_data.inc.php');
 
-echo isset($_GET['spoon']['aa']);
-exit;
+if (count($FormErrors) > 0) {
+	outputErrorMessage("- " . html_entity_decode(implode("\n\n- ", $FormErrors)));
+}
 
 // ==========================================================
 // Get the calendar ID from the query string
@@ -81,10 +92,10 @@ if (is_string( $result =& DBQuery($query) ) ) {
 // ==========================================================
 
 // Set the expiration of the returned data.
-//Header("Expires: " . gmdate("D, d M Y H:i:s", time() + (CACHEMINUTES*60)) . " GMT");
+Header("Expires: " . gmdate("D, d M Y H:i:s", time() + (EXPORT_CACHE_MINUTES*60)) . " GMT");
 
 // Set that this file was last updated right now.
-//Header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
+Header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
 
 if (isset($_GET['raw'])) Header("Content-Type: text/plain");
 
@@ -99,7 +110,7 @@ switch($FormData['format']) {
 		break;
 	case "rss2_0":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");
-		echo GenerateRSS2_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL, BASEURL.EXPORTURL.'?'.http_build_query($_GET));
+		echo GenerateRSS2_0($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL, BASEURL.EXPORT_PATH.'?'.http_build_query($_GET));
 		break;
 	case "xml":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");

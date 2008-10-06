@@ -5,9 +5,13 @@ exclusive to main.php or main_body.inc.php
 since it is included in export/export.php.
 ======================================= */
 
-$Submit_CreateExport = isset($_GET['createexport']);
+define("DOPREVIEW", isset($_GET['createexport']));
+
+define("ISCALADMIN", isset($_SESSION['AUTH_ISCALENDARADMIN']) && $_SESSION['AUTH_ISCALENDARADMIN']);
 
 // Defaults
+$FormData['timebegin'] = 'upcoming';
+$FormData['maxevents'] = '25';
 $FormData['sponsor'] = 'all';
 $FormData['htmltype'] = 'table';
 $FormData['jshtml'] = '1';
@@ -61,11 +65,12 @@ $lang['export_settings'] = 'Export Settings';
 $lang['export_format'] = 'Export Format';
 $lang['export_format_standard'] = 'Standard';
 $lang['export_format_advanced'] = 'Advanced';
-$lang['export_format_error'] = 'You must select an &quot;'.$lang['export_format'].'&quot; below.';
+$lang['export_format_error'] = 'You must select an &quot;'.$lang['export_format'].'&quot;.';
 
 $lang['export_maxevents'] = 'Maximum Events Returned';
 $lang['export_maxevents_description'] = 'To avoid excessively large output, you can specify the maximum number of events.';
-$lang['export_maxevents_error'] = 'You must either enter a number below or leave it blank.';
+$lang['export_maxevents_error'] = 'You must enter a number between 1 and '.MAX_EXPORT_EVENTS.'.';
+$lang['export_maxevents_rangemessage'] = 'Must be a number from 1 to '.MAX_EXPORT_EVENTS;
 
 $lang['export_dates'] = 'Dates';
 $lang['export_dates_description'] = 'The start and end date for which you want events.';
@@ -154,16 +159,27 @@ $lang['export_preview_raw'] = 'Raw Export Preview';
 $lang['export_preview_raw_text'] = 'The window below shows the raw output for the exported events.';
 
 if (isset($_GET['format'])) setVar($FormData['format'],$_GET['format'],'exportformat');
-if ($Submit_CreateExport && !isset($FormData['format'])) $FormErrors['format'] = lang('export_format_error');
+if (isset($FormData['format']) && $FormData['format'] == "xml" && (!PUBLIC_EXPORT_VTCALXML && !ISCALADMIN)) unset($FormData['format']);
+if ((DOPREVIEW || defined("DOEXPORT")) && !isset($FormData['format'])) $FormErrors['format'] = lang('export_format_error');
 
-if (!empty($_GET['maxevents']) && !setVar($FormData['maxevents'],$_GET['maxevents'],'int_gte1')) $FormErrors['maxevents'] = lang('export_maxevents_error');
+// Output an error message if:
+// 1. Max Events is set but not a number greater than 1.
+// 2. Max events is set, the user is not an admin, and the value is greater than what is allowed.
+// 3. Max events is not set, and either the user is not an admin.
+if ((isset($_GET['maxevents']) && !setVar($FormData['maxevents'],$_GET['maxevents'],'int_gte1'))
+	|| (isset($_GET['maxevents']) && !ISCALADMIN && intval($FormData['maxevents']) > MAX_EXPORT_EVENTS)
+	|| (!isset($_GET['maxevents']) && !ISCALADMIN && DOPREVIEW)) {
+	
+	$FormErrors['maxevents'] = lang('export_maxevents_error');
+	$FormData['maxevents'] = $FormDataDefaults['maxevents'];
+}
 
-if (!empty($_GET['timebegin'])) if (preg_match('/^(today|upcoming)$/', $_GET['timebegin']) == 1 || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error');
+if (isset($_GET['timebegin'])) { if (preg_match('/^(today|upcoming)?$/', $_GET['timebegin']) == 1 || isValidInput($_GET['timebegin'] . " 00:00:00", 'timebegin')) $FormData['timebegin'] = strtolower($_GET['timebegin']); else $FormErrors['timebegin'] = lang('export_dates_from_error'); }
 if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $FormData['timeend'] = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 if (empty($_GET['timebegin']) && !empty($_GET['timeend'])) $FormErrors['timeend'] = lang('export_dates_missingfrom');
 
-if (isset($_GET['categories']) && !setVar($FormData['categories'],$_GET['categories'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
-if ($Submit_CreateExport && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
+if (isset($_GET['c']) && !setVar($FormData['categories'],$_GET['c'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
+if (DOPREVIEW && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
 if (isset($FormData['categories']) && is_string($FormData['categories'])) $FormData['categories'] = explode(",", $FormData['categories']);
 
 if (isset($_GET['sponsor'])) setVar($FormData['sponsor'],$_GET['sponsor'],'sponsortype');

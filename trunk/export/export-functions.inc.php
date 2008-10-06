@@ -17,7 +17,7 @@ function outputErrorMessage($mesg) {
 	header('Expires: '.gmdate("D, d M Y H:i:s", mktime(0,0,0,1,1,1975)).' GMT');
 	header('Cache-Control: no-store');
 	header('Content-type: text/plain');
-	echo "<!-- /* ERR\n\nError Message:\n\n". $mesg ."\n\nSee the instructions at http://www.howard.edu/calendar/public-export/instructions.php\n\n*/ -->";
+	echo "<!-- /* ERR\n\nError Message(s):\n\n". $mesg ."\n\nSee the instructions at http://www.howard.edu/calendar/public-export/instructions.php\n\n*/ -->";
 	exit();
 }
 

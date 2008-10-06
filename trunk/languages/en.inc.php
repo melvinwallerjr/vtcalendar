@@ -152,6 +152,9 @@ still be able to download individual events by clicking on the link
 on each page that lists event details.';
 $lang['whole_calendar'] = 'Entire calendar';
 
+// Export View
+$lang['rss_feed_title'] = 'Next 25 Upcoming Events';
+
 // ================================== Login-protected interface =====================================
 
 $lang['dberror_generic'] = 'A database error was encountered';

@@ -204,8 +204,11 @@ function setVar(&$var,$value,$type,$default=NULL) {
 		}
 	}
 	
-	// Set the var to the default if the value was invalid.
-	$var = $default;
+	// Set the var to the default if the value was invalid and a default was set.
+	if ($default !== NULL) {
+		$var = $default;
+	}
+	
 	return false;
 }
 

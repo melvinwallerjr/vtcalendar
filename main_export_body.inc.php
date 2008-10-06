@@ -5,32 +5,36 @@ if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include 
 // This prevents a huge query string in the export URL.
 if (isset($FormData['categories']) && count($FormData['categories']) == $numcategories) unset($FormData['categories']);
 
-if (!$Submit_CreateExport || count($FormErrors) != 0) {
+if (!DOPREVIEW || count($FormErrors) != 0) {
 	echo '<div style="padding: 10px; padding-bottom: 0;">' . lang('export_form_description') .'</div>';
 }
 
 ?><form id="ExportForm" name="ExportForm" method="get" action="main.php" class="HideHTML">
 <input type="hidden" name="view" value="export"><?php
 
-if ($Submit_CreateExport && count($FormErrors) == 0) {
+if (DOPREVIEW && count($FormErrors) == 0) {
 
 	echo '<table border="0" cellspacing="0" cellpadding="10" width="100%"><tr><td>';
 	
 	// Create the query string and output hidden <input> so that we can return to the form.
-	$URL = BASEURL.EXPORTURL."?calendarid=" . $_SESSION['CALENDAR_ID'];
+	$URL = BASEURL.EXPORT_PATH."?calendarid=" . $_SESSION['CALENDAR_ID'];
 	foreach($FormData as $key => $val) {
 		// Output separate <input> if the value is an array.
 		if (is_array($val)) {
 			$URL .= '&' .urlencode($key) . '=' . urlencode(implode(',', $val));
 			foreach ($val as $arrayval) {
-				echo "\n".'<input type="hidden" name="'.htmlentities($key).'[]" value="'.htmlentities($arrayval).'">';
+				echo "\n".'<input type="hidden" name="'.($key == 'categories' ? "c" : htmlentities($key)).'[]" value="'.htmlentities($arrayval).'">';
 			}
 		}
-		// Otherwise, output the value if it does not match the default (assuming there was a default).
-		elseif (!isset($FormDataDefaults[$key]) || $val != $FormDataDefaults[$key]) {
-			$URL .= '&' . urlencode($key) . '=' . urlencode($val);
+		else {
+			if (!isset($FormDataDefaults[$key]) || $val != $FormDataDefaults[$key]) {
+				$URL .= '&' . urlencode($key) . '=' . urlencode($val);
+			}
 			echo "\n".'<input type="hidden" name="'.htmlentities($key).'" value="'.htmlentities($val).'">';
 		}
+	}
+	if (ISCALADMIN) {
+		$URL .= "&adminexport=1";
 	}
 	?>
 	

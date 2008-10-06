@@ -70,25 +70,27 @@ function SpecificSponsorChanged() {
 	    	<tr>
 	    		<td colspan="2"><b><?php echo lang('export_format_standard'); ?>:</b></td>
 	   		</tr>
+	   		<?php if (PUBLIC_EXPORT_VTCALXML || ISCALADMIN) { ?>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="xml" id="format_xml" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "xml") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_xml">VTCalendar (XML) </td>
+	    		<td><label for="format_xml">VTCalendar (XML)</td>
 	   		</tr>
+	   		<?php } ?>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="rss" id="format_rss" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "rss") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_rss">RSS 0.91 (XML) </td>
+	    		<td><label for="format_rss">RSS 0.91 (XML)</td>
 	   		</tr>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="rss1_0" id="format_rss1_0" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "rss1_0") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_rss1_0">RSS 1.0 (XML) </td>
+	    		<td><label for="format_rss1_0">RSS 1.0 (XML)</td>
 	   		</tr>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="rss2_0" id="format_rss2_0" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "rss2_0") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_rss2_0">RSS 2.0 (XML) </td>
+	    		<td><label for="format_rss2_0">RSS 2.0 (XML)</td>
 	   		</tr>
 	    	<tr>
 	    		<td><input name="format" type="radio" value="vxml" id="format_vxml" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "vxml") echo "CHECKED"; ?>></td>
-	    		<td><label for="format_vxml">VoiceXML 2.0 (XML) </td>
+	    		<td><label for="format_vxml">VoiceXML 2.0 (XML)</td>
 	   		</tr>
 	    	<tr>
 	    		<td colspan="2" style="padding-top: 16px;"><b><?php echo lang('export_format_advanced'); ?>:</b></td>
@@ -110,7 +112,7 @@ function SpecificSponsorChanged() {
 		<?php if (isset($FormErrors['maxevents'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['maxevents'].'</p>'; ?>
 		<p><?php echo lang('export_maxevents_description'); ?></p>
 		<p><input name="maxevents" type="text" id="maxevents" value="<?php if (isset($FormData['maxevents'])) echo $FormData['maxevents']; ?>">
-			 (<?php echo lang('export_leaveblank'); ?>)</p>
+			 <?php if (!ISCALADMIN) { ?>(<?php echo lang('export_maxevents_rangemessage'); ?>)<?php } ?></p>
 	</blockquote>
 	
 	<p><b><?php echo lang('export_dates'); ?>:</b></p>
@@ -144,7 +146,7 @@ function SpecificSponsorChanged() {
 	<blockquote>
 		<p><?php echo lang('export_categories_description'); ?>:</p>
 		<?php if (isset($FormErrors['categories'])) echo '<p class="FormError"><img src="install/failed.png" class="png" width="16" height="16" alt="" align="left"> '.$FormErrors['categories'].'</p>'; ?>
-		<p><a href="javascript:checkAll(document.ExportForm,'categories',true);"><?php echo lang('select_unselect'); ?></a></p>
+		<p><a href="javascript:checkAll(document.ExportForm,'c',true);"><?php echo lang('select_unselect'); ?></a></p>
 		<table border="0" cellspacing="0" cellpadding="4"><tr><td valign="top">
 		<table border="0" cellspacing="0" cellpadding="1">
 		<?php
@@ -167,7 +169,7 @@ function SpecificSponsorChanged() {
 			
 			?>
 	    	<tr>
-	    		<td><input type="checkbox" name="categories[]" value="<?php echo $categories_id[$c]; ?>" id="category<?php echo $categories_id[$c]; ?>" <?php if ($categoryselected) echo "CHECKED"; ?>></td>
+	    		<td><input type="checkbox" name="c[]" value="<?php echo $categories_id[$c]; ?>" id="category<?php echo $categories_id[$c]; ?>" <?php if ($categoryselected) echo "CHECKED"; ?>></td>
 	    		<td><label for="category<?php echo $categories_id[$c]; ?>"><?php echo htmlentities($categories_name[$c]); ?></label></td>
 	    	</tr>
 	    	<?php
@@ -216,8 +218,8 @@ function SpecificSponsorChanged() {
 	<blockquote>
 	    	<p><?php echo lang('export_htmltype_description'); ?></p>
 	    	<p><select name="htmltype" id="htmltype">
-	    			<option <?php if (isset($FormData['htmltype']) && $FormData['htmltype'] == 'paragraph') echo "selected"; ?>><?php echo lang('export_htmltype_paragraph'); ?></option>
-		    		<option <?php if (isset($FormData['htmltype']) && $FormData['htmltype'] == 'table') echo "selected"; ?>><?php echo lang('export_htmltype_table'); ?></option>
+	    			<option value="paragraph" <?php if (isset($FormData['htmltype']) && $FormData['htmltype'] == 'paragraph') echo "selected"; ?>><?php echo lang('export_htmltype_paragraph'); ?></option>
+		    		<option value="table" <?php if (isset($FormData['htmltype']) && $FormData['htmltype'] == 'table') echo "selected"; ?>><?php echo lang('export_htmltype_table'); ?></option>
 				</select></p>
 	</blockquote>
 	

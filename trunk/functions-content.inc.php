@@ -14,6 +14,7 @@ function pageheader($title, $navbaractive) {
 		<?php } else { ?>
 			<meta name="robots" content="noindex,follow">
 		<?php } ?>
+		<link rel="alternate" type="application/rss+xml" title="<?php lang('rss_feed_title'); ?>" href="export/export.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=rss2_0">
 		<script type="text/javascript" src="scripts/browsersniffer.js"></script>
 		<script type="text/javascript" src="scripts/general.js"></script>
 		<script type="text/javascript" src="scripts/update.js"></script>

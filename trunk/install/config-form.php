@@ -11,7 +11,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_TITLEPREFIX" name="TITLEPREFIX" value="<?php echo htmlentities($GLOBALS['Form_TITLEPREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TITLEPREFIX"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_TITLEPREFIX" name="TITLEPREFIX" value="<?php echo htmlentities($GLOBALS['Form_TITLEPREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TITLEPREFIX"> </span>
                      </div>
                   </td>
                </tr>
@@ -31,7 +31,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_TITLESUFFIX" name="TITLESUFFIX" value="<?php echo htmlentities($GLOBALS['Form_TITLESUFFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TITLESUFFIX"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_TITLESUFFIX" name="TITLESUFFIX" value="<?php echo htmlentities($GLOBALS['Form_TITLESUFFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TITLESUFFIX"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: " - My University"</i>
@@ -54,7 +54,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_LANGUAGE" name="LANGUAGE" value="<?php echo htmlentities($GLOBALS['Form_LANGUAGE']); ?>" size="60"/> <span id="DataFieldInputExtra_LANGUAGE"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_LANGUAGE" name="LANGUAGE" value="<?php echo htmlentities($GLOBALS['Form_LANGUAGE']); ?>" size="60"/> <span id="DataFieldInputExtra_LANGUAGE"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: en, de</i>
@@ -82,7 +82,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_DATABASE" name="DATABASE" value="<?php echo htmlentities($GLOBALS['Form_DATABASE']); ?>" size="60"/> <span id="DataFieldInputExtra_DATABASE"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_DATABASE" name="DATABASE" value="<?php echo htmlentities($GLOBALS['Form_DATABASE']); ?>" size="60"/> <span id="DataFieldInputExtra_DATABASE"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: mysql://vtcal:abc123@localhost/vtcalendar</i>
@@ -106,7 +106,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_SQLLOGFILE" name="SQLLOGFILE" value="<?php echo htmlentities($GLOBALS['Form_SQLLOGFILE']); ?>" size="60"/> <span id="DataFieldInputExtra_SQLLOGFILE"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_SQLLOGFILE" name="SQLLOGFILE" value="<?php echo htmlentities($GLOBALS['Form_SQLLOGFILE']); ?>" size="60"/> <span id="DataFieldInputExtra_SQLLOGFILE"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: /var/log/vtcalendarsql.log</i>
@@ -136,7 +136,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_REGEXVALIDUSERID" name="REGEXVALIDUSERID" value="<?php echo htmlentities($GLOBALS['Form_REGEXVALIDUSERID']); ?>" size="60"/> <span id="DataFieldInputExtra_REGEXVALIDUSERID"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_REGEXVALIDUSERID" name="REGEXVALIDUSERID" value="<?php echo htmlentities($GLOBALS['Form_REGEXVALIDUSERID']); ?>" size="60"/> <span id="DataFieldInputExtra_REGEXVALIDUSERID"> </span>
                      </div>
                   </td>
                </tr>
@@ -158,7 +158,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_DB" name="AUTH_DB" value="true"
 										onclick="ToggleDependant('AUTH_DB');" onchange="ToggleDependant('AUTH_DB');"<?php if ($GLOBALS['Form_AUTH_DB'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_DB"> Yes</label>
-                        <span id="DataFieldInputExtra_AUTH_DB"/>
+                        <span id="DataFieldInputExtra_AUTH_DB"> </span>
                      </div>
                   </td>
                </tr>
@@ -179,7 +179,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_USER_PREFIX" name="AUTH_DB_USER_PREFIX" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_USER_PREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_USER_PREFIX"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_USER_PREFIX" name="AUTH_DB_USER_PREFIX" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_USER_PREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_USER_PREFIX"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: db_</i>
@@ -204,7 +204,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_NOTICE" name="AUTH_DB_NOTICE" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_NOTICE']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_NOTICE"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_DB_NOTICE" name="AUTH_DB_NOTICE" value="<?php echo htmlentities($GLOBALS['Form_AUTH_DB_NOTICE']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_DB_NOTICE"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -234,7 +234,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_LDAP" name="AUTH_LDAP" value="true"
 										onclick="ToggleDependant('AUTH_LDAP');" onchange="ToggleDependant('AUTH_LDAP');"<?php if ($GLOBALS['Form_AUTH_LDAP'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_LDAP"> Yes</label>
-                        <span id="DataFieldInputExtra_AUTH_LDAP"/>
+                        <span id="DataFieldInputExtra_AUTH_LDAP"> </span>
                      </div>
                   </td>
                </tr>
@@ -257,7 +257,7 @@
                                     <td class="DataField">
                                        <div class="DataFieldInput"><input type="checkbox" id="CheckBox_LDAP_CHECK" name="LDAP_CHECK" value="true"
 										<?php if ($GLOBALS['Form_LDAP_CHECK'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_LDAP_CHECK"> Yes</label>
-                                          <span id="DataFieldInputExtra_LDAP_CHECK"/>
+                                          <span id="DataFieldInputExtra_LDAP_CHECK"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -278,7 +278,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_HOST" name="LDAP_HOST" value="<?php echo htmlentities($GLOBALS['Form_LDAP_HOST']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_HOST"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_HOST" name="LDAP_HOST" value="<?php echo htmlentities($GLOBALS['Form_LDAP_HOST']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_HOST"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: directory.myuniversity.edu or ldap://directory.myuniversity.edu/ or ldaps://secure-directory.myuniversity.edu/</i>
@@ -301,7 +301,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_PORT" name="LDAP_PORT" value="<?php echo htmlentities($GLOBALS['Form_LDAP_PORT']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_PORT"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_PORT" name="LDAP_PORT" value="<?php echo htmlentities($GLOBALS['Form_LDAP_PORT']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_PORT"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -321,7 +321,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_USERFIELD" name="LDAP_USERFIELD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_USERFIELD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_USERFIELD"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_USERFIELD" name="LDAP_USERFIELD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_USERFIELD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_USERFIELD"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: sAMAccountName</i>
@@ -344,15 +344,12 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_BASE_DN" name="LDAP_BASE_DN" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BASE_DN']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BASE_DN"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_BASE_DN" name="LDAP_BASE_DN" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BASE_DN']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BASE_DN"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: DC=myuniversity,DC=edu</i>
                                        </div>
                                     </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment"/>
                                  </tr>
                               </table>
                            </td>
@@ -365,7 +362,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_SEARCH_FILTER" name="LDAP_SEARCH_FILTER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_SEARCH_FILTER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_SEARCH_FILTER"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_LDAP_SEARCH_FILTER" name="LDAP_SEARCH_FILTER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_SEARCH_FILTER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_SEARCH_FILTER"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: (objectClass=person)</i>
@@ -390,7 +387,7 @@
                                     <td class="DataField">
                                        <div class="DataFieldInput"><input type="checkbox" id="CheckBox_LDAP_BIND" name="LDAP_BIND" value="true"
 										onclick="ToggleDependant('LDAP_BIND');" onchange="ToggleDependant('LDAP_BIND');"<?php if ($GLOBALS['Form_LDAP_BIND'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_LDAP_BIND"> Yes</label>
-                                          <span id="DataFieldInputExtra_LDAP_BIND"/>
+                                          <span id="DataFieldInputExtra_LDAP_BIND"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -411,12 +408,9 @@
                                                 <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                                    <tr>
                                                       <td class="DataField">
-                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_USER" name="LDAP_BIND_USER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_USER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_USER"/>
+                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_USER" name="LDAP_BIND_USER" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_USER']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_USER"> </span>
                                                          </div>
                                                       </td>
-                                                   </tr>
-                                                   <tr>
-                                                      <td class="Comment"/>
                                                    </tr>
                                                 </table>
                                              </td>
@@ -429,12 +423,9 @@
                                                 <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                                    <tr>
                                                       <td class="DataField">
-                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_PASSWORD" name="LDAP_BIND_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_PASSWORD"/>
+                                                         <div class="DataFieldInput"><input type="text" id="Input_LDAP_BIND_PASSWORD" name="LDAP_BIND_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_LDAP_BIND_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_LDAP_BIND_PASSWORD"> </span>
                                                          </div>
                                                       </td>
-                                                   </tr>
-                                                   <tr>
-                                                      <td class="Comment"/>
                                                    </tr>
                                                 </table>
                                              </td>
@@ -463,7 +454,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_HTTP" name="AUTH_HTTP" value="true"
 										onclick="ToggleDependant('AUTH_HTTP');" onchange="ToggleDependant('AUTH_HTTP');"<?php if ($GLOBALS['Form_AUTH_HTTP'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_HTTP"> Yes</label>
-                        <span id="DataFieldInputExtra_AUTH_HTTP"/>
+                        <span id="DataFieldInputExtra_AUTH_HTTP"> </span>
                      </div>
                   </td>
                </tr>
@@ -485,7 +476,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_HTTP_URL" name="AUTH_HTTP_URL" value="<?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_URL']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_HTTP_URL"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_HTTP_URL" name="AUTH_HTTP_URL" value="<?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_URL']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_HTTP_URL"> </span>
                                        </div>
                                        <div class="Example">
                                           <i>Example: http://localhost/customauth.php</i>
@@ -520,7 +511,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_BASEPATH" name="BASEPATH" value="<?php echo htmlentities($GLOBALS['Form_BASEPATH']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEPATH"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_BASEPATH" name="BASEPATH" value="<?php echo htmlentities($GLOBALS['Form_BASEPATH']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEPATH"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: /calendar/</i>
@@ -545,7 +536,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_BASEDOMAIN" name="BASEDOMAIN" value="<?php echo htmlentities($GLOBALS['Form_BASEDOMAIN']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEDOMAIN"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_BASEDOMAIN" name="BASEDOMAIN" value="<?php echo htmlentities($GLOBALS['Form_BASEDOMAIN']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEDOMAIN"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: localhost</i>
@@ -574,7 +565,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_BASEURL" name="BASEURL" value="<?php echo htmlentities($GLOBALS['Form_BASEURL']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEURL"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_BASEURL" name="BASEURL" value="<?php echo htmlentities($GLOBALS['Form_BASEURL']); ?>" size="60"/> <span id="DataFieldInputExtra_BASEURL"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: http://localhost/calendar/</i>
@@ -598,7 +589,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_SECUREBASEURL" name="SECUREBASEURL" value="<?php echo htmlentities($GLOBALS['Form_SECUREBASEURL']); ?>" size="60"/> <span id="DataFieldInputExtra_SECUREBASEURL"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_SECUREBASEURL" name="SECUREBASEURL" value="<?php echo htmlentities($GLOBALS['Form_SECUREBASEURL']); ?>" size="60"/> <span id="DataFieldInputExtra_SECUREBASEURL"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: https://localhost/calendar/</i>
@@ -628,7 +619,7 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_TIMEZONE_OFFSET" name="TIMEZONE_OFFSET" value="<?php echo htmlentities($GLOBALS['Form_TIMEZONE_OFFSET']); ?>" size="60"/> <span id="DataFieldInputExtra_TIMEZONE_OFFSET"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_TIMEZONE_OFFSET" name="TIMEZONE_OFFSET" value="<?php echo htmlentities($GLOBALS['Form_TIMEZONE_OFFSET']); ?>" size="60"/> <span id="DataFieldInputExtra_TIMEZONE_OFFSET"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: -5</i>
@@ -656,7 +647,7 @@
                            <option value="0" selected="selected">Sunday (0)</option>
                            <option value="1">Monday (1)</option>
                         </select>
-                        <span id="DataFieldInputExtra_WEEK_STARTING_DAY"/>
+                        <span id="DataFieldInputExtra_WEEK_STARTING_DAY"> </span>
                      </div>
                   </td>
                </tr>
@@ -678,7 +669,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_USE_AMPM" name="USE_AMPM" value="true"
 										<?php if ($GLOBALS['Form_USE_AMPM'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_USE_AMPM"> Yes</label>
-                        <span id="DataFieldInputExtra_USE_AMPM"/>
+                        <span id="DataFieldInputExtra_USE_AMPM"> </span>
                      </div>
                   </td>
                </tr>
@@ -708,7 +699,7 @@
                            <option value="LEFT">LEFT</option>
                            <option value="RIGHT" selected="selected">RIGHT</option>
                         </select>
-                        <span id="DataFieldInputExtra_COLUMNSIDE"/>
+                        <span id="DataFieldInputExtra_COLUMNSIDE"> </span>
                      </div>
                   </td>
                </tr>
@@ -731,7 +722,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_SHOW_UPCOMING_TAB" name="SHOW_UPCOMING_TAB" value="true"
 										onclick="ToggleDependant('SHOW_UPCOMING_TAB');" onchange="ToggleDependant('SHOW_UPCOMING_TAB');"<?php if ($GLOBALS['Form_SHOW_UPCOMING_TAB'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_SHOW_UPCOMING_TAB"> Yes</label>
-                        <span id="DataFieldInputExtra_SHOW_UPCOMING_TAB"/>
+                        <span id="DataFieldInputExtra_SHOW_UPCOMING_TAB"> </span>
                      </div>
                   </td>
                </tr>
@@ -751,7 +742,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_MAX_UPCOMING_EVENTS" name="MAX_UPCOMING_EVENTS" value="<?php echo htmlentities($GLOBALS['Form_MAX_UPCOMING_EVENTS']); ?>" size="60"/> <span id="DataFieldInputExtra_MAX_UPCOMING_EVENTS"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_MAX_UPCOMING_EVENTS" name="MAX_UPCOMING_EVENTS" value="<?php echo htmlentities($GLOBALS['Form_MAX_UPCOMING_EVENTS']); ?>" size="60"/> <span id="DataFieldInputExtra_MAX_UPCOMING_EVENTS"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -780,7 +771,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_SHOW_MONTH_OVERLAP" name="SHOW_MONTH_OVERLAP" value="true"
 										<?php if ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_SHOW_MONTH_OVERLAP"> Yes</label>
-                        <span id="DataFieldInputExtra_SHOW_MONTH_OVERLAP"/>
+                        <span id="DataFieldInputExtra_SHOW_MONTH_OVERLAP"> </span>
                      </div>
                   </td>
                </tr>
@@ -809,7 +800,7 @@
                   <td class="DataField">
                      <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_HTTP_CACHE" name="AUTH_HTTP_CACHE" value="true"
 										onclick="ToggleDependant('AUTH_HTTP_CACHE');" onchange="ToggleDependant('AUTH_HTTP_CACHE');"<?php if ($GLOBALS['Form_AUTH_HTTP_CACHE'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_HTTP_CACHE"> Yes</label>
-                        <span id="DataFieldInputExtra_AUTH_HTTP_CACHE"/>
+                        <span id="DataFieldInputExtra_AUTH_HTTP_CACHE"> </span>
                      </div>
                   </td>
                </tr>
@@ -830,7 +821,7 @@
                               <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                                  <tr>
                                     <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_HTTP_CACHE_EXPIRATIONDAYS" name="AUTH_HTTP_CACHE_EXPIRATIONDAYS" value="<?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_HTTP_CACHE_EXPIRATIONDAYS"/>
+                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_HTTP_CACHE_EXPIRATIONDAYS" name="AUTH_HTTP_CACHE_EXPIRATIONDAYS" value="<?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_HTTP_CACHE_EXPIRATIONDAYS"> </span>
                                        </div>
                                     </td>
                                  </tr>
@@ -857,13 +848,125 @@
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_MAX_CACHESIZE_CATEGORYNAME" name="MAX_CACHESIZE_CATEGORYNAME" value="<?php echo htmlentities($GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME']); ?>" size="60"/> <span id="DataFieldInputExtra_MAX_CACHESIZE_CATEGORYNAME"/>
+                     <div class="DataFieldInput"><input type="text" id="Input_MAX_CACHESIZE_CATEGORYNAME" name="MAX_CACHESIZE_CATEGORYNAME" value="<?php echo htmlentities($GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME']); ?>" size="60"/> <span id="DataFieldInputExtra_MAX_CACHESIZE_CATEGORYNAME"> </span>
                      </div>
                   </td>
                </tr>
                <tr>
                   <td class="Comment">
                      <div class="CommentLine">Cache the list of category names in memory if the calendar has less than or equal to this number.</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Cache 'Subscribe &amp; Download' ICS Files:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_CACHE_ICS" name="CACHE_ICS" value="true"
+										<?php if ($GLOBALS['Form_CACHE_ICS'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_CACHE_ICS"> Yes</label>
+                        <span id="DataFieldInputExtra_CACHE_ICS"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</div>
+                     <div class="CommentLine">To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category </div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>
+<h2>Export:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="text" id="Input_EXPORT_PATH" name="EXPORT_PATH" value="<?php echo htmlentities($GLOBALS['Form_EXPORT_PATH']); ?>" size="60"/> <span id="DataFieldInputExtra_EXPORT_PATH"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">The URL extension to the export script. Must NOT being with a slash (/).</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Maximum Exported Events:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="text" id="Input_MAX_EXPORT_EVENTS" name="MAX_EXPORT_EVENTS" value="<?php echo htmlentities($GLOBALS['Form_MAX_EXPORT_EVENTS']); ?>" size="60"/> <span id="DataFieldInputExtra_MAX_EXPORT_EVENTS"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">The maximum number of events that can be exported using the subscribe, download or export pages.</div>
+                     <div class="CommentLine">Calendar and main admins can export all data using the VTCalendar (XML) format.</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Export Data Lifetime (in minutes):</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="text" id="Input_EXPORT_CACHE_MINUTES" name="EXPORT_CACHE_MINUTES" value="<?php echo htmlentities($GLOBALS['Form_EXPORT_CACHE_MINUTES']); ?>" size="60"/> <span id="DataFieldInputExtra_EXPORT_CACHE_MINUTES"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">The number of minutes that a browser will be told to cache exported data.</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Allow Export in VTCalendar (XML) Format:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_PUBLIC_EXPORT_VTCALXML" name="PUBLIC_EXPORT_VTCALXML" value="true"
+										<?php if ($GLOBALS['Form_PUBLIC_EXPORT_VTCALXML'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_PUBLIC_EXPORT_VTCALXML"> Yes</label>
+                        <span id="DataFieldInputExtra_PUBLIC_EXPORT_VTCALXML"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.</div>
+                     <div class="CommentLine">However, users that are part of the admin sponsor, or are main admins, can always export in this format.</div>
                   </td>
                </tr>
             </table>

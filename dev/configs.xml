@@ -211,14 +211,14 @@
         </Config>
     </Section>
     <Section Label="Date/Time">
-    	<Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number" Required="true">
+    	<Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number">
             <Default>5</Default>
             <Example>-5</Example>
             <Comment>
                 <Line>Defines the offset to GMT, can be positive or negative</Line>
             </Comment>
         </Config>
-    	<Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number" Required="true">
+    	<Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number">
             <Default>0</Default>
     	    <Choices>
     	        <Choice Value="0">Sunday (0)</Choice>
@@ -255,7 +255,7 @@
                 <Line>Whether or not the upcoming tab will be shown.</Line>
             </Comment>
         	<Dependants>
-        		<Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number" Required="true">
+        		<Config Label="Max Upcoming Events" Variable="MAX_UPCOMING_EVENTS" Type="number">
         			<Default>75</Default>
         			<Comment>
         				<Line>The maximum number of upcoming events displayed.</Line>
@@ -280,7 +280,7 @@
     			<Line>This acts as a failover if the HTTP authentication fails due to a server error.</Line>
     		</Comment>
     		<Dependants>
-    			<Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number" Required="true">
+    			<Config Label="HTTP Authentication Cache Expiration" Variable="AUTH_HTTP_CACHE_EXPIRATIONDAYS" Type="number">
     				<Default>4</Default>
     				<Comment>
     					<Line>The number of days in which data in the HTTP authentication cache is valid.</Line>
@@ -288,13 +288,13 @@
     			</Config>
     		</Dependants>
     	</Config>
-    	<Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number" Required="true">
+    	<Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number">
             <Default>100</Default>
             <Comment>
                 <Line>Cache the list of category names in memory if the calendar has less than or equal to this number.</Line>
             </Comment>
     	</Config>
-    	<Config Label="Cache 'Subscribe &amp; Download' ICS Files" Variable="CACHE_ICS" Type="boolean" Required="true">
+    	<Config Label="Cache 'Subscribe &amp; Download' ICS Files" Variable="CACHE_ICS" Type="boolean">
     		<Default>false</Default>
     		<Comment>
     			<Line>When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</Line>
@@ -309,20 +309,20 @@
 				<Line>The URL extension to the export script. Must NOT being with a slash (/).</Line>
 			</Comment>
 		</Config>
-		<Config Label="Maximum Exported Events" Variable="MAX_EXPORT_EVENTS" Type="number" Required="true">
+		<Config Label="Maximum Exported Events" Variable="MAX_EXPORT_EVENTS" Type="number">
 			<Default>100</Default>
 			<Comment>
 				<Line>The maximum number of events that can be exported using the subscribe, download or export pages.</Line>
 				<Line>Calendar and main admins can export all data using the VTCalendar (XML) format.</Line>
 			</Comment>
 		</Config>
-		<Config Label="Export Data Lifetime (in minutes)" Variable="EXPORT_CACHE_MINUTES" Type="number" Required="true">
+		<Config Label="Export Data Lifetime (in minutes)" Variable="EXPORT_CACHE_MINUTES" Type="number">
 			<Default>5</Default>
 			<Comment>
 				<Line>The number of minutes that a browser will be told to cache exported data.</Line>
 			</Comment>
 		</Config>
-		<Config Label="Allow Export in VTCalendar (XML) Format" Variable="PUBLIC_EXPORT_VTCALXML" Type="boolean" Required="true">
+		<Config Label="Allow Export in VTCalendar (XML) Format" Variable="PUBLIC_EXPORT_VTCALXML" Type="boolean">
 			<Default>false</Default>
 			<Comment>
 				<Line>The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.</Line>

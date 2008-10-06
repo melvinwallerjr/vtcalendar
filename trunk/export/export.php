@@ -3,6 +3,9 @@
 set_time_limit(10);
 define("DOEXPORT", true);
 
+// Tell application.inc.php not to perform DB actions
+define("NOLOADDB", true);
+
 // Validate the user if the export is flagged as being an admin export.
 if (isset($_GET['adminexport']) || isset($_POST['adminexport'])) {
 	define("IS_ADMIN_EXPORT", true);
@@ -72,8 +75,8 @@ elseif (is_int($calendardata)) {
 }
 
 // If the calendar requires authentication to view, then exit.
-elseif ($calendardata['viewauthrequired'] != 0) {
-	outputErrorMessage("The '".$CalendarID."' calendar requires authentication to be viewed, so it cannot be used by the public export script.");
+elseif ($calendardata['viewauthrequired'] == '1') {
+	outputErrorMessage("The '".$CalendarID."' calendar requires authentication to be viewed, so it cannot be used by the export script.");
 }
 
 // ==========================================================

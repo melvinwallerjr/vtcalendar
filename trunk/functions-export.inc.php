@@ -252,9 +252,6 @@ function GenerateICal(&$result, $calendarID, $calendarName, $calendarurl, $timeb
 		$icalname = str_replace(array(" ","-","/"),"_",$calendarName);
 	}
 	
-	//Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"".$icalname.".ics\"");
-	//Header("Content-disposition: attachment; filename=".$icalname.".ics");
-	
 	$resultString .= getICalHeader();
 	
 	if (!is_string($result)) {

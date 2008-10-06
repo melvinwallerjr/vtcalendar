@@ -55,7 +55,7 @@ if ( isset($fbid) ) {
 			</dl>
 			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">Backup &amp; Restore:</h2>
 			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><a href="export.php"><?php echo lang('export_events'); ?></a></dt>
+				<dt><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>view=export"><?php echo lang('export_events'); ?></a></dt>
 				<dd>Export events to a file you can save on your computer as a backup, or to transfer to another calendar.</dd>
 				<dt><a href="import.php"><?php echo lang('import_events'); ?></a></dt>
 				<dd>Import an XML file that contains events as a batch.</dd>

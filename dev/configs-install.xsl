@@ -50,14 +50,19 @@
 														<xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
 													</xsl:choose>
 												</xsl:variable>
-												<xsl:choose>
-													<xsl:when test="$ChoiceValue = ../../Default/text()">
-														<option value="{$ChoiceValue}" selected="selected"><xsl:value-of select="text()"/></option>
-													</xsl:when>
-													<xsl:otherwise>
-														<option value="{$ChoiceValue}"><xsl:value-of select="text()"/></option>
-													</xsl:otherwise>
-												</xsl:choose>
+												<xsl:text disable-output-escaping="yes">&#13;&#10;&lt;option value="</xsl:text>
+												<xsl:call-template name="xml-escape-string">
+													<xsl:with-param name="text" select="$ChoiceValue"/>
+												</xsl:call-template>
+												<xsl:text disable-output-escaping="yes">" &lt;?php</xsl:text> if ($GLOBALS['Form_<xsl:value-of select="../../@Variable"/>'] == '<xsl:call-template name="escape-string">
+													<xsl:with-param name="text" select="$ChoiceValue"/>
+													<xsl:with-param name="characters">\'</xsl:with-param>
+													<xsl:with-param name="escape-character">\</xsl:with-param>
+												</xsl:call-template>') echo 'selected="selected"'; <xsl:text disable-output-escaping="yes">?&gt;&gt;</xsl:text>
+												<xsl:call-template name="xml-escape-string">
+													<xsl:with-param name="text" select="text()"/>
+												</xsl:call-template>
+												<xsl:text disable-output-escaping="yes">&lt;/option&gt;</xsl:text>
 											</xsl:for-each>
 										</select>
 									</xsl:when>

@@ -232,4 +232,10 @@ function lang($sTextKey) {
 function escapeJavaScriptString($string) {
 	return str_replace("\t", "\\t", str_replace("\r", "\\r", str_replace("\n", "\\n", str_replace("\"", "\\\"", str_replace("'", "\\'", str_replace("\\", "\\\\", $string))))));
 }
+
+if (!function_exists("html_entity_decode")) {
+	function html_entity_decode($string, $quote_style=NULL, $charset=NULL) {
+		return str_replace("&amp;", "&", str_replace("&lt;", "<", str_replace("&gt;", ">", str_replace("&quot;", '"', $string))));
+	}
+}
 ?>

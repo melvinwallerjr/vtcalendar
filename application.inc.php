@@ -30,10 +30,12 @@ if (AUTH_HTTP) {
                 Open the database connection
 ============================================================ */
 
-$DBCONNECTION =& DBOpen();
-if (is_string($DBCONNECTION)) {
-	include("dberror.php");
-	exit;
+if (!defined("NOLOADDB")) {
+	$DBCONNECTION =& DBOpen();
+	if (is_string($DBCONNECTION)) {
+		include("dberror.php");
+		exit;
+	}
 }
 
 /* ============================================================
@@ -64,7 +66,7 @@ if (!isset($_SESSION['CALENDAR_ID']) && !isset($calendarid)) {
 }
 
 // If the calendar ID was specified then load that calendar
-if (isset($calendarid)) { 
+if (isset($calendarid) && !defined("NOLOADDB")) { 
 	if (calendar_exists($calendarid)) { 
 		$_SESSION['CALENDAR_ID'] = $calendarid;
 		setCalendarPreferences();

@@ -12,12 +12,12 @@
 // =====================================
 
 // Config: Title Prefix
-// Added at the beginning of the <title> tag.
+// OPTIONAL. Added at the beginning of the <title> tag.
 if (!defined("TITLEPREFIX")) define("TITLEPREFIX", "");
 
 // Config: Title Suffix
 // Example: " - My University"
-// Added at the end of the <title> tag.
+// OPTIONAL. Added at the end of the <title> tag.
 if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 
 // Config: Language
@@ -37,7 +37,7 @@ if (!defined("DATABASE")) define("DATABASE", "");
 
 // Config: SQL Log File
 // Example: /var/log/vtcalendarsql.log
-// Put a name of a (folder and) file where the calendar logs every SQL query to the database.
+// OPTIONAL. Put a name of a (folder and) file where the calendar logs every SQL query to the database.
 // This is good for debugging but make sure you write into a file that's not readable by the webserver or else you may expose private information.
 // If left blank ("") no log will be kept. That's the default.
 if (!defined("SQLLOGFILE")) define("SQLLOGFILE", "");
@@ -57,13 +57,13 @@ if (!defined("AUTH_DB")) define("AUTH_DB", true);
 
 // Config: Prefix for Database Usernames
 // Example: db_
-// This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."
+// OPTIONAL. This prefix is used when creating/editing a local user-ID (in the DB "user" table), e.g. "calendar."
 // If you only use auth_db just leave it an empty string.
 // Its purpose is to avoid name-space conflicts with the users authenticated via LDAP or HTTP.
 if (!defined("AUTH_DB_USER_PREFIX")) define("AUTH_DB_USER_PREFIX", "");
 
 // Config: Database Authentication Notice
-// This displays a text (or nothing) on the Update tab behind the user user management options.
+// OPTIONAL. This displays a text (or nothing) on the Update tab behind the user user management options.
 // It could be used if you employ both, AUTH_DB and AUTH_LDAP at the same time to let users know that they should create local users only if they are not in the LDAP.
 if (!defined("AUTH_DB_NOTICE")) define("AUTH_DB_NOTICE", "");
 
@@ -92,19 +92,17 @@ if (!defined("LDAP_BASE_DN")) define("LDAP_BASE_DN", "");
 
 // Config: Additional LDAP Search Filter
 // Example: (objectClass=person)
-// An optional filter to add to the LDAP search.
+// OPTIONAL. A filter to add to the LDAP search.
 if (!defined("LDAP_SEARCH_FILTER")) define("LDAP_SEARCH_FILTER", "");
 
-// Config: LDAP Search Bind Username.
+// Config: LDAP Username
 // Before authenticating the user, we first check if the username exists.
 // If your LDAP server does not allow anonymous connections, specific a username here.
 // Leave this blank to connect anonymously.
 if (!defined("LDAP_BIND_USER")) define("LDAP_BIND_USER", "");
 
-// Config: LDAP Search Bind Password
-// Before authenticating the user, we first check if the username exists.
-// If your LDAP server does not allow anonymous connections, specific a password here.
-// Leave this blank to connect anonymously.
+// Config: LDAP Password
+// If you specified LDAP_BIND_USER you must also enter a password here.
 if (!defined("LDAP_BIND_PASSWORD")) define("LDAP_BIND_PASSWORD", "");
 
 // Config: HTTP Authentication
@@ -122,16 +120,16 @@ if (!defined("AUTH_HTTP_URL")) define("AUTH_HTTP_URL", "");
 // Cookies
 // =====================================
 
-// Config: Cookie Base URL
+// Config: Cookie Path
 // Example: /calendar/
-// If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's base URL.
+// OPTIONAL. If you are hosting more than one VTCalendar on your server, you may want to set this to this calendar's path.
 // Otherwise, the cookie will be submitted with a default path.
 // This must start and end with a forward slash (/), unless the it is exactly "/".
 if (!defined("BASEPATH")) define("BASEPATH", "");
 
 // Config: Cookie Host Name
 // Example: localhost
-// If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.
+// OPTIONAL. If you are hosting more than one VTCalendar on your server, you may want to set this to your server's host name.
 // Otherwise, the cookie will be submitted with a default host name.
 if (!defined("BASEDOMAIN")) define("BASEDOMAIN", "");
 
@@ -162,11 +160,12 @@ if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
 if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", 5);
 
 // Config: Week Starting Day
-// defines the week starting day - allowable values - 0 for "Sunday" or 1 for "Monday"
+// Defines the week starting day
+// Allowable values - 0 for "Sunday" or 1 for "Monday"
 if (!defined("WEEK_STARTING_DAY")) define("WEEK_STARTING_DAY", 0);
 
 // Config: Use AM/PM
-// defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)
+// Defines time format e.g. 1am-11pm (true) or 1:00-23:00 (false)
 if (!defined("USE_AMPM")) define("USE_AMPM", true);
 
 // =====================================
@@ -175,15 +174,16 @@ if (!defined("USE_AMPM")) define("USE_AMPM", true);
 
 // Config: Column Position
 // Which side the little calendar, 'jump to', 'today is', etc. will be on.
+// RIGHT is more user friendly for users with low resolutions.
 // Values must be LEFT or RIGHT.
-if (!defined("COLUMNSIDE")) define("COLUMNSIDE", 'LEFT');
+if (!defined("COLUMNSIDE")) define("COLUMNSIDE", 'RIGHT');
 
 // Config: Show Upcoming Tab
 // Whether or not the upcoming tab will be shown.
 if (!defined("SHOW_UPCOMING_TAB")) define("SHOW_UPCOMING_TAB", true);
 
 // Config: Max Upcoming Events
-// Whether or not the upcoming tab will be shown.
+// The maximum number of upcoming events displayed.
 if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 
 // Config: Show Month Overlap
@@ -209,15 +209,37 @@ if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATI
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
 if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
 
+// Config: Cache 'Subscribe & Download' ICS Files
+// When a lot of users subscribe to your calendar via the 'Subscribe & Download' page, this can put a heavy load on your server.
+// To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category 
+if (!defined("CACHE_ICS")) define("CACHE_ICS", false);
+
+// =====================================
+// Export
+// =====================================
+
+// Config: 
+// The URL extension to the export script. Must NOT being with a slash (/).
+if (!defined("EXPORT_PATH")) define("EXPORT_PATH", 'export/export.php');
+
+// Config: Maximum Exported Events
+// The maximum number of events that can be exported using the subscribe, download or export pages.
+// Calendar and main admins can export all data using the VTCalendar (XML) format.
+if (!defined("MAX_EXPORT_EVENTS")) define("MAX_EXPORT_EVENTS", 100);
+
+// Config: Export Data Lifetime (in minutes)
+// The number of minutes that a browser will be told to cache exported data.
+if (!defined("EXPORT_CACHE_MINUTES")) define("EXPORT_CACHE_MINUTES", 5);
+
+// Config: Allow Export in VTCalendar (XML) Format
+// The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.
+// However, users that are part of the admin sponsor, or are main admins, can always export in this format.
+if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);
+
 // END GENERATED
 
-// Config: Export URL Extension
-// The URL extension to the export script. Must NOT being with a slash (/).
-if (!defined("EXPORTURL")) define("EXPORTURL", 'export/export.php');
-
+// If 00:00 - 23:00 time format is used, appropriate day start/end hours will be used in datetime2timestamp functions where calculating day edges
 define("DAY_BEG_H", 0);
-
-// if 0:00 - 23:00 time format is used, appropriate day start/end hours will be used in datetime2timestamp functions where calculating day edges
 define("DAY_END_H", (USE_AMPM ? 11 : 23));
 
 // ---------- The following functions allow you to customize processing based on your database -------

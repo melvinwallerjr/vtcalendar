@@ -37,6 +37,11 @@ $Form_SHOW_MONTH_OVERLAP = true;
 $Form_AUTH_HTTP_CACHE = false;
 $Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = '4';
 $Form_MAX_CACHESIZE_CATEGORYNAME = '100';
+$Form_CACHE_ICS = false;
+$Form_EXPORT_PATH = 'export/export.php';
+$Form_MAX_EXPORT_EVENTS = '100';
+$Form_EXPORT_CACHE_MINUTES = '5';
+$Form_PUBLIC_EXPORT_VTCALXML = false;
 
 // Load Submitted Form Values
 if (isset($_POST['SaveConfig'])) {
@@ -87,6 +92,11 @@ if (isset($_POST['SaveConfig'])) {
 		$Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = $_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS'];
 	}
 	$Form_MAX_CACHESIZE_CATEGORYNAME = $_POST['MAX_CACHESIZE_CATEGORYNAME'];
+	$Form_CACHE_ICS = isset($_POST['CACHE_ICS']);
+	$Form_EXPORT_PATH = $_POST['EXPORT_PATH'];
+	$Form_MAX_EXPORT_EVENTS = $_POST['MAX_EXPORT_EVENTS'];
+	$Form_EXPORT_CACHE_MINUTES = $_POST['EXPORT_CACHE_MINUTES'];
+	$Form_PUBLIC_EXPORT_VTCALXML = isset($_POST['PUBLIC_EXPORT_VTCALXML']);
 }
 
 // Build Code for config.inc.php
@@ -293,6 +303,34 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Config: Max Category Name Cache Size'."\n";
 	$ConfigOutput .= '// Cache the list of category names in memory if the calendar has less than or equal to this number.'."\n";
 	$ConfigOutput .= 'define("MAX_CACHESIZE_CATEGORYNAME", \''. escapephpstring($GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME']) .'\');'."\n\n";
+
+	// Output Cache 'Subscribe & Download' ICS Files
+	$ConfigOutput .= '// Config: Cache \'Subscribe & Download\' ICS Files'."\n";
+	$ConfigOutput .= '// When a lot of users subscribe to your calendar via the \'Subscribe & Download\' page, this can put a heavy load on your server.'."\n";
+	$ConfigOutput .= '// To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category '."\n";
+	$ConfigOutput .= 'define("CACHE_ICS", ' . ($GLOBALS['Form_CACHE_ICS'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output 
+	$ConfigOutput .= '// Config: '."\n";
+	$ConfigOutput .= '// The URL extension to the export script. Must NOT being with a slash (/).'."\n";
+	$ConfigOutput .= 'define("EXPORT_PATH", \''. escapephpstring($GLOBALS['Form_EXPORT_PATH']) .'\');'."\n\n";
+
+	// Output Maximum Exported Events
+	$ConfigOutput .= '// Config: Maximum Exported Events'."\n";
+	$ConfigOutput .= '// The maximum number of events that can be exported using the subscribe, download or export pages.'."\n";
+	$ConfigOutput .= '// Calendar and main admins can export all data using the VTCalendar (XML) format.'."\n";
+	$ConfigOutput .= 'define("MAX_EXPORT_EVENTS", \''. escapephpstring($GLOBALS['Form_MAX_EXPORT_EVENTS']) .'\');'."\n\n";
+
+	// Output Export Data Lifetime (in minutes)
+	$ConfigOutput .= '// Config: Export Data Lifetime (in minutes)'."\n";
+	$ConfigOutput .= '// The number of minutes that a browser will be told to cache exported data.'."\n";
+	$ConfigOutput .= 'define("EXPORT_CACHE_MINUTES", \''. escapephpstring($GLOBALS['Form_EXPORT_CACHE_MINUTES']) .'\');'."\n\n";
+
+	// Output Allow Export in VTCalendar (XML) Format
+	$ConfigOutput .= '// Config: Allow Export in VTCalendar (XML) Format'."\n";
+	$ConfigOutput .= '// The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.'."\n";
+	$ConfigOutput .= '// However, users that are part of the admin sponsor, or are main admins, can always export in this format.'."\n";
+	$ConfigOutput .= 'define("PUBLIC_EXPORT_VTCALXML", ' . ($GLOBALS['Form_PUBLIC_EXPORT_VTCALXML'] ? 'true' : 'false') .');'."\n\n";
 
 }
 ?>

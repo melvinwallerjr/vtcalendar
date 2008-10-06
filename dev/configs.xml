@@ -302,4 +302,32 @@
     		</Comment>
     	</Config>
     </Section>
+	<Section Label="Export">
+		<Config Label="" Variable="EXPORT_PATH" Type="string" Required="true">
+			<Default>export/export.php</Default>
+			<Comment>
+				<Line>The URL extension to the export script. Must NOT being with a slash (/).</Line>
+			</Comment>
+		</Config>
+		<Config Label="Maximum Exported Events" Variable="MAX_EXPORT_EVENTS" Type="number" Required="true">
+			<Default>100</Default>
+			<Comment>
+				<Line>The maximum number of events that can be exported using the subscribe, download or export pages.</Line>
+				<Line>Calendar and main admins can export all data using the VTCalendar (XML) format.</Line>
+			</Comment>
+		</Config>
+		<Config Label="Export Data Lifetime (in minutes)" Variable="EXPORT_CACHE_MINUTES" Type="number" Required="true">
+			<Default>5</Default>
+			<Comment>
+				<Line>The number of minutes that a browser will be told to cache exported data.</Line>
+			</Comment>
+		</Config>
+		<Config Label="Allow Export in VTCalendar (XML) Format" Variable="PUBLIC_EXPORT_VTCALXML" Type="boolean" Required="true">
+			<Default>false</Default>
+			<Comment>
+				<Line>The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.</Line>
+				<Line>However, users that are part of the admin sponsor, or are main admins, can always export in this format.</Line>
+			</Comment>
+		</Config>
+	</Section>
 </Configs>

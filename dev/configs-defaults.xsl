@@ -13,38 +13,38 @@
         <xsl:text>// </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
         <xsl:text>// =====================================&#13;&#10;&#13;&#10;</xsl:text>
         
-        <xsl:apply-templates select="Config[not(@IsDefinition = 'false')]"/>
+        <xsl:apply-templates select="descendant::Config"/>
     </xsl:template>
     
     <xsl:template match="Config">
-        <xsl:text>// Config: </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
-        <xsl:if test="Example">
-            <xsl:text>// Example: </xsl:text><xsl:value-of select="Example/text()"/><xsl:text>&#13;&#10;</xsl:text>
-        </xsl:if>
-        
-        <xsl:for-each select="Comment/Line">
-            <xsl:text>// </xsl:text>
-            <xsl:value-of select="text()"/>
-            <xsl:text>&#13;&#10;</xsl:text>
-        </xsl:for-each>
-        
-        <xsl:text>if (!defined("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>")) define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
-        <xsl:choose>
-        	<xsl:when test="not(Default)">""</xsl:when>
-        	<xsl:when test="Default/@Internal"><xsl:value-of select="Default/@Internal"/></xsl:when>
-        	<xsl:when test="@Type='string'">
-        	    <xsl:text>'</xsl:text>
-        	    <xsl:call-template name="escape-string">
-        	        <xsl:with-param name="text" select="Default/text()"/>
-        	        <xsl:with-param name="characters">\'</xsl:with-param>
-        	        <xsl:with-param name="escape-character">\</xsl:with-param>
-        	    </xsl:call-template>
-        	    <xsl:text>'</xsl:text>
-        	</xsl:when>
-        	<xsl:otherwise><xsl:value-of select="Default/text()"/></xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>);&#13;&#10;&#13;&#10;</xsl:text>
-        
-        <xsl:apply-templates select="Dependants/Config[not(@IsDefinition = 'false')]"/>
+    	<xsl:if test="not(@IsDefinition = 'false')">
+	    	<xsl:text>// Config: </xsl:text><xsl:value-of select="@Label"/><xsl:text>&#13;&#10;</xsl:text>
+	        <xsl:if test="Example">
+	            <xsl:text>// Example: </xsl:text><xsl:value-of select="Example/text()"/><xsl:text>&#13;&#10;</xsl:text>
+	        </xsl:if>
+	        
+	        <xsl:for-each select="Comment/Line">
+	            <xsl:text>// </xsl:text>
+	            <xsl:value-of select="text()"/>
+	            <xsl:text>&#13;&#10;</xsl:text>
+	        </xsl:for-each>
+	        
+	        <xsl:text>if (!defined("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>")) define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
+	        <xsl:choose>
+	        	<xsl:when test="not(Default)">""</xsl:when>
+	        	<xsl:when test="Default/@Internal"><xsl:value-of select="Default/@Internal"/></xsl:when>
+	        	<xsl:when test="@Type='string'">
+	        	    <xsl:text>'</xsl:text>
+	        	    <xsl:call-template name="escape-string">
+	        	        <xsl:with-param name="text" select="Default/text()"/>
+	        	        <xsl:with-param name="characters">\'</xsl:with-param>
+	        	        <xsl:with-param name="escape-character">\</xsl:with-param>
+	        	    </xsl:call-template>
+	        	    <xsl:text>'</xsl:text>
+	        	</xsl:when>
+	        	<xsl:otherwise><xsl:value-of select="Default/text()"/></xsl:otherwise>
+	        </xsl:choose>
+	        <xsl:text>);&#13;&#10;&#13;&#10;</xsl:text>
+    	</xsl:if>
     </xsl:template>
 </xsl:stylesheet>

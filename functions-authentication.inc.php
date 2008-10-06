@@ -17,6 +17,9 @@ function checkoldpassword(&$user, $userid) {
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg="") {
 	global $lang, $eventid, $httpreferer, $authsponsorid;
+	
+	// Do not show the login if asked not to.
+	if (defined("HIDELOGIN")) return;
 
 	pageheader(lang('update_page_header'), "Update");
 	contentsection_begin(lang('login'));
@@ -66,6 +69,9 @@ function displaylogin($errormsg="") {
 function displaymultiplelogin($errorMessage="") {
 	global $lang, $eventid, $httpreferer, $authsponsorid;
 	
+	// Do not show the login if asked not to.
+	if (defined("HIDELOGIN")) return;
+
 	pageheader(lang('login'), "Update");
 	
 	contentsection_begin(lang('choose_sponsor_role'));
@@ -128,6 +134,9 @@ function displaymultiplelogin($errorMessage="") {
 } // end: function displaymultiplelogin
 
 function displaynotauthorized() {
+	// Do not show the login if asked not to.
+	if (defined("HIDELOGIN")) return;
+
 	pageheader(lang('login'), "Update");
 	contentsection_begin(lang('error_not_authorized'));
 	

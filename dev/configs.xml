@@ -25,7 +25,7 @@
         	<Example>mysql://vtcal:abc123@localhost/vtcalendar</Example>
             <Comment>
                 <Line>This is the database connection string used by the PEAR library.</Line>
-                <Line>It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</Line>
+                <Line>It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"</Line>
             </Comment>
     	</Config>
         <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">

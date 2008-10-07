@@ -20,7 +20,9 @@ if (file_exists(CONFIGFILENAME)) {
 	exit();
 }
 
-require_once("DB.php");
+// Include Pear::DB or output an error message if it does not exist.
+@(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
+
 require_once("config-code.php");
 require_once("../functions-io.inc.php");
 require_once("../functions-db-generic.inc.php");

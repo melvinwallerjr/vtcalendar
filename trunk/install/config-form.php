@@ -92,7 +92,7 @@
                <tr>
                   <td class="Comment">
                      <div class="CommentLine">This is the database connection string used by the PEAR library.</div>
-                     <div class="CommentLine">It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"</div>
+                     <div class="CommentLine">It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"</div>
                   </td>
                </tr>
             </table>

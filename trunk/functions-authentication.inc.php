@@ -408,7 +408,7 @@ function authorized() {
 					$record = $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 					$_SESSION["AUTH_SPONSORID"]= $authsponsorid;
 		 			$_SESSION["AUTH_SPONSORNAME"] = $record['name'];
-					$_SESSION['AUTH_ISCALENDARADMIN'] = $record["admin"] == 1;
+					$_SESSION['AUTH_ISCALENDARADMIN'] = $record['admin'] == 1;
 				}
 				$result->free();
 			}
@@ -451,7 +451,7 @@ function authorized() {
 					$_SESSION["AUTH_SPONSORID"]= $authorization['id'];
 		 			$_SESSION["AUTH_SPONSORNAME"] = $authorization['name'];
 		 			$_SESSION["AUTH_SPONSORCOUNT"] = 1;
-		 			$_SESSION['AUTH_ISCALENDARADMIN'] = $authorization["admin"] == 1;
+		 			$_SESSION['AUTH_ISCALENDARADMIN'] = $authorization['admin'] == 1;
 				}
 				
 				// If the user belongs to more than one sponsor, then display the form to select a sponsor.

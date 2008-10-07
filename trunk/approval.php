@@ -27,7 +27,7 @@ if (isset($approveallevents)) {
 			if (is_string($result)) { DBErrorBox($result); exit; }
 			
 			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC);
-			if ($event["approved"]==0) {
+			if ($event['approved']==0) {
 				//eventaddslashes($event);
 				if (!empty($event['repeatid'])) {
 					repeatpublicizeevent($eventid,$event);
@@ -52,7 +52,7 @@ elseif (isset($eventid)) {
 	
 	$event =& $result->fetchRow(DB_FETCHMODE_ASSOC);
 
-	if ($event["approved"]==0) {
+	if ($event['approved']==0) {
 
 		if (isset($approvethis)) {
 			// eventaddslashes($event);

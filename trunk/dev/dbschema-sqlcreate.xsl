@@ -5,7 +5,7 @@
 	<!-- Set to 'mysql' or 'postgresql' -->
 	<xsl:param name="DB">postgresql</xsl:param>
 	<xsl:param name="TablePrefix"></xsl:param>
-	<xsl:param name="DropTables"></xsl:param>
+	<xsl:param name="DropTables">true</xsl:param>
 	<xsl:variable name="IdentifierQuote">
 		<xsl:choose>
 			<xsl:when test="$DB='mysql'">`</xsl:when>
@@ -15,13 +15,16 @@
 	</xsl:variable>
 	
 	<xsl:template match="/">
+		<xsl:if test="$DropTables = 'true'">
+			<xsl:for-each select="DBSchema/Table">
+				<xsl:text>DROP TABLE </xsl:text><xsl:value-of select="$IdentifierQuote"/><xsl:value-of select="$TablePrefix"/><xsl:value-of select="@Name"/><xsl:value-of select="$IdentifierQuote"/><xsl:text>;&#10;&#10;</xsl:text>
+			</xsl:for-each>
+		</xsl:if>
+		
 		<xsl:apply-templates select="DBSchema/Table"/>
 	</xsl:template>
 	
 	<xsl:template match="Table">
-		<xsl:if test="$DropTables = 'true'">
-			<xsl:text>DROP TABLE </xsl:text><xsl:value-of select="$IdentifierQuote"/><xsl:value-of select="$TablePrefix"/><xsl:value-of select="@Name"/><xsl:value-of select="$IdentifierQuote"/><xsl:text>;&#10;&#10;</xsl:text>
-		</xsl:if>
 		<xsl:text>CREATE TABLE </xsl:text><xsl:value-of select="$IdentifierQuote"/><xsl:value-of select="$TablePrefix"/><xsl:value-of select="@Name"/><xsl:value-of select="$IdentifierQuote"/><xsl:text> (</xsl:text>
 		<xsl:choose>
 			<xsl:when test="$DB = 'mysql'">

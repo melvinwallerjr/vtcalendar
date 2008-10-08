@@ -32,7 +32,7 @@ if (!defined("LANGUAGE")) define("LANGUAGE", 'en');
 // Config: Database Connection String
 // Example: mysql://vtcal:abc123@localhost/vtcalendar
 // This is the database connection string used by the PEAR library.
-// It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"
+// It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"
 if (!defined("DATABASE")) define("DATABASE", "");
 
 // Config: SQL Log File

@@ -239,6 +239,10 @@ if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);
 
 // END GENERATED
 
+// Config: Version Check
+// Whether or not VTCalendar will check for a newer version when main admins log in.
+if (!defined("CHECKVERSION")) define("CHECKVERSION", true);
+
 // If 00:00 - 23:00 time format is used, appropriate day start/end hours will be used in datetime2timestamp functions where calculating day edges
 define("DAY_BEG_H", 0);
 define("DAY_END_H", (USE_AMPM ? 11 : 23));

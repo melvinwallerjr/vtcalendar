@@ -122,7 +122,7 @@ switch($FormData['format']) {
 	case "ical":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/calendar; charset=\"utf-8\"; name=\"export.ics\"");
 		if (!isset($_GET['raw'])) Header("Content-disposition: attachment; filename=export.ics");
-		echo GenerateICal($result, $CalendarID, $calendardata['name'] .": ".$calendardata['title'], BASEURL);
+		echo GenerateICal($result, $calendardata['name']);
 		break;
 	case "vxml":
 		if (!isset($_GET['raw'])) Header("Content-Type: text/xml");

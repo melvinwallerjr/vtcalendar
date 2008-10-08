@@ -238,19 +238,11 @@ function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl) {
 	return $resultString;
 }
 
-function GenerateICal(&$result, $calendarID, $calendarName, $calendarurl, $timebegin) {
+function GenerateICal(&$result, $calendarName) {
 	$resultString = "";
 	
 	$icalname = "calendar";
-	if ($categoryid != 0) {
-		if (!is_string($result) && $result->numRows() > 0) {
-			$event = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
-			$icalname = str_replace(array(" ","-","/"),"_",$event['category_name']);
-		}
-	}
-	else {
-		$icalname = str_replace(array(" ","-","/"),"_",$calendarName);
-	}
+	$icalname = preg_replace("/[^A-Za-z0-9_]/", "_", $calendarName);
 	
 	$resultString .= "BEGIN:VCALENDAR".CRLF;
 	$resultString .= "VERSION:2.0".CRLF;

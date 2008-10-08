@@ -252,7 +252,10 @@ function GenerateICal(&$result, $calendarID, $calendarName, $calendarurl, $timeb
 		$icalname = str_replace(array(" ","-","/"),"_",$calendarName);
 	}
 	
-	$resultString .= getICalHeader();
+	$resultString .= "BEGIN:VCALENDAR".CRLF;
+	$resultString .= "VERSION:2.0".CRLF;
+	$resultString .= "METHOD:PUBLISH".CRLF;
+	$resultString .= "PRODID:-//Virginia Tech//VTCalendar//EN".CRLF;
 	
 	if (!is_string($result)) {
 
@@ -263,12 +266,12 @@ function GenerateICal(&$result, $calendarID, $calendarName, $calendarurl, $timeb
 		
 		for ($i=0; $i < $result->numRows(); $i++) {
 			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-			$resultString .= getICalFormat($event);
+			$resultString .= GenerateICal4Event($event);
 		}
 		$result->free();
 	}
 	
-	$resultString .= getICalFooter();	
+	$resultString .= "END:VCALENDAR".CRLF;
 	
 	return $resultString;
 }
@@ -510,4 +513,95 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 	
 	return $resultString;
 }
+
+function FormatICalText($text) {
+	$ical = "";
+	$nl_at_nextspace = 0;
+	for ($i=0; $i < strlen($text); $i++) {
+		$c = substr($text, $i, 1);
+		if ($i>0 && $i/45==floor($i/45)) { $nl_at_nextspace = 1; }
+		if ($c==" " && $nl_at_nextspace) { $ical .= " ".CRLF." "; $nl_at_nextspace = 0; }
+		elseif ($c==chr(13)) { $ical .= "\\n".CRLF." "; $i++; }
+		else { $ical .= $c; }
+	}
+	
+	return $ical;
+} // end: FormatICalText
+
+function GenerateICal4Event(&$event) {
+	disassemble_timestamp($event);
+
+	$dtstart = date("Ymd\\THis", GetUTCTime(mktime(
+		intval($event['timebegin_ampm'] == "am" ? ($event['timebegin_hour'] == 12 ? 0 : $event['timebegin_hour']) : ($event['timebegin_hour'] == 12 ? $event['timebegin_hour'] : $event['timebegin_hour']+12)),
+		intval($event['timebegin_min']),
+		0,
+		intval($event['timebegin_month']),
+		intval($event['timebegin_day']),
+		intval($event['timebegin_year']))));
+
+	$dtend = date("Ymd\\THis", GetUTCTime(mktime(
+		intval($event['timeend_ampm'] == "am" ? ($event['timeend_hour'] == 12 ? 0 : $event['timeend_hour']) : ($event['timeend_hour'] == 12 ? $event['timeend_hour'] : $event['timeend_hour']+12)),
+		intval($event['timeend_min']),
+		0,
+		intval($event['timeend_month']),
+		intval($event['timeend_day']),
+		intval($event['timeend_year']))));
+
+	$ical = "BEGIN:VEVENT".CRLF;
+	$ical.= "DTSTAMP:".$dtstart."Z".CRLF;
+	$ical.= "UID:".$event['id']."@".$_SERVER["HTTP_HOST"].CRLF;
+	$ical.= "CATEGORIES:".$event['category_name'].CRLF;
+	if ($event['wholedayevent']==1) {
+		$ical.= "DTSTART;VALUE=DATE:".substr($dtstart,0,8).CRLF;
+		$ical.= "DTEND;VALUE=DATE:".substr($dtend,0,8).CRLF;
+	}
+	else {
+		$ical.= "DTSTART:".$dtstart."Z".CRLF;
+		$ical.= "DTEND:".$dtend."Z".CRLF;
+	}
+	$ical.= "SUMMARY:".$event['title'].CRLF;
+
+	$ical.= "DESCRIPTION:".CRLF." ";
+	if (!empty($event['description'])) {
+		$ical.= FormatICalText($event['description']);
+		$ical.= "\\n\\n".CRLF;
+	}
+	if (!empty($event['price'])) {
+		$ical.= " ".lang('price').": ";
+		$ical.= FormatICalText($event['price']);
+		$ical.= "\\n".CRLF;
+	}
+	if (!empty($event['sponsor_name'])) {
+		$ical.= " ".lang('sponsor').": ";
+		$ical.= FormatICalText($event['sponsor_name']);
+		$ical.= "\\n".CRLF;
+	}
+	if (!(empty($event['sponsor_url']) || $event['sponsor_url']=="http://")) {
+		$ical.= " ".lang('homepage')." ";
+		$ical.= FormatICalText($event['sponsor_url']);
+		$ical.= "\\n".CRLF;
+	}
+	if (!empty($event['contact_name'])) {
+		$ical.= " ".lang('contact').": ";
+		$ical.= FormatICalText($event['contact_name']);
+		$ical.= "\\n".CRLF;
+	}
+	if (!empty($event['contact_phone'])) {
+		$ical.= " ".lang('phone').": ";
+		$ical.= FormatICalText($event['contact_phone']);
+		$ical.= "\\n".CRLF;
+	}
+	if (!empty($event['contact_email'])) {
+		$ical.= " ".lang('email').": ";
+		$ical.= FormatICalText($event['contact_email']);
+		$ical.= "\\n".CRLF;
+	}
+
+	if (!empty($event['location'])) {
+		$ical.= "LOCATION:".$event['location'].CRLF;
+	}
+	$ical.= "END:VEVENT".CRLF;
+	
+	return $ical;
+} // end: function GenerateICal4Event
 ?>

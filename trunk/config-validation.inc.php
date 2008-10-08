@@ -36,7 +36,6 @@ if (!is_string(BASEDOMAIN)) exit('BASEDOMAIN must be a string.');
 if (!is_string(BASEURL)) exit('BASEURL must be a string.');
 if (BASEURL == '') exit('BASEURL cannot be an empty string.');
 if (!is_string(SECUREBASEURL)) exit('SECUREBASEURL must be a string.');
-if (!is_numeric(TIMEZONE_OFFSET)) exit('TIMEZONE_OFFSET must be an numeric.');
 if (!is_string(TIMEZONE)) exit('TIMEZONE must be a string.');
 if (!is_numeric(WEEK_STARTING_DAY)) exit('WEEK_STARTING_DAY must be an numeric.');
 if (!is_bool(USE_AMPM)) exit('USE_AMPM must be a boolean true or false. Make sure it is not enclosed in quotes.');

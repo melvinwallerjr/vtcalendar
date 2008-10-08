@@ -211,13 +211,6 @@
         </Config>
     </Section>
     <Section Label="Date/Time">
-    	<Config Label="Timezone Offset" Variable="TIMEZONE_OFFSET" Type="number">
-            <Default>5</Default>
-            <Example>-5</Example>
-            <Comment>
-                <Line>Defines the offset to GMT, can be positive or negative</Line>
-            </Comment>
-    	</Config>
     	<Config Label="Timezone" Variable="TIMEZONE" Type="string">
     		<Default></Default>
     		<Example>America/New_York</Example>

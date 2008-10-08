@@ -67,6 +67,8 @@ $lang['export_format_standard'] = 'Standard';
 $lang['export_format_advanced'] = 'Advanced';
 $lang['export_format_error'] = 'You must select an &quot;'.$lang['export_format'].'&quot;.';
 
+$lang['export_id_error'] = 'The event ID specified is not in the valid format.';
+
 $lang['export_maxevents'] = 'Maximum Events Returned';
 $lang['export_maxevents_description'] = 'To avoid excessively large output, you can specify the maximum number of events.';
 $lang['export_maxevents_error'] = 'You must enter a number between 1 and '.MAX_EXPORT_EVENTS.'.';
@@ -161,6 +163,8 @@ $lang['export_preview_raw_text'] = 'The window below shows the raw output for th
 if (isset($_GET['format'])) setVar($FormData['format'],$_GET['format'],'exportformat');
 if (isset($FormData['format']) && $FormData['format'] == "xml" && (!PUBLIC_EXPORT_VTCALXML && !ISCALADMIN)) unset($FormData['format']);
 if ((DOPREVIEW || defined("DOEXPORT")) && !isset($FormData['format'])) $FormErrors['format'] = lang('export_format_error');
+
+if (isset($_GET['id']) && !setVar($FormData['id'],$_GET['id'],'eventid')) $FormErrors['id'] = lang('export_id_error');
 
 // Output an error message if:
 // 1. Max Events is set but not a number greater than 1.

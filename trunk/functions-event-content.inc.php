@@ -100,12 +100,11 @@ function print_event($event, $linkfeatures=true) {
 							<?php
 							if (!empty($event['id'])) {
 								?>						
-								<a 
-									href="icalendar.php?eventid=<?php echo $event['id']; ?>"><img 
+								<a href="<?php echo EXPORT_PATH; ?>?calendarid=default&format=ical&id=<?php echo urlencode($event['id']); ?>"><img 
 									src="images/vcalendar.gif" width="20" height="20" border="0" align="absmiddle"></a>
-								<a href="icalendar.php?eventid=<?php echo $event['id']; ?>"><?php echo lang('copy_event_to_pda'); ?></a>
+								<a href="<?php echo EXPORT_PATH; ?>?calendarid=default&format=ical&id=<?php echo urlencode($event['id']); ?>"><?php echo lang('copy_event_to_pda'); ?></a>
 								<?php
-							} // end: if (!empty($event['id']))
+							}
 							?>
 					</div>
 					<?php

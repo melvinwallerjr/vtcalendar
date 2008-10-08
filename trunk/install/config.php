@@ -151,10 +151,6 @@ if (isset($_POST['SaveConfig'])) {
 		$FormErrors[count($FormErrors)] = "You must specify the Secure Calendar Base URL.";
 	}
 	
-	if (preg_match("/^(-?)[0-9]+$/", $Form_TIMEZONE_OFFSET) == 0) {
-		$FormErrors[count($FormErrors)] = "The timezone offset must be a positive or negative integer.";
-	}
-	
 	if ($Form_SHOW_UPCOMING_TAB && preg_match("/^[0-9]+$/", $Form_MAX_UPCOMING_EVENTS) == 0) {
 		$FormErrors[count($FormErrors)] = "The Max Upcoming Events must be an integer.";
 	}

@@ -227,48 +227,54 @@ function BuildExportQuery($CalendarID, &$FormData) {
 		." FROM vtcal_event_public e, vtcal_sponsor s, vtcal_category c"
 		." WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 	
-	// Filter by date.
-	if (isset($FormData['timebegin'])) {
-		if ($FormData['timebegin'] == "upcoming") {
-			$query .= " AND e.timeend > '" . sqlescape(NOW_AS_TEXT) ."' ";
-			$BeginTicks = NOW;
-		}
-		elseif ($FormData['timebegin'] == "today") {
-			$query .= " AND e.timebegin >= '" . sqlescape(substr(NOW_AS_TEXT, 0, 10))." 00:00:00' ";
-			$BeginTicks = NOW;
-		}
-		else {
-			$query .= " AND e.timebegin >= '" . sqlescape($FormData['timebegin']). " 00:00:00' ";
-			$BeginTicks = strtotime($FormData['timebegin']);
-		}
-		
-		if (isset($FormData['timeend'])) {
-			if (isValidInput($FormData['timeend'], 'int_gte1')) {
-				$query .= " AND e.timeend <= '" . sqlescape(date("Y-m-d", strtotime($FormData['timeend']." day", $BeginTicks))) . " 23:59:59' ";
+	// Ignore other filters if an ID was specified.
+	if (isset($FormData['id'])) {
+		$query .= " AND e.id='".sqlescape($FormData['id'])."' ";
+	}
+	else {
+		// Filter by date.
+		if (isset($FormData['timebegin'])) {
+			if ($FormData['timebegin'] == "upcoming") {
+				$query .= " AND e.timeend > '" . sqlescape(NOW_AS_TEXT) ."' ";
+				$BeginTicks = NOW;
+			}
+			elseif ($FormData['timebegin'] == "today") {
+				$query .= " AND e.timebegin >= '" . sqlescape(substr(NOW_AS_TEXT, 0, 10))." 00:00:00' ";
+				$BeginTicks = NOW;
 			}
 			else {
-				$query .= " AND e.timeend <= '" . sqlescape($FormData['timeend']). " 23:59:59' ";
+				$query .= " AND e.timebegin >= '" . sqlescape($FormData['timebegin']). " 00:00:00' ";
+				$BeginTicks = strtotime($FormData['timebegin']);
+			}
+			
+			if (isset($FormData['timeend'])) {
+				if (isValidInput($FormData['timeend'], 'int_gte1')) {
+					$query .= " AND e.timeend <= '" . sqlescape(date("Y-m-d", strtotime($FormData['timeend']." day", $BeginTicks))) . " 23:59:59' ";
+				}
+				else {
+					$query .= " AND e.timeend <= '" . sqlescape($FormData['timeend']). " 23:59:59' ";
+				}
 			}
 		}
-	}
-	
-	// Show only the specified categories.
-	if (isset($FormData['categories']) && count($FormData['categories']) > 0) {
-		$query .= " AND (";
-		for ($i = 0; $i < count($FormData['categories']); $i++) {
-			if ($i > 0) $query .= " OR ";
-			$query .= " e.categoryid = '".sqlescape($FormData['categories'][$i])."' ";
+		
+		// Show only the specified categories.
+		if (isset($FormData['categories']) && count($FormData['categories']) > 0) {
+			$query .= " AND (";
+			for ($i = 0; $i < count($FormData['categories']); $i++) {
+				if ($i > 0) $query .= " OR ";
+				$query .= " e.categoryid = '".sqlescape($FormData['categories'][$i])."' ";
+			}
+			$query .= ") ";
 		}
-		$query .= ") ";
-	}
+		
+		// Filter by the specified sponsor string, if one was specified.
+		if ($FormData['sponsor'] == "specific") {
+			$query .= " AND e.displayedsponsor LIKE '%" . sqlescape($FormData['specificsponsor']) . "%'";
+		}
 	
-	// Filter by the specified sponsor string, if one was specified.
-	if ($FormData['sponsor'] == "specific") {
-		$query .= " AND e.displayedsponsor LIKE '%" . sqlescape($FormData['specificsponsor']) . "%'";
+		// Order the query
+		$query .= " ORDER BY e.timebegin, e.title";
 	}
-	
-	// Order the query
-	$query .= " ORDER BY e.timebegin, e.title";
 	
 	// Append a LIMIT if a maximum number of events was specified.
 	if (isset($FormData['maxevents'])) $query .= ' LIMIT ' . $FormData['maxevents'];

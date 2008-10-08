@@ -154,11 +154,6 @@ if (!defined("SECUREBASEURL")) define("SECUREBASEURL", BASEURL);
 // Date/Time
 // =====================================
 
-// Config: Timezone Offset
-// Example: -5
-// Defines the offset to GMT, can be positive or negative
-if (!defined("TIMEZONE_OFFSET")) define("TIMEZONE_OFFSET", 5);
-
 // Config: Timezone
 // Example: America/New_York
 // The timezone in which the calendar will set the local time for. All new events, logs, etc will be affected by this setting.

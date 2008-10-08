@@ -613,29 +613,6 @@
    <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>Timezone Offset:</b>
-         </td>
-         <td class="VariableBody">
-            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-               <tr>
-                  <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_TIMEZONE_OFFSET" name="TIMEZONE_OFFSET" value="<?php echo htmlentities($GLOBALS['Form_TIMEZONE_OFFSET']); ?>" size="60"/> <span id="DataFieldInputExtra_TIMEZONE_OFFSET"> </span>
-                     </div>
-                     <div class="Example">
-                        <i>Example: -5</i>
-                     </div>
-                  </td>
-               </tr>
-               <tr>
-                  <td class="Comment">
-                     <div class="CommentLine">Defines the offset to GMT, can be positive or negative</div>
-                  </td>
-               </tr>
-            </table>
-         </td>
-      </tr>
-      <tr>
-         <td class="VariableName" nowrap="nowrap" valign="top">
             <b>Timezone:</b>
          </td>
          <td class="VariableBody">

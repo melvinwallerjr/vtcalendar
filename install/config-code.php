@@ -27,7 +27,6 @@ $Form_BASEPATH = '';
 $Form_BASEDOMAIN = '';
 $Form_BASEURL = '';
 $Form_SECUREBASEURL = '';
-$Form_TIMEZONE_OFFSET = '5';
 $Form_TIMEZONE = '';
 $Form_WEEK_STARTING_DAY = '0';
 $Form_USE_AMPM = true;
@@ -79,7 +78,6 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_BASEDOMAIN = $_POST['BASEDOMAIN'];
 	$Form_BASEURL = $_POST['BASEURL'];
 	$Form_SECUREBASEURL = $_POST['SECUREBASEURL'];
-	$Form_TIMEZONE_OFFSET = $_POST['TIMEZONE_OFFSET'];
 	$Form_TIMEZONE = $_POST['TIMEZONE'];
 	$Form_WEEK_STARTING_DAY = $_POST['WEEK_STARTING_DAY'];
 	$Form_USE_AMPM = isset($_POST['USE_AMPM']);
@@ -248,12 +246,6 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// If you are not using URL, set this to the same address as BASEURL.'."\n";
 	$ConfigOutput .= '// This MUST end with a slash "/"'."\n";
 	$ConfigOutput .= 'define("SECUREBASEURL", \''. escapephpstring($GLOBALS['Form_SECUREBASEURL']) .'\');'."\n\n";
-
-	// Output Timezone Offset
-	$ConfigOutput .= '// Config: Timezone Offset'."\n";
-	$ConfigOutput .= '// Example: -5'."\n";
-	$ConfigOutput .= '// Defines the offset to GMT, can be positive or negative'."\n";
-	$ConfigOutput .= 'define("TIMEZONE_OFFSET", \''. escapephpstring($GLOBALS['Form_TIMEZONE_OFFSET']) .'\');'."\n\n";
 
 	// Output Timezone
 	$ConfigOutput .= '// Config: Timezone'."\n";

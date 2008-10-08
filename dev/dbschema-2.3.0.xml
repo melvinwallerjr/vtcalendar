@@ -64,8 +64,8 @@
 	<Field Name="textcolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="linkcolor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="gridcolor" Type="text" NotNull="false" AutoIncrement="false"/>-->
-	<Field Name="viewauthrequired" Type="boolean" NotNull="false" AutoIncrement="false"/>
-	<Field Name="forwardeventdefault" Type="boolean" NotNull="true" AutoIncrement="false"/>
+	<Field Name="viewauthrequired" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
+	<Field Name="forwardeventdefault" Type="varchar(1)" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="id" SubPart=""/>
 	</PrimaryKey>
@@ -146,7 +146,7 @@
 	<Field Name="timeend" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="sponsorid" Type="int" NotNull="true" AutoIncrement="false"/>
 	<Field Name="title" Type="text" NotNull="true" AutoIncrement="false"/>
-	<Field Name="wholedayevent" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="wholedayevent" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="categoryid" Type="int" NotNull="false" AutoIncrement="false"/>
 	<Field Name="description" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="location" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
@@ -156,13 +156,13 @@
 	<Field Name="contact_email" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangedtime" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="recordchangeduser" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="approved" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="approved" Type="int" NotNull="false" AutoIncrement="false"/>
 	<Field Name="rejectreason" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="displayedsponsor" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="displayedsponsorurl" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="repeatid" Type="varchar(13)" NotNull="false" AutoIncrement="false"/>
-	<Field Name="showondefaultcal" Type="boolean" NotNull="false" AutoIncrement="false"/>
-	<Field Name="showincategory" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="showondefaultcal" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
+	<Field Name="showincategory" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="calendarid" SubPart=""/>
 		<KeyField Name="id" SubPart=""/>
@@ -176,7 +176,7 @@
 	<Field Name="timeend" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="sponsorid" Type="int" NotNull="true" AutoIncrement="false"/>
 	<Field Name="title" Type="text" NotNull="true" AutoIncrement="false"/>
-	<Field Name="wholedayevent" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="wholedayevent" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="categoryid" Type="int" NotNull="false" AutoIncrement="false"/>
 	<Field Name="description" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="location" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
@@ -280,7 +280,7 @@
 	<Field Name="name" Type="varchar(100)" NotNull="true" AutoIncrement="false"/>
 	<Field Name="url" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="email" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>
-	<Field Name="admin" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="admin" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="id" SubPart=""/>
 	</PrimaryKey>
@@ -295,7 +295,7 @@
 	<Field Name="name" Type="text" NotNull="true" AutoIncrement="false"/>
 	<Field Name="sponsorid" Type="int" NotNull="true" AutoIncrement="false"/>
 	<Field Name="title" Type="text" NotNull="true" AutoIncrement="false"/>
-	<Field Name="wholedayevent" Type="boolean" NotNull="false" AutoIncrement="false"/>
+	<Field Name="wholedayevent" Type="varchar(1)" NotNull="false" AutoIncrement="false"/>
 	<Field Name="categoryid" Type="int" NotNull="false" AutoIncrement="false"/>
 	<Field Name="description" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="location" Type="varchar(100)" NotNull="false" AutoIncrement="false"/>

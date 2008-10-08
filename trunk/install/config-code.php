@@ -124,7 +124,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Config: Database Connection String'."\n";
 	$ConfigOutput .= '// Example: mysql://vtcal:abc123@localhost/vtcalendar'."\n";
 	$ConfigOutput .= '// This is the database connection string used by the PEAR library.'."\n";
-	$ConfigOutput .= '// It has the format: "mysql://user:password@host/databasename" or "postgres://user:password@host/databasename"'."\n";
+	$ConfigOutput .= '// It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"'."\n";
 	$ConfigOutput .= 'define("DATABASE", \''. escapephpstring($GLOBALS['Form_DATABASE']) .'\');'."\n\n";
 
 	// Output SQL Log File

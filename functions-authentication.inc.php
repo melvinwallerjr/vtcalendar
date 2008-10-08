@@ -470,19 +470,8 @@ function authorized() {
 } // end: Function authorized()
 
 /**
- * Checks if a user is allowed to view the main calendar (main.php) or export data (export.php, icalendar.php).
- * 
- * TODO: Update this.
- * This is how the viewauthorized function executes:
- * 	1. If the userid and password are in the _POST, then set them (local scope only).
- * 	2a. If the calendar does not require authentication to view, then set that the user is allowed to view.
- * 	2b. If the userid and password is set...
- * 		A. If the username and password combo is valid then verify that the user has access to the calendar.
- * 		B. If the combo was bad or the user does not have access then output a message and set that the user is not allowed to view.
- * 	2c. If the user is already logged in then they should have access, so set that the user is allowed to view.
- * 	2d. Otherwise...
- * 		A. If the user is not using SSL, redirect them.
- * 		B. Show the login page.
+ * Checks if a user is allowed to view the main calendar (main.php) or export data (export/export.php).
+ * @return boolean true if the user is authorized; otherwise, false.
  */
 function viewauthorized() {
 	// Return true if the calendar does not require authorization.

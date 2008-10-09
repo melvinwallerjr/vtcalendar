@@ -144,21 +144,26 @@ if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=forums">Forums</a></li>
 			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=bugs">Report Bugs</a></li>
 		</ul>
-		<?php if (CHECKVERSION) { ?>
-			<!--[if lte IE 6]><style type="text/css">
-			.HideIE6 { display: none; }
-			</style><![endif]-->
-			<h2 class="HideIE6" style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">Version Check:&nbsp;</h2>
-			<div class="HideIE6" style="margin-top: 0; padding-top: 10px;" id="VersionResult"></div>
-			<script type="text/javascript"><!-- //<![CDATA[
-			function CheckVersionHandler(image, messageHTML, tableHTML) {
-				document.getElementById("VersionResult").innerHTML = tableHTML.replace('<br/>', '<br/><br/>');
-			}
-			if (!is_ie || is_ie7up) {
-				document.write('<iframe src="checkversion.php?width=250" width="1" height="1" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>');
-			}
-			// ]]> --></script>
-		<?php } ?>
+		
+		<style type="text/css">
+		#ReleaseNote {
+			padding-top: 4px;
+		}
+		#ReleaseMessage {
+			padding-bottom: 16px;
+		}
+		#PreReleaseNote {
+			padding-top: 8px;
+		}
+		</style>
+		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">Version Check:&nbsp;</h2>
+		<div style="margin-top: 0; padding-top: 10px;" id="VersionResult"></div>
+		<script type="text/javascript"><!-- //<![CDATA[
+		function CheckVersionHandler(image, messageHTML, tableHTML) {
+			document.getElementById("VersionResult").innerHTML = tableHTML;
+		}
+		// ]]> --></script>
+		<iframe src="checkversion.php" width="1" height="1" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
 	</td>
 	<?php
 }

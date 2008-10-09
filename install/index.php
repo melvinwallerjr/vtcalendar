@@ -6,6 +6,17 @@
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
 <link href="styles.css" type="text/css" rel="stylesheet" />
 <!--[if lt IE 7]><style type="text/css">.png { behavior: url(../scripts/iepngfix.htc); }</style><![endif]-->
+<style type="text/css">
+#ReleaseNote {
+	padding-top: 4px;
+}
+#ReleaseMessage {
+	padding-bottom: 16px;
+}
+#PreReleaseNote {
+	padding-top: 8px;
+}
+</style>
 </head>
 
 <body>
@@ -42,21 +53,17 @@
 	</blockquote>
 </blockquote>
 	
-<?php if (!isset($_SERVER['HTTPS'])) { ?>
-
 <h2>Version Check</h2>
 
 <blockquote>
 	<div id="VersionResult"></div>
 	<script type="text/javascript"><!-- //<![CDATA[
 	function CheckVersionHandler(image, messageHTML, tableHTML) {
-		document.getElementById("VersionResult").innerHTML = '<table border="0" cellpadding="0" cellspacing="0" border="0"><tr><td valign="top" style="padding-top: 4px; padding-right: 8px;"><img src="../'+image+'" class="png" width="32" height="32" alt=""/></td><td width="100%">'+messageHTML+'</td></tr></table>';
+		document.getElementById("VersionResult").innerHTML = tableHTML.replace(/src="/g, 'src="../'); //'<table border="0" cellpadding="0" cellspacing="0" border="0"><tr><td valign="top" style="padding-top: 4px; padding-right: 8px;"><img src="../'+image+'" class="png" width="32" height="32" alt=""/></td><td width="100%">'+messageHTML+'</td></tr></table>';
 	}	
 	// ]]> --></script>
 	<iframe src="../checkversion.php" width="1" height="1" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
 </blockquote>
-
-<?php } ?>
 
 </body>
 </html>

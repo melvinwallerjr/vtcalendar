@@ -139,7 +139,7 @@ if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">VTCalendar Community:&nbsp;</h2>
 		<p>The following are external links to various VTCalendar resources:</p>
 		<ul>
-			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=docs">Documentation &amp; Faq</a></li>
+			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=docs">Documentation</a></li>
 			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=vtcalendar-announce">New Release Mailing List</a></li>
 			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=forums">Forums</a></li>
 			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=bugs">Report Bugs</a></li>

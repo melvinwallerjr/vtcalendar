@@ -25,7 +25,8 @@ else {
 	$FUNCINCLUDE = array_flip(explode(' ', 'dates dates-generic inputvalidation db-generic db-gets export misc'));
 	require_once('../functions.inc.php');
 	
-	require_once('../languages/'.LANGUAGE.'.inc.php');
+	require_once('../languages/en.inc.php');
+	if (LANGUAGE != 'en') require_once('../languages/'.LANGUAGE.'.inc.php');
 	require_once('../constants.inc.php');
 }
 

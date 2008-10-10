@@ -2,6 +2,7 @@
 require_once('application.inc.php');
 
 $lang['no_managed_events'] = 'You have not submitted any events for the month of ';
+$lang['show_events_for'] = 'Show events for';
 
 if (!authorized()) { exit; }
 
@@ -36,7 +37,7 @@ else {
 	<form method="get" action="manageevents.php">
 		<table  border="0" cellspacing="0" cellpadding="2">
 				<tr>
-					<td>Show events for:</td>
+					<td><?php echo lang('show_events_for'); ?>:</td>
 					<td><select name="month">
 						<?php
 						for ($m = 1; $m <= 12; $m++) {

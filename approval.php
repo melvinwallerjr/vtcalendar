@@ -1,6 +1,8 @@
 <?php
 require_once('application.inc.php');
 
+$lang['no_events_for_approval'] = 'There are no events currently awaiting approval.';
+
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
@@ -101,7 +103,7 @@ else {
 	echo "<div>&nbsp;</div>";
 	
 	if ($result->numRows() == 0 ) {
-		echo "There are no events currently awaiting approval.";
+		echo lang('no_events_for_approval');
 	}
 	else {
 		?>

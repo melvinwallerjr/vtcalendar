@@ -206,7 +206,10 @@ function timestring($hour,$min,$ampm) {
 
 // returns true if the ending time is not 11:59pm (meaning: not specified)
 function endingtime_specified(&$event) {
-	return !($event['timeend_hour']==11 &&
+	return !(isset($event['timeend_hour']) &&
+		isset($event['timeend_min']) &&
+		isset($event['timeend_ampm']) && 
+		$event['timeend_hour']==11 &&
 		$event['timeend_min']==59 &&
 		$event['timeend_ampm']=="pm");
 }

@@ -13,7 +13,8 @@ require_once('config-colordefaults.inc.php');
 require_once('config-validation.inc.php');
 require_once('session_start.inc.php');
 require_once('functions.inc.php');
-require_once('languages/'.LANGUAGE.'.inc.php');
+require_once('languages/en.inc.php');
+if (LANGUAGE != 'en') require_once('languages/'.LANGUAGE.'.inc.php');
 require_once('constants.inc.php');
 
 if (AUTH_LDAP && !function_exists("ldap_connect")) {

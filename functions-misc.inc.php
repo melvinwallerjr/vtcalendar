@@ -217,10 +217,6 @@ function lang($sTextKey) {
 	global $lang;
 	
 	if (!isset($lang[$sTextKey])) {
-		require('languages/en.inc.php');
-	}
-	
-	if (!isset($lang[$sTextKey])) {
 		return "";
 	}
 	else {

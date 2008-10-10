@@ -35,16 +35,19 @@ function defaultevent(&$event,$sponsorid) {
 } /* function defaultevent */
 
 /* checks the validity of the time 1am-12pm or 0:00-23:00 */
-function checktime($hour,$min) {
-	 if (USE_AMPM){
-			return
-				 (($hour>0) && ($hour<=12)) &&
-				 (($min>=0) && ($min<=59));
-	 }else{
-		 return
-				 (($hour>=0) && ($hour<23)) &&
-				 (($min>=0) && ($min<=59));
-	 }
+function checktime(&$hour,&$min) {
+	if (!isset($hour) || !isset($min)) return false;
+	
+	if (USE_AMPM) {
+		return
+			(($hour>0) && ($hour<=12)) &&
+			(($min>=0) && ($min<=59));
+	}
+	else {
+		return
+				(($hour>=0) && ($hour<23)) &&
+				(($min>=0) && ($min<=59));
+	}
 }
 
 function checkeventdate(&$event,&$repeat) {

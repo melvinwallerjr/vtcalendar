@@ -21,9 +21,20 @@ $VariableErrors = array();
 LoadVariables();
 
 if (isset($save) && count($VariableErrors) == 0) {
-	$updateSQL = MakeColorUpdateSQL($_SESSION['CALENDAR_ID']);
-	$result =& DBQuery($updateSQL);
+	$result =& DBQuery("SELECT count(*) as reccount FROM vtcal_colors WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "'");
+	if (is_string($result)) { DBErrorBox($result); exit; }
 	
+	$count =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	if ($count['reccount'] == 0) {
+		$sql = MakeColorUpdateSQL($_SESSION['CALENDAR_ID'], 'insert');
+	}
+	else {
+		$sql = MakeColorUpdateSQL($_SESSION['CALENDAR_ID'], 'update');
+	}
+	
+	echo $sql;
+	
+	$result =& DBQuery($sql);
 	if (is_string($result)) { DBErrorBox($result); exit; }
 	
 	setCalendarPreferences();

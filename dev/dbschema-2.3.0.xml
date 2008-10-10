@@ -38,15 +38,15 @@
 </Table>
 
 <Table Name="vtcal_auth_httpcache">
-	<Field Name="ID" Type="varchar(50)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="PassHash" Type="varchar(75)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="CacheDate" Type="timestamp" NotNull="true" AutoIncrement="false"/>
+	<Field Name="id" Type="varchar(50)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="passhash" Type="varchar(75)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="cachedate" Type="timestamp" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>
-		<KeyField Name="ID" SubPart=""/>
+		<KeyField Name="id" SubPart=""/>
 	</PrimaryKey>
 	<Key Name="Index_ID_MD5" Unique="false">
-		<KeyField Name="ID" SubPart=""/>
-		<KeyField Name="PassHash" SubPart=""/>
+		<KeyField Name="id" SubPart=""/>
+		<KeyField Name="passhash" SubPart=""/>
 	</Key>
 </Table>
 
@@ -91,49 +91,49 @@
 
 <Table Name="vtcal_colors">
 	<Field Name="calendarid" Type="varchar(50)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Text" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Text_Faded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Text_Warning" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Link" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Body" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Today" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="TodayLight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Light_Cell_BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Table_Header_Text" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Table_Header_BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Border" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Keyword_Highlight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="H2" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="H3" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="Title" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="TabGrayed_BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="TabGrayed_Text" Type="varchar(7)" NotNull="false" AutoIncrement="false"/>
-	<Field Name="FilterNotice_BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="FilterNotice_Font" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="FilterNotice_FontFaded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="FilterNotice_BGImage" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="EventBar_Past" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="EventBar_Current" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="EventBar_Future" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="MonthDayLabels_Past" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="MonthDayLabels_Current" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="MonthDayLabels_Future" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="OtherMonth" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="LittleCal_Today" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="LittleCal_Highlight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="LittleCal_FontFaded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="LittleCal_Line" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="GOBtn_BG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="GOBtn_Border" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="NewBorder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="NewBG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="ApproveBorder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="ApproveBG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="CopyBorder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="CopyBG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="DeleteBorder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
-	<Field Name="DeleteBG" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="text" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="text_faded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="text_warning" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="link" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="body" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="today" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="todaylight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="light_cell_bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="table_header_text" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="table_header_bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="border" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="keyword_highlight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="h2" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="h3" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="title" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="tabgrayed_bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="tabgrayed_text" Type="varchar(7)" NotNull="false" AutoIncrement="false"/>
+	<Field Name="filternotice_bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="filternotice_font" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="filternotice_fontfaded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="filternotice_bgimage" Type="text" NotNull="true" AutoIncrement="false"/>
+	<Field Name="eventbar_past" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="eventbar_current" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="eventbar_future" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="monthdaylabels_past" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="monthdaylabels_current" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="monthdaylabels_future" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="othermonth" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="littlecal_today" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="littlecal_highlight" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="littlecal_fontfaded" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="littlecal_line" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="gobtn_bg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="gobtn_border" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="newborder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="newbg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="approveborder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="approvebg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="copyborder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="copybg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="deleteborder" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
+	<Field Name="deletebg" Type="varchar(7)" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="calendarid" SubPart=""/>
 	</PrimaryKey>

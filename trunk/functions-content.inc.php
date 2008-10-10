@@ -78,7 +78,7 @@ function pageheader($title, $navbaractive) {
 									echo ")";
 								}
 								?>&nbsp;<?php //echo lang('is_logged_on'); ?></td>
-							<td valign="bottom" class="NaviBar-Tab"><div><a href="logout.php">Logout</a></div></td>
+							<td valign="bottom" class="NaviBar-Tab"><div><a href="logout.php"><?php echo lang('logout'); ?></a></div></td>
 								<?php
 							}
 							else {

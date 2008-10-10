@@ -160,6 +160,7 @@ $lang['new_user'] = 'Create New User';
 
 $lang['dberror_generic'] = 'A database error was encountered';
 $lang['dberror_nosponsor'] = 'Error: The calendar does not seem to have any sponsors.';
+$lang['sponsor_twin_asterisk_note'] = 'Note: The sponsor marked with a ** is the administrative sponsor of this calendar';
 
 // Update interface
 $lang['choose_template'] = 'Choose template';

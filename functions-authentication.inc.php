@@ -122,7 +122,7 @@ function displaymultiplelogin($errorMessage="") {
 		echo "</ul>";
 		
 		if ($adminfound) {
-			?><p>Note: The sponsor marked with a ** is the administrative sponsor of this calendar..</p><?php
+			echo '<p>' . lang('sponsor_twin_asterisk_note') . '</p>';
 		}
 		
 		$result->free();

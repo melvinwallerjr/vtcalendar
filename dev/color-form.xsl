@@ -141,7 +141,7 @@
                     <xsl:value-of select="@Variable"/>
                     <xsl:text disable-output-escaping="yes"><![CDATA[" onClick="SetupColorPicker(']]></xsl:text>
                     <xsl:value-of select="@Variable"/>
-                    <xsl:text disable-output-escaping="yes"><![CDATA[')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_]]></xsl:text>
+                    <xsl:text disable-output-escaping="yes"><![CDATA[')" title="<?php echo lang('click_for_color_picker'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_border']; ?>; padding: 2px; background-color: <?php echo $GLOBALS['Color_]]></xsl:text>
                     <xsl:value-of select="@Variable"/>
                 	<xsl:text disable-output-escaping="yes"><![CDATA[']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</span> ]]></xsl:text>
                 </xsl:if>
@@ -166,7 +166,7 @@
             		<xsl:value-of select="@Variable"/>
             		<xsl:text disable-output-escaping="yes"><![CDATA[', '<?php echo DEFAULTCOLOR_]]></xsl:text>
             		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
-            		<xsl:text disable-output-escaping="yes"><![CDATA[; ?>')" title="<?php echo lang('reset_to_default_color'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_Border']; ?>; padding: 2px; background-color: <?php echo DEFAULTCOLOR_]]></xsl:text>
+            		<xsl:text disable-output-escaping="yes"><![CDATA[; ?>')" title="<?php echo lang('reset_to_default_color'); ?>" style="cursor: pointer; border: 1px solid <?php echo $GLOBALS['Color_border']; ?>; padding: 2px; background-color: <?php echo DEFAULTCOLOR_]]></xsl:text>
             		<xsl:value-of select="translate(@Variable, $Lower, $Upper)"/>
             		<xsl:text disable-output-escaping="yes"><![CDATA[; ?>">&nbsp;</span>) ]]></xsl:text>
             	</xsl:if>

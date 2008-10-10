@@ -190,16 +190,20 @@ DBclose();
 function passeventtimevalues($event,$repeat) {
 	$eventFields = explode(' ', 'timebegin_year timebegin_month timebegin_day timebegin_hour timebegin_min timebegin_ampm timeend_year timeend_month timeend_day timeend_hour timeend_min timeend_ampm repeatid');
 	foreach ($eventFields as $field) {
+		echo '<input type="hidden" name="event['.$field.']" value="';
 		if (isset($event[$field])) {
-			echo '<input type="hidden" name="event['.$field.']" value="',HTMLSpecialChars($event[$field]),"\">\n";
+			echo HTMLSpecialChars($event[$field]);
 		}
+		echo "\">\n";
 	}
 	
 	$repeatFields = explode(' ', 'mode interval1 frequency1 interval2 frequency2modifier1 frequency2modifier2');
 	foreach ($repeatFields as $field) {
+		echo '<input type="hidden" name="repeat['.$field.']" value="';
 		if (isset($repeat[$field])) {
-			echo '<input type="hidden" name="repeat['.$field.']" value="',HTMLSpecialChars($repeat[$field]),"\">\n";
+			echo HTMLSpecialChars($repeat[$field]);
 		}
+		echo "\">\n";
 	}
 }
 
@@ -208,9 +212,11 @@ function passeventvalues($event,$sponsorid,$repeat) {
 	
 	$fields = explode(' ', 'sponsorid title wholedayevent categoryid description location price contact_name contact_phone contact_email displayedsponsor displayedsponsorurl showondefaultcal showincategory');
 	foreach ($fields as $field) {
+		echo '<input type="hidden" name="event['.$field.']" value="';
 		if (isset($event[$field])) {
-			echo '<input type="hidden" name="event['.$field.']" value="',HTMLSpecialChars($event[$field]),"\">\n";
+			echo HTMLSpecialChars($event[$field]);
 		}
+		echo "\">\n";
 	}
 } // end: function passeventvalues
 ?>

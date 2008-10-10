@@ -180,7 +180,7 @@ function assemble_timestamp(&$event) {
 		$event['timebegin_ampm']);
 
 	// If event doesn't have an ending time, set it to the end of the day.
-	if ($event['timeend_hour']==0) {
+	if (!isset($event['timeend_hour']) || $event['timeend_hour']==0) {
 		$event['timeend_hour']=DAY_END_H;
 		$event['timeend_min']=59;
 		if(USE_AMPM)

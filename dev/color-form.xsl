@@ -198,9 +198,9 @@
 		<xsl:text>"&#13;&#10;</xsl:text>
 		<xsl:text>&#9;&#9;. ") VALUES ('" . sqlescape($calendarid) . "'"&#13;&#10;</xsl:text>
 		<xsl:for-each select="/Colors/Section/*[@Variable]">
-			<xsl:text>&#9;&#9;&#9;. ",'" . sqlescape($GLOBALS['Color_</xsl:text>
+			<xsl:text>&#9;&#9;&#9;. ",'" . sqlescape(strtoupper($GLOBALS['Color_</xsl:text>
 			<xsl:value-of select="@Variable"/>
-			<xsl:text>']) . "'"&#13;&#10;</xsl:text>	
+			<xsl:text>'])) . "'"&#13;&#10;</xsl:text>	
 		</xsl:for-each>
 		<xsl:text>&#9;&#9;. ")";&#13;&#10;</xsl:text>
 		<xsl:text>&#9;}&#13;&#10;</xsl:text>
@@ -212,9 +212,9 @@
 				<xsl:text>,</xsl:text>
 			</xsl:if>
 			<xsl:value-of select="@Variable"/>
-			<xsl:text> = '" . sqlescape($GLOBALS['Color_</xsl:text>
+			<xsl:text> = '" . sqlescape(strtoupper($GLOBALS['Color_</xsl:text>
 			<xsl:value-of select="@Variable"/>
-			<xsl:text>']) . "'"&#13;&#10;</xsl:text>	
+			<xsl:text>'])) . "'"&#13;&#10;</xsl:text>	
 		</xsl:for-each>
 		<xsl:text>&#9;&#9;&#9;." WHERE calendarid='" . sqlescape($calendarid) . "'";&#13;&#10;</xsl:text>
 		<xsl:text>&#9;}&#13;&#10;</xsl:text>

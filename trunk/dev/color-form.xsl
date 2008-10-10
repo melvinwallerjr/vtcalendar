@@ -105,16 +105,16 @@
     <xsl:template match="Section">
         <div class="FormSectionHeader">
             <h3 style="margin: 0; padding: 0;">
-                <xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities(lang('color_section_title_</xsl:text>
+                <xsl:text disable-output-escaping="yes">&lt;?php echo lang('color_section_title_</xsl:text>
                 <xsl:value-of select="translate(@Name, $Upper, $Lower)"/>
-                <xsl:text disable-output-escaping="yes">')); ?&gt;:</xsl:text>
+                <xsl:text disable-output-escaping="yes">'); ?&gt;:</xsl:text>
             </h3>
 
             <xsl:if test="string-length(Description/text()) &gt; 0">
                 <div style="padding: 2px; padding-left: 15px;">
-                    <xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities(lang('color_section_description_</xsl:text>
+                    <xsl:text disable-output-escaping="yes">&lt;?php echo lang('color_section_description_</xsl:text>
                     <xsl:value-of select="translate(@Name, $Upper, $Lower)"/>
-                    <xsl:text disable-output-escaping="yes">')); ?&gt;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">'); ?&gt;</xsl:text>
                 </div>
             </xsl:if>
         </div>
@@ -130,9 +130,9 @@
         <tr>
             <td>
                 <b>
-                    <xsl:text disable-output-escaping="yes">&lt;?php echo htmlentities(lang('color_label_</xsl:text>
+                    <xsl:text disable-output-escaping="yes">&lt;?php echo lang('color_label_</xsl:text>
                     <xsl:value-of select="translate(@Variable, $Upper, $Lower)"/>
-                    <xsl:text disable-output-escaping="yes">')); ?&gt;:</xsl:text>
+                    <xsl:text disable-output-escaping="yes">'); ?&gt;:</xsl:text>
                 </b>
             </td>
             <td>
@@ -156,9 +156,9 @@
             	<xsl:text disable-output-escaping="yes"><![CDATA[')"> ]]></xsl:text>
             	
                 <xsl:if test="string-length(text()) &gt; 0">
-                	<xsl:text disable-output-escaping="yes"> &lt;?php echo htmlentities(lang('color_description_</xsl:text>
+                	<xsl:text disable-output-escaping="yes"> &lt;?php echo lang('color_description_</xsl:text>
                     <xsl:value-of select="translate(@Variable, $Upper, $Lower)"/>
-                    <xsl:text disable-output-escaping="yes">')); ?&gt;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">'); ?&gt;</xsl:text>
                 </xsl:if>
             	
             	<xsl:if test="self::Color">
@@ -187,33 +187,38 @@
     </xsl:template>
 	
 	<xsl:template name="SQL">
-		<xsl:text>function MakeColorUpdateSQL($calendarid) {&#13;&#10;</xsl:text>
-		<xsl:text>&#9;$sql = "INSERT INTO vtcal_colors (calendarid";&#13;&#10;</xsl:text>
-		<xsl:text>&#9;$sql .= "</xsl:text>
+		<xsl:text>function MakeColorUpdateSQL($calendarid, $type) {&#13;&#10;</xsl:text>
+		<xsl:text>&#9;if ($type == 'insert') {&#13;&#10;</xsl:text>
+		<xsl:text>&#9;&#9;return "INSERT INTO vtcal_colors (calendarid"&#13;&#10;</xsl:text>
+		<xsl:text>&#9;&#9;&#9;. "</xsl:text>
 		<xsl:for-each select="/Colors/Section/*[@Variable]">
 			<xsl:text>, </xsl:text>
 			<xsl:value-of select="@Variable"/>
 		</xsl:for-each>
-		<xsl:text>";&#13;&#10;</xsl:text>
-		<xsl:text>&#9;$sql .= ") VALUES ('" . sqlescape($calendarid) . "'";&#13;&#10;</xsl:text>
+		<xsl:text>"&#13;&#10;</xsl:text>
+		<xsl:text>&#9;&#9;. ") VALUES ('" . sqlescape($calendarid) . "'"&#13;&#10;</xsl:text>
 		<xsl:for-each select="/Colors/Section/*[@Variable]">
-			<xsl:text>&#9;&#9;$sql .= ",'" . sqlescape($GLOBALS['Color_</xsl:text>
+			<xsl:text>&#9;&#9;&#9;. ",'" . sqlescape($GLOBALS['Color_</xsl:text>
 			<xsl:value-of select="@Variable"/>
-			<xsl:text>']) . "'";&#13;&#10;</xsl:text>	
+			<xsl:text>']) . "'"&#13;&#10;</xsl:text>	
 		</xsl:for-each>
-		<xsl:text>&#9;$sql .= ") ON DUPLICATE KEY UPDATE ";&#13;&#10;</xsl:text>
+		<xsl:text>&#9;&#9;. ")";&#13;&#10;</xsl:text>
+		<xsl:text>&#9;}&#13;&#10;</xsl:text>
+		<xsl:text>&#9;else {&#13;&#10;</xsl:text>
+		<xsl:text>&#9;&#9;return "UPDATE vtcal_colors SET "&#13;&#10;</xsl:text>
 		<xsl:for-each select="/Colors/Section/*[@Variable]">
-			<xsl:text>&#9;&#9;$sql .= "</xsl:text>
+			<xsl:text>&#9;&#9;&#9;. "</xsl:text>
 			<xsl:if test="position() &gt; 1">
 				<xsl:text>,</xsl:text>
 			</xsl:if>
 			<xsl:value-of select="@Variable"/>
 			<xsl:text> = '" . sqlescape($GLOBALS['Color_</xsl:text>
 			<xsl:value-of select="@Variable"/>
-			<xsl:text>']) . "'";&#13;&#10;</xsl:text>	
+			<xsl:text>']) . "'"&#13;&#10;</xsl:text>	
 		</xsl:for-each>
+		<xsl:text>&#9;&#9;&#9;." WHERE calendarid='" . sqlescape($calendarid) . "'";&#13;&#10;</xsl:text>
+		<xsl:text>&#9;}&#13;&#10;</xsl:text>
 		
-		<xsl:text>&#9;return $sql;&#13;&#10;</xsl:text>
 		<xsl:text>}&#13;&#10;</xsl:text>
 	</xsl:template>
 </xsl:stylesheet>

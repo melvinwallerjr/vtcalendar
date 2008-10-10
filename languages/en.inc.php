@@ -131,13 +131,7 @@ $lang['select_categories'] = 'Select the event categories you would like events 
 $lang['select_unselect'] = 'Select/Unselect All';
 $lang['apply_filter'] = 'Apply Filter';
 
-//update view
-$lang['update_page_header'] = 'Login';
-$lang['login'] = 'Login';
-$lang['user_id'] = 'User-ID';
-$lang['password']='Password:';
-$lang['new_user'] = 'Create New User';
-
+// Subscribe & Download View
 $lang['subscribe'] = 'Subscribe';
 $lang['download'] = 'Download';
 $lang['copy_event_to_pda'] = 'copy this event into your personal desktop calendar';
@@ -156,6 +150,13 @@ $lang['whole_calendar'] = 'Entire calendar';
 $lang['rss_feed_title'] = 'Next 25 Upcoming Events';
 
 // ================================== Login-protected interface =====================================
+
+// Login Screen
+$lang['update_page_header'] = 'Login';
+$lang['login'] = 'Login';
+$lang['user_id'] = 'User-ID';
+$lang['password']='Password:';
+$lang['new_user'] = 'Create New User';
 
 $lang['dberror_generic'] = 'A database error was encountered';
 $lang['dberror_nosponsor'] = 'Error: The calendar does not seem to have any sponsors.';

@@ -34,8 +34,6 @@ $Form_COLUMNSIDE = 'RIGHT';
 $Form_SHOW_UPCOMING_TAB = true;
 $Form_MAX_UPCOMING_EVENTS = '75';
 $Form_SHOW_MONTH_OVERLAP = true;
-$Form_AUTH_HTTP_CACHE = false;
-$Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = '4';
 $Form_MAX_CACHESIZE_CATEGORYNAME = '100';
 $Form_CACHE_ICS = false;
 $Form_EXPORT_PATH = 'export/export.php';
@@ -87,10 +85,6 @@ if (isset($_POST['SaveConfig'])) {
 		$Form_MAX_UPCOMING_EVENTS = $_POST['MAX_UPCOMING_EVENTS'];
 	}
 	$Form_SHOW_MONTH_OVERLAP = isset($_POST['SHOW_MONTH_OVERLAP']);
-	$Form_AUTH_HTTP_CACHE = isset($_POST['AUTH_HTTP_CACHE']);
-	if ($Form_AUTH_HTTP_CACHE) {
-		$Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS = $_POST['AUTH_HTTP_CACHE_EXPIRATIONDAYS'];
-	}
 	$Form_MAX_CACHESIZE_CATEGORYNAME = $_POST['MAX_CACHESIZE_CATEGORYNAME'];
 	$Form_CACHE_ICS = isset($_POST['CACHE_ICS']);
 	$Form_EXPORT_PATH = $_POST['EXPORT_PATH'];
@@ -288,17 +282,6 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.'."\n";
 	$ConfigOutput .= '// Values must be true or false.'."\n";
 	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] ? 'true' : 'false') .');'."\n\n";
-
-	// Output HTTP Authentication Cache
-	$ConfigOutput .= '// Config: HTTP Authentication Cache'."\n";
-	$ConfigOutput .= '// Cache successful HTTP authentication attempts as hashes in DB.'."\n";
-	$ConfigOutput .= '// This acts as a failover if the HTTP authentication fails due to a server error.'."\n";
-	$ConfigOutput .= 'define("AUTH_HTTP_CACHE", ' . ($GLOBALS['Form_AUTH_HTTP_CACHE'] ? 'true' : 'false') .');'."\n\n";
-
-	// Output HTTP Authentication Cache Expiration
-	$ConfigOutput .= '// Config: HTTP Authentication Cache Expiration'."\n";
-	$ConfigOutput .= '// The number of days in which data in the HTTP authentication cache is valid.'."\n";
-	$ConfigOutput .= 'define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", \''. escapephpstring($GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS']) .'\');'."\n\n";
 
 	// Output Max Category Name Cache Size
 	$ConfigOutput .= '// Config: Max Category Name Cache Size'."\n";

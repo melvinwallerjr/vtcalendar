@@ -197,15 +197,6 @@ if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 // Cache
 // =====================================
 
-// Config: HTTP Authentication Cache
-// Cache successful HTTP authentication attempts as hashes in DB.
-// This acts as a failover if the HTTP authentication fails due to a server error.
-if (!defined("AUTH_HTTP_CACHE")) define("AUTH_HTTP_CACHE", false);
-
-// Config: HTTP Authentication Cache Expiration
-// The number of days in which data in the HTTP authentication cache is valid.
-if (!defined("AUTH_HTTP_CACHE_EXPIRATIONDAYS")) define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
-
 // Config: Max Category Name Cache Size
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
 if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
@@ -238,6 +229,10 @@ if (!defined("EXPORT_CACHE_MINUTES")) define("EXPORT_CACHE_MINUTES", 5);
 if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);
 
 // END GENERATED
+
+// TODO: Disabled feature.
+define("AUTH_HTTP_CACHE", false);
+define("AUTH_HTTP_CACHE_EXPIRATIONDAYS", 4);
 
 // Config: Version Check
 // Whether or not VTCalendar will check for a newer version when main admins log in.

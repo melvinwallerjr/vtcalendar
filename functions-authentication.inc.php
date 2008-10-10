@@ -263,14 +263,14 @@ function userauthenticated($userid, $password) {
 				
 				if (AUTH_HTTP_CACHE) {
 					$passhash = crypt($password);
-					DBQuery( "INSERT INTO vtcal_auth_httpcache (ID, PassHash, CacheDate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE PassHash='".sqlescape($passhash)."', CacheDate=Now()" );
+					DBQuery( "INSERT INTO vtcal_auth_httpcache (id, passhash, cachedate) VALUES ('".sqlescape($userid)."', '".sqlescape($passhash)."', Now()) ON DUPLICATE KEY UPDATE passhash='".sqlescape($passhash)."', cachedate=Now()" );
 				}
 				
 				$returnValue = true;
 			}
 			else {
 				if (AUTH_HTTP_CACHE) {
-					$result =& DBQuery( "SELECT PassHash FROM vtcal_auth_httpcache WHERE ID = '".sqlescape($userid)."' AND DateDiff(CacheDate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
+					$result =& DBQuery( "SELECT passhash FROM vtcal_auth_httpcache WHERE id = '".sqlescape($userid)."' AND DateDiff(cachedate, Now()) > -".AUTH_HTTP_CACHE_EXPIRATIONDAYS);
 					
 					if (is_string($result)) {
 						$returnValue = lang('dberror_generic') . ": " . $result;

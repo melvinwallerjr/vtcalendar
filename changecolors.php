@@ -32,15 +32,13 @@ if (isset($save) && count($VariableErrors) == 0) {
 		$sql = MakeColorUpdateSQL($_SESSION['CALENDAR_ID'], 'update');
 	}
 	
-	echo $sql;
-	
 	$result =& DBQuery($sql);
 	if (is_string($result)) { DBErrorBox($result); exit; }
 	
 	setCalendarPreferences();
 	
-	//redirect2URL("update.php");
-	//exit;
+	redirect2URL("update.php");
+	exit;
 }
 
 pageheader(lang('change_colors'), "Update");

@@ -834,7 +834,7 @@
         </Config>
     </Section>
     <Section Label="Cache">
-    	<Config Label="HTTP Authentication Cache" Variable="AUTH_HTTP_CACHE" Type="boolean">
+    	<!--<Config Label="HTTP Authentication Cache" Variable="AUTH_HTTP_CACHE" Type="boolean">
     		<Default>false</Default>
     		<Comment>
     			<Line>Cache successful HTTP authentication attempts as hashes in DB.</Line>
@@ -848,7 +848,7 @@
     				</Comment>
     			</Config>
     		</Dependants>
-    	</Config>
+    	</Config>-->
     	<Config Label="Max Category Name Cache Size" Variable="MAX_CACHESIZE_CATEGORYNAME" Type="number">
             <Default>100</Default>
             <Comment>

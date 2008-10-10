@@ -155,9 +155,10 @@ if (isset($_POST['SaveConfig'])) {
 		$FormErrors[count($FormErrors)] = "The Max Upcoming Events must be an integer.";
 	}
 	
-	if ($Form_AUTH_HTTP_CACHE && preg_match("/^[0-9]+$/", $Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS) == 0) {
+	// TODO: Disabled feature.
+	/*if ($Form_AUTH_HTTP_CACHE && preg_match("/^[0-9]+$/", $Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS) == 0) {
 		$FormErrors[count($FormErrors)] = "The HTTP Authentication Cache Expiration must be an integer.";
-	}
+	}*/
 	
 	if (preg_match("/^[0-9]+$/", $Form_MAX_CACHESIZE_CATEGORYNAME) == 0) {
 		$FormErrors[count($FormErrors)] = "The Max Category Name Cache Size must be an integer.";

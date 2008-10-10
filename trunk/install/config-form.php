@@ -1350,56 +1350,6 @@
    <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>HTTP Authentication Cache:</b>
-         </td>
-         <td class="VariableBody">
-            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-               <tr>
-                  <td class="DataField">
-                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_AUTH_HTTP_CACHE" name="AUTH_HTTP_CACHE" value="true"
-										onclick="ToggleDependant('AUTH_HTTP_CACHE');" onchange="ToggleDependant('AUTH_HTTP_CACHE');"<?php if ($GLOBALS['Form_AUTH_HTTP_CACHE'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_AUTH_HTTP_CACHE"> Yes</label>
-                        <span id="DataFieldInputExtra_AUTH_HTTP_CACHE"> </span>
-                     </div>
-                  </td>
-               </tr>
-               <tr>
-                  <td class="Comment">
-                     <div class="CommentLine">Cache successful HTTP authentication attempts as hashes in DB.</div>
-                     <div class="CommentLine">This acts as a failover if the HTTP authentication fails due to a server error.</div>
-                  </td>
-               </tr>
-               <tr id="Dependants_AUTH_HTTP_CACHE">
-                  <td>
-                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
-                        <tr>
-                           <td class="VariableName" nowrap="nowrap" valign="top">
-                              <b>HTTP Authentication Cache Expiration:</b>
-                           </td>
-                           <td class="VariableBody">
-                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
-                                 <tr>
-                                    <td class="DataField">
-                                       <div class="DataFieldInput"><input type="text" id="Input_AUTH_HTTP_CACHE_EXPIRATIONDAYS" name="AUTH_HTTP_CACHE_EXPIRATIONDAYS" value="<?php echo htmlentities($GLOBALS['Form_AUTH_HTTP_CACHE_EXPIRATIONDAYS']); ?>" size="60"/> <span id="DataFieldInputExtra_AUTH_HTTP_CACHE_EXPIRATIONDAYS"> </span>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td class="Comment">
-                                       <div class="CommentLine">The number of days in which data in the HTTP authentication cache is valid.</div>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
-                     </table>
-                     <script type="text/javascript">ToggleDependant('AUTH_HTTP_CACHE');</script>
-                  </td>
-               </tr>
-            </table>
-         </td>
-      </tr>
-      <tr>
-         <td class="VariableName" nowrap="nowrap" valign="top">
             <b>Max Category Name Cache Size:</b>
          </td>
          <td class="VariableBody">

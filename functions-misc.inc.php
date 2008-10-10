@@ -220,6 +220,17 @@ function lang($sTextKey) {
 		return "";
 	}
 	else {
+		// Debug code that reverses case so inline text (aka: text not using lang()) can easily be located.
+		/*$finalstr = "";
+		for ($i=0; $i < strlen($lang[$sTextKey]); $i++) {
+			if (strtolower(substr($lang[$sTextKey], $i, 1)) === substr($lang[$sTextKey], $i, 1)) {
+				$finalstr .= strtoupper(substr($lang[$sTextKey], $i, 1));
+			}
+			else {
+				$finalstr .= strtolower(substr($lang[$sTextKey], $i, 1));
+			}
+		}
+		return $finalstr;*/
 		return $lang[$sTextKey];
 	}
 }

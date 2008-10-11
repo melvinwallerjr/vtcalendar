@@ -91,11 +91,24 @@
 			</xsl:call-template>
 			
 			<xsl:text>'."\n";&#13;&#10;</xsl:text>
+			
 			<xsl:if test="Example">
 				<xsl:value-of select="$Tab"/><xsl:text>$ConfigOutput .= '// Example: </xsl:text>
 				
 				<xsl:call-template name="escape-string">
 					<xsl:with-param name="text" select="Example/text()"/>
+					<xsl:with-param name="characters">\'</xsl:with-param>
+					<xsl:with-param name="escape-character">\</xsl:with-param>
+				</xsl:call-template>
+				
+				<xsl:text>'."\n";&#13;&#10;</xsl:text>
+			</xsl:if>
+			
+			<xsl:if test="Default">
+				<xsl:value-of select="$Tab"/><xsl:text>$ConfigOutput .= '// Default: </xsl:text>
+				
+				<xsl:call-template name="escape-string">
+					<xsl:with-param name="text" select="Default/text()"/>
 					<xsl:with-param name="characters">\'</xsl:with-param>
 					<xsl:with-param name="escape-character">\</xsl:with-param>
 				</xsl:call-template>

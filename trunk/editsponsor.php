@@ -13,8 +13,8 @@ require_once('application.inc.php');
 	if (isset($_POST['sponsor'])) { 
 		if (!isset($_POST['sponsor']['name']) || !setVar($sponsor['name'],$_POST['sponsor']['name'],'sponsor_name')) unset($sponsor['name']);
 		if (!isset($_POST['sponsor']['email']) || !setVar($sponsor['email'],$_POST['sponsor']['email'],'email')) unset($sponsor['email']);
-		if (!isset($_POST['sponsor']['url']) || !setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url')) unset($sponsor['url']);
-		if (!isset($_POST['sponsor']['admins']) || !setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins')) unset($sponsor['admins']);
+		if (!isset($_POST['sponsor']['url']) || !setVar($sponsor['url'],$_POST['sponsor']['url'],'sponsor_url')) $sponsor['url'] = '';
+		if (!isset($_POST['sponsor']['admins']) || !setVar($sponsor['admins'],$_POST['sponsor']['admins'],'sponsor_admins')) $sponsor['admins'] = '';
 	}
 	else {
 		unset($sponsor);
@@ -28,7 +28,7 @@ require_once('application.inc.php');
 	function checksponsor(&$sponsor) {
 		return (!empty($sponsor['name']) &&
 			 	    !empty($sponsor['email']) &&
-						checkURL($sponsor['url']));
+						(empty(checkURL($sponsor['url'])) || checkURL($sponsor['url'])));
 	}
 
 	function emailsponsoraccountchanged(&$sponsor) {
@@ -47,6 +47,7 @@ require_once('application.inc.php');
 
 	$sponsorexists = false;
 	$addPIDError="";
+	$pidsAdded = array();
 	if (isset($save) && checksponsor($sponsor) ) {
 		$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."'" );
 		if ( $result->numRows()>0 ) {
@@ -149,7 +150,7 @@ require_once('application.inc.php');
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php
-if ($sponsor['admin']) {
+if (isset($sponsor) && $sponsor['admin']) {
 	?><p><b>Note:</b> Users added to this sponsor will have administrative access to this calendar.</p><?php
 } else {
 	echo "<br>";
@@ -216,7 +217,7 @@ if ($sponsor['admin']) {
 	<tr>
 		<td class="bodytext" valign="top">
 			<strong><?php
-				if ($sponsor['admin']) {
+				if (isset($sponsor) && $sponsor['admin']) {
 					echo lang('administrative_members');
 				} else {
 					echo lang('sponsor_members');

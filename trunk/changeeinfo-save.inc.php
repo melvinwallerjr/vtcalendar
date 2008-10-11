@@ -110,7 +110,7 @@ if (isset($eventid) && (!isset($copy) || $copy != 1)) {
 // Insert as a new event or copy of an existing event
 else {
 	// Event is re-ocurring.
-	if (sizeof($repeatlist) > 0) {
+	if (isset($repeatlist) && sizeof($repeatlist) > 0) {
 	
 		// Create the new event ID.
 		$event['repeatid'] = getNewEventId();

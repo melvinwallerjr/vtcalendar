@@ -364,8 +364,7 @@ function authorized() {
 	
 	// Get sponsor related URL values
 	if (isset($_GET['authsponsorid'])) {
-		if (!setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid')) unset($authsponsorid);
-		if ($authsponsorid === NULL) unset($authsponsorid);
+		setVar($authsponsorid, $_GET['authsponsorid'], 'sponsorid');
 		unset($_SESSION["AUTH_SPONSORNAME"]);
 		unset($_SESSION["AUTH_SPONSORID"]);
 	}

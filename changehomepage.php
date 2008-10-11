@@ -48,7 +48,7 @@ require_once('application.inc.php');
 <?php
 	} /* end: if ($checkURL($sponsor[url])) */
 ?>
-	<input type="text" name="sponsor_url" maxlength="<?php echo constUrlMaxLength; ?>" size="60" value="<?php echo HTMLSpecialChars($sponsor['url']); ?>">
+	<input type="text" name="sponsor_url" maxlength="<?php echo MAXLENGTH_URL; ?>" size="60" value="<?php echo HTMLSpecialChars($sponsor['url']); ?>">
 	<br>
 	<br>
 	<input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>">

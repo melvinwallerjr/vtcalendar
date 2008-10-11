@@ -173,7 +173,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 			}
 		}
 ?>
-			<input type="text" size="50" name="sponsor[name]" maxlength=<?php echo constSponsor_nameMaxLength; ?>  value="<?php
+			<input type="text" size="50" name="sponsor[name]" maxlength=<?php echo MAXLENGTH_SPONSOR_NAME; ?>  value="<?php
 		if ( isset($check) ) { $sponsor['name']=stripslashes($sponsor['name']); }
 		if ( isset($sponsor['name']) ) { echo HTMLSpecialChars($sponsor['name']); }
 ?>"> <i><?php echo lang('sponsor_name_example'); ?></i><br>
@@ -190,7 +190,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 		feedback(lang('choose_email'),FEEDBACKNEG);
 	}
 ?>
-			<input type="text" size="20" name="sponsor[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+			<input type="text" size="20" name="sponsor[email]" maxlength=<?php echo MAXLENGTH_EMAIL; ?> value="<?php
 	if ( isset($check) ) { $sponsor['email']=stripslashes($sponsor['email']); }
 	if ( isset($sponsor['email'])) { echo HTMLSpecialChars($sponsor['email']); }
 ?>">
@@ -207,7 +207,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
-			<input type="text" size="50" name="sponsor[url]" maxlength=<?php echo constUrlMaxLength; ?> value="<?php
+			<input type="text" size="50" name="sponsor[url]" maxlength=<?php echo MAXLENGTH_URL; ?> value="<?php
 	if ( isset($check) ) { $sponsor['url']=stripslashes($sponsor['url']); }
 	if ( isset($sponsor['url']) ) { echo HTMLSpecialChars($sponsor['url']); }
 ?>">

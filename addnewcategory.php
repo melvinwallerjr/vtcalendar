@@ -60,7 +60,7 @@ contentsection_begin(lang('add_new_event_category'));
 	}
 ?>
 	<b><?php echo lang('category_name'); ?>:&nbsp;</b>
-	<input type="text" name="category[name]" maxlength="<?php echo constCategory_nameMaxLength; ?>" size="25" value="<?php 
+	<input type="text" name="category[name]" maxlength="<?php echo MAXLENGTH_CATEGORY_NAME; ?>" size="25" value="<?php 
 	if (!empty($category['name'])) {
 		echo HTMLSpecialChars($category['name']); 
 	}

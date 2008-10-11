@@ -175,7 +175,7 @@ require_once('application.inc.php');
 <?php
 	if ( isset ($new) ) { 
 ?>
-	<input type="text" size="20" name="cal[id]" maxlength=<?php echo constCalendaridMAXLENGTH; ?> value="<?php
+	<input type="text" size="20" name="cal[id]" maxlength=<?php echo MAXLENGTH_CALENDARID; ?> value="<?php
 	if ( isset($check) ) { $cal['id']=stripslashes($cal['id']); }
 	if ( isset($cal['id']) ) { echo HTMLSpecialChars($cal['id']); }
 ?>"> <i><?php echo lang('calendar_id_example'); ?></i>
@@ -202,7 +202,7 @@ require_once('application.inc.php');
 		}
 	}
 ?>
-			<input type="text" size="50" name="cal[name]" maxlength=<?php echo constCalendarnameMAXLENGTH; ?>  value="<?php
+			<input type="text" size="50" name="cal[name]" maxlength=<?php echo MAXLENGTH_CALENDARNAME; ?>  value="<?php
 	if ( isset($check) ) { $cal['name']=stripslashes($cal['name']); }
 	if ( isset($cal['name']) ) { echo HTMLSpecialChars($cal['name']); }
 ?>"> <i><?php echo lang('calendar_name_example'); ?></i><br>

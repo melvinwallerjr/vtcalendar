@@ -68,7 +68,7 @@ require_once('application.inc.php');
 	}
 ?>
 	<b><?php echo lang('category_name'); ?>:&nbsp;</b>
-	<input type="text" name="category[name]" maxlength="<?php echo constCategory_nameMaxLength; ?>" size="25" value="<?php echo HTMLSpecialChars($category['name']); ?>">
+	<input type="text" name="category[name]" maxlength="<?php echo MAXLENGTH_CATEGORY_NAME; ?>" size="25" value="<?php echo HTMLSpecialChars($category['name']); ?>">
 	<input type="hidden" name="categoryid" value="<?php echo $categoryid; ?>">
 	<input type="hidden" name="check" value="1">
 	<br>

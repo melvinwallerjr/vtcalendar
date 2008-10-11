@@ -73,7 +73,7 @@ $lang['community'] = 'VTCalendar Community';
 $lang['version_check'] = 'Version Check';
 ?>
 
-<table id="UpdateMainMenu" cellspacing="0" cellpadding="10" border="0">
+<table id="UpdateMainMenu" width="100%" cellspacing="0" cellpadding="10" border="0">
 <tr>
 	
 	<!-- Start Sponsor Level Column -->
@@ -156,7 +156,7 @@ if ($_SESSION['AUTH_ISCALENDARADMIN']) {
 
 if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
 	?>
-	<td valign="top" style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">
+	<td valign="top" style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; <?php if (!$_SESSION['AUTH_ISCALENDARADMIN']) echo "background-color: " . $_SESSION['COLOR_LIGHT_CELL_BG']; ?>">
 		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('main_administrators_options'); ?>:&nbsp;</h2>
 		<dl style="margin-top: 0; padding-top: 2px;">
 			<dt><?php	if ( AUTH_DB ) { ?><a href="manageusers.php"><?php echo lang('manage_users'); ?></a> <?php echo AUTH_DB_NOTICE; ?><?php } ?></dt>

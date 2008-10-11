@@ -32,7 +32,7 @@
 				<strong><?php echo lang('keyword'); ?>:&nbsp;&nbsp;&nbsp;</strong>
 			</td>
 			<td class="bodytext" valign="baseline">
-				<input type="text" size="40" name="keyword" value="<?php echo $keyword; ?>" maxlength="<?php echo constKeywordMaxLength; ?>"><br>
+				<input type="text" size="40" name="keyword" value="<?php echo $keyword; ?>" maxlength="<?php echo MAXLENGTH_KEYWORD; ?>"><br>
 				<?php echo lang('case_insensit'); ?><br>
 				<br>
 			</td>

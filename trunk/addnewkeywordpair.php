@@ -56,12 +56,12 @@ require_once('application.inc.php');
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="keyword" maxlength="<?php echo constKeywordMaxLength; ?>" size="20" value="<?php 
+				<input type="text" name="keyword" maxlength="<?php echo MAXLENGTH_KEYWORD; ?>" size="20" value="<?php 
 				if (!empty($keyword)) { echo HTMLSpecialChars($keyword); }
 				?>">
 			</td>
 			<td>
-				<input type="text" name="alternativekeyword" maxlength="<?php echo constKeywordMaxLength; ?>" size="20" value="<?php 
+				<input type="text" name="alternativekeyword" maxlength="<?php echo MAXLENGTH_KEYWORD; ?>" size="20" value="<?php 
 				if (!empty($alternativekeyword)) { echo HTMLSpecialChars($alternativekeyword); } 
 				?>">
 			</td>

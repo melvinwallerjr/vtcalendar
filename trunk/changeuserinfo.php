@@ -146,7 +146,7 @@ require_once('application.inc.php');
 		feedback(lang('choose_password'),FEEDBACKNEG);
 	}
 ?>
-			<input type="password" size="14" name="user[password]" maxlength=<?php echo constPasswordMaxLength; ?>  value="<?php if (!empty($chooseuser)) { echo "#nochange$"; } ?>"> <br>
+			<input type="password" size="14" name="user[password]" maxlength=<?php echo MAXLENGTH_PASSWORD; ?>  value="<?php if (!empty($chooseuser)) { echo "#nochange$"; } ?>"> <br>
 		</td>
 	</tr>
 	<tr>
@@ -154,7 +154,7 @@ require_once('application.inc.php');
 			<b><?php echo lang('email'); ?></b>
 		</td>
 		<td class="bodytext" valign="baseline">
-			<input type="text" size="20" name="user[email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+			<input type="text" size="20" name="user[email]" maxlength=<?php echo MAXLENGTH_EMAIL; ?> value="<?php
 	if (isset($user) && isset($user['email'])) {
 		if (isset($check) && $check) { 
 			$user['email']=stripslashes($user['email']); 

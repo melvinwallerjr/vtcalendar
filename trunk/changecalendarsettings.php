@@ -101,7 +101,7 @@ contentsection_begin(lang('change_header_footer_auth'));
 <p><input type="submit" name="save" value="<?php echo lang('ok_button_text'); ?>" class="button">&nbsp;&nbsp;<input type="submit" name="cancel" value="<?php echo lang('cancel_button_text'); ?>" class="button"></p>
 
 	<b><?php echo lang('calendar_title'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_text'); ?></font><br>
-	<input type="text" name="title" maxlength="<?php echo constCalendarTitleMAXLENGTH; ?>" size="30" value="<?php 
+	<input type="text" name="title" maxlength="<?php echo MAXLENGTH_CALENDARTITLE; ?>" size="30" value="<?php 
 	echo htmlentities($title);
 	?>"><br>
 	<br>

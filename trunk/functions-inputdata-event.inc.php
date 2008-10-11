@@ -501,7 +501,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		feedback(lang('choose_title'),FEEDBACKNEG);
 	}
 ?>
-			<input type="text" size="24" name="event[title]" maxlength=<?php echo constTitleMaxLength; ?> value="<?php
+			<input type="text" size="24" name="event[title]" maxlength=<?php echo MAXLENGTH_TITLE; ?> value="<?php
 	if (isset($event['title'])) {
 		if ($check) { $event['title']=$event['title']; }
 		echo HTMLSpecialChars($event['title']);
@@ -538,7 +538,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('location'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" size="24" name="event[location]" maxlength=<?php echo constLocationMaxLength; ?> value="<?php
+			<input type="text" size="24" name="event[location]" maxlength=<?php echo MAXLENGTH_LOCATION; ?> value="<?php
 	if (isset($event['location'])) {
 		if ($check) { $event['location']=$event['location']; }
 		echo HTMLSpecialChars($event['location']);
@@ -551,7 +551,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('price'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" size="24" name="event[price]" maxlength=<?php echo constPriceMaxLength; ?>  value="<?php
+			<input type="text" size="24" name="event[price]" maxlength=<?php echo MAXLENGTH_PRICE; ?>  value="<?php
 	if (isset($event['price'])) {
 		if ($check) { $event['price']=$event['price']; }
 		echo HTMLSpecialChars($event['price']);
@@ -564,7 +564,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('contact_name'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" size="24" name="event[contact_name]" maxlength=<?php echo constContact_nameMaxLength; ?> value="<?php
+			<input type="text" size="24" name="event[contact_name]" maxlength=<?php echo MAXLENGTH_CONTACT_NAME; ?> value="<?php
 	if (isset($event['contact_name'])) {
 		if ($check) { $event['contact_name']=$event['contact_name']; }
 		echo HTMLSpecialChars($event['contact_name']);
@@ -577,7 +577,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('contact_phone'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" size="24" name="event[contact_phone]" maxlength=<?php echo constContact_phoneMaxLength; ?> value="<?php
+			<input type="text" size="24" name="event[contact_phone]" maxlength=<?php echo MAXLENGTH_CONTACT_PHONE; ?> value="<?php
 	if (isset($event['contact_phone'])) {
 		if ($check) { $event['contact_phone']=$event['contact_phone']; }
 		echo HTMLSpecialChars($event['contact_phone']);
@@ -590,7 +590,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			 <strong><?php echo lang('contact_email'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" size="24" name="event[contact_email]" maxlength=<?php echo constEmailMaxLength; ?> value="<?php
+			<input type="text" size="24" name="event[contact_email]" maxlength=<?php echo MAXLENGTH_EMAIL; ?> value="<?php
 	if (isset($event['contact_email'])) {
 		if ($check) { $event['contact_email']=$event['contact_email']; }
 		echo HTMLSpecialChars(urldecode($event['contact_email']));
@@ -668,7 +668,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('displayed_sponsor_name'); ?>:</strong>
 		</td>
 		<td class="bodytext" valign="top">
-			<input type="text" id="defaultsponsornametext" size="50" name="event[displayedsponsor]" maxlength=<?php echo constDisplayedsponsorMaxLength; ?> value="<?php
+			<input type="text" id="defaultsponsornametext" size="50" name="event[displayedsponsor]" maxlength=<?php echo MAXLENGTH_DISPLAYEDSPONSOR; ?> value="<?php
 	if (isset($event['displayedsponsor'])) {
 		if ($check) { $event['displayedsponsor']=$event['displayedsponsor']; }
 		echo HTMLSpecialChars($event['displayedsponsor']);
@@ -687,7 +687,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 		feedback(lang('url_invalid'),FEEDBACKNEG);
 	}
 ?>
-			<input type="text" id="defaultsponsorurltext" size="50" name="event[displayedsponsorurl]" maxlength=<?php echo constDisplayedsponsorurlMaxLength; ?> value="<?php
+			<input type="text" id="defaultsponsorurltext" size="50" name="event[displayedsponsorurl]" maxlength=<?php echo MAXLENGTH_DISPLAYEDSPONSORURL; ?> value="<?php
 	if (isset($event['displayedsponsorurl'])) {
 		if ($check) { $event['displayedsponsorurl']=$event['displayedsponsorurl']; }
 		echo HTMLSpecialChars($event['displayedsponsorurl']);

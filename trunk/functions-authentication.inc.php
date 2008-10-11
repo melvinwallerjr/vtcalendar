@@ -44,7 +44,7 @@ function displaylogin($errormsg="") {
 			</tr>
 			<tr>
 				<td class="inputbox" align="right"><b><?php echo lang('password'); ?></b></td>
-				<td align="left"><input type="password" name="login_password" value="" maxlength="<?php echo constPasswordMaxLength; ?>"></td>
+				<td align="left"><input type="password" name="login_password" value="" maxlength="<?php echo MAXLENGTH_PASSWORD; ?>"></td>
 			</tr>
 			<tr>
 				<td class="inputbox">&nbsp;</td>

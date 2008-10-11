@@ -12,7 +12,7 @@ function inputtemplatedata(&$event,$sponsorid,$check,$template_name) {
 			feedback(lang('choose_template_name'),FEEDBACKNEG);
 		}
 	?>
-		<input type="text" size="24" name="template_name" maxlength="<?php echo constTemplate_nameMaxLength; ?>" value="<?php
+		<input type="text" size="24" name="template_name" maxlength="<?php echo MAXLENGTH_TEMPLATE_NAME; ?>" value="<?php
 	
 		if ($check) { $template_name=stripslashes($template_name); }
 		echo HTMLSpecialChars($template_name);

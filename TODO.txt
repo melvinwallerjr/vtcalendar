@@ -1,30 +1,31 @@
 NEW TODO:
 ===========================
 
-X Add helpsignup.php link back to displaylogin() in functions.inc.php
-X Should probably remove checking for HTTPS and just use
-  SECUREBASEURL for the action of any forms that need to be
-  secured. Search scripts for: _SERVER['HTTPS']
-X Filters need to work on upcoming events view.
-X A message should output when a keyword is being used in day/week/month view. There is currently no way for a user to know its filtering.
-X $iday['css'] and $iday['color'] should be removed if not being used.
 - Check input validation constants in constants.inc.php to determine the correct values and merge the constants as necessary.
-X Check current database schema vs 2.2.2.
-X Determine what 'detailscaller' did and if they can be removed.
-X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.2))
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
 - Free results by using $results->free()
 - Properly handle string returns from functions like DBQuery.
-X Add colors to vtcal_colors for new CSS
 - Expand AUTH_HTTP_CACHE to LDAP
 - Improve the way AUTH_HTTP checks if the authentication was successful or not successful by also checking the body text.
 - Allow events to be flagged private so that you can only see them if you log in.
 - "Send event to a friend" form.
 - Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database:
-(?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
+  (?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
 - Validate iCalendar export format.
 - Allow data currently stored in session to be loaded from the DB or a file.
+- Move all lang files to languages/en.inc.php
+- Update install/upgradedb.php for PostgreSQL.
+
+X Add helpsignup.php link back to displaylogin() in functions.inc.php
+X Should probably remove checking for HTTPS and just use SECUREBASEURL for the action of any forms that need to be secured. Search scripts for: _SERVER['HTTPS']
+X Filters need to work on upcoming events view.
+X A message should output when a keyword is being used in day/week/month view. There is currently no way for a user to know its filtering.
+X $iday['css'] and $iday['color'] should be removed if not being used.
+X Check current database schema vs 2.2.2.
+X Determine what 'detailscaller' did and if they can be removed.
+X Why was the saveall button disabled? ((Logic was unstable. Was removed in 2.2.2))
+X Add colors to vtcal_colors for new CSS
 X Allow SMTP e-mail via Pear::Mail.
 
 OLD TODO:

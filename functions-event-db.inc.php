@@ -127,15 +127,15 @@ function insertintoevent_public(&$event) {
 
 function updateevent($eventid, &$event) {
 	$changed = date ("Y-m-d H:i:s", NOW);
-	$query = "UPDATE vtcal_event SET approved=0, rejectreason='".sqlescape($event['rejectreason']);
-	$query.= "',timebegin='".(isset($event['timebegin']) ? sqlescape($event['timebegin']) : '')."',timeend='".sqlescape($event['timeend']);
-	$query.= "',repeatid='".(isset($event['repeatid']) ? sqlescape($event['repeatid']) : '')."',sponsorid='".sqlescape($event['sponsorid']);
-	$query.= "',displayedsponsor='".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '')."',displayedsponsorurl='".sqlescape($event['displayedsponsorurl']);
-	$query.= "',title='".(isset($event['title']) ? sqlescape($event['title']) : '')."',wholedayevent='".sqlescape($event['wholedayevent']);
-	$query.= "',categoryid='".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '')."',description='".sqlescape($event['description']);
-	$query.= "',location='".(isset($event['location']) ? sqlescape($event['location']) : '')."',price='".sqlescape($event['price']);
-	$query.= "',contact_name='".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '')."',contact_phone='".sqlescape($event['contact_phone']);
-	$query.= "',contact_email='".sqlescape($event['contact_email']);
+	$query = "UPDATE vtcal_event SET approved=0, rejectreason='".(isset($event['rejectreason']) ? sqlescape($event['rejectreason']) : '');
+	$query.= "',timebegin='".(isset($event['timebegin']) ? sqlescape($event['timebegin']) : '')."',timeend='".(isset($event['timeend']) ? sqlescape($event['timeend']) : '');
+	$query.= "',repeatid='".(isset($event['repeatid']) ? sqlescape($event['repeatid']) : '')."',sponsorid='".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '');
+	$query.= "',displayedsponsor='".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '')."',displayedsponsorurl='".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '');
+	$query.= "',title='".(isset($event['title']) ? sqlescape($event['title']) : '')."',wholedayevent='".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '');
+	$query.= "',categoryid='".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '')."',description='".(isset($event['description']) ? sqlescape($event['description']) : '');
+	$query.= "',location='".(isset($event['location']) ? sqlescape($event['location']) : '')."',price='".(isset($event['price']) ? sqlescape($event['price']) : '');
+	$query.= "',contact_name='".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '')."',contact_phone='".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '');
+	$query.= "',contact_email='".(isset($event['contact_email']) ? sqlescape($event['contact_email']) : '');
 	$query.= "',recordchangedtime='".sqlescape($changed)."',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "',showondefaultcal='".(isset($event['showondefaultcal']) ? sqlescape($event['showondefaultcal']) : '')."',showincategory='".(isset($event['showincategory']) ? sqlescape($event['showincategory']) : '')."' ";
 	$query.= "WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
@@ -147,14 +147,14 @@ function updateevent($eventid, &$event) {
 
 function updateevent_public($eventid, &$event) {
 	$changed = date ("Y-m-d H:i:s", NOW);
-	$query = "UPDATE vtcal_event_public SET timebegin='".sqlescape($event['timebegin']);
-	$query.= "',timeend='".(isset($event['timeend']) ? sqlescape($event['timeend']) : '')."',repeatid='".sqlescape($event['repeatid']);
-	$query.= "',sponsorid='".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '')."',displayedsponsor='".sqlescape($event['displayedsponsor']);
-	$query.= "',displayedsponsorurl='".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '')."',title='".sqlescape($event['title']);
-	$query.= "',wholedayevent='".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '')."',categoryid='".sqlescape($event['categoryid']);
-	$query.= "',description='".(isset($event['description']) ? sqlescape($event['description']) : '')."',location='".sqlescape($event['location']);
-	$query.= "',price='".(isset($event['price']) ? sqlescape($event['price']) : '')."',contact_name='".sqlescape($event['contact_name']);
-	$query.= "',contact_phone='".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '')."',contact_email='".sqlescape($event['contact_email']);
+	$query = "UPDATE vtcal_event_public SET timebegin='".(isset($event['timebegin']) ? sqlescape($event['timebegin']) : '');
+	$query.= "',timeend='".(isset($event['timeend']) ? sqlescape($event['timeend']) : '')."',repeatid='".(isset($event['repeatid']) ? sqlescape($event['repeatid']) : '');
+	$query.= "',sponsorid='".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '')."',displayedsponsor='".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '');
+	$query.= "',displayedsponsorurl='".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '')."',title='".(isset($event['title']) ? sqlescape($event['title']) : '');
+	$query.= "',wholedayevent='".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '')."',categoryid='".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '');
+	$query.= "',description='".(isset($event['description']) ? sqlescape($event['description']) : '')."',location='".(isset($event['location']) ? sqlescape($event['location']) : '');
+	$query.= "',price='".(isset($event['price']) ? sqlescape($event['price']) : '')."',contact_name='".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '');
+	$query.= "',contact_phone='".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '')."',contact_email='".(isset($event['contact_email']) ? sqlescape($event['contact_email']) : '');
 	$query.= "',recordchangedtime='".sqlescape($changed);
 	$query.= "',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
@@ -168,12 +168,12 @@ function insertintotemplate($template_name, &$event) {
 	$changed = date ("Y-m-d H:i:s", NOW);
 	$query = "INSERT INTO vtcal_template (calendarid,name,sponsorid,displayedsponsor,displayedsponsorurl,title,wholedayevent,categoryid,description,location,price,contact_name,contact_phone,contact_email,recordchangedtime,recordchangeduser) ";
 	$query.= "VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($template_name);
-	$query.= "','".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '')."','".sqlescape($event['displayedsponsor']);
-	$query.= "','".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '')."','".sqlescape($event['title']);
-	$query.= "','".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '')."','".sqlescape($event['categoryid']);
-	$query.= "','".(isset($event['description']) ? sqlescape($event['description']) : '')."','".sqlescape($event['location']);
-	$query.= "','".(isset($event['price']) ? sqlescape($event['price']) : '')."','".sqlescape($event['contact_name']);
-	$query.= "','".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '')."','".sqlescape($event['contact_email']);
+	$query.= "','".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '')."','".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '');
+	$query.= "','".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '')."','".(isset($event['title']) ? sqlescape($event['title']) : '');
+	$query.= "','".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '')."','".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '');
+	$query.= "','".(isset($event['description']) ? sqlescape($event['description']) : '')."','".(isset($event['location']) ? sqlescape($event['location']) : '');
+	$query.= "','".(isset($event['price']) ? sqlescape($event['price']) : '')."','".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '');
+	$query.= "','".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '')."','".(isset($event['contact_email']) ? sqlescape($event['contact_email']) : '');
 	$query.= "','".sqlescape($changed)."','".sqlescape($_SESSION["AUTH_USERID"])."')";
 	$result =& DBQuery($query);
 	if (is_string($result)) return $result;
@@ -183,13 +183,13 @@ function insertintotemplate($template_name, &$event) {
 
 function updatetemplate($templateid, $template_name, &$event) {
 	$changed = date ("Y-m-d H:i:s", NOW);
-	$query = "UPDATE vtcal_template SET name='".sqlescape($template_name)."',sponsorid='".sqlescape($event['sponsorid']);
-	$query.= "',displayedsponsor='".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '')."',displayedsponsorurl='".sqlescape($event['displayedsponsorurl']);
-	$query.= "',title='".(isset($event['title']) ? sqlescape($event['title']) : '')."',wholedayevent='".sqlescape($event['wholedayevent']);
-	$query.= "',categoryid='".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '')."',description='".sqlescape($event['description']);
-	$query.= "',location='".(isset($event['location']) ? sqlescape($event['location']) : '')."',price='".sqlescape($event['price']);
-	$query.= "',contact_name='".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '')."',contact_phone='".sqlescape($event['contact_phone']);
-	$query.= "',contact_email='".sqlescape($event['contact_email']);
+	$query = "UPDATE vtcal_template SET name='".sqlescape($template_name)."',sponsorid='".(isset($event['sponsorid']) ? sqlescape($event['sponsorid']) : '');
+	$query.= "',displayedsponsor='".(isset($event['displayedsponsor']) ? sqlescape($event['displayedsponsor']) : '')."',displayedsponsorurl='".(isset($event['displayedsponsorurl']) ? sqlescape($event['displayedsponsorurl']) : '');
+	$query.= "',title='".(isset($event['title']) ? sqlescape($event['title']) : '')."',wholedayevent='".(isset($event['wholedayevent']) ? sqlescape($event['wholedayevent']) : '');
+	$query.= "',categoryid='".(isset($event['categoryid']) ? sqlescape($event['categoryid']) : '')."',description='".(isset($event['description']) ? sqlescape($event['description']) : '');
+	$query.= "',location='".(isset($event['location']) ? sqlescape($event['location']) : '')."',price='".(isset($event['price']) ? sqlescape($event['price']) : '');
+	$query.= "',contact_name='".(isset($event['contact_name']) ? sqlescape($event['contact_name']) : '')."',contact_phone='".(isset($event['contact_phone']) ? sqlescape($event['contact_phone']) : '');
+	$query.= "',contact_email='".(isset($event['contact_email']) ? sqlescape($event['contact_email']) : '');
 	$query.= "',recordchangedtime='".sqlescape($changed)."',recordchangeduser='".sqlescape($_SESSION["AUTH_USERID"]);
 	$query.= "' WHERE sponsorid='".sqlescape($_SESSION["AUTH_SPONSORID"])."' AND id='".sqlescape($templateid)."'";
 	$result =& DBQuery($query);

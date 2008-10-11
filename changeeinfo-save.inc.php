@@ -19,7 +19,7 @@ if (isset($eventid) && (!isset($copy) || $copy != 1)) {
 	if (empty($event['repeatid'])) {
 	
 		// If the event is now reocurring
-		if (sizeof($repeatlist) > 0) {
+		if (isset($repeatlist) && sizeof($repeatlist) > 0) {
 			
 			// Delete the old single event
 			deletefromevent($eventid);

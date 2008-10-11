@@ -9,18 +9,6 @@ define("CRLF", "\r\n");
 ============================================================ */
 
 define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
-//NOT USED define("BGCOLORNAVBARACTIVE","#993333");
-//NOT USED define("BGCOLORWEEKMONTHNAVBAR","#993333");
-//NOT USED define("BGCOLORDETAILSHEADER","#993333");
-define("MAXLENGTH_URL","100"); // NOT CONSISTANT (see below)
-define("MAXLENGTH_TITLE","75"); // NOT CONSISTANT (see below)
-define("MAXLENGTH_DESCRIPTION","5000"); // NOT CONSISTANT (see below)
-//define("MAXLENGTH_LOCATION","100");
-//define("MAXLENGTH_PRICE","100");
-//define("MAXLENGTH_CONTACT_NAME","100");
-//define("MAXLENGTH_CONTACT_PHONE","100");
-//define("MAXLENGTH_CONTACT_EMAIL","100");
-define("MAXLENGTH_SPONSOR","50"); // NOT CONSISTANT (see below)
 define("FEEDBACKPOS","0");
 define("FEEDBACKNEG","1");
 

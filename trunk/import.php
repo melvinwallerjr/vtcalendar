@@ -47,13 +47,13 @@ function saveevent() {
 	$event['wholedayevent'] = ($timebegin == "00:00") && ($timeend == "23:59");
 
 	// make sure that the previous event got all the input fields
-	if (!(strlen($event['displayedsponsor']) <= MAXLENGTH_SPONSOR)) { feedback(lang('import_error_displayedsponsor').": ".htmlentities($event['displayedsponsor']),FEEDBACKNEG); $error = true; }
+	if (!(strlen($event['displayedsponsor']) <= constDisplayedsponsorMaxLength)) { feedback(lang('import_error_displayedsponsor').": ".htmlentities($event['displayedsponsor']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['displayedsponsorurl']) <= constUrlMaxLength && checkurl($event['displayedsponsorurl']))) { feedback(lang('import_error_displayedsponsorurl').": ".htmlentities($event['displayedsponsorurl']),FEEDBACKNEG); $error = true; }
 	if (!(eventtimebeginvalid($event['timebegin']))) { feedback(lang('import_error_timebegin').": ".htmlentities($event['timebegin']),FEEDBACKNEG); $error = true; }
 	if (!(eventtimeendvalid($event['timeend']))) { feedback(lang('import_error_timeend').": ".htmlentities($event['timeend']),FEEDBACKNEG); $error = true; }
 	if (!(array_key_exists($event['categoryid'],$validcategory))) { feedback(lang('import_error_categoryid').": ".htmlentities($event['categoryid']),FEEDBACKNEG); $error = true; }
-	if (!(!empty($event['title']) && strlen($event['title']) <= MAXLENGTH_TITLE)) { feedback(lang('import_error_title').": ".htmlentities($event['']),FEEDBACKNEG); $error = true; }
-	if (!(strlen($event['description']) <= MAXLENGTH_DESCRIPTION)) { feedback(lang('import_error_description').": ".htmlentities($event['description']),FEEDBACKNEG); $error = true; }
+	if (!(!empty($event['title']) && strlen($event['title']) <= constTitleMaxLength)) { feedback(lang('import_error_title').": ".htmlentities($event['']),FEEDBACKNEG); $error = true; }
+	if (!(strlen($event['description']) <= constDescriptionMaxLength)) { feedback(lang('import_error_description').": ".htmlentities($event['description']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['location']) <= constLocationMaxLength)) { feedback(lang('import_error_location').": ".htmlentities($event['location']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['price']) <= constPriceMaxLength)) { feedback(lang('import_error_price').": ".htmlentities($event['price']),FEEDBACKNEG); $error = true; }
 	if (!(strlen($event['contact_name']) <= constContact_nameMaxLength)) { feedback(lang('import_error_contact_name').": ".htmlentities($event['contact_name']),FEEDBACKNEG); $error = true; }

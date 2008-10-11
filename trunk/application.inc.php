@@ -22,6 +22,11 @@ if (AUTH_LDAP && !function_exists("ldap_connect")) {
 	exit();
 }
 
+// Include Pear::Mail or output an error message if it does not exist.
+if (EMAIL_USEPEAR) {
+	@(include_once('Mail.php')) or die('Pear::Mail is required when EMAIL_USERPEAR is set to true. See: http://pear.php.net/package/Mail');
+}
+
 // Include Pear::HTTP_Request if AUTH_HTTP is true, or output an error message if it does not exist.
 if (AUTH_HTTP) {
 	@(include_once("HTTP/Request.php")) or die("Pear::HTTP_Request is required when using HTTP authentication. See: http://pear.php.net/package/HTTP_Request");

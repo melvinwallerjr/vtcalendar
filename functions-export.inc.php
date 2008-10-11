@@ -189,9 +189,9 @@ function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl) {
 		if (!empty($event['repeatid'])) {
 			//$queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE calendarid='".sqlescape($calendarID)."' AND id='".sqlescape($event['repeatid'])."'";
 			$queryRepeat = "SELECT * FROM vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
-			$repeatresult = DBQuery($queryRepeat ); 
+			if (is_string($repeatresult =& DBQuery($queryRepeat))) { return ""; }
 			if ( $repeatresult->numRows () > 0 ) {
-				$repeat = $repeatresult->fetchRow(DB_FETCHMODE_ASSOC,0);
+				$repeat =& $repeatresult->fetchRow(DB_FETCHMODE_ASSOC,0);
 			}
 		}
 

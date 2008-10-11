@@ -102,8 +102,8 @@ END;
 
 function readinrepeat($repeatid, &$event, &$repeat) {
 	$query = "SELECT * FROM vtcal_event_repeat WHERE id = '".sqlescape($repeatid)."'";
-	$result = DBQuery($query ); 
-	$r = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	if (is_string($result =& DBQuery($query))) return $result;
+	$r =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 	repeatdef2repeatinput($r['repeatdef'],$event,$repeat);
 
@@ -111,6 +111,8 @@ function readinrepeat($repeatid, &$event, &$repeat) {
 	$event['timebegin_year']  = $startdate['year'];
 	$event['timebegin_month'] = $startdate['month'];
 	$event['timebegin_day']   = $startdate['day'];
+	
+	return true;
 }
 
 // takes the values from the inputfields on the form and constructs a

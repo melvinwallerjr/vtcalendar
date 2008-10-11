@@ -96,21 +96,22 @@ if (isset($cancel)) {
 // Check that the event ID is valid, if one was passed.
 if (!empty($eventid)) {
 	$query = "SELECT sponsorid FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
-	$result = DBQuery($query );
+	if (is_string($result =& DBQuery($query))) { DBErrorBox("Error retrieving record from vtcal_event" . $result); exit; }
 	
 	// Check that the record exists in "vtcal_event".
 	if ($result->numRows() > 0) {
-			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			$e =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	}
 	
 	// If it doesn't, check that it exists in "vtcal_event_public"
 	else {
 		$query = "SELECT * FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
-		$result = DBQuery($query ); 
+		if (is_string($result =& DBQuery($query))) { DBErrorBox("Error retrieving record from vtcal_event_public" . $result); exit; }
+		
 		
 		// If the event exists in "event_public", then insert it into "event" since it is missing...
 		if ($result->numRows() > 0) {
-			$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+			$e =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 			insertintoevent($e['id'],$e);
 		}
 		

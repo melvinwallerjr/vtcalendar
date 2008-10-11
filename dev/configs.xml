@@ -891,4 +891,54 @@
 			</Comment>
 		</Config>
 	</Section>
+	<Section Label="E-Mail">
+		<Config Label="Send E-mail via Pear::Mail" Variable="EMAIL_USEPEAR" Type="boolean">
+			<Default>false</Default>
+			<Comment>
+				<Line>Send e-mail using Pear::Mail rather than the built-in PHP Mail function.</Line>
+				<Line>This should be used if you are on Windows or do not have sendmail installed.</Line>
+			</Comment>
+			<Dependants>
+				<Config Label="SMTP Host" Variable="EMAIL_SMTP_HOST" Type="string" Required="true">
+					<Default>localhost</Default>
+					<Comment><Line>The SMTP host name to connect to.</Line></Comment>
+				</Config>
+				<Config Label="SMTP Port" Variable="EMAIL_SMTP_PORT" Type="number">
+					<Default>25</Default>
+					<Comment><Line>The SMTP port number to connect to.</Line></Comment>
+				</Config>
+				<Config Label="SMTP Authentication" Variable="EMAIL_SMTP_AUTH" Type="boolean">
+					<Default>false</Default>
+					<Comment>
+						<Line>Whether or not to use SMTP authentication.</Line>
+					</Comment>
+					<Dependants>
+						<Config Label="SMTP Username" Variable="EMAIL_SMTP_USERNAME" Type="string" Required="true">
+							<Comment>
+								<Line>The username to use for SMTP authentication.</Line>
+							</Comment>
+						</Config>
+						<Config Label="SMTP Password" Variable="EMAIL_SMTP_PASSWORD" Type="string" Required="true">
+							<Comment>
+								<Line>The password to use for SMTP authentication.</Line>
+							</Comment>
+						</Config>
+					</Dependants>
+				</Config>
+				<Config Label="SMTP EHLO/HELO" Variable="EMAIL_SMTP_HELO" Type="string">
+					<Default>localhost</Default>
+					<Comment>
+						<Line>The value to give when sending EHLO or HELO.</Line>
+					</Comment>
+				</Config>
+				<Config Label="SMTP Timeout" Variable="EMAIL_SMTP_TIMEOUT" Type="number">
+					<Default>0</Default>
+					<Comment>
+						<Line>The SMTP connection timeout.</Line>
+						<Line>Set the value to 0 to have no timeout.</Line>
+					</Comment>
+				</Config>
+			</Dependants>
+		</Config>
+	</Section>
 </Configs>

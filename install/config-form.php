@@ -1482,3 +1482,188 @@
       </tr>
    </table>
 </blockquote>
+<h2>E-Mail:</h2>
+<blockquote>
+   <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Send E-mail via Pear::Mail:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_EMAIL_USEPEAR" name="EMAIL_USEPEAR" value="true"
+										onclick="ToggleDependant('EMAIL_USEPEAR');" onchange="ToggleDependant('EMAIL_USEPEAR');"<?php if ($GLOBALS['Form_EMAIL_USEPEAR'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_EMAIL_USEPEAR"> Yes</label>
+                        <span id="DataFieldInputExtra_EMAIL_USEPEAR"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">Send e-mail using Pear::Mail rather than the built-in PHP Mail function.</div>
+                     <div class="CommentLine">This should be used if you are on Windows or do not have sendmail installed.</div>
+                  </td>
+               </tr>
+               <tr id="Dependants_EMAIL_USEPEAR">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>SMTP Host:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_HOST" name="EMAIL_SMTP_HOST" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_HOST']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_HOST"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The SMTP host name to connect to.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>SMTP Port:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_PORT" name="EMAIL_SMTP_PORT" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_PORT']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_PORT"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The SMTP port number to connect to.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>SMTP Authentication:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="checkbox" id="CheckBox_EMAIL_SMTP_AUTH" name="EMAIL_SMTP_AUTH" value="true"
+										onclick="ToggleDependant('EMAIL_SMTP_AUTH');" onchange="ToggleDependant('EMAIL_SMTP_AUTH');"<?php if ($GLOBALS['Form_EMAIL_SMTP_AUTH'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_EMAIL_SMTP_AUTH"> Yes</label>
+                                          <span id="DataFieldInputExtra_EMAIL_SMTP_AUTH"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">Whether or not to use SMTP authentication.</div>
+                                    </td>
+                                 </tr>
+                                 <tr id="Dependants_EMAIL_SMTP_AUTH">
+                                    <td>
+                                       <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                                          <tr>
+                                             <td class="VariableName" nowrap="nowrap" valign="top">
+                                                <b>SMTP Username:</b>
+                                             </td>
+                                             <td class="VariableBody">
+                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                                   <tr>
+                                                      <td class="DataField">
+                                                         <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_USERNAME" name="EMAIL_SMTP_USERNAME" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_USERNAME']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_USERNAME"> </span>
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="Comment">
+                                                         <div class="CommentLine">The username to use for SMTP authentication.</div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td class="VariableName" nowrap="nowrap" valign="top">
+                                                <b>SMTP Password:</b>
+                                             </td>
+                                             <td class="VariableBody">
+                                                <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                                   <tr>
+                                                      <td class="DataField">
+                                                         <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_PASSWORD" name="EMAIL_SMTP_PASSWORD" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_PASSWORD']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_PASSWORD"> </span>
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="Comment">
+                                                         <div class="CommentLine">The password to use for SMTP authentication.</div>
+                                                      </td>
+                                                   </tr>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                       <script type="text/javascript">ToggleDependant('EMAIL_SMTP_AUTH');</script>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>SMTP EHLO/HELO:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_HELO" name="EMAIL_SMTP_HELO" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_HELO']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_HELO"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The value to give when sending EHLO or HELO.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>SMTP Timeout:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_EMAIL_SMTP_TIMEOUT" name="EMAIL_SMTP_TIMEOUT" value="<?php echo htmlentities($GLOBALS['Form_EMAIL_SMTP_TIMEOUT']); ?>" size="60"/> <span id="DataFieldInputExtra_EMAIL_SMTP_TIMEOUT"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The SMTP connection timeout.</div>
+                                       <div class="CommentLine">Set the value to 0 to have no timeout.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('EMAIL_USEPEAR');</script>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</blockquote>

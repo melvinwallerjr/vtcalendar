@@ -228,6 +228,44 @@ if (!defined("EXPORT_CACHE_MINUTES")) define("EXPORT_CACHE_MINUTES", 5);
 // However, users that are part of the admin sponsor, or are main admins, can always export in this format.
 if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);
 
+// =====================================
+// E-Mail
+// =====================================
+
+// Config: Send E-mail via Pear::Mail
+// Send e-mail using Pear::Mail rather than the built-in PHP Mail function.
+// This should be used if you are on Windows or do not have sendmail installed.
+if (!defined("EMAIL_USEPEAR")) define("EMAIL_USEPEAR", false);
+
+// Config: SMTP Host
+// The SMTP host name to connect to.
+if (!defined("EMAIL_SMTP_HOST")) define("EMAIL_SMTP_HOST", 'localhost');
+
+// Config: SMTP Port
+// The SMTP port number to connect to.
+if (!defined("EMAIL_SMTP_PORT")) define("EMAIL_SMTP_PORT", 25);
+
+// Config: SMTP Authentication
+// Whether or not to use SMTP authentication.
+if (!defined("EMAIL_SMTP_AUTH")) define("EMAIL_SMTP_AUTH", false);
+
+// Config: SMTP Username
+// The username to use for SMTP authentication.
+if (!defined("EMAIL_SMTP_USERNAME")) define("EMAIL_SMTP_USERNAME", "");
+
+// Config: SMTP Password
+// The password to use for SMTP authentication.
+if (!defined("EMAIL_SMTP_PASSWORD")) define("EMAIL_SMTP_PASSWORD", "");
+
+// Config: SMTP EHLO/HELO
+// The value to give when sending EHLO or HELO.
+if (!defined("EMAIL_SMTP_HELO")) define("EMAIL_SMTP_HELO", 'localhost');
+
+// Config: SMTP Timeout
+// The SMTP connection timeout.
+// Set the value to 0 to have no timeout.
+if (!defined("EMAIL_SMTP_TIMEOUT")) define("EMAIL_SMTP_TIMEOUT", 0);
+
 // END GENERATED
 
 // TODO: Disabled feature.

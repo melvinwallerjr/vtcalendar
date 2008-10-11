@@ -59,6 +59,21 @@ if (EXPORT_PATH == '') exit('EXPORT_PATH cannot be an empty string.');
 if (!is_numeric(MAX_EXPORT_EVENTS)) exit('MAX_EXPORT_EVENTS must be an numeric.');
 if (!is_numeric(EXPORT_CACHE_MINUTES)) exit('EXPORT_CACHE_MINUTES must be an numeric.');
 if (!is_bool(PUBLIC_EXPORT_VTCALXML)) exit('PUBLIC_EXPORT_VTCALXML must be a boolean true or false. Make sure it is not enclosed in quotes.');
+if (!is_bool(EMAIL_USEPEAR)) exit('EMAIL_USEPEAR must be a boolean true or false. Make sure it is not enclosed in quotes.');
+if (EMAIL_USEPEAR) {
+	if (!is_string(EMAIL_SMTP_HOST)) exit('EMAIL_SMTP_HOST must be a string.');
+	if (EMAIL_SMTP_HOST == '') exit('EMAIL_SMTP_HOST cannot be an empty string.');
+	if (!is_numeric(EMAIL_SMTP_PORT)) exit('EMAIL_SMTP_PORT must be an numeric.');
+	if (!is_bool(EMAIL_SMTP_AUTH)) exit('EMAIL_SMTP_AUTH must be a boolean true or false. Make sure it is not enclosed in quotes.');
+	if (EMAIL_SMTP_AUTH) {
+		if (!is_string(EMAIL_SMTP_USERNAME)) exit('EMAIL_SMTP_USERNAME must be a string.');
+		if (EMAIL_SMTP_USERNAME == '') exit('EMAIL_SMTP_USERNAME cannot be an empty string.');
+		if (!is_string(EMAIL_SMTP_PASSWORD)) exit('EMAIL_SMTP_PASSWORD must be a string.');
+		if (EMAIL_SMTP_PASSWORD == '') exit('EMAIL_SMTP_PASSWORD cannot be an empty string.');
+}
+	if (!is_string(EMAIL_SMTP_HELO)) exit('EMAIL_SMTP_HELO must be a string.');
+	if (!is_numeric(EMAIL_SMTP_TIMEOUT)) exit('EMAIL_SMTP_TIMEOUT must be an numeric.');
+}
 
 // =====================================
 // Manual Config Validation

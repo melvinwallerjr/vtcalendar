@@ -24,6 +24,8 @@ X Add colors to vtcal_colors for new CSS
 - Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database:
 (?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
 - Validate iCalendar export format.
+- Allow data currently stored in session to be loaded from the DB or a file.
+X Allow SMTP e-mail via Pear::Mail.
 
 OLD TODO:
 ===========================

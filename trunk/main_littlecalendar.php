@@ -146,14 +146,23 @@ function displayMonthSelector() {
 		<tr>
 			<!-- Left Arrow Button -->
 			<td align="left" valign="middle" width="17"><div id="LeftArrowButton"><a title="<?php echo lang('previous_month'); ?>" href="<?php
-			echo 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"));
-			echo $queryStringExtension;
-			?>" onclick="return ChangeCalendar('Left','<?php
-			echo "main_littlecalendar.php?view=".$view;
-			echo "&littlecal=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"));
-			echo "&timebegin=".urlencode($timebegin);
-			echo $queryStringExtension;
-			?>');"><b>&laquo;</b></a></div><div id="LeftArrowButtonDisabled" style="display: none;"><b>&laquo;</b></div></td>
+			
+			echo 'main.php?'
+				.'calendarid='.urlencode($_SESSION['CALENDAR_ID'])
+				.'&view='.$view
+				."&timebegin=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"))
+				.$queryStringExtension;
+				
+			?>"<?php
+			if ($view != 'month') {
+				echo ' onclick="return ChangeCalendar(\'Left\',\'';
+				echo "main_littlecalendar.php?view=".$view;
+				echo "&littlecal=".urlencode(datetime2timestamp($minus_one_month['year'],$minus_one_month['month'],$minus_one_month['day'],12,0,"am"));
+				echo "&timebegin=".urlencode($timebegin);
+				echo $queryStringExtension;
+				echo '\');"';
+			}
+			?>><b>&laquo;</b></a></div><div id="LeftArrowButtonDisabled" style="display: none;"><b>&laquo;</b></div></td>
 			<!-- Date Label -->
 			<td align="center" nowrap valign="middle"><b><?php
 					if ( ($view == "month" && $showdate['month'] == $month['month'] && $showdate['year'] == $month['year'] ) || !$enableViewMonth ) {
@@ -171,12 +180,16 @@ function displayMonthSelector() {
 			<td align="right" valign="middle" width="17"><div id="RightArrowButton"><a title="<?php echo lang('next_month'); ?>" href="<?php
 			echo 'main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view='.$view."&timebegin=".urlencode(datetime2timestamp($plus_one_month['year'],$plus_one_month['month'],$plus_one_month['day'],12,0,"am"));
 			echo $queryStringExtension;
-			?>" onclick="return ChangeCalendar('Right','<?php
-			echo "main_littlecalendar.php?view=".$view;
-			echo "&littlecal=".urlencode(datetime2timestamp($plus_one_month['year'],$plus_one_month['month'],$plus_one_month['day'],12,0,"am"));
-			echo "&timebegin=".urlencode($timebegin);
-			echo $queryStringExtension;
-			?>');"><b>&raquo;</b></a></div><div id="RightArrowButtonDisabled" style="display: none;"><b>&raquo;</b></div></td>
+			?>"<?php
+			if ($view != 'month') {
+				echo ' onclick="return ChangeCalendar(\'Right\',\'';
+				echo "main_littlecalendar.php?view=".$view;
+				echo "&littlecal=".urlencode(datetime2timestamp($plus_one_month['year'],$plus_one_month['month'],$plus_one_month['day'],12,0,"am"));
+				echo "&timebegin=".urlencode($timebegin);
+				echo $queryStringExtension;
+				echo '\');"';
+			}
+			?>><b>&raquo;</b></a></div><div id="RightArrowButtonDisabled" style="display: none;"><b>&raquo;</b></div></td>
 		</tr>
 	</table>
 	<!-- End Month Selector -->

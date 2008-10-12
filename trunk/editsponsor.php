@@ -28,7 +28,7 @@ require_once('application.inc.php');
 	function checksponsor(&$sponsor) {
 		return (!empty($sponsor['name']) &&
 			 	    !empty($sponsor['email']) &&
-						(empty(checkURL($sponsor['url'])) || checkURL($sponsor['url'])));
+						(empty($sponsor['url']) || checkURL($sponsor['url'])));
 	}
 
 	function emailsponsoraccountchanged(&$sponsor) {

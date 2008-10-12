@@ -31,7 +31,7 @@ function displaylogin($errormsg="") {
 	?>
 	<div>
 	<?php @(readfile('static-includes/loginform-pre.txt')); ?>
-	<form method="post" action="<?php echo SECUREBASEURL; ?>update.php" name="loginform">
+	<form method="post" action="<?php echo SECUREBASEURL . basename($_SERVER['PHP_SELF']) . '?' . $_SERVER['QUERY_STRING']; ?>" name="loginform">
 	<?php
 	if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($eventid),"\">\n"; }
 	if (isset($httpreferer)) {  echo "<input type=\"hidden\" name=\"httpreferer\" value=\"",htmlentities($httpreferer),"\">\n"; }
@@ -474,7 +474,7 @@ function authorized() {
  */
 function viewauthorized() {
 	// Return true if the calendar does not require authorization.
-	if ( $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0 ) return true;
+	if ( $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) return true;
 
 	// Default that the user does not have access.
 	$returnValue = false;
@@ -491,22 +491,39 @@ function viewauthorized() {
 	
 	// Check if the user should be able to view the calendar.
 	else {
-			// checking authorization
-			$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
+		// Check if user is assigned to one of this calendar's sponsors.
+		$result =& DBQuery("SELECT * FROM vtcal_auth v WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
+		
+		if (is_string($result)) {
+			displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
+		}
+		else {
+			$sponsorCount = $result->numRows();
+			$result->free();
 			
-			if (is_string($result)) {
-				displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
+			if ($sponsorCount > 0) {
+				$_SESSION["CALENDAR_LOGIN"] = $_SESSION['CALENDAR_ID'];
+				$returnValue = true;
 			}
 			else {
-				if ($result->numRows() > 0) {
-					$_SESSION["CALENDAR_LOGIN"] = $_SESSION['CALENDAR_ID'];
-					$returnValue = true;
+				// Check if the user is marked as having view authorization.
+				$result =& DBQuery("SELECT * FROM vtcal_calendarviewauth WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "' AND userid='" . sqlescape($_SESSION["AUTH_USERID"]) . "'");
+				
+				if (is_string($result)) {
+					displaylogin(lang('login_failed') . "<br>Reason: A database error was encountered: " . $result);
 				}
 				else {
-					displaylogin(lang('login_failed'));
+					if ($result->numRows() > 0) {
+						$_SESSION["CALENDAR_LOGIN"] = $_SESSION['CALENDAR_ID'];
+						$returnValue = true;
+					}
+					else {
+						displaylogin(lang('login_failed'));
+					}
+					$result->free();
 				}
-				$result->free();
 			}
+		}
 	}
 	
 	return $returnValue;

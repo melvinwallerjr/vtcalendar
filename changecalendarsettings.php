@@ -129,8 +129,8 @@ if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 		<table border="0">
 			<tr align="left" valign="top">
 				<td><input type="checkbox" name="forwardeventdefault" id="forwardeventdefault" value="1"<?php if ($forwardeventdefault=="1") { echo " checked"; } ?>></td>
-				<td><strong><label for="forwardeventdefault">By default also display events on the <?php echo $defaultcalendarname ?></label></strong> <br>
-					(Sponsors can still disable this on a per-event basis)</td>
+				<td><strong><label for="forwardeventdefault"><?php echo lang('forward_event_default'); ?> <?php echo $defaultcalendarname ?></label></strong> <br>
+					<?php echo lang('forward_event_default_disable'); ?></td>
 			</tr>
 		</table><?php
 	}

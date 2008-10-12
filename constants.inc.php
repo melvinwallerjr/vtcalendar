@@ -8,8 +8,6 @@ define("CRLF", "\r\n");
 				 TODO: Merge with section later in this file.
 ============================================================ */
 
-define("REGEXVALIDCOLOR","/^#[ABCDEFabcdef0-9]{6,6}$/");
-define("MAXLENGTH_SPONSOR","50"); // NOT CONSISTANT (see below) -- only in import.php
 define("FEEDBACKPOS","0");
 define("FEEDBACKNEG","1");
 
@@ -26,15 +24,12 @@ define("NOW_AS_TIMENUM",  timestamp2timenumber(NOW_AS_TEXT));
 ============================================================ */
 
 // Regular Expressions that validate text input
-define("constValidTextCharFullRegEx",'\s\x20-\x7E\xA0-\xFF'); // Includes all valid ISO-8859-1 characters
-define("constValidTextCharWithoutSpacesRegEx",'\w~!@#\$%^&*\(\)\-+=\{\}\[\]\|\\\:";\'<>?,.\/'.chr(188).chr(189).chr(190)); //188, 189, 190 are 1/4, 1/2, 3/4 respectively
-define("constValidTextCharWithSpacesRegEx",' '.constValidTextCharWithoutSpacesRegEx);
-define("constValidTextCharWithWhitespaceRegEx",'\s'.constValidTextCharWithoutSpacesRegEx);
-
-define("MAXLENGTH_PASSWORD",20);
-define("constPasswordRegEx", '/^['.constValidTextCharWithoutSpacesRegEx.']{1,'.MAXLENGTH_PASSWORD.'}$/');
+define("REGEX_VALIDTEXTCHAR",'\x21-\x7E\xA1-\xFF'); // Includes all valid ISO-8859-1 characters except whitespace.
+define("REGEX_VALIDTEXTCHAR_WITH_SPACES",'\x20'.REGEX_VALIDTEXTCHAR);
+define("REGEX_VALIDTEXTCHAR_WITH_WHITESPACE",'\s'.REGEX_VALIDTEXTCHAR);
 
 // Max length of input
+define("MAXLENGTH_PASSWORD",20);
 define("MAXLENGTH_CALENDARID",50);
 define("MAXLENGTH_CALENDARNAME",100);
 define("MAXLENGTH_CALENDARTITLE",50);

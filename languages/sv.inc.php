@@ -1,4 +1,7 @@
 <?php
+
+// Original by: Björn Wiberg -- bwiberg at users.sourceforge.net
+
 $lang['encoding'] = 'ISO-8859-1';
 
 // ================================== public interface =====================================

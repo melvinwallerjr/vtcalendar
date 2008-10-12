@@ -7,6 +7,7 @@ High:
 - Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database:
   (?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
 - Validate iCalendar export format.
+- Check help text to see if it is still accurate.
 
 Low:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)

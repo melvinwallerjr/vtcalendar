@@ -55,7 +55,7 @@ TODO for Version 3.x:
 - Allow any sponsor to be the end of the approval chain, to allow sponsors that can make events public without having access to modify the calendar settings.
 - Allow 'additional categories' for events, which would be used when a user filters the calendar.
 - Allow URLs to built programmatically to allow links like http://localhost/vtcalendar/{calendarid}/{eventid} or http://localhost/vtcalendar/{calendarid}/month/2008-01
-
+- Allow an instance of an event to be separated from the original repeating event. This would essentially be a copy, followed by adding an exclude to the repeating definition once the copy is posted.
 
 OLD TODO:
 ===========================

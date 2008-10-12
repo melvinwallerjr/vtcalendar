@@ -269,6 +269,7 @@ if (!defined("EMAIL_SMTP_TIMEOUT")) define("EMAIL_SMTP_TIMEOUT", 0);
 // END GENERATED
 
 define("ALLOWED_YEARS_AHEAD", 3);
+define("INCLUDE_MANDATORY_HEADERFOOTER_HTML", false);
 
 // TODO: Disabled feature.
 define("AUTH_HTTP_CACHE", false);

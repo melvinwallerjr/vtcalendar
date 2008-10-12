@@ -39,8 +39,12 @@ function pageheader($title, $navbaractive) {
 	</head>
 	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
 	
+	<?php if ($_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-pre-header.txt')); ?>
+	
 	<!-- Start Calendar Header --><?php echo $_SESSION['CALENDAR_HEADER']; ?><!-- End Calendar Header -->
 
+	<?php if ($_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-post-header.txt')); ?>
+	
 	<div id="CalendarBlock">
 	
 	<!-- Start of Top Navi Table -->
@@ -102,9 +106,13 @@ function pagefooter() {
 	// End of <div id="CalendarBlock">
 	?></div>
 
+	<?php if ($_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-pre-footer.txt')); ?>
+
 	<!-- Start Calendar Footer -->
 	<?php echo $_SESSION['CALENDAR_FOOTER']; ?>
 	<!-- End Calendar Footer -->
+
+	<?php if ($_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-post-footer.txt')); ?>
 
 	</body>
 	</html>

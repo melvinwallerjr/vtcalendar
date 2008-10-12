@@ -56,7 +56,7 @@ function displaylogin($errormsg="") {
 	<script language="JavaScript1.2"><!--
 		document.loginform.login_userid.focus();
 	//--></script>
-	<?php @(readfile('static-includes/xloginform-post.txt')); ?>
+	<?php @(readfile('static-includes/loginform-post.txt')); ?>
 	</div>
 	<?php
 	contentsection_end();

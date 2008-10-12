@@ -36,7 +36,7 @@ function inputdate($month,$monthvar,$day,$dayvar,$year,$yearvar) {
 	// print list with years and select the one read from the DB
 	$currentyear = date("Y", NOW);
 	if (!empty($year) && $year < $currentyear) { echo "<option selected value=\"",$year,"\">",$year,"</option>\n"; }
-	for ($i=$currentyear;$i<=$currentyear+3;$i++) {
+	for ($i=$currentyear;$i<=$currentyear+ALLOWED_YEARS_AHEAD;$i++) {
 		echo "<option ";
 		if ($year==$i) { echo "selected "; }
 		echo "value=\"",$i,"\">",$i,"</option>\n";

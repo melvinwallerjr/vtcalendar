@@ -14,7 +14,7 @@
         </Config>
         <Config Label="Language" Variable="LANGUAGE" Type="string" Required="true">
             <Default>en</Default>
-            <Example>en, de</Example>
+        	<Example>en (English), de (German), sv (Swedish)</Example>
             <Comment>
                 <Line>Language used (refers to language file in directory /languages)</Line>
             </Comment>

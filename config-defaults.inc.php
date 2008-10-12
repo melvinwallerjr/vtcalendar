@@ -21,7 +21,7 @@ if (!defined("TITLEPREFIX")) define("TITLEPREFIX", "");
 if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 
 // Config: Language
-// Example: en, de
+// Example: en (English), de (German), sv (Swedish)
 // Language used (refers to language file in directory /languages)
 if (!defined("LANGUAGE")) define("LANGUAGE", 'en');
 

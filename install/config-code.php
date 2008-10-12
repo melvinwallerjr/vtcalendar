@@ -128,7 +128,7 @@ function BuildOutput(&$ConfigOutput) {
 
 	// Output Language
 	$ConfigOutput .= '// Config: Language'."\n";
-	$ConfigOutput .= '// Example: en, de'."\n";
+	$ConfigOutput .= '// Example: en (English), de (German), sv (Swedish)'."\n";
 	$ConfigOutput .= '// Default: en'."\n";
 	$ConfigOutput .= '// Language used (refers to language file in directory /languages)'."\n";
 	$ConfigOutput .= 'define("LANGUAGE", \''. escapephpstring($GLOBALS['Form_LANGUAGE']) .'\');'."\n\n";

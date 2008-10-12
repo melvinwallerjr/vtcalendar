@@ -57,7 +57,7 @@
                      <div class="DataFieldInput"><input type="text" id="Input_LANGUAGE" name="LANGUAGE" value="<?php echo htmlentities($GLOBALS['Form_LANGUAGE']); ?>" size="60"/> <span id="DataFieldInputExtra_LANGUAGE"> </span>
                      </div>
                      <div class="Example">
-                        <i>Example: en, de</i>
+                        <i>Example: en (English), de (German), sv (Swedish)</i>
                      </div>
                   </td>
                </tr>

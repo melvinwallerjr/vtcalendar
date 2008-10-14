@@ -8,8 +8,7 @@ High:
   (?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
 - Validate iCalendar export format.
 - Check help text to see if it is still accurate.
-- Improve upcoming print view
-- Allow the AJAX little calendar call to be optional
+- Improve 'Upcoming' print view
 - Change 'Jump To' in column back to being a single drop-down.
 - Allow data currently stored in session to be loaded from the DB or a file.
 
@@ -27,6 +26,7 @@ Low:
 - A 'comments' field for sponsors where additional information (e.g. mailing address or phone number) could be stored.
 - Include file from static-includes before sub-calendar headers, and after sub-calendar footers.
 - Develop tool for assisting with translations.
+- Store IP if logged in and logout if IP changes.
 
 Future:
 - A public submit an event form that submits on behalf of a non-admin sponsor (the calendar admin decides which).
@@ -35,6 +35,7 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- Disable AJAX in month view for little calendar month-navigation arrows.
 - Add helpsignup.php link back to displaylogin() in functions.inc.php
 - Should probably remove checking for HTTPS and just use SECUREBASEURL for the action of any forms that need to be secured. Search scripts for: _SERVER['HTTPS']
 - Filters need to work on upcoming events view.
@@ -56,6 +57,8 @@ TODO for Version 3.x:
 - Allow 'additional categories' for events, which would be used when a user filters the calendar.
 - Allow URLs to built programmatically to allow links like http://localhost/vtcalendar/{calendarid}/{eventid} or http://localhost/vtcalendar/{calendarid}/month/2008-01
 - Allow an instance of an event to be separated from the original repeating event. This would essentially be a copy, followed by adding an exclude to the repeating definition once the copy is posted.
+- Event details appear in small box when hovering over event in month/week/day view.
+- Database connection persistence?
 
 OLD TODO:
 ===========================

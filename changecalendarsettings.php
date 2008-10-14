@@ -23,7 +23,7 @@ if (!(isset($title) && isset($header) && isset($footer) && isset($viewauthrequir
 	$title = $_SESSION['CALENDAR_TITLE'];	
 	$header = $_SESSION['CALENDAR_HEADER'];	
 	$footer = $_SESSION['CALENDAR_FOOTER'];	
-	$viewauthrequired	= $_SESSION['CALENDAR_VIEWAUTHREQUIRED'];
+	$viewauthrequired = $_SESSION['CALENDAR_VIEWAUTHREQUIRED'];
 	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];		
 }
 
@@ -34,7 +34,7 @@ if ( isset($save) ) {
 	if ( !empty($users) ) {
 		// disassemble the users string and check all PIDs against the DB
 		$pidsInvalid = "";
-		$pidsTokens = split ( "[ ,;\n\t]", $users );
+		$pidsTokens = split( "[ ,;\n\t]", $users);
 		$pidsAdded = array();
 		for ($i=0; $i<count($pidsTokens); $i++) {
 			$pidName = $pidsTokens[$i];
@@ -43,9 +43,9 @@ if ( isset($save) ) {
 				if ( isValidUser ( $pidName ) ) {
 					$pidsAdded[$pidsAddedCount] = $pidName;
 					$pidsAddedCount++;
-				} 
+				}
 				else {
-					if ( !empty($pidsInvalid) ) { $pidsInvalid .= ","; }
+					if ( !empty($pidsInvalid) ) { $pidsInvalid .= ", "; }
 					$pidsInvalid .= $pidName;
 				}
 			} 
@@ -64,7 +64,6 @@ if ( isset($save) ) {
 	
 	if (empty($addPIDError)) { 
 		// save the settings to database
-		if ( $viewauthrequired != 0 ) { $viewauthrequired = 1; }
 		if ( !isset($forwardeventdefault) || $forwardeventdefault != "1" ) { $forwardeventdefault = "0"; }
 		$result =& DBQuery("UPDATE vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',"
 			. "viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."'"
@@ -149,8 +148,15 @@ if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 	<td align="left"><?php echo lang('no_login_required'); ?><br></td>
 </tr>
 <tr>
+	<td align="right" valign="top"><input type="radio" name="viewauthrequired" value="2"<?php
+	if ( $viewauthrequired == 2 ) { echo " checked"; }
+	?>></td>
+	
+	<td align="left"><?php echo lang('login_required_any_login'); ?></td>
+</tr>
+<tr>
 	<td align="right" valign="top"><input type="radio" name="viewauthrequired" value="1"<?php 
-	if ( $viewauthrequired != 0 ) { echo " checked"; }
+	if ( $viewauthrequired == 1 ) { echo " checked"; }
 	?>></td>
 	<td align="left"><?php echo lang('login_required_user_ids'); ?>:<br>
 <?php
@@ -158,8 +164,10 @@ if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 		feedback($addPIDError,1);
 	}
 
-	if ( isset($users) ) {
+	if (isset($users)) {
+		?><textarea name="users" cols="40" rows="6" wrap="virtual"><?php
 		echo $users;
+		?></textarea><br><?php
 	}
 	else {
 		$query = "SELECT * FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY userid";
@@ -180,7 +188,7 @@ if ( $_SESSION['CALENDAR_ID'] != "default" ) {
 		}
 	}
 		
-		?><i><?php echo lang('separate_user_ids_with_comma'); ?></i>
+		?><i><?php echo lang('separate_user_ids'); ?></i>
 	</td>
 </tr>
 </table>

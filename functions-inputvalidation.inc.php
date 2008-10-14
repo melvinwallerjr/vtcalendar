@@ -269,7 +269,7 @@ function isValidInput($value, $type) {
 		if (preg_match('/^['.REGEX_VALIDTEXTCHAR_WITH_WHITESPACE.']{1,'.MAXLENGTH_TITLE.'}$/',$value)) { return TRUE; }
 	}
 	elseif ($type=='viewauthrequired') {
-		if ($value=='0' || $value=='1') { return TRUE; }
+		if ($value=='0' || $value=='1' || $value=='2') { return TRUE; }
 	}
 	elseif ($type=='url') {
 		if (preg_match('/^['.REGEX_VALIDTEXTCHAR_WITH_WHITESPACE.']{1,'.MAXLENGTH_URL.'}$/',$value)) { return TRUE; }

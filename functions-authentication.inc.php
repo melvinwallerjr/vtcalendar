@@ -474,18 +474,18 @@ function authorized() {
  */
 function viewauthorized() {
 	// Return true if the calendar does not require authorization.
-	if ( $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) return true;
+	if ($_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) return true;
 
 	// Default that the user does not have access.
 	$returnValue = false;
 	
 	// Make sure the user is logged in.
-	if ( ($authresult = logUserIn()) !== true ) {
+	if (($authresult = logUserIn()) !== true) {
 		displaylogin( is_string($authresult) ? $authresult : "" );
 	}
 	
-	// Allow the user to view the calendar if they are already marked as having access.
-	elseif ($_SESSION['AUTH_ISMAINADMIN'] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION['CALENDAR_ID'])) {
+	// Allow the user to view the calendar if they are already marked as having access or if any user is allowed view access.
+	elseif ($_SESSION['AUTH_ISMAINADMIN'] || (isset($_SESSION["CALENDAR_LOGIN"]) && $_SESSION["CALENDAR_LOGIN"] == $_SESSION['CALENDAR_ID']) || $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 2) {
 		$returnValue = true;
 	}
 	

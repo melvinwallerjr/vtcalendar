@@ -11,6 +11,7 @@ High:
 - Improve 'Upcoming' print view
 - Change 'Jump To' in column back to being a single drop-down.
 - Allow data currently stored in session to be loaded from the DB or a file.
+- Update search logging/reporting so that it knows keywords can only be up to 255 characters.
 
 Low:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
@@ -48,6 +49,7 @@ Finished:
 - Allow SMTP e-mail via Pear::Mail.
 - Check input validation constants in constants.inc.php to determine the correct values and merge the constants as necessary.
 - Static files are now included pre/post the header/footer for sub-calendars. This allows for mandatory header/footer HTML.
+- Added new "view authentication" mode that allows any successfully authenticated user to view the calendar.
 
 TODO for Version 3.x:
 - Modular DB

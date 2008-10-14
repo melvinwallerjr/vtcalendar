@@ -216,9 +216,10 @@ $lang['footer_html'] = 'Footer HTML';
 $lang['forward_event_default'] = 'By default also display events on: ';
 $lang['forward_event_default'] = 'By default also display events on: ';
 $lang['forward_event_default_disable'] = '(Sponsors can still disable this on a per-event basis)';
-$lang['separate_user_ids_with_comma'] = '(separate user-id\'s with a comma)';
+$lang['separate_user_ids'] = '(put each user-id on a separate line)';
 $lang['no_login_required'] = 'no login required; everyone can view the calendar';
 $lang['login_required_user_ids'] = 'login required; only the following user-IDs can view the calendar';
+$lang['login_required_any_login'] = 'login required; any successfully authenticated user can view';
 $lang['login_required_for_viewing'] = 'Login required for viewing the calendar?';
 
 $lang['save_changes'] = 'Save changes';

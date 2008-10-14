@@ -76,7 +76,7 @@ elseif (is_int($calendardata)) {
 }
 
 // If the calendar requires authentication to view, then exit.
-elseif ($calendardata['viewauthrequired'] == '1') {
+elseif ($calendardata['viewauthrequired'] > 0) {
 	outputErrorMessage("The '".$CalendarID."' calendar requires authentication to be viewed, so it cannot be used by the export script.");
 }
 

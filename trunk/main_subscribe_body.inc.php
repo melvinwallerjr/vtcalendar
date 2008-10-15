@@ -40,7 +40,7 @@ if (is_dir($iCalDirName) && $iCalDir = opendir($iCalDirName)) {
 
 // Get the categories from the DB if no files were found (or if we never searched for files anyway).
 if ($fileCount == 0) {
-	$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
+	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
 	if (is_string($result)) {
 		DBErrorBox($result); 
 	}

@@ -15,7 +15,7 @@ function defaultevent(&$event,$sponsorid) {
 	$event['timeend_ampm']="pm";
 
 	// find sponsor name
-	$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
+	$result = DBQuery("SELECT name,url FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
 	$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 
 	$event['sponsorid']=$sponsorid;
@@ -227,7 +227,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	$defaultButtonPressed = isset($event['defaultdisplayedsponsor']) || isset($event['defaultdisplayedsponsorurl']) || isset($event['defaultallsponsor']);
 
 	// read sponsor name from DB
-	//$result = DBQuery("SELECT name,url FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
+	//$result = DBQuery("SELECT name,url FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($sponsorid)."'" ); 
 	//$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	
 	// switch from "recurring event" to "repeat ..."
@@ -471,7 +471,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 	<?php
 	
 	// read event categories from DB
-	$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
+	$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
 	// print list with categories and select the one read from the DB
 
@@ -631,7 +631,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 					<select id="selectedsponsorid" name="event[sponsorid]" size="1">
 						<?php
 						// read sponsors from DB
-						$result = DBQuery("SELECT * FROM vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
+						$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 						
 						// print list with sponsors and select the one read from the DB
 						
@@ -724,7 +724,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 							<select name="event[showincategory]" size="1">
 								<?php
 									// read event categories from DB
-									$result = DBQuery("SELECT * FROM vtcal_category WHERE calendarid='default' ORDER BY name ASC" );
+									$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='default' ORDER BY name ASC" );
 								
 									// print list with categories and select the one read from the DB
 									if (empty($event['showincategory'])) {

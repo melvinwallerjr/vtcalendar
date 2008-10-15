@@ -39,7 +39,7 @@ contentsection_begin(lang('searched_keywords'),true);
 </form>
 <?php
 
-$result =& DBquery("SELECT sum(count) as sum, keyword FROM vtcal_searchedkeywords WHERE searchdate >= '" . $rangestart . "' AND searchdate <= '" . $rangeend . "' GROUP BY keyword");
+$result =& DBquery("SELECT sum(count) as sum, keyword FROM ".TABLEPREFIX."vtcal_searchedkeywords WHERE searchdate >= '" . $rangestart . "' AND searchdate <= '" . $rangeend . "' GROUP BY keyword");
 
 if (is_string($result)) {
 	DBErrorBox($result);

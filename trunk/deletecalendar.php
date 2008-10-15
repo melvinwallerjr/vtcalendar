@@ -22,7 +22,7 @@ require_once('application.inc.php');
 	}
 
 	// make sure the calendar exists
-	$result =& DBQuery("SELECT * FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
+	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
 	if (is_string($result)) { DBErrorBox("Error determining if calendar exists: " . $result); exit; };
 	
 	if ( $result->numRows() != 1 ) {
@@ -34,41 +34,41 @@ require_once('application.inc.php');
 	}
 
 	if (isset($save) ) {
-		$result =& DBQuery("DELETE FROM vtcal_event WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting events from vtcal_event: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_event WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting events from ".TABLEPREFIX."vtcal_event: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_event_repeat WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting repeating events from vtcal_event_repeat: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_event_repeat WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting repeating events from ".TABLEPREFIX."vtcal_event_repeat: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_event_public WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting public events from vtcal_event_public: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_event_public WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting public events from ".TABLEPREFIX."vtcal_event_public: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_calendarviewauth WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting view auth from vtcal_calendarviewauth: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_calendarviewauth WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting view auth from ".TABLEPREFIX."vtcal_calendarviewauth: " . $result); exit; };
 		
 		$result =& DBQuery("DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."'" );
 		if (is_string($result)) { DBErrorBox("Error deleting auth from vtcal_auth: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_searchlog WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting log entries from vtcal_searchlog: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_searchlog WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting log entries from ".TABLEPREFIX."vtcal_searchlog: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_searchkeyword WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting keywords from vtcal_searchkeyword: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_searchkeyword WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting keywords from ".TABLEPREFIX."vtcal_searchkeyword: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_searchfeatured WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error deleting featured keywords from vtcal_searchfeatured: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_searchfeatured WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error deleting featured keywords from ".TABLEPREFIX."vtcal_searchfeatured: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_category WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error categories from vtcal_category: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error categories from ".TABLEPREFIX."vtcal_category: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_template WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error templates from vtcal_template: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_template WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error templates from ".TABLEPREFIX."vtcal_template: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error sponsors from vtcal_sponsor: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error sponsors from ".TABLEPREFIX."vtcal_sponsor: " . $result); exit; };
 		
-		$result =& DBQuery("DELETE FROM vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
-		if (is_string($result)) { DBErrorBox("Error the calendar from vtcal_calendar: " . $result); exit; };
+		$result =& DBQuery("DELETE FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($cal['id'])."'" );
+		if (is_string($result)) { DBErrorBox("Error the calendar from ".TABLEPREFIX."vtcal_calendar: " . $result); exit; };
 		
 		redirect2URL("managecalendars.php");
 		exit;

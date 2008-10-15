@@ -24,7 +24,7 @@ if (isset($approveallevents)) {
 	for ($i = 0; $i < count($eventids); $i++) {
 		$eventid = $eventids[$i];
 		if (!empty($eventid)) {
-			$result =& DBQuery("SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
+			$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
 			
 			if (is_string($result)) { DBErrorBox($result); exit; }
 			
@@ -47,7 +47,7 @@ if (isset($approveallevents)) {
 // Approve a single event.
 elseif (isset($eventid)) {
 	// check if event is marked as "submitted" (to avoid multiple approvals/rejections)
-	$query = "SELECT * FROM vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
+	$query = "SELECT * FROM ".TABLEPREFIX."vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'";
 	$result =& DBQuery($query ); 
 	
 	if (is_string($result)) { DBErrorBox($result); exit; }
@@ -65,13 +65,13 @@ elseif (isset($eventid)) {
 			repeatpublicizeevent($eventid,$event);
 		}
 		elseif (isset($rejectconfirmedthis)) {
-			$result =& DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
+			$result =& DBQuery("UPDATE ".TABLEPREFIX."vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($eventid)."'" );
 			if (is_string($result)) { DBErrorBox($result); exit; }
 			sendrejectionemail($eventid);
 		}
 		elseif (isset($rejectconfirmedall)) {
 			// determine repeatid
-			$result =& DBQuery("UPDATE vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND approved=0 AND repeatid='".sqlescape($event['repeatid'])."'" ); 
+			$result =& DBQuery("UPDATE ".TABLEPREFIX."vtcal_event SET approved=-1, rejectreason='".sqlescape($rejectreason)."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND approved=0 AND repeatid='".sqlescape($event['repeatid'])."'" ); 
 			if (is_string($result)) { DBErrorBox($result); exit; }
 			sendrejectionemail($eventid);
 		}
@@ -91,7 +91,7 @@ contentsection_begin(lang('approve_reject_event_updates'),true);
 
 // print list with events
 $query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory";
-$query.= " FROM vtcal_event e, vtcal_category c, vtcal_sponsor s";
+$query.= " FROM ".TABLEPREFIX."vtcal_event e, ".TABLEPREFIX."vtcal_category c, ".TABLEPREFIX."vtcal_sponsor s";
 $query.= " WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id AND e.approved = 0";
 $query.= " ORDER BY e.timebegin asc, e.wholedayevent DESC";
 $result =& DBQuery($query ); 
@@ -191,7 +191,7 @@ DBclose();
 	
 function sendrejectionemail($eventid) {
 	// determine sponsor id, name
-	$query = "SELECT e.title AS event_title, e.rejectreason AS event_rejectreason, s.name AS sponsor_name, s.email AS sponsor_email, s.id AS sponsorid FROM vtcal_event e, vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
+	$query = "SELECT e.title AS event_title, e.rejectreason AS event_rejectreason, s.name AS sponsor_name, s.email AS sponsor_email, s.id AS sponsorid FROM ".TABLEPREFIX."vtcal_event e, ".TABLEPREFIX."vtcal_sponsor s WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.sponsorid=s.id AND e.id='".sqlescape($eventid)."'";
 	$result =& DBQuery($query ); 
 	if (!is_string($result)) {
 		$d =& $result->fetchRow(DB_FETCHMODE_ASSOC);

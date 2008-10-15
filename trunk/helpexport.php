@@ -58,7 +58,7 @@ require_once('application.inc.php');
 <br>
 <?php
 // read event categories from DB
-$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
+$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" ); 
 
 if (is_string($result)) {
 	DBErrorBox($result); 

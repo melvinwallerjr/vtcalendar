@@ -6,6 +6,7 @@ $Form_TITLEPREFIX = '';
 $Form_TITLESUFFIX = '';
 $Form_LANGUAGE = 'en';
 $Form_DATABASE = '';
+$Form_TABLEPREFIX = '';
 $Form_SQLLOGFILE = '';
 $Form_REGEXVALIDUSERID = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/';
 $Form_AUTH_DB = true;
@@ -55,6 +56,7 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_TITLESUFFIX = $_POST['TITLESUFFIX'];
 	$Form_LANGUAGE = $_POST['LANGUAGE'];
 	$Form_DATABASE = $_POST['DATABASE'];
+	$Form_TABLEPREFIX = $_POST['TABLEPREFIX'];
 	$Form_SQLLOGFILE = $_POST['SQLLOGFILE'];
 	$Form_REGEXVALIDUSERID = $_POST['REGEXVALIDUSERID'];
 	$Form_AUTH_DB = isset($_POST['AUTH_DB']);
@@ -139,6 +141,15 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// This is the database connection string used by the PEAR library.'."\n";
 	$ConfigOutput .= '// It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"'."\n";
 	$ConfigOutput .= 'define("DATABASE", \''. escapephpstring($GLOBALS['Form_DATABASE']) .'\');'."\n\n";
+
+	// Output Table Prefix
+	$ConfigOutput .= '// Config: Table Prefix'."\n";
+	$ConfigOutput .= '// Example: public'."\n";
+	$ConfigOutput .= '// In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.'."\n";
+	$ConfigOutput .= '// If this is the case for you, enter the name of the schema here.'."\n";
+	$ConfigOutput .= '// It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.'."\n";
+	$ConfigOutput .= '// If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.'."\n";
+	$ConfigOutput .= 'define("TABLEPREFIX", \''. escapephpstring($GLOBALS['Form_TABLEPREFIX']) .'\');'."\n\n";
 
 	// Output SQL Log File
 	$ConfigOutput .= '// Config: SQL Log File'."\n";

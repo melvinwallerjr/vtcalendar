@@ -9,6 +9,7 @@ if (!is_string(LANGUAGE)) exit('LANGUAGE must be a string.');
 if (LANGUAGE == '') exit('LANGUAGE cannot be an empty string.');
 if (!is_string(DATABASE)) exit('DATABASE must be a string.');
 if (DATABASE == '') exit('DATABASE cannot be an empty string.');
+if (!is_string(TABLEPREFIX)) exit('TABLEPREFIX must be a string.');
 if (!is_string(SQLLOGFILE)) exit('SQLLOGFILE must be a string.');
 if (!is_string(REGEXVALIDUSERID)) exit('REGEXVALIDUSERID must be a string.');
 if (REGEXVALIDUSERID == '') exit('REGEXVALIDUSERID cannot be an empty string.');

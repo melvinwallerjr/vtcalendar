@@ -119,6 +119,7 @@
                      <div class="CommentLine">If this is the case for you, enter the name of the schema here.</div>
                      <div class="CommentLine">It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.</div>
                      <div class="CommentLine">If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.</div>
+                     <div class="CommentLine">Note: If specified, the table prefix MUST end with a period.</div>
                   </td>
                </tr>
             </table>

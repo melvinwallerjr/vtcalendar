@@ -149,6 +149,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// If this is the case for you, enter the name of the schema here.'."\n";
 	$ConfigOutput .= '// It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.'."\n";
 	$ConfigOutput .= '// If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.'."\n";
+	$ConfigOutput .= '// Note: If specified, the table prefix MUST end with a period.'."\n";
 	$ConfigOutput .= 'define("TABLEPREFIX", \''. escapephpstring($GLOBALS['Form_TABLEPREFIX']) .'\');'."\n\n";
 
 	// Output SQL Log File

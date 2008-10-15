@@ -41,6 +41,7 @@ if (!defined("DATABASE")) define("DATABASE", "");
 // If this is the case for you, enter the name of the schema here.
 // It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.
 // If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.
+// Note: If specified, the table prefix MUST end with a period.
 if (!defined("TABLEPREFIX")) define("TABLEPREFIX", "");
 
 // Config: SQL Log File

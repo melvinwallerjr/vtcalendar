@@ -31,7 +31,9 @@ $FormDataDefaults = $FormData;
 $FormErrors = array();
 
 $lang['export_page_header'] = 'Export Events';
-$lang['export_form_description'] = 'CHANGE THIS';
+
+// TODO: Improve this description.
+$lang['export_form_description'] = 'Export events to a file you can save on your computer as a backup, or to transfer to another calendar.';
 
 // Generic messages
 $lang['export_leaveblank'] = 'Leave blank for no maximum';

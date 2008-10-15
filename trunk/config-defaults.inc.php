@@ -25,6 +25,11 @@ if (!defined("TITLESUFFIX")) define("TITLESUFFIX", "");
 // Language used (refers to language file in directory /languages)
 if (!defined("LANGUAGE")) define("LANGUAGE", 'en');
 
+// Config: Max Year Ahead for New Events
+// The number of years into the future that the calendar will allow users to create events for.
+// For example, if the current year is 2000 then a value of '3' will allow users to create events up to 2003.
+if (!defined("ALLOWED_YEARS_AHEAD")) define("ALLOWED_YEARS_AHEAD", 3);
+
 // =====================================
 // Database
 // =====================================
@@ -202,6 +207,30 @@ if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 // Values must be true or false.
 if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 
+// Config: Include Static Pre-Header HTML
+// Include the file located at ./static-includes/subcalendar-pre-header.txt before the calendar header HTML for all calendars.
+// This allows you to enforce a standard header for all calendars.
+// This does not affect the default calendar.
+if (!defined("INCLUDE_STATIC_PRE_HEADER")) define("INCLUDE_STATIC_PRE_HEADER", false);
+
+// Config: Include Static Post-Header HTML
+// Include the file located at ./static-includes/subcalendar-post-header.txt after the calendar header HTML for all calendars.
+// This allows you to enforce a standard header for all calendars.
+// This does not affect the default calendar.
+if (!defined("INCLUDE_STATIC_POST_HEADER")) define("INCLUDE_STATIC_POST_HEADER", false);
+
+// Config: Include Static Pre-Footer HTML
+// Include the file located at ./static-includes/subcalendar-pre-footer.txt before the calendar footer HTML for all calendars.
+// This allows you to enforce a standard footer for all calendars.
+// This does not affect the default calendar.
+if (!defined("INCLUDE_STATIC_PRE_FOOTER")) define("INCLUDE_STATIC_PRE_FOOTER", false);
+
+// Config: Include Static Post-Footer HTML
+// Include the file located at ./static-includes/subcalendar-post-footer.txt after the calendar footer HTML for all calendars.
+// This allows you to enforce a standard footer for all calendars.
+// This does not affect the default calendar.
+if (!defined("INCLUDE_STATIC_POST_FOOTER")) define("INCLUDE_STATIC_POST_FOOTER", false);
+
 // =====================================
 // Cache
 // =====================================
@@ -277,12 +306,12 @@ if (!defined("EMAIL_SMTP_TIMEOUT")) define("EMAIL_SMTP_TIMEOUT", 0);
 
 // END GENERATED
 
-define("ALLOWED_YEARS_AHEAD", 3);
+//define("ALLOWED_YEARS_AHEAD", 3);
 
-define("INCLUDE_STATIC_PRE_HEADER", false);
-define("INCLUDE_STATIC_POST_HEADER", false);
-define("INCLUDE_STATIC_PRE_FOOTER", false);
-define("INCLUDE_STATIC_POST_FOOTER", false);
+//define("INCLUDE_STATIC_PRE_HEADER", false);
+//define("INCLUDE_STATIC_POST_HEADER", false);
+//define("INCLUDE_STATIC_PRE_FOOTER", false);
+//define("INCLUDE_STATIC_POST_FOOTER", false);
 
 // TODO: Disabled feature.
 define("AUTH_HTTP_CACHE", false);

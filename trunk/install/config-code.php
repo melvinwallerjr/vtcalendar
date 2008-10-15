@@ -5,6 +5,7 @@ if (!defined("ALLOWINCLUDES")) exit;
 $Form_TITLEPREFIX = '';
 $Form_TITLESUFFIX = '';
 $Form_LANGUAGE = 'en';
+$Form_ALLOWED_YEARS_AHEAD = '3';
 $Form_DATABASE = '';
 $Form_TABLEPREFIX = '';
 $Form_SQLLOGFILE = '';
@@ -35,6 +36,10 @@ $Form_COLUMNSIDE = 'RIGHT';
 $Form_SHOW_UPCOMING_TAB = true;
 $Form_MAX_UPCOMING_EVENTS = '75';
 $Form_SHOW_MONTH_OVERLAP = true;
+$Form_INCLUDE_STATIC_PRE_HEADER = false;
+$Form_INCLUDE_STATIC_POST_HEADER = false;
+$Form_INCLUDE_STATIC_PRE_FOOTER = false;
+$Form_INCLUDE_STATIC_POST_FOOTER = false;
 $Form_MAX_CACHESIZE_CATEGORYNAME = '100';
 $Form_CACHE_ICS = false;
 $Form_EXPORT_PATH = 'export/export.php';
@@ -55,6 +60,7 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_TITLEPREFIX = $_POST['TITLEPREFIX'];
 	$Form_TITLESUFFIX = $_POST['TITLESUFFIX'];
 	$Form_LANGUAGE = $_POST['LANGUAGE'];
+	$Form_ALLOWED_YEARS_AHEAD = $_POST['ALLOWED_YEARS_AHEAD'];
 	$Form_DATABASE = $_POST['DATABASE'];
 	$Form_TABLEPREFIX = $_POST['TABLEPREFIX'];
 	$Form_SQLLOGFILE = $_POST['SQLLOGFILE'];
@@ -95,6 +101,10 @@ if (isset($_POST['SaveConfig'])) {
 		$Form_MAX_UPCOMING_EVENTS = $_POST['MAX_UPCOMING_EVENTS'];
 	}
 	$Form_SHOW_MONTH_OVERLAP = isset($_POST['SHOW_MONTH_OVERLAP']);
+	$Form_INCLUDE_STATIC_PRE_HEADER = isset($_POST['INCLUDE_STATIC_PRE_HEADER']);
+	$Form_INCLUDE_STATIC_POST_HEADER = isset($_POST['INCLUDE_STATIC_POST_HEADER']);
+	$Form_INCLUDE_STATIC_PRE_FOOTER = isset($_POST['INCLUDE_STATIC_PRE_FOOTER']);
+	$Form_INCLUDE_STATIC_POST_FOOTER = isset($_POST['INCLUDE_STATIC_POST_FOOTER']);
 	$Form_MAX_CACHESIZE_CATEGORYNAME = $_POST['MAX_CACHESIZE_CATEGORYNAME'];
 	$Form_CACHE_ICS = isset($_POST['CACHE_ICS']);
 	$Form_EXPORT_PATH = $_POST['EXPORT_PATH'];
@@ -134,6 +144,13 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Default: en'."\n";
 	$ConfigOutput .= '// Language used (refers to language file in directory /languages)'."\n";
 	$ConfigOutput .= 'define("LANGUAGE", \''. escapephpstring($GLOBALS['Form_LANGUAGE']) .'\');'."\n\n";
+
+	// Output Max Year Ahead for New Events
+	$ConfigOutput .= '// Config: Max Year Ahead for New Events'."\n";
+	$ConfigOutput .= '// Default: 3'."\n";
+	$ConfigOutput .= '// The number of years into the future that the calendar will allow users to create events for.'."\n";
+	$ConfigOutput .= '// For example, if the current year is 2000 then a value of \'3\' will allow users to create events up to 2003.'."\n";
+	$ConfigOutput .= 'define("ALLOWED_YEARS_AHEAD", \''. escapephpstring($GLOBALS['Form_ALLOWED_YEARS_AHEAD']) .'\');'."\n\n";
 
 	// Output Database Connection String
 	$ConfigOutput .= '// Config: Database Connection String'."\n";
@@ -328,6 +345,38 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.'."\n";
 	$ConfigOutput .= '// Values must be true or false.'."\n";
 	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Include Static Pre-Header HTML
+	$ConfigOutput .= '// Config: Include Static Pre-Header HTML'."\n";
+	$ConfigOutput .= '// Default: false'."\n";
+	$ConfigOutput .= '// Include the file located at ./static-includes/subcalendar-pre-header.txt before the calendar header HTML for all calendars.'."\n";
+	$ConfigOutput .= '// This allows you to enforce a standard header for all calendars.'."\n";
+	$ConfigOutput .= '// This does not affect the default calendar.'."\n";
+	$ConfigOutput .= 'define("INCLUDE_STATIC_PRE_HEADER", ' . ($GLOBALS['Form_INCLUDE_STATIC_PRE_HEADER'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Include Static Post-Header HTML
+	$ConfigOutput .= '// Config: Include Static Post-Header HTML'."\n";
+	$ConfigOutput .= '// Default: false'."\n";
+	$ConfigOutput .= '// Include the file located at ./static-includes/subcalendar-post-header.txt after the calendar header HTML for all calendars.'."\n";
+	$ConfigOutput .= '// This allows you to enforce a standard header for all calendars.'."\n";
+	$ConfigOutput .= '// This does not affect the default calendar.'."\n";
+	$ConfigOutput .= 'define("INCLUDE_STATIC_POST_HEADER", ' . ($GLOBALS['Form_INCLUDE_STATIC_POST_HEADER'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Include Static Pre-Footer HTML
+	$ConfigOutput .= '// Config: Include Static Pre-Footer HTML'."\n";
+	$ConfigOutput .= '// Default: false'."\n";
+	$ConfigOutput .= '// Include the file located at ./static-includes/subcalendar-pre-footer.txt before the calendar footer HTML for all calendars.'."\n";
+	$ConfigOutput .= '// This allows you to enforce a standard footer for all calendars.'."\n";
+	$ConfigOutput .= '// This does not affect the default calendar.'."\n";
+	$ConfigOutput .= 'define("INCLUDE_STATIC_PRE_FOOTER", ' . ($GLOBALS['Form_INCLUDE_STATIC_PRE_FOOTER'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Include Static Post-Footer HTML
+	$ConfigOutput .= '// Config: Include Static Post-Footer HTML'."\n";
+	$ConfigOutput .= '// Default: false'."\n";
+	$ConfigOutput .= '// Include the file located at ./static-includes/subcalendar-post-footer.txt after the calendar footer HTML for all calendars.'."\n";
+	$ConfigOutput .= '// This allows you to enforce a standard footer for all calendars.'."\n";
+	$ConfigOutput .= '// This does not affect the default calendar.'."\n";
+	$ConfigOutput .= 'define("INCLUDE_STATIC_POST_FOOTER", ' . ($GLOBALS['Form_INCLUDE_STATIC_POST_FOOTER'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Max Category Name Cache Size
 	$ConfigOutput .= '// Config: Max Category Name Cache Size'."\n";

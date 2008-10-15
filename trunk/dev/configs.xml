@@ -35,6 +35,7 @@
     			<Line>If this is the case for you, enter the name of the schema here.</Line>
     			<Line>It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.</Line>
     			<Line>If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.</Line>
+    			<Line>Note: If specified, the table prefix MUST end with a period.</Line>
     		</Comment>
     	</Config>
         <Config Label="SQL Log File" Variable="SQLLOGFILE" Type="string">

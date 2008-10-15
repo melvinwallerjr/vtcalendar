@@ -92,7 +92,7 @@ if (SHOW_UPCOMING_TAB) {
 							?>><?php
 							
 							if (!empty($_SESSION["AUTH_SPONSORID"])) {
-								echo '<a href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$event['timebegin_year']."&timebegin_month=".$event['timebegin_month']."&timebegin_day=".$event['timebegin_day']."\" title=\"",lang('add_new_event'),"\">";
+								echo '<a class="NoPrint" href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$event['timebegin_year']."&timebegin_month=".$event['timebegin_month']."&timebegin_day=".$event['timebegin_day']."\" title=\"",lang('add_new_event'),"\">";
 								echo '<img style="padding-right: 4px;" src="images/new.gif" height="16" width="16" alt="',lang('add_new_event'),'" border="0" align="left"></a>';
 							}
 							

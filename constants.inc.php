@@ -2,12 +2,6 @@
 if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 
 define("CRLF", "\r\n");
-
-/* ============================================================
-         Constants that define valid values for fields.
-				 TODO: Merge with section later in this file.
-============================================================ */
-
 define("FEEDBACKPOS","0");
 define("FEEDBACKNEG","1");
 

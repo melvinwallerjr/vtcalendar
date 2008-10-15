@@ -21,7 +21,7 @@ $VariableErrors = array();
 LoadVariables();
 
 if (isset($save) && count($VariableErrors) == 0) {
-	$result =& DBQuery("SELECT count(*) as reccount FROM vtcal_colors WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "'");
+	$result =& DBQuery("SELECT count(*) as reccount FROM ".TABLEPREFIX."vtcal_colors WHERE calendarid='" . sqlescape($_SESSION['CALENDAR_ID']) . "'");
 	if (is_string($result)) { DBErrorBox($result); exit; }
 	
 	$count =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);

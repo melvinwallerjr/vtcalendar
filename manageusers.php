@@ -29,7 +29,7 @@ contentsection_begin(lang('manage_users'),true);
 <select name="userid" size="<?php echo $numLines; ?>" style="width:200px">
 <?php
 
-$result =& DBQuery("SELECT * FROM vtcal_user ORDER BY id" ); 
+$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_user ORDER BY id" ); 
 if (is_string($result)) {
 	DBErrorBox($result);
 }

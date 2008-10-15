@@ -60,7 +60,7 @@ helpwindow_header();
 <?php echo lang('help_import_data_format_intro');
 
 // read event categories from DB
-$result =& DBQuery("SELECT * FROM vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" );
+$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" );
 if (is_string($result)) {
 	DBErrorBox($result); 
 }

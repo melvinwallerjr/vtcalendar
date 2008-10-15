@@ -58,10 +58,10 @@ require_once('application.inc.php');
 	if (isset($save) && checkuser($user) && ($chooseuser || !userExistsInDB($user['id'])) ) { // save user into DB
 		if (!empty($chooseuser)) { // update an existing user
 			if ( $user['password'] == "#nochange$" ) { // update only the e-mail address
-				$result = DBQuery("UPDATE vtcal_user SET email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
+				$result = DBQuery("UPDATE ".TABLEPREFIX."vtcal_user SET email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
 			}	
 			else { // update password and email address
-				$result = DBQuery("UPDATE vtcal_user SET password='".sqlescape(crypt($user['password']))."',email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
+				$result = DBQuery("UPDATE ".TABLEPREFIX."vtcal_user SET password='".sqlescape(crypt($user['password']))."',email='".sqlescape($user['email'])."' WHERE id='".sqlescape($user['id'])."'" );
 			}
 			
 			emailuseraccountchanged($user);
@@ -69,7 +69,7 @@ require_once('application.inc.php');
 			redirect2URL("manageusers.php");
 		}
 		else { // insert as a new user
-			$query = "INSERT INTO vtcal_user (id,password,email) VALUES ('".sqlescape($user['id'])."','".sqlescape(crypt($user['password']))."','".sqlescape($user['email'])."')";
+			$query = "INSERT INTO ".TABLEPREFIX."vtcal_user (id,password,email) VALUES ('".sqlescape($user['id'])."','".sqlescape(crypt($user['password']))."','".sqlescape($user['email'])."')";
 			$result = DBQuery($query ); 
 
 			emailuseraccountchanged($user);
@@ -98,7 +98,7 @@ require_once('application.inc.php');
 	}
 
 	if (isset($user['id']) && (!isset($check) || $check != 1)) { // load user to update information if it's the first time the form is viewed
-		$result = DBQuery("SELECT * FROM vtcal_user WHERE id='".sqlescape($user['id'])."'" ); 
+		$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_user WHERE id='".sqlescape($user['id'])."'" ); 
 		$user = $result->fetchRow(DB_FETCHMODE_ASSOC);
 	} // end if: "if (isset($userid))"
 ?>

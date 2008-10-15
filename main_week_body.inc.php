@@ -54,7 +54,7 @@ else {
 		echo '<a href="main.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&view=day&timebegin=', urlencode(datetime2timestamp($iday['year'],$iday['month'],$iday['day'],12,0,"am")), $queryStringExtension ,'">' . week_header_date_format($iday['day'],Month_to_Text($iday['month']),0,3) . "</a></b></div>";
 
 		if (!empty($_SESSION["AUTH_SPONSORID"])) { // display "add event" icon
-			echo '<div style="padding-top: 3px;"><a href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
+			echo '<div style="padding-top: 3px;" class="NoPrint"><a href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
 			echo '<img src="images/new.gif" height="16" width="16" alt="',lang('add_new_event'),'" border="0"></a></div>';
 		}
 

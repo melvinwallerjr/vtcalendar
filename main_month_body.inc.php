@@ -116,7 +116,7 @@
 						
 						// Display an "add event" icon
 						if (!empty($_SESSION["AUTH_SPONSORID"])) {
-							echo '<td><a style="font-size: 11px;" href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
+							echo '<td class="NoPrint"><a style="font-size: 11px;" href="addevent.php?calendarid='.urlencode($_SESSION['CALENDAR_ID']).'&timebegin_year='.$iday['year']."&timebegin_month=".$iday['month']."&timebegin_day=".$iday['day']."\" title=\"",lang('add_new_event'),"\">";
 							echo '<img src="images/new.gif" height="16" width="16" title="',lang('add_new_event'),'" alt="',lang('add_new_event'),'" border="0">';
 							echo '</a></td>';
 						}

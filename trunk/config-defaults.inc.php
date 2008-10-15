@@ -35,6 +35,14 @@ if (!defined("LANGUAGE")) define("LANGUAGE", 'en');
 // It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"
 if (!defined("DATABASE")) define("DATABASE", "");
 
+// Config: Table Prefix
+// Example: public
+// In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.
+// If this is the case for you, enter the name of the schema here.
+// It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.
+// If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.
+if (!defined("TABLEPREFIX")) define("TABLEPREFIX", "");
+
 // Config: SQL Log File
 // Example: /var/log/vtcalendarsql.log
 // OPTIONAL. Put a name of a (folder and) file where the calendar logs every SQL query to the database.

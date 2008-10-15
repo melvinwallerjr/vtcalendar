@@ -100,6 +100,32 @@
       </tr>
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Table Prefix:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="text" id="Input_TABLEPREFIX" name="TABLEPREFIX" value="<?php echo htmlentities($GLOBALS['Form_TABLEPREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TABLEPREFIX"> </span>
+                     </div>
+                     <div class="Example">
+                        <i>Example: public</i>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.</div>
+                     <div class="CommentLine">If this is the case for you, enter the name of the schema here.</div>
+                     <div class="CommentLine">It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.</div>
+                     <div class="CommentLine">If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
             <b>SQL Log File:</b>
          </td>
          <td class="VariableBody">

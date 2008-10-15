@@ -5,10 +5,10 @@ High:
 - Move all lang files to languages/en.inc.php
 - Update install/upgradedb.php for PostgreSQL.
 - Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database:
-  (?<!')vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user)
+  Search: (?<!"\.TABLEPREFIX\.")(?<![."'])(?=vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user))
+  Replace: ".TABLEPREFIX."
 - Validate iCalendar export format.
 - Check help text to see if it is still accurate.
-- Improve 'Upcoming' print view
 - Change 'Jump To' in column back to being a single drop-down.
 - Allow data currently stored in session to be loaded from the DB or a file.
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
@@ -22,7 +22,6 @@ Low:
 - Improve the way AUTH_HTTP checks if the authentication was successful or not successful by also checking the body text.
 - Allow events to be flagged private so that you can only see them if you log in.
 - "Send event to a friend" form.
-- Disable admin buttons/icons in print view.
 - Allow week/month to be viewed as a list of events (like upcoming view).
 - A 'comments' field for sponsors where additional information (e.g. mailing address or phone number) could be stored.
 - Include file from static-includes before sub-calendar headers, and after sub-calendar footers.
@@ -36,6 +35,8 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- Improve 'Upcoming' print view (Finished 08-10-15)
+- Disable admin buttons/icons in print view (Finished 08-10-15)
 - Disable AJAX in month view for little calendar month-navigation arrows.
 - Add helpsignup.php link back to displaylogin() in functions.inc.php
 - Should probably remove checking for HTTPS and just use SECUREBASEURL for the action of any forms that need to be secured. Search scripts for: _SERVER['HTTPS']

@@ -327,16 +327,9 @@ if (TIMEZONE != '') {
 
 // ---------- The following functions allow you to customize processing based on your database -------
 
-/*// escapes a value to make it safe for a SQL query
-if (!function_exists('sqlescape')) {
-	function sqlescape($value) {
-	  if (preg_match("/^pgsql/",DATABASE)) {
-		  return pg_escape_string($value);
-		}
-		else {
-			return mysql_escape_string($value);
-		}
-	}
+// Escapes a value to make it safe for a SQL query
+/*function sqlescape($value) {
+
 }*/
 
 // --------------- The following functions allow you to customize the date format display ------------

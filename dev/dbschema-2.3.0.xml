@@ -201,7 +201,7 @@
 	<Field Name="repeatdef" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="startdate" Type="text" NotNull="false" AutoIncrement="false"/>
 	<Field Name="enddate" Type="text" NotNull="false" AutoIncrement="false"/>
-	<Field Name="recordchangedtime" Type="timestamp" NotNull="false" AutoIncrement="false"/>
+	<Field Name="recordchangedtime" Type="timestamp" NotNull="true" AutoIncrement="false"/>
 	<Field Name="recordchangeduser" Type="text" NotNull="false" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="id" SubPart=""/>

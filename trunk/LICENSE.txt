@@ -1,22 +1,22 @@
 VTCalendar
 http://vtcalendar.sourceforge.net/
 
-Product Description:
-VTCalendar is a web-based event calendar that allows for decentralized data
-input and includes a central approval mechanism. It also supports calendar
-hosting for individual organizations and the forwarding of events from these
-individual calendars to the main event calendar.
-
-Copyright (c) Web Hosting Group and
-Virginia Polytechnic Institute and State University, All Rights Reserved.
+Copyright:
+=============================
+© Virginia Polytechnic Institute and State University, All Rights Reserved.
 
 Contact Information:
+=============================
 Andre Mekkawi, amekkawi@users.sourceforge.net
 
-VT Calendar falls under the Open-Source Software label because it is released
-under the GNU Lesser General Public License (LGPL). 
-For details, see http://www.gnu.org/copyleft/lesser.html
+License:
+=============================
+VTCalendar is open-source software licensed under the
+GNU Lesser General Public License (LGPL). For details see:
+http://www.gnu.org/copyleft/lesser.html
 
+Disclaimer:
+=============================
 THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
 INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE
@@ -28,6 +28,8 @@ OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+Additional Restrictions:
+=============================
 - The name of the product must not be used to endorse or promote products
   derived from this software without prior written permission. For written
   permission, please contact the copyright holders (see contact information,

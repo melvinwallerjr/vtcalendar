@@ -13,6 +13,8 @@ High:
 - Allow data currently stored in session to be loaded from the DB or a file.
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
 - Improve description on export page.
+- For upgradedb.php make sure 'int(11)' is aliased to 'int'.
+- Change fields to NotNull. Many fields are allowed to be null.
 
 Low:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)

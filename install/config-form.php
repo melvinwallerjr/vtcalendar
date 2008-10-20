@@ -1393,6 +1393,30 @@
       </tr>
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
+            <b>Combined 'Jump To' Drop-Down:</b>
+         </td>
+         <td class="VariableBody">
+            <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+               <tr>
+                  <td class="DataField">
+                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_COMBINED_JUMPTO" name="COMBINED_JUMPTO" value="true"
+										<?php if ($GLOBALS['Form_COMBINED_JUMPTO'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_COMBINED_JUMPTO"> Yes</label>
+                        <span id="DataFieldInputExtra_COMBINED_JUMPTO"> </span>
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td class="Comment">
+                     <div class="CommentLine">Whether or not the 'jump to' drop-down in the column will be combined into a single drop-down box or not.</div>
+                     <div class="CommentLine">When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).</div>
+                     <div class="CommentLine">Only the last 3 months will be included in this list.</div>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td class="VariableName" nowrap="nowrap" valign="top">
             <b>Include Static Pre-Header HTML:</b>
          </td>
          <td class="VariableBody">

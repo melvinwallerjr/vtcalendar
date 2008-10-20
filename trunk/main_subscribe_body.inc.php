@@ -8,12 +8,23 @@ $color = $_SESSION['COLOR_BG'];
 $iCalDirName = 'calendars/';
 
 ?>
-<b><?php echo lang('whole_calendar'); ?>:</b><br/><?php echo $_SESSION['CALENDAR_NAME']; ?>&nbsp; 
-<a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION['CALENDAR_ID']; ?>&type=ical&sponsortype=all&timebegin=today"><?php echo lang('subscribe'); ?></a> &nbsp; 
-<a href="<?php echo BASEURL; ?>export.php?type=ical&sponsortype=all&timebegin=today"><?php echo lang('download'); ?></a>
+<p><b><?php echo lang('whole_calendar'); ?>:</b><br/><?php echo htmlentities($_SESSION['CALENDAR_NAME']); ?> &nbsp; 
+<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=rss2_0&timebegin=upcoming"><?php echo lang('rss_feed'); ?></a> &nbsp;
+<a href="webcal://<?php echo preg_replace('/^[A-Za-z]+:\/\//', '', BASEURL) . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming"><?php echo lang('subscribe'); ?></a> &nbsp;
+<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming"><?php echo lang('download'); ?></a>
+</p>
+
 <?php
 
-echo '<p><b>...or by category:</b></p><blockquote><table border="0" cellspacing="0" cellpadding="4">';
+?><p><b>...or by category:</b></p>
+	<blockquote>
+		<table border="0" cellspacing="2" cellpadding="4">
+			<tr bgcolor="<?php echo $color; ?>">
+				<td bgcolor="<?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>"><b><?php echo lang('category'); ?></b></td>
+				<td align="right" bgcolor="<?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>"><b><?php echo lang('upcoming_events'); ?></b></td>
+				<td align="center" bgcolor="<?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>"><b><?php echo lang('ways_to_subscribe'); ?></b></td>
+			</tr>
+<?php
 
 // The number of ICS files found.
 $fileCount = 0;
@@ -40,7 +51,7 @@ if (is_dir($iCalDirName) && $iCalDir = opendir($iCalDirName)) {
 
 // Get the categories from the DB if no files were found (or if we never searched for files anyway).
 if ($fileCount == 0) {
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
+	$result =& DBQuery("SELECT count(e.id) as eventcount, c.id, c.name FROM ".TABLEPREFIX."vtcal_category c LEFT JOIN ".TABLEPREFIX."vtcal_event_public e ON c.calendarid = e.calendarid AND c.id = e.categoryid AND e.timeend > '" . sqlescape(NOW_AS_TEXT) . "' WHERE c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY c.id ORDER BY c.name"); 
 	if (is_string($result)) {
 		DBErrorBox($result); 
 	}
@@ -50,16 +61,20 @@ if ($fileCount == 0) {
 			if ( $color == $_SESSION['COLOR_LIGHT_CELL_BG'] ) { $color = $_SESSION['COLOR_BG']; } else { $color = $_SESSION['COLOR_LIGHT_CELL_BG']; }
 			?>	
 			<tr bgcolor="<?php echo $color; ?>">
-				<td bgcolor="<?php echo $color; ?>"><?php echo $category['name']; ?></td>
-				<td bgcolor="<?php echo $color; ?>"><a href="webcal://<?php echo substr(BASEURL,7); ?>export.php?calendar=<?php echo $_SESSION['CALENDAR_ID']; ?>&type=ical&sponsortype=all&timebegin=today&categoryid=<?php echo $category['id']; ?>"><?php echo lang('subscribe'); ?></a> &nbsp; 
-			<a href="<?php echo BASEURL; ?>export.php?type=ical&sponsortype=all&timebegin=today&categoryid=<?php echo $category['id']; ?>"><?php echo lang('download'); ?></a></td>
+				<td bgcolor="<?php echo $color; ?>"><?php echo htmlentities($category['name']); ?></td>
+				<td align="right" bgcolor="<?php echo $color; ?>"><?php echo $category['eventcount']; ?></td>
+				<td bgcolor="<?php echo $color; ?>">
+
+<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=rss2_0&timebegin=upcoming&categories=<?php echo $category['id']; ?>"><?php echo lang('rss_feed'); ?></a> &nbsp;
+<a href="webcal://<?php echo preg_replace('/^[A-Za-z]+:\/\//', '', BASEURL) . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming&categories=<?php echo $category['id']; ?>"><?php echo lang('subscribe'); ?></a> &nbsp;
+<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming&categories=<?php echo $category['id']; ?>"><?php echo lang('download'); ?></a>
+				</td>
 			</tr>
 			<?php
 		}
 	}
 }
 
-echo '</blockquote></table>';
+?></blockquote></table>
 
-?>
 </td></tr></table>

@@ -132,8 +132,11 @@ $lang['select_unselect'] = 'Select/Unselect All';
 $lang['apply_filter'] = 'Apply Filter';
 
 // Subscribe & Download View
-$lang['subscribe'] = 'Subscribe';
-$lang['download'] = 'Download';
+$lang['upcoming_events'] = 'Upcoming<br/>Events';
+$lang['ways_to_subscribe'] = 'Ways to Subscribe &amp; Download';
+$lang['rss_feed'] = 'RSS Feed';
+$lang['subscribe'] = 'iCal Subscribe';
+$lang['download'] = 'iCal Download';
 $lang['copy_event_to_pda'] = 'copy this event into your personal desktop calendar';
 $lang['subscribe_message'] = 'If you have a desktop calendar or PDA compatible with the iCalendar standard you
 can subscribe to a calendar or download events. Currently the iCalendar standard

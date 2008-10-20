@@ -207,6 +207,12 @@ if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 // Values must be true or false.
 if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 
+// Config: Combined 'Jump To' Drop-Down
+// Whether or not the 'jump to' drop-down in the column will be combined into a single drop-down box or not.
+// When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).
+// Only the last 3 months will be included in this list.
+if (!defined("COMBINED_JUMPTO")) define("COMBINED_JUMPTO", true);
+
 // Config: Include Static Pre-Header HTML
 // Include the file located at ./static-includes/subcalendar-pre-header.txt before the calendar header HTML for all calendars.
 // This allows you to enforce a standard header for all calendars.

@@ -54,6 +54,7 @@ if (SHOW_UPCOMING_TAB) {
 	if (!is_numeric(MAX_UPCOMING_EVENTS)) exit('MAX_UPCOMING_EVENTS must be an numeric.');
 }
 if (!is_bool(SHOW_MONTH_OVERLAP)) exit('SHOW_MONTH_OVERLAP must be a boolean true or false. Make sure it is not enclosed in quotes.');
+if (!is_bool(COMBINED_JUMPTO)) exit('COMBINED_JUMPTO must be a boolean true or false. Make sure it is not enclosed in quotes.');
 if (!is_bool(INCLUDE_STATIC_PRE_HEADER)) exit('INCLUDE_STATIC_PRE_HEADER must be a boolean true or false. Make sure it is not enclosed in quotes.');
 if (!is_bool(INCLUDE_STATIC_POST_HEADER)) exit('INCLUDE_STATIC_POST_HEADER must be a boolean true or false. Make sure it is not enclosed in quotes.');
 if (!is_bool(INCLUDE_STATIC_PRE_FOOTER)) exit('INCLUDE_STATIC_PRE_FOOTER must be a boolean true or false. Make sure it is not enclosed in quotes.');

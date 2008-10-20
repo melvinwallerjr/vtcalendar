@@ -36,6 +36,7 @@ $Form_COLUMNSIDE = 'RIGHT';
 $Form_SHOW_UPCOMING_TAB = true;
 $Form_MAX_UPCOMING_EVENTS = '75';
 $Form_SHOW_MONTH_OVERLAP = true;
+$Form_COMBINED_JUMPTO = true;
 $Form_INCLUDE_STATIC_PRE_HEADER = false;
 $Form_INCLUDE_STATIC_POST_HEADER = false;
 $Form_INCLUDE_STATIC_PRE_FOOTER = false;
@@ -101,6 +102,7 @@ if (isset($_POST['SaveConfig'])) {
 		$Form_MAX_UPCOMING_EVENTS = $_POST['MAX_UPCOMING_EVENTS'];
 	}
 	$Form_SHOW_MONTH_OVERLAP = isset($_POST['SHOW_MONTH_OVERLAP']);
+	$Form_COMBINED_JUMPTO = isset($_POST['COMBINED_JUMPTO']);
 	$Form_INCLUDE_STATIC_PRE_HEADER = isset($_POST['INCLUDE_STATIC_PRE_HEADER']);
 	$Form_INCLUDE_STATIC_POST_HEADER = isset($_POST['INCLUDE_STATIC_POST_HEADER']);
 	$Form_INCLUDE_STATIC_PRE_FOOTER = isset($_POST['INCLUDE_STATIC_PRE_FOOTER']);
@@ -345,6 +347,14 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.'."\n";
 	$ConfigOutput .= '// Values must be true or false.'."\n";
 	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Combined 'Jump To' Drop-Down
+	$ConfigOutput .= '// Config: Combined \'Jump To\' Drop-Down'."\n";
+	$ConfigOutput .= '// Default: true'."\n";
+	$ConfigOutput .= '// Whether or not the \'jump to\' drop-down in the column will be combined into a single drop-down box or not.'."\n";
+	$ConfigOutput .= '// When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).'."\n";
+	$ConfigOutput .= '// Only the last 3 months will be included in this list.'."\n";
+	$ConfigOutput .= 'define("COMBINED_JUMPTO", ' . ($GLOBALS['Form_COMBINED_JUMPTO'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Include Static Pre-Header HTML
 	$ConfigOutput .= '// Config: Include Static Pre-Header HTML'."\n";

@@ -24,7 +24,7 @@ $lang['lit_cal_sat'] = 'S';
 $lang['lit_cal_week'] = 'Wk';
 
 // Date Picker
-//$lang['jump_to'] = 'Jump to...';
+$lang['jump_to'] = 'Jump to...';
 $lang['today_is'] = 'Today is: ';
 
 // Column Links

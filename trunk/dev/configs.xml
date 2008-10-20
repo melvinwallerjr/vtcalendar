@@ -849,6 +849,14 @@
                 <Line>Values must be true or false.</Line>
             </Comment>
         </Config>
+    	<Config Label="Combined 'Jump To' Drop-Down" Variable="COMBINED_JUMPTO" Type="boolean">
+    		<Default>true</Default>
+    		<Comment>
+    			<Line>Whether or not the 'jump to' drop-down in the column will be combined into a single drop-down box or not.</Line>
+    			<Line>When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).</Line>
+    			<Line>Only the last 3 months will be included in this list.</Line>
+    		</Comment>
+    	</Config>
     	<Config Label="Include Static Pre-Header HTML" Variable="INCLUDE_STATIC_PRE_HEADER" Type="boolean">
     		<Default>false</Default>
     		<Comment>
@@ -865,7 +873,6 @@
     			<Line>This does not affect the default calendar.</Line>
     		</Comment>
     	</Config>
-    	
     	<Config Label="Include Static Pre-Footer HTML" Variable="INCLUDE_STATIC_PRE_FOOTER" Type="boolean">
     		<Default>false</Default>
     		<Comment>

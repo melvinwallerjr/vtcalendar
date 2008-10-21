@@ -17,6 +17,7 @@ High:
 - Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well.
   MySQL: UPDATE vtcal_event_public SET description = concat(description, '\n\n', url), url = '' WHERE URL != '';
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
+- Check existing column max lengths, 'max(length(X))', for fields that are being updated in upgradedb.php.
 
 Low:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)

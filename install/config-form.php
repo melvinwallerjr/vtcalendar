@@ -1566,7 +1566,7 @@
    <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>:</b>
+            <b>Export Path:</b>
          </td>
          <td class="VariableBody">
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
@@ -1627,7 +1627,7 @@
       </tr>
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>Allow Export in VTCalendar (XML) Format:</b>
+            <b>Allow Public to Export in VTCalendar (XML) Format:</b>
          </td>
          <td class="VariableBody">
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">

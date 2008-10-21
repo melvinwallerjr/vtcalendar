@@ -921,7 +921,7 @@
     	</Config>
     </Section>
 	<Section Label="Export">
-		<Config Label="" Variable="EXPORT_PATH" Type="string" Required="true">
+		<Config Label="Export Path" Variable="EXPORT_PATH" Type="string" Required="true">
 			<Default>export/export.php</Default>
 			<Comment>
 				<Line>The URL extension to the export script. Must NOT being with a slash (/).</Line>
@@ -940,7 +940,7 @@
 				<Line>The number of minutes that a browser will be told to cache exported data.</Line>
 			</Comment>
 		</Config>
-		<Config Label="Allow Export in VTCalendar (XML) Format" Variable="PUBLIC_EXPORT_VTCALXML" Type="boolean">
+		<Config Label="Allow Public to Export in VTCalendar (XML) Format" Variable="PUBLIC_EXPORT_VTCALXML" Type="boolean">
 			<Default>false</Default>
 			<Comment>
 				<Line>The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.</Line>

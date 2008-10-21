@@ -10,8 +10,8 @@ function AddMainAdmin($username) {
 	
 	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 	if ($record['idcount'] != "0") {
-		// Return true since the user already exists.
-		return true;
+		// Return false since the user already exists.
+		return false;
 	}
 	
 	$result->free();
@@ -37,8 +37,8 @@ function AddUser($username, $password, $email = "") {
 	
 	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 	if ($record['idcount'] != "0") {
-		// Return true since the user already exists.
-		return true;
+		// Return false since the user already exists.
+		return false;
 	}
 	
 	$result->free();

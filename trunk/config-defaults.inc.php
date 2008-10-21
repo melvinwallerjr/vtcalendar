@@ -254,7 +254,7 @@ if (!defined("CACHE_ICS")) define("CACHE_ICS", false);
 // Export
 // =====================================
 
-// Config: 
+// Config: Export Path
 // The URL extension to the export script. Must NOT being with a slash (/).
 if (!defined("EXPORT_PATH")) define("EXPORT_PATH", 'export/export.php');
 
@@ -267,7 +267,7 @@ if (!defined("MAX_EXPORT_EVENTS")) define("MAX_EXPORT_EVENTS", 100);
 // The number of minutes that a browser will be told to cache exported data.
 if (!defined("EXPORT_CACHE_MINUTES")) define("EXPORT_CACHE_MINUTES", 5);
 
-// Config: Allow Export in VTCalendar (XML) Format
+// Config: Allow Public to Export in VTCalendar (XML) Format
 // The VTCalendar (XML) export format contains all information about an event, which you may not want to allow the public to view.
 // However, users that are part of the admin sponsor, or are main admins, can always export in this format.
 if (!defined("PUBLIC_EXPORT_VTCALXML")) define("PUBLIC_EXPORT_VTCALXML", false);

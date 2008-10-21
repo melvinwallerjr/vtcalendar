@@ -3,11 +3,14 @@
 	<xsl:output method="text" omit-xml-declaration="yes"/>
 	
 	<xsl:template match="/">
+		<xsl:text>&lt;?php&#10;</xsl:text>
 		<xsl:apply-templates select="DBSchema/Table/*"/>
+		<xsl:text>?&gt;&#10;</xsl:text>
 	</xsl:template>
 	
 	<xsl:template match="Field">
 		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Fields']['<xsl:value-of select="@Name"/>']['Type'] = "<xsl:value-of select="@Type"/>"<xsl:text>;&#10;</xsl:text>
+		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Fields']['<xsl:value-of select="@Name"/>']['Length'] = "<xsl:value-of select="@Length"/>"<xsl:text>;&#10;</xsl:text>
 		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Fields']['<xsl:value-of select="@Name"/>']['NotNull'] = <xsl:value-of select="@NotNull"/><xsl:text>;&#10;</xsl:text>
 		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Fields']['<xsl:value-of select="@Name"/>']['AutoIncrement'] = <xsl:value-of select="@AutoIncrement"/><xsl:text>;&#10;</xsl:text>
 	</xsl:template>
@@ -23,12 +26,12 @@
 		<xsl:apply-templates select="KeyField">
 			<xsl:with-param name="IndexName" select="@Name"/>
 		</xsl:apply-templates>
-		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Keys']['<xsl:value-of select="@Name"/>']['Unique'] = <xsl:value-of select="@Unique"/><xsl:text>;&#10;</xsl:text>
+		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../@Name"/>']['Keys']['<xsl:value-of select="../@Name"/>_<xsl:value-of select="@Name"/>']['Unique'] = <xsl:value-of select="@Unique"/><xsl:text>;&#10;</xsl:text>
 	</xsl:template>
 	
 	<xsl:template match="KeyField">
 		<xsl:param name="IndexName"/>
-		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../../@Name"/>']['Keys']['<xsl:value-of select="$IndexName"/>']['Fields']['<xsl:value-of select="@Name"/>'] = "<xsl:value-of select="@SubPart"/>"<xsl:text>;&#10;</xsl:text>
+		<xsl:text>$FinalTables</xsl:text>['<xsl:value-of select="../../@Name"/>']['Keys']['<xsl:if test="not($IndexName = 'PRIMARY')"><xsl:value-of select="../../@Name"/>_</xsl:if><xsl:value-of select="$IndexName"/>']['Fields'][<xsl:value-of select="position()"/>] = "<xsl:value-of select="@Name"/>"<xsl:text>;&#10;</xsl:text>
 	</xsl:template>
 	<!-- 
 		$FinalTables['vtcal_auth']['Fields']['calendarid']['Type'] = "varchar(150)";

@@ -81,10 +81,10 @@ if (isset($user['id']) && (!isset($check) || $check != 1)) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="mainform">
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 			<b><?php echo lang('user_id'); ?>:</b>
 		</td>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 <?php
 		if (isset($check) && $check && (empty($mainuserid))) {
 			feedback(lang('choose_user_id'),FEEDBACKNEG);

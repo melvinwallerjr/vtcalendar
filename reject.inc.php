@@ -10,7 +10,6 @@
 	
 	disassemble_timestamp($event);
 
-	echo '<span class="bodytext">';
 	if (!empty($event['repeatid'])) {
 		readinrepeat($event['repeatid'],$event,$repeat);
 		echo lang('recurring_event'),": ";
@@ -21,7 +20,6 @@
 			$repeatdef);
 		echo "<br>";
 	}
-	echo '</span>';
 ?>
 <br>
 <form method="post" action="approval.php">

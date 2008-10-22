@@ -3,21 +3,15 @@ TODO for Version 2.x:
 
 High:
 - Move all lang files to languages/en.inc.php
-- Update install/upgradedb.php for PostgreSQL.
-- Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database:
-  Search: (?<!"\.TABLEPREFIX\.")(?<![."'])(?=vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user))
-  Replace: ".TABLEPREFIX."
 - Validate iCalendar export format.
 - Check help text to see if it is still accurate.
 - Allow data currently stored in session to be loaded from the DB or a file.
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
 - Improve description on export page.
-- For upgradedb.php make sure 'int(11)' is aliased to 'int'.
 - Improve iCal/RSS caching.
 - Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well.
   MySQL: UPDATE vtcal_event_public SET description = concat(description, '\n\n', url), url = '' WHERE URL != '';
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
-- Check existing column max lengths, 'max(length(X))', for fields that are being updated in upgradedb.php.
 
 Low:
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
@@ -40,6 +34,12 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- For upgradedb.php make sure 'int(11)' is aliased to 'int'. (Finished ~2008-10-19)
+- Check existing column max lengths, 'max(length(X))', for fields that are being updated in upgradedb.php. (Finished 2008-10-21)
+- Update install/upgradedb.php for PostgreSQL. (Finished 2008-10-21)
+- Add a customizable prefix for table names to support multiple sets of vtcalendar tables within one Postgres database: (Finished 2008-10-21)
+  Search: (?<!"\.TABLEPREFIX\.")(?<![."'])(?=vtcal_(adminuser|admin|calendar|calendarviewauth|category|colors|event|searchedkeywords|searchfeatured|searchkeyword|searchlog|sponsor|template|user))
+  Replace: ".TABLEPREFIX."
 - Add RSS links to subscribe page. (Finished 2008-10-20)
 - Change fields to NotNull. Many fields are allowed to be null. (Finished 2008-10-20)
 - Change 'Jump To' in column back to being a single drop-down. (Finished 2008-10-20)

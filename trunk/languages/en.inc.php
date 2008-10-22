@@ -902,17 +902,8 @@ can be empty or not (like <code>&lt;timeend&gt;&lt;/timeend&gt;</code>).
 	</tr>
 </table>';
 
-$lang['help_signup'] = 'How to post events';
-$lang['help_signup_authorization'] = 'Authorization can be obtained by contacting the calendar coordinator
- at ';
-$lang['help_signup_contents'] = 'Please send an email containing:<br>
-1) The name of your organization/club<br>
-2) The user-ID (the ID used to check e-mail) of the person(s) who will be entering information<br>
-<br>
-All event submissions will be reviewed by the calendar coordinator before
-they are posted. Consequently, it is important to submit items at
-least two days in advance of the event.
-During the review process, submissions will be checked to see if they are
-appropriate for posting and edited for clarity and conciseness.';
+$lang['help_signup'] = 'How to request a login';
+$lang['help_signup_authorization'] = '<p>Authorization to add events can be obtained by contacting the calendar administrator at ';
+$lang['help_signup_contents'] = '<p>All event submissions will be reviewed by the calendar coordinator before they are posted. Consequently, it is important to submit items at least two days in advance of the event. During the review process, submissions will be checked to see if they are appropriate for posting and edited for clarity and conciseness.</p>';
 
 ?>

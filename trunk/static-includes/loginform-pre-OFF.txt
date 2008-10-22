@@ -1,1 +1,1 @@
-<!-- To override the "How to request a login" message on the login page, rename this file to loginform-post.txt and include HTML below. -->
+<!-- To include HTML before the login form, rename this file to loginform-post.txt and include HTML below. -->

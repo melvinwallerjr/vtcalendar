@@ -155,11 +155,11 @@ if (isset($sponsor) && $sponsor['admin']) {
 ?>
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<strong><?php echo lang('sponsor_name'); ?></strong>
 			<span class="WarningText">*</span>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 		if ( isset($check) ) {
 			if (empty($sponsor['name'])) {
@@ -177,11 +177,11 @@ if (isset($sponsor) && $sponsor['admin']) {
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<strong><?php echo lang('email'); ?></strong>
 			<span class="WarningText">*</span>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if (isset($check) && (empty($sponsor['email']))) {
 		feedback(lang('choose_email'),FEEDBACKNEG);
@@ -195,10 +195,10 @@ if (isset($sponsor) && $sponsor['admin']) {
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<strong><?php echo lang('homepage'); ?></strong>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if ( isset($check) && !checkURL($sponsor['url']) ) {
 		feedback(lang('url_invalid'),FEEDBACKNEG);
@@ -212,7 +212,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<strong><?php
 				if (isset($sponsor) && $sponsor['admin']) {
 					echo lang('administrative_members');
@@ -221,7 +221,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 				}
 			?></strong>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if (!empty($addPIDError)) {    
 		feedback($addPIDError,1);

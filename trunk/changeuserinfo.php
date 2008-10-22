@@ -109,10 +109,10 @@ require_once('application.inc.php');
 ?>
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 			<b><?php echo lang('user_id'); ?>:<span class="WarningText">*</span></b>
 		</td>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 <?php
 	if (!empty($chooseuser)) {
 		echo "<b>".$userid."</b>";
@@ -137,10 +137,10 @@ require_once('application.inc.php');
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 			<b><?php echo lang('password'); ?><span class="WarningText">*</span></b>
 		</td>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 <?php
 	if (isset($check) && $check && (empty($user['password']))) {
 		feedback(lang('choose_password'),FEEDBACKNEG);
@@ -150,10 +150,10 @@ require_once('application.inc.php');
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 			<b><?php echo lang('email'); ?></b>
 		</td>
-		<td class="bodytext" valign="baseline">
+		<td valign="baseline">
 			<input type="text" size="20" name="user[email]" maxlength=<?php echo MAXLENGTH_EMAIL; ?> value="<?php
 	if (isset($user) && isset($user['email'])) {
 		if (isset($check) && $check) { 

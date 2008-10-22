@@ -157,11 +157,11 @@ require_once('application.inc.php');
 <form method="post" action="editcalendar.php">
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<?php echo lang('calendar_id'); ?>:
 			<span class="WarningText">*</span>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['id']) || !isValidInput($cal['id'],'calendarid')) {
@@ -190,11 +190,11 @@ require_once('application.inc.php');
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<?php echo lang('calendar_name'); ?>:
 			<span class="WarningText">*</span>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if ( isset($check) ) {
 		if (empty($cal['name']) || !isValidInput($cal['name'],'calendarname')) {
@@ -209,10 +209,10 @@ require_once('application.inc.php');
 		</td>
 	</tr>
 	<tr>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 			<?php echo lang('administrators'); ?><br>
 		</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">
 <?php
 	if (!empty($addPIDError)) {    
 		feedback($addPIDError,1);
@@ -248,8 +248,8 @@ require_once('application.inc.php');
 	if ( !isset($cal['id']) || $cal['id'] != "default" ) {
 ?>
 	<tr>
-		<td class="bodytext" valign="top">&nbsp;</td>
-		<td class="bodytext" valign="top">
+		<td valign="top">&nbsp;</td>
+		<td valign="top">
 <?php
 	$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_calendar WHERE id='default'" ); 
 	$c = $result->fetchRow(DB_FETCHMODE_ASSOC,0);

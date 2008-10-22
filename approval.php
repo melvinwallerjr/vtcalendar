@@ -1,9 +1,6 @@
 <?php
 require_once('application.inc.php');
 
-$lang['no_events_for_approval'] = 'There are no events currently awaiting approval.';
-$lang['approval_description'] = 'New events, and changes to existing events, must be approved before they are visible to the public. If an event is rejected, the sponsor who submitted the event is notified. The sponsor can then make any necessary changes and resubmit the event. Note: Sponors can delete their events at anytime without requiring approval.';
-
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 

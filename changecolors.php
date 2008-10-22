@@ -2,9 +2,6 @@
 require_once('application.inc.php');
 require_once('changecolors-functions.inc.php');
 
-$lang['click_for_color_picker'] = "Use Color Picker";
-$lang['reset_to_default_color'] = "Reset to the Default Calendar Color";
-
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 

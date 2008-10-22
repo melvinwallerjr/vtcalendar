@@ -153,6 +153,11 @@ function xmlcharacterdata_importevent($parser, $data) {
 	elseif (strtolower($xmlcurrentelement)=="contact_email") {
 		$event['contact_email'] .= $data;
 	}
+	
+	// Append the URL to the end of the description.
+	elseif (strtolower($xmlcurrentelement)=="url") {
+		$event['description'] .= "\n\n".lang('more_information').': '.$data;
+	}
 } // end: function characterdata_importevents
 
 // default error handler

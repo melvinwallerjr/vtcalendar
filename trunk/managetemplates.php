@@ -11,6 +11,9 @@ if (is_string($result)) {
 	DBErrorBox($result);
 }
 else {
+
+?><p>Event templates are a time-saving tool that allows you to quickly create events that have the same basic information.</p><?php
+
 	?><p><a href="addtemplate.php"><?php echo lang('add_new_template'); ?></a><?php
 	
 	if ($result->numRows() > 0 ) {

@@ -73,6 +73,10 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 	cursor: pointer;
 }
 
+#CalendarBlock .LightCellBG {
+	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
+}
+
 /*===================================
              Top Navi Bar
 ===================================*/

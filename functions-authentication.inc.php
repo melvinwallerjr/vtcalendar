@@ -51,12 +51,18 @@ function displaylogin($errormsg="") {
 				<td align="left"><input type="submit" name="login" value="&nbsp;&nbsp;&nbsp;<?php echo lang('login'); ?>&nbsp;&nbsp;&nbsp;"></td>
 			</tr>
 		</table>
-		<p><a href="helpsignup.php" target="newWindow" onclick="new_window(this.href); return false"><b><?php echo lang('new_user'); ?></b></a></p>
 	</form>
 	<script language="JavaScript1.2"><!--
 		document.loginform.login_userid.focus();
 	//--></script>
-	<?php @(readfile('static-includes/loginform-post.txt')); ?>
+	<?php
+	if (@(readfile('static-includes/loginform-post.txt')) === false) {
+		echo '<div class="LightCellBG" style="padding: 4px;">'
+			. '<h2>'.lang('help_signup').':</h2>'
+			. lang('help_signup_authorization') . '<a href="mailto:' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '">' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '</a>.' . lang('help_signup_contents')
+			. '</div>';
+	}
+	?>
 	</div>
 	<?php
 	contentsection_end();
@@ -140,10 +146,15 @@ function displaynotauthorized() {
 	pageheader(lang('login'), "Update");
 	contentsection_begin(lang('error_not_authorized'));
 	
-	echo lang('error_not_authorized_message'); ?><br>
-	<br>
-			<a href="helpsignup.php" target="newWindow"	onclick="new_window(this.href); return false"><?php echo lang('help_signup_link'); ?></a><br>
-	<br><?php
+	echo '<p>' . lang('error_not_authorized_message') . '</p>';
+	
+	if (@(readfile('static-includes/loginform-post.txt')) === false) {
+		echo '<div class="LightCellBG" style="padding: 4px;">'
+			. '<h2>'.lang('help_signup').':</h2>'
+			. lang('help_signup_authorization') . '<a href="mailto:' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '">' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '</a>.' . lang('help_signup_contents')
+			. '</div>';
+	}
+	
 	contentsection_end();
 
 	pagefooter();

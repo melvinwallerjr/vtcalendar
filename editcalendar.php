@@ -53,15 +53,12 @@ require_once('application.inc.php');
 					."('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '', '', '0', '".sqlescape($cal['forwardeventdefault'])."')";
 				if (is_string($result =& DBQuery($query))) { DBErrorBox("Error creating calendar: " . $result); exit; };
 
-				$query = "INSERT INTO ".TABLEPREFIX."vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".lang('administration')."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";
+				$query = "INSERT INTO ".TABLEPREFIX."vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".sqlescape(lang('default_sponsor_name'))."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";
 				if (is_string($result =& DBQuery($query))) { DBErrorBox("Error creating default sponsor: " . $result); exit; };
 				
 				// Create a default category
-				$query = "INSERT INTO ".TABLEPREFIX."vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','General')";
+				$query = "INSERT INTO ".TABLEPREFIX."vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','" . sqlescape(lang('default_category_name')) . "')";
 				if (is_string($result =& DBQuery($query))) { DBErrorBox("Error creating default category: " . $result); exit; };
-				
-				//$result = DBQuery("INSERT INTO ".TABLEPREFIX."vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category2')."')" );
-				//$result = DBQuery("INSERT INTO ".TABLEPREFIX."vtcal_category (calendarid,name) VALUES ('".sqlescape($cal['id'])."','".lang('category3')."')" );
 			}
 		} // end: if ( isset($new) )
 		else { 

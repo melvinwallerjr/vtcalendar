@@ -55,8 +55,8 @@ else {
 		} // end: for ($i=0; $i<$result->numRows(); $i++)
 	?>	
 	</select><br>
-	<input type="submit" name="edit" value="<?php echo lang('button_edit'); ?>">
-	<input type="submit" name="delete" value="<?php echo lang('button_delete'); ?>"><br>
+	<input type="submit" name="edit" value="<?php echo lang('edit'); ?>">
+	<input type="submit" name="delete" value="<?php echo lang('delete'); ?>"><br>
 	<p><?php echo lang('sponsor_twin_asterisk_note'); ?></p>
 	<p><b><?php echo $result->numRows(); ?> <?php echo lang('sponsors_total'); ?></b></p>
 	</form>

@@ -569,7 +569,7 @@ function GenerateICal4Event(&$event) {
 		$ical.= "\\n".CRLF;
 	}
 	if (!(empty($event['sponsor_url']) || $event['sponsor_url']=="http://")) {
-		$ical.= " ".lang('homepage')." ";
+		$ical.= " ".lang('homepage').": ";
 		$ical.= FormatICalText($event['sponsor_url']);
 		$ical.= "\\n".CRLF;
 	}

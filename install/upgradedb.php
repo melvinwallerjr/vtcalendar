@@ -202,7 +202,7 @@ elseif ($Submit_Preview && $FormIsComplete) {
 				}
 				
 				if ($InsertDefaultRecord_Category) {
-					$FinalSQL .= "INSERT INTO " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_category" . FIELDQUALIFIER . " (calendarid, name) VALUES ('default', 'General');\n\n";
+					$FinalSQL .= "INSERT INTO " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_category" . FIELDQUALIFIER . " (calendarid, name) VALUES ('default', '".sqlescape(lang('default_category_name'))."');\n\n";
 					$changes++;
 				}
 				
@@ -230,7 +230,7 @@ elseif ($Submit_Preview && $FormIsComplete) {
 				}
 				
 				if ($InsertDefaultRecord_Sponsor) {
-					$FinalSQL .= "INSERT INTO " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_sponsor" . FIELDQUALIFIER . " (calendarid, name, url, email, admin) VALUES ('default', 'Administration', '', '', 1);\n\n";
+					$FinalSQL .= "INSERT INTO " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_sponsor" . FIELDQUALIFIER . " (calendarid, name, url, email, admin) VALUES ('default', '".sqlescape(lang('default_sponsor_name'))."', '', '', 1);\n\n";
 					$changes++;
 				}
 				

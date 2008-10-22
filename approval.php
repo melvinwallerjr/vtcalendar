@@ -2,6 +2,7 @@
 require_once('application.inc.php');
 
 $lang['no_events_for_approval'] = 'There are no events currently awaiting approval.';
+$lang['approval_description'] = 'New events, and changes to existing events, must be approved before they are visible to the public. If an event is rejected, the sponsor who submitted the event is notified. The sponsor can then make any necessary changes and resubmit the event. Note: Sponors can delete their events at anytime without requiring approval.';
 
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
@@ -89,6 +90,8 @@ pageheader(lang('approve_reject_event_updates'), "Update");
 
 contentsection_begin(lang('approve_reject_event_updates'),true);
 
+echo '<p>'.lang('approval_description').'</p>';
+
 // print list with events
 $query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory";
 $query.= " FROM ".TABLEPREFIX."vtcal_event e, ".TABLEPREFIX."vtcal_category c, ".TABLEPREFIX."vtcal_sponsor s";
@@ -100,10 +103,8 @@ if (is_string($result)) {
 	DBErrorBox($result);
 }
 else {
-	echo "<div>&nbsp;</div>";
-	
 	if ($result->numRows() == 0 ) {
-		echo lang('no_events_for_approval');
+		echo '<b>'.lang('no_events_for_approval').'</b>';
 	}
 	else {
 		?>

@@ -27,6 +27,8 @@ elseif ( isset($delete) ) {
 pageheader(lang('manage_sponsors'), "Update");
 contentsection_begin(lang('manage_sponsors'),true);
 
+echo '<p>'.lang('manage_sponsors_description').'</p>';
+
 $result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
 
 if (is_string($result)) {

@@ -65,6 +65,7 @@ TODO for Version 3.x:
 - Modular DB
 - Modular authentication
 - Approval chain
+- Allow multiple reoccurring definitions with an include/exclude flag. See http://www.imc.org/pdi/vcal-10.txt and http://tools.ietf.org/html/rfc2445
 - Allow any sponsor to be the end of the approval chain, to allow sponsors that can make events public without having access to modify the calendar settings.
 - Allow 'additional categories' for events, which would be used when a user filters the calendar.
 - Allow URLs to built programmatically to allow links like http://localhost/vtcalendar/{calendarid}/{eventid} or http://localhost/vtcalendar/{calendarid}/month/2008-01

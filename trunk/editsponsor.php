@@ -35,8 +35,8 @@ require_once('application.inc.php');
 		$subject = lang('email_account_updated_subject');
 		$body = lang('email_account_updated_body');
 		$body .= "   ".lang('sponsor_name')." ".stripslashes($sponsor['name'])."\n";
-		$body .= "   ".lang('email')." ".stripslashes($sponsor['email'])."\n";
-		$body .= "   ".lang('homepage')." ".stripslashes($sponsor['url'])."\n\n";
+		$body .= "   ".lang('email').": ".stripslashes($sponsor['email'])."\n";
+		$body .= "   ".lang('homepage').": ".stripslashes($sponsor['url'])."\n\n";
 		$body .= SECUREBASEURL."update.php?calendarid=".$_SESSION['CALENDAR_ID']."\n\n";
 		$body .= lang('email_add_event_instructions');
 		sendemail2sponsor($sponsor['name'],$sponsor['email'],$subject,$body);
@@ -178,7 +178,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 	</tr>
 	<tr>
 		<td valign="top">
-			<strong><?php echo lang('email'); ?></strong>
+			<strong><?php echo lang('email'); ?>:</strong>
 			<span class="WarningText">*</span>
 		</td>
 		<td valign="top">
@@ -196,7 +196,7 @@ if (isset($sponsor) && $sponsor['admin']) {
 	</tr>
 	<tr>
 		<td valign="top">
-			<strong><?php echo lang('homepage'); ?></strong>
+			<strong><?php echo lang('homepage'); ?>:</strong>
 		</td>
 		<td valign="top">
 <?php

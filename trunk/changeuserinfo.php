@@ -40,7 +40,7 @@ require_once('application.inc.php');
 		if ( $user['password'] != "#nochange$" ) {
 			$body.= "   ".lang('password')." ".stripslashes($user['password'])."\n";
 		}
-		$body.= "   ".lang('email')." ".stripslashes($user['email'])."\n";
+		$body.= "   ".lang('email').": ".stripslashes($user['email'])."\n";
 		
 		sendemail2user($user['email'],$subject,$body);
 	} // end: emailuseraccountchanged
@@ -151,7 +151,7 @@ require_once('application.inc.php');
 	</tr>
 	<tr>
 		<td valign="baseline">
-			<b><?php echo lang('email'); ?></b>
+			<b><?php echo lang('email'); ?>:</b>
 		</td>
 		<td valign="baseline">
 			<input type="text" size="20" name="user[email]" maxlength=<?php echo MAXLENGTH_EMAIL; ?> value="<?php

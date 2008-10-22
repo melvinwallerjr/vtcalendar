@@ -284,7 +284,7 @@ $lang['url_invalid'] = '"The URL is invalid. Please make sure that you enter: &q
 
 $lang['email_account_updated_subject'] = 'calendar account information updated';
 $lang['email_account_updated_body'] = "The calendar administrator updated the information for your user account.\n\nThe current settings are:\n";
-$lang['email'] = 'E-Mail:';
+$lang['email'] = 'E-Mail';
 
 $lang['user_id_already_exists'] = 'A user with this Login ID already exists. Please choose a different one.';
 $lang['choose_password'] = 'Please choose a password.';
@@ -333,7 +333,7 @@ $lang['delete_user'] = 'Delete user';
 $lang['delete_user_confirm'] = 'The following user will be deleted:';
 
 $lang['calendar'] = 'Calendar';
-$lang['administration'] = 'Administration';
+$lang['default_sponsor_name'] = 'Administration';
 $lang['category1'] = 'Category 1';
 $lang['category2'] = 'Category 2';
 $lang['category3'] = 'Category 3';
@@ -359,7 +359,7 @@ $lang['keyword_already_exists'] = 'This keyword already exists.';
 $lang['featured_text'] = 'Featured Text (or HTML):';
 $lang['featured_text_cannot_be_empty'] = 'The featured text cannot be empty.';
 
-$lang['homepage'] = 'Homepage:';
+$lang['homepage'] = 'Homepage';
 $lang['email_add_event_instructions'] = 'Short instructions for adding an event:
 - Login using your personal user-ID and password
 - Click on "Add new event"

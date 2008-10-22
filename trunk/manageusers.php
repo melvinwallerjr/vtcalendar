@@ -40,8 +40,8 @@ else {
 	} // end: for ($i=0; $i<$result->numRows(); $i++)
 	
 	?></select><br>
-	<input type="submit" name="edit" value="<?php echo lang('button_edit'); ?>">
-	<input type="submit" name="delete" value="<?php echo lang('button_delete'); ?>"><br>
+	<input type="submit" name="edit" value="<?php echo lang('edit'); ?>">
+	<input type="submit" name="delete" value="<?php echo lang('delete'); ?>"><br>
 	<br>
 	<b><?php echo $result->numRows(); ?> Users total</b>
 	</form>

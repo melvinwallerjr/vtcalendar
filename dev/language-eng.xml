@@ -379,9 +379,33 @@
 			<Item Name="version_check">'Version Check'</Item>
 		</Section>
 		
-		<Section Name="Add New Event">
+		<Section Name="Choose Template Page">
 			<Item Name="choose_template">'Choose template'</Item>
 			<Item Name="blank">'blank'</Item>
+		</Section>
+		
+		<Section Name="Add/Edit Event Form">
+			<Item Name="date_and_time_header">'Date &amp;amp; Time'</Item>
+			<Item Name="basic_event_info_header">'Basic Event Information'</Item>
+			<Item Name="additional_event_info_header">'Additional Event Information'</Item>
+			<Item Name="additional_event_info_description">'XXX'</Item>
+			<Item Name="event_owner_info_header">'Owner of this Event'</Item>
+			<Item Name="event_owner_info_description">'This is the sponsor who owns this event in the calendar system.&lt;br/&gt;The sponsor who owns this event is able to copy and delete it, as well as submit new versions for approval.'</Item>
+			<Item Name="event_sponsor_info_header">'Information About the Event\'s Sponsor'</Item>
+			<Item Name="event_sponsor_info_description">'This is information about the department or organization that is the official sponsor of the event.&lt;br/&gt;For example, if this event was Commencement then the sponsor would be the Office of the Secretary.'</Item>
+			<Item Name="date_description">'Choose between one of the radio buttons to determine whether your event is a one-time or a recurring event. Then you will be given the opportunity to specify the date of the one-time event or define the recurrence for a repeating event.&lt;br/&gt;The validity of the date you picked is checked after pressing the &amp;quot;Preview Event&amp;quot; button.'</Item>
+			<Item Name="time_description">'Declare the event as being an &amp;quot;all day event&amp;quot; (for example &amp;quot;Thanksgiving Day&amp;quot;) or specify start and ending time for the event. Pick &amp;quot;???&amp;quot; for the hour of the ending time if the event does not have a specified ending time.'</Item>
+			<Item Name="category_description">'The category that best fits your event. This facilitates searching.'</Item>
+			<Item Name="title_description">'A short but descriptive title that is meaningful to the general audience.'</Item>
+			<Item Name="description_description">'A detailed description of the event. To avoid unnecessary calls or e-mails to your office be as detailed as possible.&lt;br/&gt;You are not limited in space, and Web and e-mail addresses are automatically linked.'</Item>
+			<Item Name="location_description">'Optionally describe the location of the event (e.g. Squires Colonial Hall Room 200.)'</Item>
+			<Item Name="price_description">'A charge for taking part in the event. If it\'s free then leave the field blank.'</Item>
+			<Item Name="contact_name_description">'Optionally specify the name of a person that can be contacted by people interested to learn more about the event.'</Item>
+			<Item Name="contact_phone_description">'Optionally specify a phone number that a person can call for further information.&lt;br/&gt;If you include more than one number, make sure to specify what each number is for (e.g. phone, fax).'</Item>
+			<Item Name="contact_email_description">'Optionally specify an email address that can be used to request further information.'</Item>
+			<Item Name="submit_to_default_calendar_header">'Submit to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; Calendar'</Item>
+			<Item Name="submit_to_default_calendar_text">'&lt;b&gt;Yes&lt;/b&gt;, and assign it to the following category'</Item>
+			<Item Name="submit_to_default_calendar_description">'Submit this event for approval to be added to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; calendar.'</Item>
 		</Section>
 		
 		<Section Name="Users">

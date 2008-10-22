@@ -34,14 +34,11 @@ require_once('application.inc.php');
 	function emailsponsoraccountchanged(&$sponsor) {
 		$subject = lang('email_account_updated_subject');
 		$body = lang('email_account_updated_body');
-		$body.= "   ".lang('sponsor_name')." ".stripslashes($sponsor['name'])."\n";
-		$body.= "   ".lang('email')." ".stripslashes($sponsor['email'])."\n";
-		$body.= "   ".lang('homepage')." ".stripslashes($sponsor['url'])."\n\n";
-
-			if ( isset($_SERVER["HTTPS"]) ) { $body .= "https"; } else { $body .= "http"; } 
-				$body .= "://".$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'], "/"))."/update.php?calendarid=".$_SESSION['CALENDAR_ID']."\n\n";
-
-		$body.= lang('email_add_event_instructions');
+		$body .= "   ".lang('sponsor_name')." ".stripslashes($sponsor['name'])."\n";
+		$body .= "   ".lang('email')." ".stripslashes($sponsor['email'])."\n";
+		$body .= "   ".lang('homepage')." ".stripslashes($sponsor['url'])."\n\n";
+		$body .= SECUREBASEURL."update.php?calendarid=".$_SESSION['CALENDAR_ID']."\n\n";
+		$body .= lang('email_add_event_instructions');
 		sendemail2sponsor($sponsor['name'],$sponsor['email'],$subject,$body);
 	} // end: emailsponsoraccountchanged
 

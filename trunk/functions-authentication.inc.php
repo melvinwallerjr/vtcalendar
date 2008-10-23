@@ -16,7 +16,7 @@ function checkoldpassword(&$user, $userid) {
 
 // display login screen and errormsg (if exists)
 function displaylogin($errormsg="") {
-	global $lang, $eventid, $httpreferer, $authsponsorid;
+	global $eventid, $httpreferer, $authsponsorid;
 	
 	// Do not show the login if asked not to.
 	if (defined("HIDELOGIN")) return;
@@ -73,7 +73,7 @@ function displaylogin($errormsg="") {
 // Display a list of sponsors that the user belongs to
 // so they can choose the one they wish to login as.
 function displaymultiplelogin($errorMessage="") {
-	global $lang, $eventid, $httpreferer, $authsponsorid;
+	global $eventid, $httpreferer, $authsponsorid;
 	
 	// Do not show the login if asked not to.
 	if (defined("HIDELOGIN")) return;

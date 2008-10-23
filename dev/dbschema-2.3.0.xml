@@ -217,7 +217,7 @@
 	</Key>
 </Table>
 
-<Table Name="vtcal_searchedkeywords">
+<!--<Table Name="vtcal_searchedkeywords">
 	<Field Name="calendarid" Type="varchar" Length="50" NotNull="true" AutoIncrement="false"/>
 	<Field Name="keyword" Type="varchar" Length="50" NotNull="true" AutoIncrement="false"/>
 	<Field Name="searchdate" Type="date" NotNull="true" AutoIncrement="false"/>
@@ -232,7 +232,7 @@
 		<KeyField Name="searchdate"/>
 		<KeyField Name="keyword"/>
 	</Key>
-</Table>
+</Table>-->
 
 <Table Name="vtcal_searchfeatured">
 	<Field Name="id" Type="int" NotNull="true" AutoIncrement="true"/>

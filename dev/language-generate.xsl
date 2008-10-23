@@ -5,7 +5,9 @@
     <xsl:variable name="NL"><xsl:text>&#10;</xsl:text></xsl:variable>
     
     <xsl:template match="/">
+        <xsl:text>&lt;?php</xsl:text><xsl:value-of select="$NL"/><xsl:value-of select="$NL"/>
         <xsl:apply-templates select="/Items/*"/>
+        <xsl:text>?&gt;</xsl:text>
     </xsl:template>
     
     <xsl:template match="Section">

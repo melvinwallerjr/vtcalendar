@@ -215,6 +215,7 @@ function lang($sTextKey) {
 	global $lang;
 	
 	if (!isset($lang[$sTextKey])) {
+		trigger_error("Lang key '".$sTextKey."' not found", E_USER_WARNING);
 		return "";
 	}
 	else {

@@ -1,11 +1,6 @@
 <?php
 require_once('application.inc.php');
 
-$lang['show_totals'] = 'Show Totals';
-$lang['upcoming_total'] = 'Upcoming / Total';
-$lang['dberror_nototals'] = 'Note: Event totals could not be calculated due to a database error';
-$lang['dberror_noupcomingtotals'] = 'Note: Upcoming event totals could not be calculated due to a database error';
-
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
 

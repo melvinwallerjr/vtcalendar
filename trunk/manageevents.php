@@ -1,9 +1,6 @@
 <?php
 require_once('application.inc.php');
 
-$lang['no_managed_events'] = 'You have not submitted any events for the month of ';
-$lang['show_events_for'] = 'Show events for';
-
 if (!authorized()) { exit; }
 
 pageheader(lang('manage_events'), "Update");

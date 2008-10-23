@@ -77,6 +77,10 @@ function SpecificSponsorChanged() {
 	   		</tr>
 	   		<?php } ?>
 	    	<tr>
+	    		<td><input name="format" type="radio" value="ical" id="format_ical" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "ical") echo "CHECKED"; ?>></td>
+	    		<td><label for="format_ical">iCalendar (ICS)</td>
+	   		</tr>
+	    	<tr>
 	    		<td><input name="format" type="radio" value="rss" id="format_rss" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "rss") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_rss">RSS 0.91 (XML)</td>
 	   		</tr>

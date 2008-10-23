@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Items>
-	<Section Name="Public Interface">
+	<Section Name="Common" Comment="Text that may be used by all scripts.">
 		
 		<Section Name="Misc">
 			<Item Name="encoding">'ISO-8859-1'</Item>
@@ -25,6 +25,9 @@
 			<Item Name="contact">'Contact'</Item>
 			<Item Name="homepage">'Homepage'</Item>
 			<Item Name="phone">'Phone'</Item>
+			<Item Name="contact_name">'Contact name'</Item>
+			<Item Name="contact_phone">'Contact phone'</Item>
+			<Item Name="contact_email">'Contact e-mail'</Item>
 		</Section>
 		
 		<Section Name="Date &amp; Time">
@@ -86,7 +89,9 @@
 			<Item Name="update">'Update'</Item>
 			<Item Name="logout">'Logout'</Item>
 		</Section>
-		
+	</Section>
+	
+	<Section Name="Main" Comment="Text used by main.php and its includes (main_*.inc.php).">
 		<Section Name="Little Calendar">
 			<Item Name="lit_cal_sun">'S'</Item>
 			<Item Name="lit_cal_mon">'M'</Item>
@@ -312,12 +317,20 @@
 		<Item Name="dberror_nosponsor">'Error: The calendar does not seem to have any sponsors.'</Item>
 	</Section>
 	
-	<Section Name="Login-protected interface">
+	<Section Name="Update" Comment="Text used by the login-protected interface">
 		
-		<Item Name="sponsor_twin_asterisk_note">'Note: The sponsor marked with a ** is the administrative sponsor of this calendar'</Item>
-		<Item Name="back_to_menu">'Back to Menu'</Item>
-		<Item Name="ok_button_text">'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;OK&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'</Item>
-		<Item Name="cancel_button_text">'Cancel'</Item>
+		<Section Name="Misc">
+			<Item Name="sponsor_twin_asterisk_note">'Note: The sponsor marked with a ** is the administrative sponsor of this calendar'</Item>
+			<Item Name="back_to_menu">'Back to Menu'</Item>
+			<Item Name="ok_button_text">'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;OK&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'</Item>
+			<Item Name="cancel_button_text">'Cancel'</Item>
+			<Item Name="url_invalid">'"The URL is invalid. Please make sure that you enter: &amp;quot;http://&amp;quot; in front."'</Item>
+			<Item Name="user_ids_invalid">'The following user-IDs are invalid:'</Item>
+			<Item Name="user_id_invalid">'The following user-ID is invalid:'</Item>
+			
+			<Item Name="default_sponsor_name" Comment="The default sponsor name when a new calendar is created.">'Administration'</Item>
+			<Item Name="default_category_name" Comment="The default category name when a new calendar is created.">'General'</Item>
+		</Section>
 		
 		<Section Name="Login Screen">
 			<Item Name="update_page_header">'Login'</Item>
@@ -365,6 +378,7 @@
 			<Item Name="manage_featured_search_keywords_description">'When a &amp;quot;Featured keyword&amp;quot; is used in a search, a message automatically appears at the top of the search results.'</Item>
 			<Item Name="view_search_log_description">'You can view a log of all the keywords searched here, which can be useful when you want to create keyword synonyms or featured keywords.'</Item>
 			
+			<Item Name="main_administrators_options">'Main administrator&apos;s options'</Item>
 			<Item Name="manage_users_description">'Add, edit and remove user accounts from the database.'</Item>
 			<Item Name="manage_calendars_description">'Add, edit and remove calendars as well as set who has &apos;administrative&apos; access to the calendar.'</Item>
 			<Item Name="manage_main_admins_description">'Add, edit and remove users who have full access to the entire calendar system.'</Item>
@@ -377,6 +391,14 @@
 			<Item Name="external_resources_bugs">'Report Bugs'</Item>
 			
 			<Item Name="version_check">'Version Check'</Item>
+			
+			<Section Name="Notices" Comment="These appear on update.php after actions have been successfully completed (e.g. submitted new event).">
+				<Item Name="new_event_submitted_notice">'The new event has been submitted for approval:'</Item>
+				<Item Name="updated_event_submitted_notice">'The update for the event has been submitted for approval:'</Item>
+				<Item Name="hompage_changed_notice">'The address of your homepage was successfully changed to:'</Item>
+				<Item Name="email_changed_notice">'Your email address was successfully changed to:'</Item>
+				<Item Name="change_password_of_user">'Change password of user'</Item>
+			</Section>
 		</Section>
 		
 		<Section Name="Choose Template Page">
@@ -385,27 +407,105 @@
 		</Section>
 		
 		<Section Name="Add/Edit Event Form">
+			<Item Name="input_event_information">'Input event information'</Item>
+			
 			<Item Name="date_and_time_header">'Date &amp;amp; Time'</Item>
-			<Item Name="basic_event_info_header">'Basic Event Information'</Item>
-			<Item Name="additional_event_info_header">'Additional Event Information'</Item>
-			<Item Name="additional_event_info_description">'XXX'</Item>
-			<Item Name="event_owner_info_header">'Owner of this Event'</Item>
-			<Item Name="event_owner_info_description">'This is the sponsor who owns this event in the calendar system.&lt;br/&gt;The sponsor who owns this event is able to copy and delete it, as well as submit new versions for approval.'</Item>
-			<Item Name="event_sponsor_info_header">'Information About the Event\'s Sponsor'</Item>
-			<Item Name="event_sponsor_info_description">'This is information about the department or organization that is the official sponsor of the event.&lt;br/&gt;For example, if this event was Commencement then the sponsor would be the Office of the Secretary.'</Item>
-			<Item Name="date_description">'Choose between one of the radio buttons to determine whether your event is a one-time or a recurring event. Then you will be given the opportunity to specify the date of the one-time event or define the recurrence for a repeating event.&lt;br/&gt;The validity of the date you picked is checked after pressing the &amp;quot;Preview Event&amp;quot; button.'</Item>
-			<Item Name="time_description">'Declare the event as being an &amp;quot;all day event&amp;quot; (for example &amp;quot;Thanksgiving Day&amp;quot;) or specify start and ending time for the event. Pick &amp;quot;???&amp;quot; for the hour of the ending time if the event does not have a specified ending time.'</Item>
-			<Item Name="category_description">'The category that best fits your event. This facilitates searching.'</Item>
-			<Item Name="title_description">'A short but descriptive title that is meaningful to the general audience.'</Item>
-			<Item Name="description_description">'A detailed description of the event. To avoid unnecessary calls or e-mails to your office be as detailed as possible.&lt;br/&gt;You are not limited in space, and Web and e-mail addresses are automatically linked.'</Item>
-			<Item Name="location_description">'Optionally describe the location of the event (e.g. Squires Colonial Hall Room 200.)'</Item>
-			<Item Name="price_description">'A charge for taking part in the event. If it\'s free then leave the field blank.'</Item>
-			<Item Name="contact_name_description">'Optionally specify the name of a person that can be contacted by people interested to learn more about the event.'</Item>
-			<Item Name="contact_phone_description">'Optionally specify a phone number that a person can call for further information.&lt;br/&gt;If you include more than one number, make sure to specify what each number is for (e.g. phone, fax).'</Item>
-			<Item Name="contact_email_description">'Optionally specify an email address that can be used to request further information.'</Item>
-			<Item Name="submit_to_default_calendar_header">'Submit to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; Calendar'</Item>
-			<Item Name="submit_to_default_calendar_text">'&lt;b&gt;Yes&lt;/b&gt;, and assign it to the following category'</Item>
-			<Item Name="submit_to_default_calendar_description">'Submit this event for approval to be added to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; calendar.'</Item>
+			
+			<Section Name="Reocurring Event">
+				<Item Name="recurring">'recurring'</Item>
+				<Item Name="on_the">'on the'</Item>
+				<Item Name="last">'last'</Item>
+				<Item Name="first">'first'</Item>
+				<Item Name="second">'second'</Item>
+				<Item Name="third">'third'</Item>
+				<Item Name="fourth">'fourth'</Item>
+				<Item Name="of_the_month_every">'of the month every'</Item>
+				<Item Name="other_month">'other month'</Item>
+				<Item Name="months">'months'</Item>
+				<Item Name="year">'Year'</Item>
+				<Item Name="every">'every'</Item>
+				<Item Name="every_other">'every other'</Item>
+				<Item Name="every_third">'every third'</Item>
+				<Item Name="every_fourth">'every fourth'</Item>
+				<Item Name="starting">'starting:'</Item>
+				<Item Name="ending">'ending:'</Item>
+				<Item Name="recurrence_produces_no_dates">'(The recurrence you have defined produces no dates!)'</Item>
+				<Item Name="resulting_dates_are">'The resulting dates are:'</Item>
+				
+				<Item Name="repeat">'repeat'</Item>
+				<Item Name="repeat_on_the">'repeat on the'</Item>
+			</Section>
+			
+			<Section Name="Event Date &amp; Time">
+				<Item Name="date_description">'Choose between one of the radio buttons to determine whether your event is a one-time or a recurring event. Then you will be given the opportunity to specify the date of the one-time event or define the recurrence for a repeating event.&lt;br/&gt;The validity of the date you picked is checked after pressing the &amp;quot;Preview Event&amp;quot; button.'</Item>
+				<Item Name="time_description">'Declare the event as being an &amp;quot;all day event&amp;quot; (for example &amp;quot;Thanksgiving Day&amp;quot;) or specify start and ending time for the event. Pick &amp;quot;???&amp;quot; for the hour of the ending time if the event does not have a specified ending time.'</Item>
+				
+				<Item Name="specify_valid_ending_date">'Please specify a valid ending date.'</Item>
+				<Item Name="specify_valid_dates">'Please specify valid dates.'</Item>
+				<Item Name="specify_valid_starting_date">'Please specify a valid starting date.'</Item>
+				<Item Name="ending_date_after_starting_date">'The ending date must be equal or greater than the starting date.'</Item>
+				<Item Name="date_invalid">'Date is invalid. Please change.'</Item>
+				<Item Name="one_time_event">'one-time event'</Item>
+				<Item Name="specify_all_day_or_starting_time">'Please specify &amp;quot;All day event&amp;quot; or a starting time.'</Item>
+				<Item Name="all_day_event">'All day event'</Item>
+				<Item Name="timed_event">'Timed event'</Item>
+				
+				<Item Name="ending_time_not_required">'(ending time is NOT required)'</Item>
+				<Item Name="warning_ending_time_before_starting_time">'Warning! Ending time is not greater than starting time.'</Item>
+				<Item Name="warning_no_ending_time">'Warning! The ending time is not specified.'</Item>
+				<Item Name="recurring_event">'recurring event'</Item>
+				<Item Name="no_recurrences_defined">'no recurrences defined.'</Item>
+			</Section>
+			
+			<Section Name="Basic Event Information">
+				<Item Name="basic_event_info_header">'Basic Event Information'</Item>
+				
+				<Item Name="category_description">'The category that best fits your event. This facilitates searching.'</Item>
+				<Item Name="title_description">'A short but descriptive title that is meaningful to the general audience.'</Item>
+				<Item Name="description_description">'A detailed description of the event. To avoid unnecessary calls or e-mails to your office be as detailed as possible.&lt;br/&gt;You are not limited in space, and Web and e-mail addresses are automatically linked.'</Item>
+				
+				<Item Name="choose_category">'Please choose a category.'</Item>
+				<Item Name="choose_title">'Please choose a title.'</Item>
+			</Section>
+			
+			<Section Name="Additional Event Information">
+				<Item Name="additional_event_info_header">'Additional Event Information'</Item>
+				<Item Name="additional_event_info_description">'XXX'</Item>
+				
+				<Item Name="location_description">'Optionally describe the location of the event (e.g. Squires Colonial Hall Room 200.)'</Item>
+				<Item Name="price_description">'A charge for taking part in the event. If it\'s free then leave the field blank.'</Item>
+				
+				<Item Name="contact_name_description">'Optionally specify the name of a person that can be contacted by people interested to learn more about the event.'</Item>
+				<Item Name="contact_phone_description">'Optionally specify a phone number that a person can call for further information.&lt;br/&gt;If you include more than one number, make sure to specify what each number is for (e.g. phone, fax).'</Item>
+				<Item Name="contact_email_description">'Optionally specify an email address that can be used to request further information.'</Item>
+			</Section>
+			
+			<Section Name="Event Owner">
+				<Item Name="event_owner_info_header">'Owner of this Event'</Item>
+				<Item Name="event_owner_info_description">'This is the sponsor who owns this event in the calendar system.&lt;br/&gt;The sponsor who owns this event is able to copy and delete it, as well as submit new versions for approval.'</Item>
+			</Section>
+			
+			<Section Name="Displayed Sponsor/URL">
+				<Item Name="event_sponsor_info_header">'Information About the Event\'s Sponsor'</Item>
+				<Item Name="event_sponsor_info_description">'This is information about the department or organization that is the official sponsor of the event.&lt;br/&gt;For example, if this event was Commencement then the sponsor would be the Office of the Secretary.'</Item>
+				
+				<Item Name="button_restore_all_sponsor_defaults">'Restore all sponsor defaults'</Item>
+				<Item Name="displayed_sponsor_name">'Displayed Name'</Item>
+				<Item Name="sponsor_page_web_address">'Sponsor&apos;s Website'</Item>
+				<Item Name="button_restore_default">'Restore default'</Item>
+			</Section>
+			
+			<Section Name="Submit to Default Calendar">
+				<Item Name="submit_to_default_calendar_header">'Submit to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; Calendar'</Item>
+				<Item Name="submit_to_default_calendar_text">'&lt;b&gt;Yes&lt;/b&gt;, and assign it to the following category'</Item>
+				<Item Name="submit_to_default_calendar_description">'Submit this event for approval to be added to the &amp;quot;DEFAULTCALENDARNAME&amp;quot; calendar.'</Item>
+			</Section>
+			
+			<Section Name="Buttons">
+				<Item Name="preview_event">'Preview event'</Item>
+				<Item Name="save_changes">'Save changes'</Item>
+				<Item Name="go_back_to_make_changes">'Go back to make changes'</Item>
+			</Section>
 		</Section>
 		
 		<Section Name="Users">
@@ -447,18 +547,17 @@
 			<Item Name="no_events_for_approval">'There are no events currently awaiting approval.'</Item>
 		</Section>
 		
-		<Item Name="approve">'Approve'</Item>
-		<Item Name="reject">'Reject'</Item>
-		<Item Name="rename">'Rename'</Item>
-		<Item Name="copy">'Copy'</Item>
-		<Item Name="edit">'Edit'</Item>
-		<Item Name="delete">'Delete'</Item>
-		<Item Name="copy_event">'Copy event'</Item>
-		<Item Name="update_event">'Update event'</Item>
-		<Item Name="add_new_event">'Add new event'</Item>
-		
-		<Item Name="user_ids_invalid">'The following user-IDs are invalid:'</Item>
-		<Item Name="user_id_invalid">'The following user-ID is invalid:'</Item>
+		<Section Name="Admin Buttons">
+			<Item Name="approve">'Approve'</Item>
+			<Item Name="reject">'Reject'</Item>
+			<Item Name="rename">'Rename'</Item>
+			<Item Name="copy">'Copy'</Item>
+			<Item Name="edit">'Edit'</Item>
+			<Item Name="delete">'Delete'</Item>
+			<Item Name="copy_event">'Copy event'</Item>
+			<Item Name="update_event">'Update event'</Item>
+			<Item Name="add_new_event">'Add new event'</Item>
+		</Section>
 		
 		<Section Name="Change Calendar Settings">
 			<Item Name="change_header_footer_auth">'Change header, footer, authorization settings'</Item>
@@ -586,27 +685,12 @@
 			<Item Name="color_description_deletebg">'Border color for \'Delete Event\' Admin Buttons'</Item>
 		</Section>
 		
-		<Section Name="Event Input Page">
-			<Item Name="input_event_information">'Input event information'</Item>
-			
-			<Item Name="warning_ending_time_before_starting_time">'Warning! Ending time is not greater than starting time.'</Item>
-			<Item Name="warning_no_ending_time">'Warning! The ending time is not specified.'</Item>
-			<Item Name="recurring_event">'recurring event'</Item>
-			<Item Name="no_recurrences_defined">'no recurrences defined.'</Item>
-			
-			<Item Name="save_changes">'Save changes'</Item>
-			<Item Name="preview_event">'Preview event'</Item>
-			<Item Name="go_back_to_make_changes">'Go back to make changes'</Item>
-		</Section>
-		
 		<Item Name="change_email">'Change email address'</Item>
 		<Item Name="change_email_label">'The email address you enter below will be used by the calendar administrator to send messages to you:'</Item>
 		<Item Name="email_invalid">'The email address is invalid.'</Item>
 		<Item Name="change_homepage">'Change homepage address'</Item>
 		<Item Name="change_homepage_label">'Please enter the address of your organization&apos;s homepage:'</Item>
 		<Item Name="change_homepage_example">'(Make sure to enter the full URL including &amp;quot;http://&amp;quot;.)'</Item>
-		
-		<Item Name="url_invalid">'"The URL is invalid. Please make sure that you enter: &amp;quot;http://&amp;quot; in front."'</Item>
 		
 		<Item Name="email_account_updated_subject">'calendar account information updated'</Item>
 		<Item Name="email_account_updated_body">'The calendar administrator updated the information for your user account. The current settings are: '</Item>
@@ -622,44 +706,42 @@
 		<Item Name="two_passwords_dont_match">'The two values you entered for the new password do not agree. Please try again.'</Item>
 		<Item Name="new_password_invalid">'The new password is invalid.'</Item>
 		
-		<Item Name="delete_calendar">'Delete calendar'</Item>
-		<Item Name="warning_calendar_delete">'Warning! The following calendar will be deleted:'</Item>
-		
-		<Item Name="delete_event_category">'Delete event category'</Item>
-		<Item Name="warning_event_category_delete">'Warning! The following event category will be deleted:'</Item>
-		
-		<Item Name="delete_all_events_in_category">'delete all events in this category'</Item>
-		<Item Name="reassign_all_events_to_category">'re-assign all events in this category to:'</Item>
-		
-		<Item Name="delete_event">'Delete event'</Item>
-		<Item Name="delete_event_confirm">'Do you really want to delete this event?'</Item>
-		<Item Name="button_delete_this_event">'Delete this event'</Item>
-		<Item Name="button_delete_all_recurrences">'Delete ALL recurrences of this event'</Item>
-		
-		<Item Name="delete_inactive_sponsors">'Delete inactive sponsors'</Item>
-		<Item Name="delete_inactive_sponsors_message">'Delete all sponsors who do NOT had an event during the last'</Item>
-		<Item Name="delete_inactive_sponsors_year">'year'</Item>
-		<Item Name="delete_inactive_sponsors_2years">'2 years'</Item>
-		<Item Name="delete_inactive_sponsors_3years">'3 years'</Item>
-		
-		<Item Name="delete_main_admin">'Delete main admin'</Item>
-		<Item Name="delete_main_admin_confirm">'The following main admin will be deleted:'</Item>
-		
-		<Item Name="clear_search_log">'Clear search log'</Item>
-		<Item Name="clear_search_log_confirm">'Do you want to delete the entire search log?'</Item>
-		
-		<Item Name="delete_sponsor">'Delete sponsor'</Item>
-		<Item Name="delete_sponsor_confirm">'Warning! The following sponsor will be deleted:'</Item>
-		
-		<Item Name="delete_all_events_of_sponsor">'delete all events belonging to this sponsor'</Item>
-		<Item Name="reassign_all_events_to_sponsor">'re-assign all events belonging to this sponsor to:'</Item>
-		
-		<Item Name="delete_user">'Delete user'</Item>
-		<Item Name="delete_user_confirm">'The following user will be deleted:'</Item>
-		
-		
-		<Item Name="default_sponsor_name">'Administration'</Item>
-		<Item Name="default_category_name">'General'</Item>
+		<Section Name="Delete Calendar/Category/Event/Sponsors/Users">
+			<Item Name="delete_calendar">'Delete calendar'</Item>
+			<Item Name="warning_calendar_delete">'Warning! The following calendar will be deleted:'</Item>
+			
+			<Item Name="delete_event_category">'Delete event category'</Item>
+			<Item Name="warning_event_category_delete">'Warning! The following event category will be deleted:'</Item>
+			
+			<Item Name="delete_all_events_in_category">'delete all events in this category'</Item>
+			<Item Name="reassign_all_events_to_category">'re-assign all events in this category to:'</Item>
+			
+			<Item Name="delete_event">'Delete event'</Item>
+			<Item Name="delete_event_confirm">'Do you really want to delete this event?'</Item>
+			<Item Name="button_delete_this_event">'Delete this event'</Item>
+			<Item Name="button_delete_all_recurrences">'Delete ALL recurrences of this event'</Item>
+			
+			<Item Name="delete_inactive_sponsors">'Delete inactive sponsors'</Item>
+			<Item Name="delete_inactive_sponsors_message">'Delete all sponsors who do NOT had an event during the last'</Item>
+			<Item Name="delete_inactive_sponsors_year">'year'</Item>
+			<Item Name="delete_inactive_sponsors_2years">'2 years'</Item>
+			<Item Name="delete_inactive_sponsors_3years">'3 years'</Item>
+			
+			<Item Name="delete_main_admin">'Delete main admin'</Item>
+			<Item Name="delete_main_admin_confirm">'The following main admin will be deleted:'</Item>
+			
+			<Item Name="clear_search_log">'Clear search log'</Item>
+			<Item Name="clear_search_log_confirm">'Do you want to delete the entire search log?'</Item>
+			
+			<Item Name="delete_sponsor">'Delete sponsor'</Item>
+			<Item Name="delete_sponsor_confirm">'Warning! The following sponsor will be deleted:'</Item>
+			
+			<Item Name="delete_all_events_of_sponsor">'delete all events belonging to this sponsor'</Item>
+			<Item Name="reassign_all_events_to_sponsor">'re-assign all events belonging to this sponsor to:'</Item>
+			
+			<Item Name="delete_user">'Delete user'</Item>
+			<Item Name="delete_user_confirm">'The following user will be deleted:'</Item>
+		</Section>
 		
 		<Section Name="Add/Edit Calendars">
 			<Item Name="edit_calendar">'Edit calendar'</Item>
@@ -701,40 +783,80 @@
 			<Item Name="email_add_event_instructions">'Short instructions for adding an event: - Login using your personal user-ID and password - Click on "Add new event" - Fill in the fields - Press the "Preview event" button - If the preview looks ok, press the "Save changes" button Your event is submitted to the calendar administrator for review and will be publicized shortly. '</Item>
 		</Section>
 		
-		<Item Name="recurring">'recurring'</Item>
-		<Item Name="on_the">'on the'</Item>
-		<Item Name="last">'last'</Item>
-		<Item Name="first">'first'</Item>
-		<Item Name="second">'second'</Item>
-		<Item Name="third">'third'</Item>
-		<Item Name="fourth">'fourth'</Item>
-		<Item Name="of_the_month_every">'of the month every'</Item>
-		<Item Name="other_month">'other month'</Item>
-		<Item Name="months">'months'</Item>
-		<Item Name="year">'Year'</Item>
-		<Item Name="every">'every'</Item>
-		<Item Name="every_other">'every other'</Item>
-		<Item Name="every_third">'every third'</Item>
-		<Item Name="every_fourth">'every fourth'</Item>
-		<Item Name="starting">'starting:'</Item>
-		<Item Name="ending">'ending:'</Item>
-		<Item Name="recurrence_produces_no_dates">'(The recurrence you have defined produces no dates!)'</Item>
-		<Item Name="resulting_dates_are">'The resulting dates are:'</Item>
-		
-		<Item Name="repeat">'repeat'</Item>
-		<Item Name="repeat_on_the">'repeat on the'</Item>
-		
-		<Item Name="specify_valid_ending_date">'Please specify a valid ending date.'</Item>
-		<Item Name="specify_valid_dates">'Please specify valid dates.'</Item>
-		<Item Name="specify_valid_starting_date">'Please specify a valid starting date.'</Item>
-		<Item Name="ending_date_after_starting_date">'The ending date must be equal or greater than the starting date.'</Item>
-		<Item Name="date_invalid">'Date is invalid. Please change.'</Item>
-		<Item Name="one_time_event">'one-time event'</Item>
-		<Item Name="specify_all_day_or_starting_time">'Please specify &amp;quot;All day event&amp;quot; or a starting time.'</Item>
-		<Item Name="all_day_event">'All day event'</Item>
-		<Item Name="timed_event">'Timed event'</Item>
-		
 		<Item Name="calendar_administration">'Calendar administration'</Item>
+		
+		<Section Name="Manage Calendars">
+			<Item Name="manage_calendars">'Manage calendars'</Item>
+			<Item Name="or_modify_existing_calendar">'or modify existing calendar:'</Item>
+			<Item Name="show_totals">'Show Totals'</Item>
+			<Item Name="upcoming_total">'Upcoming / Total'</Item>
+			<Item Name="dberror_nototals">'Note: Event totals could not be calculated due to a database error'</Item>
+			<Item Name="dberror_noupcomingtotals">'Note: Upcoming event totals could not be calculated due to a database error'</Item>
+		</Section>
+		
+		<Section Name="Manage Categories">
+			<Item Name="manage_event_categories">'Manage event categories'</Item>
+			<Item Name="or_modify_existing_category">'or modify existing category:'</Item>
+		</Section>
+		
+		<Section Name="Manage 'My' Events">
+			<Item Name="manage_events">'My submitted events'</Item>
+			<Item Name="or_manage_existing_events">'or manage existing events:'</Item>
+			
+			<Item Name="no_managed_events">'You have not submitted any events for the month of '</Item>
+			<Item Name="show_events_for">'Show events for'</Item>
+			
+			<Item Name="status">'Status'</Item>
+			<Item Name="submitted_for_approval">'awaiting approval'</Item>
+			<Item Name="approved">'approved'</Item>
+			<Item Name="status_info_message">'The status information has the following meaning:'</Item>
+			<Item Name="rejected">'rejected'</Item>
+			<Item Name="rejected_explanation">'...event was not approved for publication'</Item>
+			<Item Name="submitted_for_approval_explanation">'...event has yet to be reviewed and approved'</Item>
+			<Item Name="approved_explanation">'...event is displayed in the calendar'</Item>
+		</Section>
+		
+		<Section Name="Manage Featured Search Keywords">
+			<Item Name="manage_featured_search_keywords">'Manage featured search keywords'</Item>
+			<Item Name="featured_search_keywords_message">'Below you can associate certain search keywords with custom&lt;br&gt; text messages or HTML. This can be used to answer to keywords&lt;br&gt; which are frequently used but rarely have a match within the&lt;br&gt; calendar.'</Item>
+			<Item Name="or_manage_existing_keywords">'or manage existing keywords:'</Item>
+		</Section>
+		
+		<Section Name="Manage Main Admins">
+			<Item Name="manage_main_admins">'Manage main admins'</Item>
+			<Item Name="add_new_main_admin">'Add new main admin'</Item>
+			<Item Name="or_delete_existing">'or delete existing:'</Item>
+			<Item Name="main_admins_total">'Main admins total'</Item>
+		</Section>
+		
+		<Section Name="Manage Alternate Search Keywords">
+			<Item Name="manage_search_keywords">'Manage search keywords'</Item>
+			<Item Name="manage_search_keywords_message">'The following list contains keywords which are tried by the calendar search engine&lt;br&gt; in addition to the keyword provided by the user. You can improve the search engine&apos;s&lt;br&gt; power by building a list of common synonyms (or alternative keywords) for &lt;br&gt; frequently-used keywords.'</Item>
+			<Item Name="or_manage_existing_pairs">'or manage existing pairs:'</Item>
+		</Section>
+		
+		<Section Name="Manage Sponsors">
+			<Item Name="manage_sponsors">'Manage Sponsors'</Item>
+			<Item Name="or_modify_existing_sponsor">'or modify existing sponsor:'</Item>
+			<Item Name="sponsors_total">'Sponsors total'</Item>
+		</Section>
+		
+		<Section Name="Manage Users">
+			<Item Name="manage_users">'Manage users'</Item>
+			<Item Name="or_modify_existing_user">'or modify existing user:'</Item>
+		</Section>
+		
+		<Section Name="Reject Event">
+			<Item Name="reject_event_update">'Reject event update'</Item>
+			<Item Name="reason_for_rejection">'Reason for rejecting this update (send as a notification to the sponsor):'</Item>
+		</Section>
+		
+		<Item Name="rename_event_category">'Rename event category'</Item>
+		
+		<Section Name="Search Log">
+			<Item Name="view_search_log">'View search log'</Item>
+			<Item Name="search_log_is_empty">'Search log is empty.'</Item>
+		</Section>
 		
 		<Section Name="Import Events">
 			<Item Name="import_error_displayedsponsor">'Error!: &amp;lt;displayedsponsor&amp;gt; is too long.'</Item>
@@ -762,82 +884,21 @@
 			<Item Name="enter_import_url_example">'(e.g. &amp;quot;http://www.vtmc.vt.edu/rec/newevents.xml&amp;quot;)'</Item>
 		</Section>
 		
-		<Item Name="ending_time_not_required">'(ending time is NOT required)'</Item>
-		<Item Name="choose_category">'Please choose a category.'</Item>
-		<Item Name="choose_title">'Please choose a title.'</Item>
+		<Section Name="Help Windows" Comment="This is being phased out and the text is instead being included directly on pages">
+			<Item Name="help_export_xmlformat_example">'This is an example of the custom XML format:'</Item>
+			<Item Name="help_export_data_format">'@FILE:languages/en/help_export_data_format.html'</Item>
+			<Item Name="help_export_categoryid_intro">'The value for &amp;quot;categoryid&amp;quot; is one of the following index numbers:'</Item>
+			<Item Name="help_categoryid_index">'Index'</Item>
+			<Item Name="help_categoryid_name">'Name'</Item>
+			<Item Name="help_import">'Importing events'</Item>
+			<Item Name="help_import_intro">'@FILE:languages/en/help_import_intro.html'</Item>
+			<Item Name="help_import_data_format_intro">'@FILE:languages/en/help_import_data_format_intro.html'</Item>
+			<Item Name="help_import_data_format">'@FILE:languages/en/help_import_data_format.html'</Item>
+			<Item Name="help_signup">'How to request a login'</Item>
+			<Item Name="help_signup_authorization">'&lt;p&gt;Authorization to add events can be obtained by contacting the calendar administrator at '</Item>
+			<Item Name="help_signup_contents">'&lt;p&gt;All event submissions will be reviewed by the calendar coordinator before they are posted. Consequently, it is important to submit items at least two days in advance of the event. During the review process, submissions will be checked to see if they are appropriate for posting and edited for clarity and conciseness.&lt;/p&gt;'</Item>
+		</Section>
 		
-		<Item Name="contact_name">'Contact name'</Item>
-		<Item Name="contact_phone">'Contact phone'</Item>
-		<Item Name="contact_email">'Contact e-mail'</Item>
-		
-		<Item Name="button_restore_all_sponsor_defaults">'Restore all sponsor defaults'</Item>
-		<Item Name="displayed_sponsor_name">'Displayed Name'</Item>
-		<Item Name="sponsor_page_web_address">'Sponsor&apos;s Website'</Item>
-		<Item Name="button_restore_default">'Restore default'</Item>
-		
-		<Item Name="manage_calendars">'Manage calendars'</Item>
-		<Item Name="or_modify_existing_calendar">'or modify existing calendar:'</Item>
-		
-		<Item Name="manage_event_categories">'Manage event categories'</Item>
-		<Item Name="or_modify_existing_category">'or modify existing category:'</Item>
-		<Item Name="manage_events">'My submitted events'</Item>
-		<Item Name="or_manage_existing_events">'or manage existing events:'</Item>
-		<Item Name="status">'Status'</Item>
-		<Item Name="submitted_for_approval">'awaiting approval'</Item>
-		<Item Name="approved">'approved'</Item>
-		<Item Name="status_info_message">'The status information has the following meaning:'</Item>
-		<Item Name="rejected">'rejected'</Item>
-		<Item Name="rejected_explanation">'...event was not approved for publication'</Item>
-		<Item Name="submitted_for_approval_explanation">'...event has yet to be reviewed and approved'</Item>
-		<Item Name="approved_explanation">'...event is displayed in the calendar'</Item>
-		
-		<Item Name="manage_featured_search_keywords">'Manage featured search keywords'</Item>
-		<Item Name="featured_search_keywords_message">'Below you can associate certain search keywords with custom&lt;br&gt; text messages or HTML. This can be used to answer to keywords&lt;br&gt; which are frequently used but rarely have a match within the&lt;br&gt; calendar.'</Item>
-		<Item Name="or_manage_existing_keywords">'or manage existing keywords:'</Item>
-		
-		<Item Name="manage_main_admins">'Manage main admins'</Item>
-		<Item Name="add_new_main_admin">'Add new main admin'</Item>
-		<Item Name="or_delete_existing">'or delete existing:'</Item>
-		<Item Name="main_admins_total">'Main admins total'</Item>
-		
-		<Item Name="manage_search_keywords">'Manage search keywords'</Item>
-		<Item Name="manage_search_keywords_message">'The following list contains keywords which are tried by the calendar search engine&lt;br&gt; in addition to the keyword provided by the user. You can improve the search engine&apos;s&lt;br&gt; power by building a list of common synonyms (or alternative keywords) for &lt;br&gt; frequently-used keywords.'</Item>
-		<Item Name="or_manage_existing_pairs">'or manage existing pairs:'</Item>
-		
-		<Item Name="manage_sponsors">'Manage Sponsors'</Item>
-		<Item Name="or_modify_existing_sponsor">'or modify existing sponsor:'</Item>
-		<Item Name="sponsors_total">'Sponsors total'</Item>
-		
-		<Item Name="manage_users">'Manage users'</Item>
-		<Item Name="or_modify_existing_user">'or modify existing user:'</Item>
-		
-		<Item Name="reject_event_update">'Reject event update'</Item>
-		<Item Name="reason_for_rejection">'Reason for rejecting this update (send as a notification to the sponsor):'</Item>
-		
-		<Item Name="rename_event_category">'Rename event category'</Item>
-		
-		<Item Name="sponsors_options">'Sponsor&apos;s options'</Item>
-		<Item Name="administrators_options">'Administrator&apos;s options'</Item>
-		<Item Name="main_administrators_options">'Main administrator&apos;s options'</Item>
-		<Item Name="new_event_submitted_notice">'The new event has been submitted for approval:'</Item>
-		<Item Name="updated_event_submitted_notice">'The update for the event has been submitted for approval:'</Item>
-		<Item Name="hompage_changed_notice">'The address of your homepage was successfully changed to:'</Item>
-		<Item Name="email_changed_notice">'Your email address was successfully changed to:'</Item>
-		<Item Name="change_password_of_user">'Change password of user'</Item>
-		<Item Name="view_search_log">'View search log'</Item>
-		<Item Name="search_log_is_empty">'Search log is empty.'</Item>
-		
-		<Item Name="help_export_xmlformat_example">'This is an example of the custom XML format:'</Item>
-		<Item Name="help_export_data_format">'@FILE:languages/en/help_export_data_format.html'</Item>
-		<Item Name="help_export_categoryid_intro">'The value for &amp;quot;categoryid&amp;quot; is one of the following index numbers:'</Item>
-		<Item Name="help_categoryid_index">'Index'</Item>
-		<Item Name="help_categoryid_name">'Name'</Item>
-		<Item Name="help_import">'Importing events'</Item>
-		<Item Name="help_import_intro">'@FILE:languages/en/help_import_intro.html'</Item>
-		<Item Name="help_import_data_format_intro">'@FILE:languages/en/help_import_data_format_intro.html'</Item>
-		<Item Name="help_import_data_format">'@FILE:languages/en/help_import_data_format.html'</Item>
-		<Item Name="help_signup">'How to request a login'</Item>
-		<Item Name="help_signup_authorization">'&lt;p&gt;Authorization to add events can be obtained by contacting the calendar administrator at '</Item>
-		<Item Name="help_signup_contents">'&lt;p&gt;All event submissions will be reviewed by the calendar coordinator before they are posted. Consequently, it is important to submit items at least two days in advance of the event. During the review process, submissions will be checked to see if they are appropriate for posting and edited for clarity and conciseness.&lt;/p&gt;'</Item>
+		<Item Name="searched_keywords">'Searched Keywords'</Item>
 	</Section>
 </Items>

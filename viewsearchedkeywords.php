@@ -4,8 +4,6 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISCALENDARADMIN']) { exit; } // additional security
 
-$lang['searched_keywords'] = 'Searched Keywords';
-
 if (!isset($_GET['rangestart']) || ($rangestart = strtotime($_GET['rangestart'])) === false) { unset($rangestart); }
 if (!isset($_GET['rangeend']) || ($rangeend = strtotime($_GET['rangeend'])) === false) { $rangeend = time(); }
 

@@ -2,7 +2,6 @@ TODO for Version 2.x:
 ===========================
 
 High:
-- Move all lang files to languages/en.inc.php
 - Validate iCalendar export format.
 - Check help text to see if it is still accurate.
 - Allow data currently stored in session to be loaded from the DB or a file.
@@ -34,6 +33,7 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- Move all lang files to languages/en.inc.php (Finished 2008-10-22)
 - For upgradedb.php make sure 'int(11)' is aliased to 'int'. (Finished ~2008-10-19)
 - Check existing column max lengths, 'max(length(X))', for fields that are being updated in upgradedb.php. (Finished 2008-10-21)
 - Update install/upgradedb.php for PostgreSQL. (Finished 2008-10-21)

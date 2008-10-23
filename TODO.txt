@@ -27,6 +27,7 @@ Low:
 - Store IP if logged in and logout if IP changes.
 
 Future:
+- Rich Text Editor for description (http://developer.yahoo.com/yui/editor/ or http://www.kevinroth.com/rte/)
 - A public submit an event form that submits on behalf of a non-admin sponsor (the calendar admin decides which).
   Events submitted this way would also need an e-mail address (and other contact info) for the person submitting the event.
   A confirmation e-mail would be sent to the address with a link the submitted will need to click to act as a spam filter.

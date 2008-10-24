@@ -203,6 +203,7 @@
 			<Item Name="export_settings">'Export Settings'</Item>
 			
 			<Item Name="export_format">'Export Format'</Item>
+			<Item Name="export_format_backup">'Backup'</Item>
 			<Item Name="export_format_standard">'Standard'</Item>
 			<Item Name="export_format_advanced">'Advanced'</Item>
 			<Item Name="export_format_error">'You must select an &amp;quot;Export Format&amp;quot;.'</Item>

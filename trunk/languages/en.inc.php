@@ -1,6 +1,7 @@
 <?php
 
 # Start Section: Common
+# Description: Text that may be used by all scripts.
 
 	# Start Section: Misc
 	
@@ -101,6 +102,7 @@
 # End Section: Common
 
 # Start Section: Main
+# Description: Text used by main.php and its includes (main_*.inc.php).
 
 	# Start Section: Little Calendar
 	
@@ -217,6 +219,7 @@
 		$lang['export_resetform'] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>- or -</b>&nbsp;&nbsp;&nbsp;&nbsp;<a href="export-new.php">Reset the Form</a>';
 		$lang['export_settings'] = 'Export Settings';
 		$lang['export_format'] = 'Export Format';
+		$lang['export_format_backup'] = 'Backup';
 		$lang['export_format_standard'] = 'Standard';
 		$lang['export_format_advanced'] = 'Advanced';
 		$lang['export_format_error'] = 'You must select an &quot;Export Format&quot;.';
@@ -329,6 +332,7 @@
 # End Section: Database Errors
 
 # Start Section: Update
+# Description: Text used by the login-protected interface
 
 	# Start Section: Misc
 	
@@ -339,9 +343,9 @@
 		$lang['url_invalid'] = '"The URL is invalid. Please make sure that you enter: &quot;http://&quot; in front."';
 		$lang['user_ids_invalid'] = 'The following user-IDs are invalid:';
 		$lang['user_id_invalid'] = 'The following user-ID is invalid:';
- // The default sponsor name when a new calendar is created.
+		// The default sponsor name when a new calendar is created.
 		$lang['default_sponsor_name'] = 'Administration';
- // The default category name when a new calendar is created.
+		// The default category name when a new calendar is created.
 		$lang['default_category_name'] = 'General';
 
 	# End Section: Misc
@@ -403,6 +407,7 @@
 		$lang['version_check'] = 'Version Check';
 
 		# Start Section: Notices
+		# Description: These appear on update.php after actions have been successfully completed (e.g. submitted new event).
 		
 			$lang['new_event_submitted_notice'] = 'The new event has been submitted for approval:';
 			$lang['updated_event_submitted_notice'] = 'The update for the event has been submitted for approval:';
@@ -969,6 +974,7 @@
 	# End Section: Import Events
 	
 	# Start Section: Help Windows
+	# Description: This is being phased out and the text is instead being included directly on pages
 	
 		$lang['help_export_xmlformat_example'] = 'This is an example of the custom XML format:';
 		$lang['help_export_data_format'] = '@FILE:languages/en/help_export_data_format.html';

@@ -2,7 +2,6 @@ TODO for Version 2.x:
 ===========================
 
 High:
-- Validate iCalendar export format.
 - Check help text to see if it is still accurate.
 - Allow data currently stored in session to be loaded from the DB or a file.
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
@@ -13,6 +12,7 @@ High:
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
 
 Low:
+- Validate iCalendar export format.
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
 - Free results by using $results->free()
@@ -28,6 +28,7 @@ Low:
 
 Future:
 - Rich Text Editor for description (http://developer.yahoo.com/yui/editor/ or http://www.kevinroth.com/rte/)
+- Full text searching
 - A public submit an event form that submits on behalf of a non-admin sponsor (the calendar admin decides which).
   Events submitted this way would also need an e-mail address (and other contact info) for the person submitting the event.
   A confirmation e-mail would be sent to the address with a link the submitted will need to click to act as a spam filter.

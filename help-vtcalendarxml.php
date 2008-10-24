@@ -6,57 +6,28 @@ pageheader(lang('vtcalendar_xml'), "Update");
 contentsection_begin(lang('vtcalendar_xml'),false);
 ?>
 
+<p>The VTCalendar XML format is used for importing and exporting events between instances of VTCalendar.</p>
+
 <h3>Example 1:</h3>
 <blockquote>
 <p>In the example below note the following:</p>
 <ul>
-<li>As of version 2.3.0, the URL field is still supported for importing, but will always be blank in export XML.</li>
+	<li>As of version 2.3.0, the URL field is still supported for importing, but will always be blank in export XML.</li>
 </ul>
 
-<style type="text/css">
-body {
-	background-color: #EEEEEE;
-}
-.DeclStart, .DeclEnd, .DeclAttributes span {
-	color: #990099 !important;
-}
-.ElementStart, .ElementEnd, .ElementName {
-	color: #000099;
-}
-.ElementName {
-	font-weight: bold;
-}
-.ElementAttr {
-	color: #CC00CC;
-}
-.AttrName, .AttrEq {
-	color: #009999;
-}
-.AttrValue, .AttrValueQuote {
-	color: #0000FF;
-}
-.Text {
-	color: #666666;
-}
-.CodeBox-Outer {
-	border: 1px solid #666666;
-	background-color: #FFFFFF;
-	padding: 5px;
-}
-.CodeBox {
-	padding: 0;
-	margin: 0;
-	overflow: scroll;
-	width: 100%;
-}
-.Comment {
-	color: #009900;
-	font-style: italic;
-}
-.DocType {
-	color: #0000FF;
-}
-</style>
+<div class="CodeBox-Outer"><pre id="Example" class="CodeBox">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;events&gt;
+    &lt;event&gt;
+        ...
+    &lt;/event&gt;
+    &lt;event&gt;
+        ...
+    &lt;/event&gt;
+&lt;/events&gt;</pre></div>
+</blockquote>
+
+<h3>Example 2:</h3>
+<blockquote>
 <div class="CodeBox-Outer"><pre id="Example" class="CodeBox">&lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;events&gt;
     &lt;event&gt;
@@ -80,10 +51,17 @@ body {
         &lt;contact_name&gt;Jackie Young&lt;/contact_name&gt;
         &lt;contact_phone&gt;202-806-8084&lt;/contact_phone&gt;
         &lt;contact_email&gt;jyoung@law.howard.edu&lt;/contact_email&gt;
-        &lt;url/&gt;
+        &lt;url&gt;http://example.edu/eventdetails.htm&lt;/url&gt;
         &lt;recordchangedtime&gt;2008-08-19 14:42:21&lt;/recordchangedtime&gt;
         &lt;recordchangeduser&gt;bsmith&lt;/recordchangeduser&gt;
     &lt;/event&gt;
+&lt;/events&gt;</pre></div>
+</blockquote>
+
+<h3>Example 3:</h3>
+<blockquote>
+<div class="CodeBox-Outer"><pre id="Example" class="CodeBox">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;events&gt;
     &lt;event&gt;
         &lt;eventid&gt;1219179596898-0008&lt;/eventid&gt;
         &lt;sponsorid&gt;200&lt;/sponsorid&gt;

@@ -54,8 +54,7 @@ for (var i = 0; i < elements.length; i++) {
 }
 // ]]> --></script>
 
-<div class="CodeBox-Outer">
-<pre id="Example" class="CodeBox">SOME CODE</pre></div>
+<div class="CodeBox-Outer"><pre id="Example" class="CodeBox">SOME CODE</pre></div>
 
 */
 
@@ -117,7 +116,6 @@ function SourceCodeColorer(id) {
 		//var MarkupDecl = '(?:' + ElementDecl + '|' + AttlistDecl + '|' + EntityDecl + '|' + NotationDecl + '|' + PI + '|' + Comment + ')';
 		//var IntSubset = '(?:(?:' + MarkupDecl + '|' + DeclSep ')*)'
 		var DocTypeDecl = '(?:<!DOCTYPE\\s+' + Name + '(?:\\s+' + ExternalID + ')?\\s*>)'; // (?:\\[' + IntSubset + '\\]\\s*)?
-		document.getElementById('Wang').value = DocTypeDecl;
 		
 		var Element = '(?:</?' + Name + '(?:\\s*' + Attribute + ')*\\s*/?>)';
 		var Comment = '(?:<!--(?:(?:' + CharNoHyphen + ')|(?:-' + CharNoHyphen + '))*-->)';

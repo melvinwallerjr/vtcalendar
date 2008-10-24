@@ -219,8 +219,9 @@
 		$lang['export_resetform'] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>- or -</b>&nbsp;&nbsp;&nbsp;&nbsp;<a href="export-new.php">Reset the Form</a>';
 		$lang['export_settings'] = 'Export Settings';
 		$lang['export_format'] = 'Export Format';
-		$lang['export_format_backup'] = 'Backup';
 		$lang['export_format_standard'] = 'Standard';
+		$lang['export_format_backup'] = 'Backup';
+		$lang['export_xml_description'] = 'This format can be used to backup (and later restore) your events.<br/>For a detailed description of this format see the <a href="http://vtcalendar.sourceforge.net/jump.php?name=exportformat" target="_blank">VTCalendar Web site</a>.';
 		$lang['export_format_advanced'] = 'Advanced';
 		$lang['export_format_error'] = 'You must select an &quot;Export Format&quot;.';
 		$lang['export_id_error'] = 'The event ID specified is not in the valid format.';

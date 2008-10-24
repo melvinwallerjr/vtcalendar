@@ -203,8 +203,9 @@
 			<Item Name="export_settings">'Export Settings'</Item>
 			
 			<Item Name="export_format">'Export Format'</Item>
-			<Item Name="export_format_backup">'Backup'</Item>
 			<Item Name="export_format_standard">'Standard'</Item>
+			<Item Name="export_format_backup">'Backup'</Item>
+			<Item Name="export_xml_description">'This format can be used to backup (and later restore) your events.&lt;br/&gt;For a detailed description of this format see the &lt;a href="http://vtcalendar.sourceforge.net/jump.php?name=exportformat" target="_blank"&gt;VTCalendar Web site&lt;/a&gt;.'</Item>
 			<Item Name="export_format_advanced">'Advanced'</Item>
 			<Item Name="export_format_error">'You must select an &amp;quot;Export Format&amp;quot;.'</Item>
 			

@@ -1,20 +1,23 @@
 /* Example Usage:
 
-<style type="text/css"><!-- // <![CDATA[
+<style type="text/css">
+body {
+	background-color: #EEEEEE;
+}
 .DeclStart, .DeclEnd, .DeclAttributes span {
 	color: #990099 !important;
 }
-.TagStart, .TagEnd, .TagName {
+.ElementStart, .ElementEnd, .ElementName {
 	color: #000099;
 }
-.TagName {
+.ElementName {
 	font-weight: bold;
 }
-.TagAttributes {
+.ElementAttr {
 	color: #CC00CC;
 }
 .AttrName, .AttrEq {
-	color: #006600;
+	color: #009999;
 }
 .AttrValue, .AttrValueQuote {
 	color: #0000FF;
@@ -22,19 +25,37 @@
 .Text {
 	color: #666666;
 }
-.CodeBox {
+.CodeBox-Outer {
 	border: 1px solid #666666;
-	width: 100%;
-	overflow: scroll;
+	background-color: #FFFFFF;
+	padding: 5px;
 }
-// ]]> --></style>
+.CodeBox {
+	padding: 0;
+	margin: 0;
+	overflow: scroll;
+	width: 100%;
+}
+.Comment {
+	color: #009900;
+	font-style: italic;
+}
+.DocType {
+	color: #0000FF;
+}
+</style>
 <script type="text/javascript"><!-- // <![CDATA[
 var colorer = new SourceCodeColorer();
+colorer.UseBRTags = true;
+colorer.UseNBSP = true;
 var elements = document.getElementsByClassName('CodeBox');
 for (var i = 0; i < elements.length; i++) {
 	elements[i].innerHTML = colorer.ColorXML(elements[i].innerHTML.unescapeHTML());
 }
 // ]]> --></script>
+
+<div class="CodeBox-Outer">
+<pre id="Example" class="CodeBox">SOME CODE</pre></div>
 
 */
 

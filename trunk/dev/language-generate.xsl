@@ -17,8 +17,9 @@
             <xsl:value-of select="$NL"/>
         </xsl:if>
         
-        <xsl:value-of select="$Tabs"/><xsl:text># Start Section: </xsl:text><xsl:value-of select="@Name"/><xsl:value-of select="$NL"/>
-        <xsl:value-of select="$Tabs"/><xsl:value-of select="$NL"/>
+    	<xsl:value-of select="$Tabs"/># Start Section: <xsl:value-of select="@Name"/><xsl:value-of select="$NL"/>
+    	<xsl:if test="@Comment"><xsl:value-of select="$Tabs"/># Description: <xsl:value-of select="@Comment"/><xsl:value-of select="$NL"/></xsl:if>
+    	<xsl:value-of select="$Tabs"/><xsl:value-of select="$NL"/>
         
         <xsl:apply-templates select="*">
             <xsl:with-param name="Tabs"><xsl:value-of select="$Tabs"/><xsl:text>&#9;</xsl:text></xsl:with-param>
@@ -31,7 +32,7 @@
     <xsl:template match="Item">
         <xsl:param name="Tabs"></xsl:param>
         
-        <xsl:if test="@Comment"> // <xsl:value-of select="@Comment"/><xsl:value-of select="$NL"/></xsl:if>
+    	<xsl:if test="@Comment"><xsl:value-of select="$Tabs"/>// <xsl:value-of select="@Comment"/><xsl:value-of select="$NL"/></xsl:if>
         <xsl:value-of select="$Tabs"/>$lang['<xsl:value-of select="@Name"/>'] = <xsl:value-of select="text()"/>;<xsl:value-of select="$NL"/>
         
         <xsl:if test="position() = last() or name(preceding-sibling::*) = 'Section'">

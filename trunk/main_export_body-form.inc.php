@@ -164,7 +164,7 @@ function SpecificSponsorChanged() {
 		}
 		
 		// Determine how many categories are in each column.
-		$percolumn = ceil($numcategories / 3);
+		$percolumn = ceil($numcategories / 2);
 		
 		for ($c=0; $c<$numcategories; $c++) {
 			$categoryselected = !isset($FormData['categories']) || count($FormData['categories']) == 0 || array_key_exists($categories_id[$c], $selectedCategoryKeys);
@@ -177,13 +177,16 @@ function SpecificSponsorChanged() {
 			?>
 	    	<tr>
 	    		<td><input type="checkbox" name="c[]" value="<?php echo $categories_id[$c]; ?>" id="category<?php echo $categories_id[$c]; ?>" <?php if ($categoryselected) echo "CHECKED"; ?>></td>
-	    		<td><label for="category<?php echo $categories_id[$c]; ?>"><?php echo htmlentities($categories_name[$c]); ?></label></td>
+	    		<td><label for="category<?php echo $categories_id[$c]; ?>"><?php echo htmlentities($categories_name[$c]); ?></label><?php if (PUBLIC_EXPORT_VTCALXML || ISCALADMIN) echo ' (<code>'.htmlentities($categories_id[$c]).'</code>)'; ?></td>
 	    	</tr>
 	    	<?php
 		}
 		?>
 		</table>
 		</td></tr></table>
+		<?php if (PUBLIC_EXPORT_VTCALXML || ISCALADMIN) { ?>
+	    <p><?php echo lang('export_categoryid_note'); ?></p>
+	    <?php } ?>
 	</blockquote>
 	
 	<p><b><?php echo lang('export_sponsor'); ?>:</b></p>

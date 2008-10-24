@@ -241,6 +241,7 @@
 		$lang['export_categories'] = 'Categories';
 		$lang['export_categories_description'] = 'Choose the event categories you would like to export events for';
 		$lang['export_categories_error'] = 'You must select one or more categories.';
+		$lang['export_categoryid_note'] = 'Note: The number in parenthesis is the database ID for the category, which is used in the VTCalendar (XML) format.';
 		$lang['export_sponsor'] = 'Sponsor';
 		$lang['export_sponsor_all'] = 'All sponsors';
 		$lang['export_sponsor_specific'] = 'Specific sponsor';

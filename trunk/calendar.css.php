@@ -3,6 +3,8 @@ require_once('application.inc.php');
 header("Content-Type: text/css");
 ?>
 
+@import "scripts/codebox.css";
+
 /*===================================
         Calendar-Wide Styles
 ===================================*/

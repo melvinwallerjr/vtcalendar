@@ -40,6 +40,8 @@ for (var i = 0; i < elements.length; i++) {
 
 function SourceCodeColorer(id) {
 	this._HasInit = false;
+	this.UseBRTags = false;
+	this.UseNBSP = false;
 	
 	this.init = function() {
 		this._HasInit = true;
@@ -54,6 +56,8 @@ function SourceCodeColorer(id) {
 		var NameChar = "(?:[-._:]|" + Letter + "|" + Digit + "|" + Extender + "|" + CombiningChar + ")";*/
 		
 		// Basic Parts
+		var Char = '(?:[\\x09\\x0A\\x0D\\x20-\\xFF])';
+		var CharNoHyphen = '(?:[\\x09\\x0A\\x0D\\x20-\\x2C\\x2E-\\xFF])';
 		var BaseChar = '(?:[a-zA-Z])';
 		var Digit = '(?:[0-9])';
 		var Extender = '(?:\\xB7)';
@@ -61,7 +65,7 @@ function SourceCodeColorer(id) {
 		var NameChar = "(?:[-._:]|" + Letter + "|" + Digit + "|" + Extender + ")";
 		var Eq = '\\s*=\\s*';
 		
-		// Complex Parts
+		// Element Parts
 		var Name = "(?:(?:[:_]|" + Letter + ")" + NameChar + "*)";
 		var NmToken = "(?:" + NameChar + "+)";
 		var EntityRef = "(?:\\&" + Name + ";)";
@@ -69,54 +73,113 @@ function SourceCodeColorer(id) {
 		var Reference = "(?:" + EntityRef + "|" + CharRef + ")";
 		var AttValue = "(?:\"(?:[^\"&<]*|" + Reference + ")\"|'(?:[^\'&<]|" + Reference + ")*')";
 		var Attribute = Name + Eq + AttValue;
+		
+		// Text Decl Parts
 		var VersionInfo = '(?:\\s+version' + Eq + '[\'"]1.0[\'"])';
 		var EncodingDecl = '(?:\\s+encoding' + Eq + '[\'"]' + EncName + '[\'"])';
 		var SDDecl = '(?:\\s*standalone' + Eq + '[\'"](?:yes|no)[\'"])';
 		var EncName = '(?:[A-Za-z]([A-Za-z0-9._]|-)*)';
 		
-		// Final Patterns
-		var TextDecl = '(<\\?xml)(' + VersionInfo + EncodingDecl + '?' + SDDecl + '?\\s*)(\\?>)';
-		var AttributePattern = '(' + Name + ')(' + Eq + ')(' + AttValue + ')';
-		var Tag = '(</?)(' + Name + ')(\\s*' + Attribute + ')*(\\s*/?>)';
+		// DocType Parts
+		var SystemLiteral = '(?:(?:"[^"]*")|(?:\'[^\']*\'))';
+		var PubidChar = '(?:[\\x20\\x0D\\x0Aa-zA-Z0-9-\'()+,./:=?;!*#@$_%])';
+		var PubidLiteral = '(?:(?:"' + PubidChar + '*")|(?:\'' + PubidChar.replace("'", "") + '*\'))';
+		var ExternalID = '(?:(?:SYSTEM\\s+' + SystemLiteral + ')|(?:PUBLIC\\s+' + PubidLiteral + '\\s+' + SystemLiteral + '))';
+		
+		// DocType Declaration (most of it commented out due to complexity)
+		//var PEReference = '(?:%' + Name + ';)';
+		//var DeclSep = '(?:' + PEReference + '|\\s+)';
+		//var Mixed = '(?:(?:\\(\\s*#PCDATA(?:\\s*\\|\\s*' + Name + ')*\\s*\\)\\*)|(?:\\(\\s*#PCDATA\\s*\\)))';
+		//var Children = '(?:(?:' + Choice + '|' + Seq + ')[?*+]?)'; // (choice | seq) ('?' | '*' | '+')?
+		//var ContentSpec = '(?:EMPTY|ANY|' + Mixed + '|' + Children + ')';
+		//var ElementDelc = '(?:<!ELEMENT\\s+' + Name + '\\s+' + ContentSpec + '\\s*>)';
+		//var MarkupDecl = '(?:' + ElementDecl + '|' + AttlistDecl + '|' + EntityDecl + '|' + NotationDecl + '|' + PI + '|' + Comment + ')';
+		//var IntSubset = '(?:(?:' + MarkupDecl + '|' + DeclSep ')*)'
+		var DocTypeDecl = '(?:<!DOCTYPE\\s+' + Name + '(?:\\s+' + ExternalID + ')?\\s*>)'; // (?:\\[' + IntSubset + '\\]\\s*)?
+		document.getElementById('Wang').value = DocTypeDecl;
+		
+		var Element = '(?:</?' + Name + '(?:\\s*' + Attribute + ')*\\s*/?>)';
+		var Comment = '(?:<!--(?:(?:' + CharNoHyphen + ')|(?:-' + CharNoHyphen + '))*-->)';
 		
 		// Create the pattern matching objects.
-		this.reTextDecl = new RegExp('^\\s*' + TextDecl, 'g');
-		this.reTag = new RegExp(Tag, 'g');
-		this.reAttribute = new RegExp(AttributePattern, 'g');
+		this.XMLDeclPattern = '^(<\\?xml)(' + VersionInfo + EncodingDecl + '?' + SDDecl + '?\\s*)(\\?>)';
+		this.SearchPattern = '('+DocTypeDecl+')|('+Element+')|('+Comment+')';
+		this.ElementPattern = '(</?)(' + Name + ')((?:\\s*' + Attribute + ')*)(\\s*/?>)';
+		this.AttributePattern = '(' + Name + ')(' + Eq + ')(' + AttValue + ')';
+		
+		this.reXMLDecl = new RegExp(this.XMLDeclPattern);
+		this.reSearch = new RegExp(this.SearchPattern, 'g');
+		this.reAttribute = new RegExp(this.AttributePattern, 'g');
+		this.reElement = new RegExp(this.ElementPattern);
+	}
+	
+	this.escapeHTML = function(source) {
+		var result = source.escapeHTML();
+		if (this.UseNBSP) {
+			result = result.replace(/ /g, '&nbsp;').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+		}
+		if (this.UseBRTags) {
+			result = result.replace(/(\r\n)|\r|\n/g, '<br/>');
+		}
+		return result;
 	}
 	
 	this.ColorXML = function(source) {
 		if (!this._HasInit) this.init();
 		
+		
 		var result = '';
 		var match;
 		
-		if ((match = this.reTextDecl.exec(source)) != null) {
+		if ((match = this.reXMLDecl.exec(source)) != null) {
 			if (match.index != 0) {
-				result += source.substring(0, match.index).escapeHTML();
+				result += this.escapeHTML(source.substring(0, match.index));
 			}
-			result += '<span class="DeclStart">' + match[1].escapeHTML() + '</span>';
+			result += '<span class="DeclStart">' + this.escapeHTML(match[1]) + '</span>';
 			result += '<span class="DeclAttributes">' + this.ColorAttributes(match[2]) + '</span>';
-			result += '<span class="DeclEnd">' + match[3].escapeHTML() + '</span>';
-			source = source.substring(this.reTextDecl.lastIndex, source.length);
+			result += '<span class="DeclEnd">' + this.escapeHTML(match[3]) + '</span>';
+			source = source.substring(match[0].length, source.length);
 		}
 		
 		var lastIndex = 0;
-		while ((match = this.reTag.exec(source)) != null) {
+		while ((match = this.reSearch.exec(source)) != null) {
 			if (match.index != lastIndex) {
-				result += '<span class="Text">' + source.substring(lastIndex, match.index).escapeHTML() + '</span>';
+				result += '<span class="Text">' + this.escapeHTML(source.substring(lastIndex, match.index)) + '</span>';
 			}
 			
-			result += '<span class="TagStart">' + match[1].escapeHTML() + '</span>';
-			result += '<span class="TagName">' + match[2].escapeHTML() + '</span>';
-			if (match[3]) {
-				result += '<span class="TagAttributes">' + this.ColorAttributes(match[3]) + '</span>';
+			if (match[1]) {
+				result += '<span class="DocType">' + this.escapeHTML(match[1]) + '</span>';
 			}
-			result += '<span class="TagEnd">' + match[4].escapeHTML() + '</span>';
-			lastIndex = this.reTag.lastIndex;
+			else if (match[2]) {
+				result += this.ColorElement(match[2]);
+			}
+			else if (match[3]) {
+				result += '<span class="Comment">' + this.escapeHTML(match[3]) + '</span>';
+			}
+			
+			lastIndex = this.reSearch.lastIndex;
 		}
 		
 		return result;
+	}
+	
+	this.ColorElement = function(source) {
+		if (!this._HasInit) this.init();
+		
+		var result = '';
+		var match = this.reElement.exec(source);
+		if (match != null) {
+			result += '<span class="ElementStart">' + this.escapeHTML(match[1]) + '</span>';
+			result += '<span class="ElementName">' + this.escapeHTML(match[2]) + '</span>';
+			if (match[3]) {
+				result += '<span class="ElementAttr">' + this.ColorAttributes(match[3]) + '</span>';
+			}
+			result += '<span class="ElementEnd">' + this.escapeHTML(match[4]) + '</span>';
+			return result;
+		}
+		else {
+			return source;
+		}
 	}
 	
 	this.ColorAttributes = function(attributes) {
@@ -125,16 +188,17 @@ function SourceCodeColorer(id) {
 		var result = '';
 		
 		var lastIndex = 0;
+		var match;
 		while ((match = this.reAttribute.exec(attributes)) != null) {
 			if (match.index != lastIndex) {
-				result += attributes.substring(lastIndex, match.index).escapeHTML();
+				result += this.escapeHTML(attributes.substring(lastIndex, match.index));
 			}
 			
-			result += '<span class="AttrName">' + match[1].escapeHTML() + '</span>';
-			result += '<span class="AttrEq">' + match[2].escapeHTML() + '</span>';
-			result += '<span class="AttrValueQuote">' + match[3].substring(0, 1).escapeHTML() + '</span>';
-			result += '<span class="AttrValue">' + match[3].substring(1,match[3].length-1).escapeHTML() + '</span>';
-			result += '<span class="AttrValueQuote">' + match[3].substring(0, 1).escapeHTML().escapeHTML() + '</span>';
+			result += '<span class="AttrName">' + this.escapeHTML(match[1]) + '</span>';
+			result += '<span class="AttrEq">' + this.escapeHTML(match[2]) + '</span>';
+			result += '<span class="AttrValueQuote">' + this.escapeHTML(match[3].substring(0, 1)) + '</span>';
+			result += '<span class="AttrValue">' + this.escapeHTML(match[3].substring(1,match[3].length-1)) + '</span>';
+			result += '<span class="AttrValueQuote">' + this.escapeHTML(match[3].substring(0, 1)) + '</span>';
 			lastIndex = this.reAttribute.lastIndex;
 		}
 		

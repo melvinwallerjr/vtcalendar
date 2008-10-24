@@ -232,6 +232,7 @@
 			<Item Name="export_categories">'Categories'</Item>
 			<Item Name="export_categories_description">'Choose the event categories you would like to export events for'</Item>
 			<Item Name="export_categories_error">'You must select one or more categories.'</Item>
+			<Item Name="export_categoryid_note">'Note: The number in parenthesis is the database ID for the category, which is used in the VTCalendar (XML) format.'</Item>
 			
 			<Item Name="export_sponsor">'Sponsor'</Item>
 			<Item Name="export_sponsor_all">'All sponsors'</Item>

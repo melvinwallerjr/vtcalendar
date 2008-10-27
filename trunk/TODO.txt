@@ -2,8 +2,6 @@ TODO for Version 2.x:
 ===========================
 
 High:
-- Check help text to see if it is still accurate.
-- Allow data currently stored in session to be loaded from the DB or a file.
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
 - Improve description on export page.
 - Improve iCal/RSS caching.
@@ -12,6 +10,7 @@ High:
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
 
 Low:
+- Allow data currently stored in session to be loaded from the DB or a file.
 - Validate iCalendar export format.
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
@@ -35,6 +34,7 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- Check help text to see if it is still accurate (Finished ~2008-10-24)
 - Move all lang files to languages/en.inc.php (Finished 2008-10-22)
 - For upgradedb.php make sure 'int(11)' is aliased to 'int'. (Finished ~2008-10-19)
 - Check existing column max lengths, 'max(length(X))', for fields that are being updated in upgradedb.php. (Finished 2008-10-21)

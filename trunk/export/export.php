@@ -1,6 +1,8 @@
 <?php
 // Make sure this script does not take a long time to execute.
 set_time_limit(10);
+
+// Tell main_export_data.inc.php that we are doing the export.
 define("DOEXPORT", true);
 
 // Tell application.inc.php not to perform DB actions

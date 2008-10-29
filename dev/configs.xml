@@ -912,11 +912,20 @@
                 <Line>Cache the list of category names in memory if the calendar has less than or equal to this number.</Line>
             </Comment>
     	</Config>
-    	<Config Label="Cache 'Subscribe &amp; Download' ICS Files" Variable="CACHE_ICS" Type="boolean">
+    	<Config Label="Cache Files Directory" Variable="CACHE_DIRECTORY" Type="string" Required="true">
+    		<Default>cache/</Default>
+    		<Example>cache/ or /var/www/htdocs/vtcalendar/cache or c:\inetpub\wwwroot\vtcalendar\cache</Example>
+    		<Comment>
+    			<Line>The directory where VTCalendar stores its cache.</Line>
+    			<!--<Line>The PHP script (or Web server) must have write access to this directory.</Line>-->
+    			<Line>Must end with a slash.</Line>
+    		</Comment>
+    	</Config>
+    	<Config Label="'Subscribe &amp; Download' Links to Static Files" Variable="CACHE_SUBSCRIBE_LINKS" Type="boolean">
     		<Default>false</Default>
     		<Comment>
     			<Line>When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</Line>
-    			<Line>To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category </Line>
+    			<Line>To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</Line>
     		</Comment>
     	</Config>
     </Section>

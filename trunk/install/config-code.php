@@ -404,6 +404,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// When a lot of users subscribe to your calendar via the \'Subscribe & Download\' page, this can put a heavy load on your server.'."\n";
 	$ConfigOutput .= '// To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the \'Subscribe & Download\' page.'."\n";
 	$ConfigOutput .= '// The \'Subscribe & Download\' page will then link to the static files rather than the export page.'."\n";
+	$ConfigOutput .= '// This also affects the RSS <link> in the HTML header.'."\n";
 	$ConfigOutput .= '// Note: Enabling this feature does not stop users from accessing the export page.'."\n";
 	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS", ' . ($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS'] ? 'true' : 'false') .');'."\n\n";
 

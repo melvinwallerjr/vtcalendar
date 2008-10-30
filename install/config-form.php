@@ -1538,22 +1538,51 @@
       </tr>
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>Cache 'Subscribe &amp; Download' ICS Files:</b>
+            <b>'Subscribe &amp; Download' Links to Static Files:</b>
          </td>
          <td class="VariableBody">
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_CACHE_ICS" name="CACHE_ICS" value="true"
-										<?php if ($GLOBALS['Form_CACHE_ICS'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_CACHE_ICS"> Yes</label>
-                        <span id="DataFieldInputExtra_CACHE_ICS"> </span>
+                     <div class="DataFieldInput"><input type="checkbox" id="CheckBox_CACHE_SUBSCRIBE_LINKS" name="CACHE_SUBSCRIBE_LINKS" value="true"
+										onclick="ToggleDependant('CACHE_SUBSCRIBE_LINKS');" onchange="ToggleDependant('CACHE_SUBSCRIBE_LINKS');"<?php if ($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS'] == 'true') echo ' checked="checked"'; ?>/><label for="CheckBox_CACHE_SUBSCRIBE_LINKS"> Yes</label>
+                        <span id="DataFieldInputExtra_CACHE_SUBSCRIBE_LINKS"> </span>
                      </div>
                   </td>
                </tr>
                <tr>
                   <td class="Comment">
                      <div class="CommentLine">When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</div>
-                     <div class="CommentLine">To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category </div>
+                     <div class="CommentLine">To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</div>
+                     <div class="CommentLine">The 'Subscribe &amp; Download' page will then link to the static files rather than the export page.</div>
+                     <div class="CommentLine">Note: Enabling this feature does not stop users from accessing the export page.</div>
+                  </td>
+               </tr>
+               <tr id="Dependants_CACHE_SUBSCRIBE_LINKS">
+                  <td>
+                     <table class="VariableTable" border="0" cellspacing="0" cellpadding="6">
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>URL Extension to Static Files:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_CACHE_SUBSCRIBE_LINKS_PATH" name="CACHE_SUBSCRIBE_LINKS_PATH" value="<?php echo htmlentities($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_PATH']); ?>" size="60"/> <span id="DataFieldInputExtra_CACHE_SUBSCRIBE_LINKS_PATH"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The path from the VTCalendar URL to the static 'Subscribe &amp; Download' files.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                     <script type="text/javascript">ToggleDependant('CACHE_SUBSCRIBE_LINKS');</script>
                   </td>
                </tr>
             </table>

@@ -245,10 +245,16 @@ if (!defined("INCLUDE_STATIC_POST_FOOTER")) define("INCLUDE_STATIC_POST_FOOTER",
 // Cache the list of category names in memory if the calendar has less than or equal to this number.
 if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME", 100);
 
-// Config: Cache 'Subscribe & Download' ICS Files
+// Config: 'Subscribe & Download' Links to Static Files
 // When a lot of users subscribe to your calendar via the 'Subscribe & Download' page, this can put a heavy load on your server.
-// To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category 
-if (!defined("CACHE_ICS")) define("CACHE_ICS", false);
+// To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe & Download' page.
+// The 'Subscribe & Download' page will then link to the static files rather than the export page.
+// Note: Enabling this feature does not stop users from accessing the export page.
+if (!defined("CACHE_SUBSCRIBE_LINKS")) define("CACHE_SUBSCRIBE_LINKS", false);
+
+// Config: URL Extension to Static Files
+// The path from the VTCalendar URL to the static 'Subscribe & Download' files.
+if (!defined("CACHE_SUBSCRIBE_LINKS_PATH")) define("CACHE_SUBSCRIBE_LINKS_PATH", 'cache/subscribe/');
 
 // =====================================
 // Export

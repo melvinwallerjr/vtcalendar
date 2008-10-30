@@ -42,7 +42,8 @@ $Form_INCLUDE_STATIC_POST_HEADER = false;
 $Form_INCLUDE_STATIC_PRE_FOOTER = false;
 $Form_INCLUDE_STATIC_POST_FOOTER = false;
 $Form_MAX_CACHESIZE_CATEGORYNAME = '100';
-$Form_CACHE_ICS = false;
+$Form_CACHE_SUBSCRIBE_LINKS = false;
+$Form_CACHE_SUBSCRIBE_LINKS_PATH = 'cache/subscribe/';
 $Form_EXPORT_PATH = 'export/export.php';
 $Form_MAX_EXPORT_EVENTS = '100';
 $Form_EXPORT_CACHE_MINUTES = '5';
@@ -108,7 +109,10 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_INCLUDE_STATIC_PRE_FOOTER = isset($_POST['INCLUDE_STATIC_PRE_FOOTER']);
 	$Form_INCLUDE_STATIC_POST_FOOTER = isset($_POST['INCLUDE_STATIC_POST_FOOTER']);
 	$Form_MAX_CACHESIZE_CATEGORYNAME = $_POST['MAX_CACHESIZE_CATEGORYNAME'];
-	$Form_CACHE_ICS = isset($_POST['CACHE_ICS']);
+	$Form_CACHE_SUBSCRIBE_LINKS = isset($_POST['CACHE_SUBSCRIBE_LINKS']);
+	if ($Form_CACHE_SUBSCRIBE_LINKS) {
+		$Form_CACHE_SUBSCRIBE_LINKS_PATH = $_POST['CACHE_SUBSCRIBE_LINKS_PATH'];
+	}
 	$Form_EXPORT_PATH = $_POST['EXPORT_PATH'];
 	$Form_MAX_EXPORT_EVENTS = $_POST['MAX_EXPORT_EVENTS'];
 	$Form_EXPORT_CACHE_MINUTES = $_POST['EXPORT_CACHE_MINUTES'];
@@ -394,12 +398,20 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Cache the list of category names in memory if the calendar has less than or equal to this number.'."\n";
 	$ConfigOutput .= 'define("MAX_CACHESIZE_CATEGORYNAME", \''. escapephpstring($GLOBALS['Form_MAX_CACHESIZE_CATEGORYNAME']) .'\');'."\n\n";
 
-	// Output Cache 'Subscribe & Download' ICS Files
-	$ConfigOutput .= '// Config: Cache \'Subscribe & Download\' ICS Files'."\n";
+	// Output 'Subscribe & Download' Links to Static Files
+	$ConfigOutput .= '// Config: \'Subscribe & Download\' Links to Static Files'."\n";
 	$ConfigOutput .= '// Default: false'."\n";
 	$ConfigOutput .= '// When a lot of users subscribe to your calendar via the \'Subscribe & Download\' page, this can put a heavy load on your server.'."\n";
-	$ConfigOutput .= '// To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the ICS files to disk for each category '."\n";
-	$ConfigOutput .= 'define("CACHE_ICS", ' . ($GLOBALS['Form_CACHE_ICS'] ? 'true' : 'false') .');'."\n\n";
+	$ConfigOutput .= '// To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the \'Subscribe & Download\' page.'."\n";
+	$ConfigOutput .= '// The \'Subscribe & Download\' page will then link to the static files rather than the export page.'."\n";
+	$ConfigOutput .= '// Note: Enabling this feature does not stop users from accessing the export page.'."\n";
+	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS", ' . ($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output URL Extension to Static Files
+	$ConfigOutput .= '// Config: URL Extension to Static Files'."\n";
+	$ConfigOutput .= '// Default: cache/subscribe/'."\n";
+	$ConfigOutput .= '// The path from the VTCalendar URL to the static \'Subscribe & Download\' files.'."\n";
+	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS_PATH", \''. escapephpstring($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_PATH']) .'\');'."\n\n";
 
 	// Output Export Path
 	$ConfigOutput .= '// Config: Export Path'."\n";

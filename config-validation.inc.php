@@ -60,7 +60,11 @@ if (!is_bool(INCLUDE_STATIC_POST_HEADER)) exit('INCLUDE_STATIC_POST_HEADER must 
 if (!is_bool(INCLUDE_STATIC_PRE_FOOTER)) exit('INCLUDE_STATIC_PRE_FOOTER must be a boolean true or false. Make sure it is not enclosed in quotes.');
 if (!is_bool(INCLUDE_STATIC_POST_FOOTER)) exit('INCLUDE_STATIC_POST_FOOTER must be a boolean true or false. Make sure it is not enclosed in quotes.');
 if (!is_numeric(MAX_CACHESIZE_CATEGORYNAME)) exit('MAX_CACHESIZE_CATEGORYNAME must be an numeric.');
-if (!is_bool(CACHE_ICS)) exit('CACHE_ICS must be a boolean true or false. Make sure it is not enclosed in quotes.');
+if (!is_bool(CACHE_SUBSCRIBE_LINKS)) exit('CACHE_SUBSCRIBE_LINKS must be a boolean true or false. Make sure it is not enclosed in quotes.');
+if (CACHE_SUBSCRIBE_LINKS) {
+	if (!is_string(CACHE_SUBSCRIBE_LINKS_PATH)) exit('CACHE_SUBSCRIBE_LINKS_PATH must be a string.');
+	if (CACHE_SUBSCRIBE_LINKS_PATH == '') exit('CACHE_SUBSCRIBE_LINKS_PATH cannot be an empty string.');
+}
 if (!is_string(EXPORT_PATH)) exit('EXPORT_PATH must be a string.');
 if (EXPORT_PATH == '') exit('EXPORT_PATH cannot be an empty string.');
 if (!is_numeric(MAX_EXPORT_EVENTS)) exit('MAX_EXPORT_EVENTS must be an numeric.');

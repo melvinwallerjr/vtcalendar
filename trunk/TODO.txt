@@ -4,10 +4,10 @@ TODO for Version 2.x:
 High:
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
 - Improve description on export page.
-- Improve iCal/RSS caching.
 - Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well.
   MySQL: UPDATE vtcal_event_public SET description = concat(description, '\n\n', url), url = '' WHERE URL != '';
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
+- Add RSS text to 'Subscribe & Download' description
 
 Low:
 - Allow data currently stored in session to be loaded from the DB or a file.
@@ -34,6 +34,7 @@ Future:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 
 Finished:
+- Improve iCal/RSS caching (Finished 2008-10-30)
 - Check help text to see if it is still accurate (Finished ~2008-10-24)
 - Move all lang files to languages/en.inc.php (Finished 2008-10-22)
 - For upgradedb.php make sure 'int(11)' is aliased to 'int'. (Finished ~2008-10-19)

@@ -1555,6 +1555,7 @@
                      <div class="CommentLine">When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</div>
                      <div class="CommentLine">To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</div>
                      <div class="CommentLine">The 'Subscribe &amp; Download' page will then link to the static files rather than the export page.</div>
+                     <div class="CommentLine">This also affects the RSS &lt;link&gt; in the HTML header.</div>
                      <div class="CommentLine">Note: Enabling this feature does not stop users from accessing the export page.</div>
                   </td>
                </tr>

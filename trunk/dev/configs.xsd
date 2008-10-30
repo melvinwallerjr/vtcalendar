@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:element name="Configs">
+		<xs:annotation>
+			<xs:documentation>Configurable parameters for VTCalendar.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Section" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Section">
+		<xs:annotation>
+			<xs:documentation>Configuration is segmented into one or more human-readable sections.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Config" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="Label" type="Label" use="required">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Config">
+		<xs:annotation>
+			<xs:documentation>A variable that can be changed to modify the way VTCalendar works.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				
+				<xs:element name="Default" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							The default value for the config.
+							This value is automatically typed/selected in the installation form, and
+							if this config is missing from config.inc.php this is the value that is set.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="Internal" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Override the default value for config-defaults.inc.php. It is not used in the installation form.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="Example" type="RequiredString" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A human-readable example value for this config.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				
+				<xs:element name="Choices" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Including this element turns this config into a drop-down menu in the installation form.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Choice" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>One of the possible values for the drop-down menu.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="RequiredString">
+											<xs:attribute name="Value" type="xs:string"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="Comment" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Human-readable text that describes what this config does.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Line" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>A single line in the comment.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="Hidden" type="xs:boolean" default="false">
+												<xs:annotation>
+													<xs:documentation>
+														Hide the comment line in the installation form.
+														It will still show in config.inc.php and config-defaults.inc.php.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="Dependants" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							Only applies with this config is of type 'boolean'.
+							One or more config that are dependant on this config being set to true.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Config" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			
+			<xs:attribute name="Label" type="Label" use="required">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Variable" type="Variable">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Type" type="Type">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Required" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IsDefinition" type="xs:boolean" default="true">
+				<xs:annotation>
+					<xs:documentation>TODO</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="RequiredString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Label">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^a-z][^\n\r]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Variable">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z_0-9]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="multiline"/>
+			<xs:enumeration value="number"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

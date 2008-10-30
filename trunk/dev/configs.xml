@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configs>
+<Configs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="configs.xsd">
     <Section Label="General">
         <Config Label="Title Prefix" Variable="TITLEPREFIX" Type="string">
             <Comment>
@@ -231,10 +231,6 @@
     	<Config Label="Timezone" Variable="TIMEZONE" Type="string">
     		<Default></Default>
     		<Example>America/New_York</Example>
-    		<Comment>
-    			<Line>The timezone in which the calendar will set the local time for. All new events, logs, etc will be affected by this setting.</Line>
-    			<Line Hidden="true">For a list of supported timezone identifiers see http://us.php.net/manual/en/timezones.php</Line>
-    		</Comment>
     		<Choices>
     			<Choice Value="">(Use the server's local time)</Choice>
     			<Choice>Africa/Abidjan</Choice>
@@ -795,6 +791,10 @@
 				<Choice>WET</Choice>
 				<Choice>Zulu</Choice>
     		</Choices>
+    		<Comment>
+    			<Line>The timezone in which the calendar will set the local time for. All new events, logs, etc will be affected by this setting.</Line>
+    			<Line Hidden="true">For a list of supported timezone identifiers see http://us.php.net/manual/en/timezones.php</Line>
+    		</Comment>
     	</Config>
     	<Config Label="Week Starting Day" Variable="WEEK_STARTING_DAY" Type="number">
             <Default>0</Default>
@@ -912,21 +912,31 @@
                 <Line>Cache the list of category names in memory if the calendar has less than or equal to this number.</Line>
             </Comment>
     	</Config>
-    	<Config Label="Cache Files Directory" Variable="CACHE_DIRECTORY" Type="string" Required="true">
+    	<!--<Config Label="Cache Directory" Variable="CACHE_DIRECTORY" Type="string" Required="true">
     		<Default>cache/</Default>
-    		<Example>cache/ or /var/www/htdocs/vtcalendar/cache or c:\inetpub\wwwroot\vtcalendar\cache</Example>
+    		<Example>../cache/ or cache/</Example>
     		<Comment>
-    			<Line>The directory where VTCalendar stores its cache.</Line>
-    			<!--<Line>The PHP script (or Web server) must have write access to this directory.</Line>-->
-    			<Line>Must end with a slash.</Line>
+    			<Line>The directory where VTCalendar stores cached and static files.</Line>
+    			<!- -<Line>The PHP script (or Web server) must have write access to this directory.</Line>- ->
+    			<Line>Must be a relative path and end with a slash.</Line>
     		</Comment>
-    	</Config>
+    	</Config>-->
     	<Config Label="'Subscribe &amp; Download' Links to Static Files" Variable="CACHE_SUBSCRIBE_LINKS" Type="boolean">
     		<Default>false</Default>
     		<Comment>
     			<Line>When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</Line>
-    			<Line>To avoid this, you can either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</Line>
+    			<Line>To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</Line>
+    			<Line>The 'Subscribe &amp; Download' page will then link to the static files rather than the export page.</Line>
+    			<Line>Note: Enabling this feature does not stop users from accessing the export page.</Line>
     		</Comment>
+    		<Dependants>
+    			<Config Label="URL Extension to Static Files" Variable="CACHE_SUBSCRIBE_LINKS_PATH" Type="string" Required="true">
+    				<Default>cache/subscribe/</Default>
+    				<Comment>
+    					<Line>The path from the VTCalendar URL to the static 'Subscribe &amp; Download' files.</Line>
+    				</Comment>
+    			</Config>
+    		</Dependants>
     	</Config>
     </Section>
 	<Section Label="Export">

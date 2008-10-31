@@ -123,4 +123,8 @@ if (TABLEPREFIX != "" && substr(TABLEPREFIX, -1) != '.') {
 	exit("TABLEPREFIX must end with a period.");
 }
 
+if (CACHE_SUBSCRIBE_LINKS && !preg_match('/[\\/\\\\]/', substr(CACHE_SUBSCRIBE_LINKS_OUTPUTDIR, -1))) {
+	exit("CACHE_SUBSCRIBE_LINKS_OUTPUTDIR must end with a slash.");
+}
+
 ?>

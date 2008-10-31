@@ -250,6 +250,7 @@ if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME",
 // To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe & Download' page.
 // The 'Subscribe & Download' page will then link to the static files rather than the export page.
 // This also affects the RSS <link> in the HTML header.
+// For detailed instructions see http://vtcalendar.sourceforge.net/jump.php?name=cachesubscribe
 // Notes:
 // * Enabling this feature does not stop users from accessing the export page.
 // * This has no effect on calendars that require users to login before viewing events.

@@ -238,7 +238,7 @@ function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl) {
 	return $resultString;
 }
 
-function GenerateICal(&$result, $calendarName) {
+function GenerateICal(&$result, $calendarName, $calendarURL) {
 	$resultString = "";
 	
 	$icalname = "calendar";
@@ -258,7 +258,7 @@ function GenerateICal(&$result, $calendarName) {
 		
 		for ($i=0; $i < $result->numRows(); $i++) {
 			$event =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-			$resultString .= GenerateICal4Event($event);
+			$resultString .= GenerateICal4Event($event, $calendarURL);
 		}
 		$result->free();
 	}
@@ -520,7 +520,7 @@ function FormatICalText($text) {
 	return $ical;
 } // end: FormatICalText
 
-function GenerateICal4Event(&$event) {
+function GenerateICal4Event(&$event, $calendarURL) {
 	disassemble_timestamp($event);
 
 	$dtstart = date("Ymd\\THis", GetUTCTime(mktime(
@@ -541,7 +541,7 @@ function GenerateICal4Event(&$event) {
 
 	$ical = "BEGIN:VEVENT".CRLF;
 	$ical.= "DTSTAMP:".$dtstart."Z".CRLF;
-	$ical.= "UID:".$event['id']."@".$_SERVER["HTTP_HOST"].CRLF;
+	$ical.= "UID:".$event['id']."@".$calendarURL.CRLF;
 	$ical.= "CATEGORIES:".$event['category_name'].CRLF;
 	if ($event['wholedayevent']==1) {
 		$ical.= "DTSTART;VALUE=DATE:".substr($dtstart,0,8).CRLF;

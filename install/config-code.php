@@ -44,6 +44,7 @@ $Form_INCLUDE_STATIC_POST_FOOTER = false;
 $Form_MAX_CACHESIZE_CATEGORYNAME = '100';
 $Form_CACHE_SUBSCRIBE_LINKS = false;
 $Form_CACHE_SUBSCRIBE_LINKS_PATH = 'cache/subscribe/';
+$Form_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR = '';
 $Form_EXPORT_PATH = 'export/export.php';
 $Form_MAX_EXPORT_EVENTS = '100';
 $Form_EXPORT_CACHE_MINUTES = '5';
@@ -112,6 +113,7 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_CACHE_SUBSCRIBE_LINKS = isset($_POST['CACHE_SUBSCRIBE_LINKS']);
 	if ($Form_CACHE_SUBSCRIBE_LINKS) {
 		$Form_CACHE_SUBSCRIBE_LINKS_PATH = $_POST['CACHE_SUBSCRIBE_LINKS_PATH'];
+		$Form_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR = $_POST['CACHE_SUBSCRIBE_LINKS_OUTPUTDIR'];
 	}
 	$Form_EXPORT_PATH = $_POST['EXPORT_PATH'];
 	$Form_MAX_EXPORT_EVENTS = $_POST['MAX_EXPORT_EVENTS'];
@@ -405,14 +407,25 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the \'Subscribe & Download\' page.'."\n";
 	$ConfigOutput .= '// The \'Subscribe & Download\' page will then link to the static files rather than the export page.'."\n";
 	$ConfigOutput .= '// This also affects the RSS <link> in the HTML header.'."\n";
-	$ConfigOutput .= '// Note: Enabling this feature does not stop users from accessing the export page.'."\n";
+	$ConfigOutput .= '// Notes:'."\n";
+	$ConfigOutput .= '// * Enabling this feature does not stop users from accessing the export page.'."\n";
+	$ConfigOutput .= '// * This has no effect on calendars that require users to login before viewing events.'."\n";
 	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS", ' . ($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output URL Extension to Static Files
 	$ConfigOutput .= '// Config: URL Extension to Static Files'."\n";
 	$ConfigOutput .= '// Default: cache/subscribe/'."\n";
 	$ConfigOutput .= '// The path from the VTCalendar URL to the static \'Subscribe & Download\' files.'."\n";
+	$ConfigOutput .= '// It will be appended to the BASEURL (e.g. http://localhost/vtcalendar/cache/subscribe/)'."\n";
+	$ConfigOutput .= '// Must end with a slash.'."\n";
 	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS_PATH", \''. escapephpstring($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_PATH']) .'\');'."\n\n";
+
+	// Output Static Files Output Directory
+	$ConfigOutput .= '// Config: Static Files Output Directory'."\n";
+	$ConfigOutput .= '// The directory path where the static \'Subscribe & Download\' files will be outputted by the ./cache/export script.'."\n";
+	$ConfigOutput .= '// Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe).'."\n";
+	$ConfigOutput .= '// Must end with a slash.'."\n";
+	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS_OUTPUTDIR", \''. escapephpstring($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR']) .'\');'."\n\n";
 
 	// Output Export Path
 	$ConfigOutput .= '// Config: Export Path'."\n";

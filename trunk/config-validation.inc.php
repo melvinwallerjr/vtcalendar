@@ -64,6 +64,8 @@ if (!is_bool(CACHE_SUBSCRIBE_LINKS)) exit('CACHE_SUBSCRIBE_LINKS must be a boole
 if (CACHE_SUBSCRIBE_LINKS) {
 	if (!is_string(CACHE_SUBSCRIBE_LINKS_PATH)) exit('CACHE_SUBSCRIBE_LINKS_PATH must be a string.');
 	if (CACHE_SUBSCRIBE_LINKS_PATH == '') exit('CACHE_SUBSCRIBE_LINKS_PATH cannot be an empty string.');
+	if (!is_string(CACHE_SUBSCRIBE_LINKS_OUTPUTDIR)) exit('CACHE_SUBSCRIBE_LINKS_OUTPUTDIR must be a string.');
+	if (CACHE_SUBSCRIBE_LINKS_OUTPUTDIR == '') exit('CACHE_SUBSCRIBE_LINKS_OUTPUTDIR cannot be an empty string.');
 }
 if (!is_string(EXPORT_PATH)) exit('EXPORT_PATH must be a string.');
 if (EXPORT_PATH == '') exit('EXPORT_PATH cannot be an empty string.');

@@ -1556,7 +1556,9 @@
                      <div class="CommentLine">To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</div>
                      <div class="CommentLine">The 'Subscribe &amp; Download' page will then link to the static files rather than the export page.</div>
                      <div class="CommentLine">This also affects the RSS &lt;link&gt; in the HTML header.</div>
-                     <div class="CommentLine">Note: Enabling this feature does not stop users from accessing the export page.</div>
+                     <div class="CommentLine">Notes:</div>
+                     <div class="CommentLine">* Enabling this feature does not stop users from accessing the export page.</div>
+                     <div class="CommentLine">* This has no effect on calendars that require users to login before viewing events.</div>
                   </td>
                </tr>
                <tr id="Dependants_CACHE_SUBSCRIBE_LINKS">
@@ -1577,6 +1579,30 @@
                                  <tr>
                                     <td class="Comment">
                                        <div class="CommentLine">The path from the VTCalendar URL to the static 'Subscribe &amp; Download' files.</div>
+                                       <div class="CommentLine">It will be appended to the BASEURL (e.g. http://localhost/vtcalendar/cache/subscribe/)</div>
+                                       <div class="CommentLine">Must end with a slash.</div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="VariableName" nowrap="nowrap" valign="top">
+                              <b>Static Files Output Directory:</b>
+                           </td>
+                           <td class="VariableBody">
+                              <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
+                                 <tr>
+                                    <td class="DataField">
+                                       <div class="DataFieldInput"><input type="text" id="Input_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR" name="CACHE_SUBSCRIBE_LINKS_OUTPUTDIR" value="<?php echo htmlentities($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR']); ?>" size="60"/> <span id="DataFieldInputExtra_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR"> </span>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="Comment">
+                                       <div class="CommentLine">The directory path where the static 'Subscribe &amp; Download' files will be outputted by the ./cache/export script.</div>
+                                       <div class="CommentLine">Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe).</div>
+                                       <div class="CommentLine">Must end with a slash.</div>
                                     </td>
                                  </tr>
                               </table>

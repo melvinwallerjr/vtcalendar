@@ -2,9 +2,6 @@
 require_once('../application.inc.php');
 require_once('../main_export_data.inc.php');
 
-// TODO: Allow this to be customized.
-define("OUTPUTDIR", dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'subscribe' . DIRECTORY_SEPARATOR);
-
 // Output and mark the starting time.
 echo "Started @ " . date("Y-m-d H:i:s") . "\n\n";
 $StartTime = time();

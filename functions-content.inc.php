@@ -16,12 +16,13 @@ function pageheader($title, $navbaractive) {
 		<?php } ?>
 		<link rel="alternate" type="application/rss+xml" title="<?php lang('rss_feed_title'); ?>" href="<?php
 		
-		if (CACHE_SUBSCRIBE_LINKS) {
+		if (CACHE_SUBSCRIBE_LINKS && $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) {
 			echo BASEURL . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.xml';
 		}
 		else {
 			echo BASEURL . EXPORT_PATH . '?calendarid=' . urlencode($_SESSION['CALENDAR_ID']) . '&format=rss2_0&timebegin=upcoming';
 		}
+		
 		?>">
 		<script type="text/javascript" src="scripts/browsersniffer.js"></script>
 		<script type="text/javascript" src="scripts/general.js"></script>

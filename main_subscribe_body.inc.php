@@ -11,7 +11,7 @@ $iCalDirName = 'calendars/';
 <p><b><?php echo lang('whole_calendar'); ?>:</b><br/><?php echo htmlentities($_SESSION['CALENDAR_NAME']); ?> &nbsp; 
 
 
-<?php if (CACHE_SUBSCRIBE_LINKS) {
+<?php if (CACHE_SUBSCRIBE_LINKS && $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) {
 	?>
 	<a href="<?php echo BASEURL . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.xml'; ?>"><?php echo lang('rss_feed'); ?></a> &nbsp;
 	<a href="webcal://<?php echo preg_replace('/^[A-Za-z]+:\/\//', '', BASEURL) . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.ics'; ?>"><?php echo lang('subscribe'); ?></a> &nbsp;

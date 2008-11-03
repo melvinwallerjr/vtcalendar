@@ -621,6 +621,8 @@
 		$lang['empty_or_any_text'] = '(empty or any text)';
 		$lang['empty_or_any_html'] = '(empty or any HTML)';
 		$lang['header_html'] = 'Header HTML';
+		$lang['htmlheader_html'] = '&lt;head&gt; HTML';
+		$lang['htmlheader_html_description'] = 'This HTML is placed between the HTML &lt;head&gt; tags. It should only include any extra CSS or JavaScript your custom header/footer may need.';
 		$lang['footer_html'] = 'Footer HTML';
 		$lang['forward_event_default'] = 'By default also display events on: ';
 		$lang['forward_event_default_disable'] = '(Sponsors can still disable this on a per-event basis)';

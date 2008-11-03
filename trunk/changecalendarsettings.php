@@ -9,6 +9,7 @@ if (!isset($_POST['save']) || !setVar($save,$_POST['save'],'save')) unset($save)
 if (!isset($_POST['users']) || !setVar($users,$_POST['users'],'users')) unset($users);
 if (!isset($_POST['title']) || !setVar($title,$_POST['title'],'calendarTitle')) unset($title);
 if (!isset($_POST['header']) || !setVar($header,$_POST['header'],'calendarHeader')) unset($header);
+if (!isset($_POST['htmlheader']) || !setVar($htmlheader,$_POST['htmlheader'],'calendarHTMLHeader')) unset($htmlheader);
 if (!isset($_POST['footer']) || !setVar($footer,$_POST['footer'],'calendarFooter')) unset($footer);
 if (!isset($_POST['viewauthrequired']) || !setVar($viewauthrequired,$_POST['viewauthrequired'],'viewauthrequired')) unset($viewauthrequired);
 if (!isset($_POST['forwardeventdefault']) || !setVar($forwardeventdefault,$_POST['forwardeventdefault'],'forwardeventdefault')) unset($forwardeventdefault);
@@ -19,12 +20,13 @@ exit;
 };
 
 // Re-read the settings from the DB if one of the required fields was not set.
-if (!(isset($title) && isset($header) && isset($footer) && isset($viewauthrequired))) {
-	$title = $_SESSION['CALENDAR_TITLE'];	
-	$header = $_SESSION['CALENDAR_HEADER'];	
-	$footer = $_SESSION['CALENDAR_FOOTER'];	
+if (!(isset($title) && isset($header) && isset($htmlheader) && isset($footer) && isset($viewauthrequired))) {
+	$title = $_SESSION['CALENDAR_TITLE'];
+	$header = $_SESSION['CALENDAR_HEADER'];
+	$htmlheader = $_SESSION['CALENDAR_HTMLHEADER'];
+	$footer = $_SESSION['CALENDAR_FOOTER'];
 	$viewauthrequired = $_SESSION['CALENDAR_VIEWAUTHREQUIRED'];
-	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];		
+	$forwardeventdefault = $_SESSION['CALENDAR_FORWARD_EVENT_BY_DEFAULT'];
 }
 
 $addPIDError="";
@@ -65,7 +67,7 @@ if ( isset($save) ) {
 	if (empty($addPIDError)) { 
 		// save the settings to database
 		if ( !isset($forwardeventdefault) || $forwardeventdefault != "1" ) { $forwardeventdefault = "0"; }
-		$result =& DBQuery("UPDATE ".TABLEPREFIX."vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',footer='".sqlescape($footer)."',"
+		$result =& DBQuery("UPDATE ".TABLEPREFIX."vtcal_calendar SET title='".sqlescape($title)."',header='".sqlescape($header)."',htmlheader='".sqlescape($htmlheader)."',footer='".sqlescape($footer)."',"
 			. "viewauthrequired='".sqlescape($viewauthrequired)."',forwardeventdefault='".sqlescape($forwardeventdefault)."'"
 			. " WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 		
@@ -103,6 +105,13 @@ contentsection_begin(lang('change_header_footer_auth'));
 	<input type="text" name="title" maxlength="<?php echo MAXLENGTH_CALENDARTITLE; ?>" size="30" value="<?php 
 	echo htmlentities($title);
 	?>"><br>
+	<br>
+
+	<b><?php echo lang('htmlheader_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>
+	<?php echo lang('htmlheader_html_description'); ?><br/>
+	<textarea name="htmlheader" wrap="physical" cols="70" rows="10" style="width: 100%;"><?php 
+	echo htmlentities($htmlheader);
+	?></textarea><br>
 	<br>
 
 	<b><?php echo lang('header_html'); ?>:</b> <font color="#999999"><?php echo lang('empty_or_any_html'); ?></font><br>

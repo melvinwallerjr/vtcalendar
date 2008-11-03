@@ -45,12 +45,19 @@ function pageheader($title, $navbaractive) {
 		<!--[if lte IE 6]><style>
 		#RightColumn #MonthTable div.DayNumber a { height: 1em; }
 		</style><![endif]-->
+		
+<!-- Start Calendar HTML Header -->
+<?php echo $_SESSION['CALENDAR_HTMLHEADER']."\n"; ?>
+<!-- End Calendar HTML Header -->
+
 	</head>
 	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
 	
 	<?php if (INCLUDE_STATIC_PRE_HEADER && $_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-pre-header.txt')); ?>
 	
-	<!-- Start Calendar Header --><?php echo $_SESSION['CALENDAR_HEADER']; ?><!-- End Calendar Header -->
+<!-- Start Calendar Header -->
+<?php echo $_SESSION['CALENDAR_HEADER']."\n"; ?>
+<!-- End Calendar Header -->
 
 	<?php if (INCLUDE_STATIC_POST_HEADER && $_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-post-header.txt')); ?>
 	
@@ -117,9 +124,9 @@ function pagefooter() {
 
 	<?php if (INCLUDE_STATIC_PRE_FOOTER && $_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-pre-footer.txt')); ?>
 
-	<!-- Start Calendar Footer -->
-	<?php echo $_SESSION['CALENDAR_FOOTER']; ?>
-	<!-- End Calendar Footer -->
+<!-- Start Calendar Footer -->
+<?php echo $_SESSION['CALENDAR_FOOTER']."\n"; ?>
+<!-- End Calendar Footer -->
 
 	<?php if (INCLUDE_STATIC_POST_FOOTER && $_SESSION['CALENDAR_ID'] != 'default') @(readfile('static-includes/subcalendar-post-footer.txt')); ?>
 

@@ -49,8 +49,8 @@ require_once('application.inc.php');
 				$result->free();
 				
 				// create new calendar
-				$query = "INSERT INTO ".TABLEPREFIX."vtcal_calendar (id, name, title, header, footer, viewauthrequired, forwardeventdefault) VALUES "
-					."('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '', '', '0', '".sqlescape($cal['forwardeventdefault'])."')";
+				$query = "INSERT INTO ".TABLEPREFIX."vtcal_calendar (id, name, title, header, htmlheader, footer, viewauthrequired, forwardeventdefault) VALUES "
+					."('".sqlescape($cal['id'])."','".sqlescape($cal['name'])."', '".lang('calendar')."', '', '', '', '0', '".sqlescape($cal['forwardeventdefault'])."')";
 				if (is_string($result =& DBQuery($query))) { DBErrorBox("Error creating calendar: " . $result); exit; };
 
 				$query = "INSERT INTO ".TABLEPREFIX."vtcal_sponsor (calendarid,name,email,url,admin) VALUES ('".sqlescape($cal['id'])."','".sqlescape(lang('default_sponsor_name'))."','','".sqlescape(BASEURL.$cal['id'])."/"."','1')";

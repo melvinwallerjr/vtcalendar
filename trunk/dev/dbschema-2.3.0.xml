@@ -54,6 +54,7 @@
 	<Field Name="id" Type="varchar" Length="50" NotNull="true" AutoIncrement="false"/>
 	<Field Name="name" Type="varchar" Length="100" NotNull="true" AutoIncrement="false"/>
 	<Field Name="title" Type="varchar" Length="50" NotNull="true" AutoIncrement="false"/>
+	<Field Name="htmlheader" Type="text" NotNull="true" AutoIncrement="false"/>
 	<Field Name="header" Type="text" NotNull="true" AutoIncrement="false"/>
 	<Field Name="footer" Type="text" NotNull="true" AutoIncrement="false"/>
 	<Field Name="viewauthrequired" Type="int" NotNull="true" AutoIncrement="false"/>

@@ -21,7 +21,7 @@ function displaylogin($errormsg="") {
 	// Do not show the login if asked not to.
 	if (defined("HIDELOGIN")) return;
 
-	pageheader(lang('update_page_header'), "Update");
+	pageheader(lang('login'), "Update");
 	contentsection_begin(lang('login'));
 
 	if (!empty($errormsg)) {

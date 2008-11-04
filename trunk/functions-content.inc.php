@@ -98,14 +98,13 @@ function pageheader($title, $navbaractive) {
 									echo ")";
 								}
 								?>&nbsp;</td>
-							<td valign="bottom" class="NaviBar-Tab"><div><a href="logout.php"><?php echo lang('logout'); ?></a></div></td>
+								<td valign="bottom" class="NaviBar-Tab"><div><a href="logout.php"><?php echo lang('logout'); ?></a></div></td>
 								<?php
 							}
 							else {
 								?><td width="100%">&nbsp;</td><?php
 							}
-						
-						?></td>
+						?>
 						<td valign="bottom" <?php if ($navbaractive=="Update") { echo 'id="NaviBar-Selected"'; }  ?> class="NaviBar-Tab"><div><a href="<?php echo SECUREBASEURL; ?>update.php"><?php echo lang('update'); ?></a></div></td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>

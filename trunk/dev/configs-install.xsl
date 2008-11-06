@@ -123,6 +123,9 @@
 	
 	<xsl:template match="Line">
 		<span class="CommentLine">
+			<xsl:if test="@ForceBreak = 'true'">
+				<br/>
+			</xsl:if>
 			<xsl:value-of select="text()"/>
 		</span>
 	</xsl:template>

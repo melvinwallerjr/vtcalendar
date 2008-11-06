@@ -12,11 +12,11 @@ High:
 - Rename TABLEPREFIX to SCHEMANAME so it is not confused with the 'vtcal_' table prefix.
 - Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
 - Added new calendar setting for header
-- After login do a redirect to avoid resubmitting POST when using the back button
 - Reverse order of year drop-down on 'my submitted events' page, and add next/previous month links;
   ... or maybe do something like this: SELECT year(timebegin) as y, month(timeend) as m, count(*) as num FROM vtcal_event_public WHERE calendarid='default' GROUP BY 1,2 ORDER BY 1 DESC, 2 DESC
 
 Low:
+- After login do a redirect to avoid resubmitting POST when using the back button
 - Allow data currently stored in session to be loaded from the DB or a file.
 - Validate iCalendar export format.
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)

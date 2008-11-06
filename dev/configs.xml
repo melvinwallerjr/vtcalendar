@@ -23,16 +23,16 @@
     		<Default>3</Default>
     		<Comment>
     			<Line>The number of years into the future that the calendar will allow users to create events for.</Line>
-    			<Line>For example, if the current year is 2000 then a value of '3' will allow users to create events up to 2003.</Line>
+    			<Line ForceBreak="true">For example, if the current year is 2000 then a value of '3' will allow users to create events up to 2003.</Line>
     		</Comment>
     	</Config>
     </Section>
     <Section Label="Database">
     	<Config Label="Database Connection String" Variable="DATABASE" Type="string" Required="true">
         	<Example>mysql://vtcal:abc123@localhost/vtcalendar</Example>
-            <Comment>
-                <Line>This is the database connection string used by the PEAR library.</Line>
-                <Line>It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"</Line>
+    		<Comment>
+    			<Line>This is the database connection string used by the PEAR library.</Line>
+    			<Line ForceBreak="true">It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"</Line>
             </Comment>
     	</Config>
     	<Config Label="Table Prefix" Variable="TABLEPREFIX" Type="string" Required="false">
@@ -844,9 +844,8 @@
         <Config Label="Show Month Overlap" Variable="SHOW_MONTH_OVERLAP" Type="boolean">
             <Default>true</Default>
             <Comment>
-                <Line>Whether or not events in month view on days that are not actually part of the current month should be shown.</Line>
-                <Line>For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.</Line>
-                <Line>Values must be true or false.</Line>
+            	<Line>Whether or not events in month view on days that are not actually part of the current month should be shown.</Line>
+            	<Line ForceBreak="true">For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.</Line>
             </Comment>
         </Config>
     	<Config Label="Combined 'Jump To' Drop-Down" Variable="COMBINED_JUMPTO" Type="boolean">
@@ -856,6 +855,18 @@
     			<Line>When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).</Line>
     			<Line>Only the last 3 months will be included in this list.</Line>
     		</Comment>
+    	</Config>
+    	<Config Label="Use Custom Login Page" Variable="CUSTOM_LOGIN_HTML" Type="boolean">
+    		<Default>false</Default>
+    		<Comment>
+    			<Line>By default the login page includes the login form and a message about how to request a login to the calendar.</Line>
+    			<Line>When set to true, a file at ./static-includes/loginform.txt will be used as a custom login page:</Line>
+    			<List Type="Bulleted">
+    				<Item>It must include @@LOGIN_FORM@@ which will be replaced with the login form itself.</Item>
+    				<Item>You can also include @@LOGIN_HEADER@@ which will be replaced with the "Login" header text for the translation you specified.</Item>
+    				<Item>See the ./static-includes/loginform-EXAMPLE.txt file for an example.</Item>
+    			</List>
+    		</Comment>    		
     	</Config>
     	<Config Label="Include Static Pre-Header HTML" Variable="INCLUDE_STATIC_PRE_HEADER" Type="boolean">
     		<Default>false</Default>
@@ -927,11 +938,12 @@
     			<Line>When a lot of users subscribe to your calendar via the 'Subscribe &amp; Download' page, this can put a heavy load on your server.</Line>
     			<Line>To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe &amp; Download' page.</Line>
     			<Line>The 'Subscribe &amp; Download' page will then link to the static files rather than the export page.</Line>
-    			<Line>This also affects the RSS &lt;link&gt; in the HTML header.</Line>
+    			<List Type="Bulleted">
+    				<Item>This also affects the RSS &lt;link&gt; in the HTML header.</Item>
+    				<Item>Enabling this feature does not stop users from accessing the export page.</Item>
+    				<Item>This has no effect on calendars that require users to login before viewing events.</Item>
+    			</List>
     			<Line>For detailed instructions see http://vtcalendar.sourceforge.net/jump.php?name=cachesubscribe</Line>
-    			<Line>Notes:</Line>
-    			<Line>* Enabling this feature does not stop users from accessing the export page.</Line>
-    			<Line>* This has no effect on calendars that require users to login before viewing events.</Line>
     		</Comment>
     		<Dependants>
     			<Config Label="URL Extension to Static Files" Variable="CACHE_SUBSCRIBE_LINKS_PATH" Type="string" Required="true">
@@ -945,7 +957,7 @@
     			<Config Label="Static Files Output Directory" Variable="CACHE_SUBSCRIBE_LINKS_OUTPUTDIR" Type="string" Required="true">
     				<Comment>
     					<Line>The directory path where the static 'Subscribe &amp; Download' files will be outputted by the ./cache/export script.</Line>
-    					<Line>Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe).</Line>
+    					<Line>Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe/).</Line>
     					<Line>Must end with a slash.</Line>
     				</Comment>
     			</Config>

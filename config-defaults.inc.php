@@ -204,7 +204,6 @@ if (!defined("MAX_UPCOMING_EVENTS")) define("MAX_UPCOMING_EVENTS", 75);
 // Config: Show Month Overlap
 // Whether or not events in month view on days that are not actually part of the current month should be shown.
 // For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.
-// Values must be true or false.
 if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 
 // Config: Combined 'Jump To' Drop-Down
@@ -212,6 +211,14 @@ if (!defined("SHOW_MONTH_OVERLAP")) define("SHOW_MONTH_OVERLAP", true);
 // When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).
 // Only the last 3 months will be included in this list.
 if (!defined("COMBINED_JUMPTO")) define("COMBINED_JUMPTO", true);
+
+// Config: Use Custom Login Page
+// By default the login page includes the login form and a message about how to request a login to the calendar.
+// When set to true, a file at ./static-includes/loginform.txt will be used as a custom login page:
+//  * It must include @@LOGIN_FORM@@ which will be replaced with the login form itself.
+//  * You can also include @@LOGIN_HEADER@@ which will be replaced with the "Login" header text for the translation you specified.
+//  * See the ./static-includes/loginform-EXAMPLE.txt file for an example.
+if (!defined("CUSTOM_LOGIN_HTML")) define("CUSTOM_LOGIN_HTML", false);
 
 // Config: Include Static Pre-Header HTML
 // Include the file located at ./static-includes/subcalendar-pre-header.txt before the calendar header HTML for all calendars.
@@ -249,11 +256,10 @@ if (!defined("MAX_CACHESIZE_CATEGORYNAME")) define("MAX_CACHESIZE_CATEGORYNAME",
 // When a lot of users subscribe to your calendar via the 'Subscribe & Download' page, this can put a heavy load on your server.
 // To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the 'Subscribe & Download' page.
 // The 'Subscribe & Download' page will then link to the static files rather than the export page.
-// This also affects the RSS <link> in the HTML header.
+//  * This also affects the RSS <link> in the HTML header.
+//  * Enabling this feature does not stop users from accessing the export page.
+//  * This has no effect on calendars that require users to login before viewing events.
 // For detailed instructions see http://vtcalendar.sourceforge.net/jump.php?name=cachesubscribe
-// Notes:
-// * Enabling this feature does not stop users from accessing the export page.
-// * This has no effect on calendars that require users to login before viewing events.
 if (!defined("CACHE_SUBSCRIBE_LINKS")) define("CACHE_SUBSCRIBE_LINKS", false);
 
 // Config: URL Extension to Static Files
@@ -264,7 +270,7 @@ if (!defined("CACHE_SUBSCRIBE_LINKS_PATH")) define("CACHE_SUBSCRIBE_LINKS_PATH",
 
 // Config: Static Files Output Directory
 // The directory path where the static 'Subscribe & Download' files will be outputted by the ./cache/export script.
-// Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe).
+// Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe/).
 // Must end with a slash.
 if (!defined("CACHE_SUBSCRIBE_LINKS_OUTPUTDIR")) define("CACHE_SUBSCRIBE_LINKS_OUTPUTDIR", "");
 

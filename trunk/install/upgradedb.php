@@ -34,9 +34,9 @@ if (file_exists("../VERSION-DBCHECKED.txt")) {
 
 <?php
 
-@(include_once('DB.php')) or die('Pear::DB does not seem to be installed. See: http://pear.php.net/package/DB');
-require_once("../functions-io.inc.php");
-require_once("../functions-db-generic.inc.php");
+define("NOLOADDB", true);
+@(include_once('../config.inc.php')) or die('config.inc.php was not found. See: <a href="index.php">VTCalendar Installation</a>.');
+require_once('../application.inc.php');
 require_once("upgradedb-functions.php");
 require_once("upgradedb-data.php");
 
@@ -52,11 +52,11 @@ if (isset($_GET['DBTYPE']) && preg_match("/^(mysql|postgres)$/", $_GET['DBTYPE']
 if (isset($_POST['POSTGRESSCHEMA']) && $_POST['POSTGRESSCHEMA'] != '') define("POSTGRESSCHEMA", $_POST['POSTGRESSCHEMA']);
 if (isset($_GET['POSTGRESSCHEMA']) && $_GET['POSTGRESSCHEMA'] != '') define("POSTGRESSCHEMA", $_GET['POSTGRESSCHEMA']);
 
-if (isset($_POST['DSN']) && $_POST['DSN'] != '') define("DATABASE", $_POST['DSN']);
-if (isset($_GET['DSN']) && $_GET['DSN'] != '') define("DATABASE", $_GET['DSN']);
+if (isset($_POST['DSN']) && $_POST['DSN'] != '') define("DSN", $_POST['DSN']);
+if (isset($_GET['DSN']) && $_GET['DSN'] != '') define("DSN", $_GET['DSN']);
 
 // Flag if the all form fields have been submitted.
-$FormIsComplete = defined("DBTYPE") && defined("DATABASE") && defined("POSTGRESSCHEMA");
+$FormIsComplete = defined("DBTYPE") && defined("DSN") && defined("POSTGRESSCHEMA");
 
 // Set the field qualifier for SQL output
 if (defined("DBTYPE") && DBTYPE == 'postgres') {
@@ -92,7 +92,7 @@ elseif ($Submit_Preview && $FormIsComplete) {
 	
 	$FinalSQL = "";
 	
-	$DBCONNECTION =& DBOpen();
+	$DBCONNECTION =& DBOpen(DSN);
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}
@@ -239,7 +239,7 @@ elseif ($Submit_Preview && $FormIsComplete) {
 				?><h2><a name="Upgrade"></a>Upgrade Database:</h2>
 				<form action="upgradedb.php" method="post" onsubmit="return verifyUpgrade();">
 				<input type="hidden" name="DBTYPE" value="<?php echo DBTYPE; ?>"/>
-				<input type="hidden" name="DSN" value="<?php echo DATABASE; ?>"/>
+				<input type="hidden" name="DSN" value="<?php echo DSN; ?>"/>
 				<input type="hidden" name="POSTGRESSCHEMA" value="<?php echo POSTGRESSCHEMA; ?>"/>
 				<blockquote><?php
 				
@@ -359,7 +359,7 @@ else {
 		</p>
 		
 		<p><b>Database Connection String:</b><br /> 
-	    	<input name="DSN" type="text" id="DSN" size="60" value="<?php if (defined("DATABASE")) echo DATABASE; ?>" style="width: 600px;" /><br/>
+	    	<input name="DSN" type="text" id="DSN" size="60" value="<?php if (defined("DSN")) echo DSN; ?>" style="width: 600px;" /><br/>
 	    	<i id="mysql_example">Syntax: mysql://user:password@host/database</i>
 	    	<i id="postgres_example">Syntax: pgsql://user:password@host/database</i></p>
 		

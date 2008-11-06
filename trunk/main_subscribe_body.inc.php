@@ -2,19 +2,19 @@
 	if (!defined("ALLOWINCLUDES")) { exit; } // prohibits direct calling of include files
 	
 ?><table width="100%" border="0" cellpadding="0" cellspacing="10"><tr><td><?php
-echo "<p>" . lang('subscribe_message') . "</p>";
+echo lang('subscribe_message');
 
 $color = $_SESSION['COLOR_BG'];
 $iCalDirName = 'calendars/';
 
 ?>
-<p><b><?php echo lang('whole_calendar'); ?>:</b></p>
+<h3><b><?php echo lang('whole_calendar'); ?>:</b></h3>
 
 <blockquote>
 <table border="0" cellspacing="2" cellpadding="0">
 <?php
 
-echo '<tr><td><b style="font-size: 16px;">'.htmlentities($_SESSION['CALENDAR_NAME']) . '</b></td></tr>';
+echo '<tr><td><b style="font-size: 14px;">'.htmlentities($_SESSION['CALENDAR_NAME']) . '</b></td></tr>';
 
 if (CACHE_SUBSCRIBE_LINKS && $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) {
 	?><tr><td>
@@ -45,7 +45,7 @@ if (!is_string($result)) {
 
 <?php
 
-?><p><b>...or by category:</b></p>
+?><h3><b>...or by category:</b></h3>
 	<blockquote>
 		<table border="0" cellspacing="2" cellpadding="4">
 			<tr bgcolor="<?php echo $color; ?>">

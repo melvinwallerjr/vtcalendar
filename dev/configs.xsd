@@ -90,13 +90,13 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:choice maxOccurs="unbounded">
-							<xs:element name="Paragraph">
+							<!--<xs:element name="Paragraph">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Line" type="Line" maxOccurs="unbounded"/>
 									</xs:sequence>
 								</xs:complexType>
-							</xs:element>
+							</xs:element>-->
 							<xs:element name="Line" type="Line" maxOccurs="unbounded"/>
 							<xs:element name="List">
 								<xs:complexType>
@@ -171,6 +171,13 @@
 						<xs:documentation>
 							Hide the comment line in the installation form.
 							It will still show in config.inc.php and config-defaults.inc.php.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ForceBreak" type="xs:boolean" default="false">
+					<xs:annotation>
+						<xs:documentation>
+							Force a line break before this line if there is a line before it.
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>

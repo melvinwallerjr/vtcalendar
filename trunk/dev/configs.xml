@@ -35,13 +35,13 @@
     			<Line ForceBreak="true">It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"</Line>
             </Comment>
     	</Config>
-    	<Config Label="Table Prefix" Variable="TABLEPREFIX" Type="string" Required="false">
+    	<Config Label="Schema Name" Variable="SCHEMANAME" Type="string" Required="false">
     		<Example>public</Example>
     		<Comment>
     			<Line>In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.</Line>
     			<Line>If this is the case for you, enter the name of the schema here.</Line>
-    			<Line>It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.</Line>
-    			<Line>If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.</Line>
+    			<Line>It will be prefixed to the table name like so: SCHEMANAME.vtcal_calendars.</Line>
+    			<Line>If necessary quote the schema name using a backtick (`) for MySQL or double quotes (") for PostgreSQL.</Line>
     			<Line>Note: If specified, the table prefix MUST end with a period.</Line>
     		</Comment>
     	</Config>

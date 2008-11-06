@@ -22,12 +22,14 @@
 	        <xsl:if test="Example">
 	            <xsl:text>// Example: </xsl:text><xsl:value-of select="Example/text()"/><xsl:text>&#13;&#10;</xsl:text>
 	        </xsl:if>
+    		
+    		<xsl:apply-templates select="Comment/*"/>
 	        
-	        <xsl:for-each select="Comment/Line">
+	        <!--<xsl:for-each select="Comment/Line">
 	            <xsl:text>// </xsl:text>
 	            <xsl:value-of select="text()"/>
 	            <xsl:text>&#13;&#10;</xsl:text>
-	        </xsl:for-each>
+	        </xsl:for-each>-->
 	        
 	        <xsl:text>if (!defined("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>")) define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
 	        <xsl:choose>
@@ -47,4 +49,30 @@
 	        <xsl:text>);&#13;&#10;&#13;&#10;</xsl:text>
     	</xsl:if>
     </xsl:template>
+	
+	<xsl:template match="Paragraph">
+		<xsl:apply-templates select="Line"/>
+	</xsl:template>
+	
+	<xsl:template match="Line">
+		<xsl:text>// </xsl:text>
+		<xsl:value-of select="text()"/>
+		<xsl:text>&#13;&#10;</xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="List">
+		<xsl:for-each select="Item">
+			<xsl:text>//  </xsl:text>
+			
+			<xsl:if test="../@Type = 'Bulleted'">
+				<xsl:text>* </xsl:text>
+			</xsl:if>
+			<xsl:if test="../@Type = 'Numbered'">
+				<xsl:value-of select="position()"/><xsl:text>. </xsl:text>
+			</xsl:if>
+			
+			<xsl:value-of select="text()"/>
+			<xsl:text>&#13;&#10;</xsl:text>
+		</xsl:for-each>
+	</xsl:template>
 </xsl:stylesheet>

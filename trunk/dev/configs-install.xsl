@@ -91,14 +91,10 @@
 							</xsl:if>
 						</td>
 					</tr>
-					<xsl:if test="count(Comment/Line[not(@Hidden = 'true')]) &gt; 0">
+					<xsl:if test="count(Comment/*[not(@Hidden = 'true')]) &gt; 0">
 						<tr>
 							<td class="Comment">
-								<xsl:for-each select="Comment/Line[not(@Hidden = 'true')]">
-									<div class="CommentLine">
-										<xsl:value-of select="text()"/>
-									</div>
-								</xsl:for-each>
+								<xsl:apply-templates select="Comment/*[not(@Hidden = 'true')]"/>
 							</td>
 						</tr>
 					</xsl:if>
@@ -117,5 +113,34 @@
 				</table>
 			</td>
 		</tr>
+	</xsl:template>
+	
+	<xsl:template match="Paragraph">
+		<p class="CommentParagraph">
+			<xsl:apply-templates select="Line"/>
+		</p>
+	</xsl:template>
+	
+	<xsl:template match="Line">
+		<span class="CommentLine">
+			<xsl:value-of select="text()"/>
+		</span>
+	</xsl:template>
+	
+	<xsl:template match="List">
+		<xsl:if test="@Type = 'Bulleted'">
+			<ul>
+				<xsl:for-each select="Item">
+					<li><xsl:value-of select="text()"/></li>
+				</xsl:for-each>
+			</ul>
+		</xsl:if>
+		<xsl:if test="@Type = 'Numbered'">
+			<ol>
+				<xsl:for-each select="Item">
+					<li><xsl:value-of select="text()"/></li>
+				</xsl:for-each>
+			</ol>
+		</xsl:if>
 	</xsl:template>
 </xsl:stylesheet>

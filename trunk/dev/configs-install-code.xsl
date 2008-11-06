@@ -116,18 +116,9 @@
 				<xsl:text>'."\n";&#13;&#10;</xsl:text>
 			</xsl:if>
 			
-			<xsl:for-each select="Comment/Line">
-				<xsl:value-of select="$Tab"/><xsl:text>$ConfigOutput .= '// </xsl:text>
-				
-				<xsl:call-template name="escape-string">
-					<xsl:with-param name="text" select="text()"/>
-					<xsl:with-param name="characters">\'</xsl:with-param>
-					<xsl:with-param name="escape-character">\</xsl:with-param>
-				</xsl:call-template>
-				
-				<xsl:text>'."\n";&#13;&#10;</xsl:text>
-			</xsl:for-each>
-			
+			<xsl:apply-templates select="Comment/*">
+				<xsl:with-param name="Tab" select="$Tab"/>
+			</xsl:apply-templates>
 			
 			<xsl:value-of select="$Tab"/><xsl:text>$ConfigOutput .= 'define("</xsl:text><xsl:value-of select="@Variable"/><xsl:text>", </xsl:text>
 			
@@ -148,5 +139,53 @@
 			
 			<!--<xsl:value-of select="$Tab"/><xsl:text>//}&#13;&#10;&#13;&#10;</xsl:text>-->
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="Paragraph">
+		<xsl:param name="Tab"/>
+		<xsl:apply-templates select="Line">
+			<xsl:with-param name="Tab" select="$Tab"/>
+		</xsl:apply-templates>
+	</xsl:template>
+	
+	<xsl:template match="Line">
+		<xsl:param name="Tab"/>
+		
+		<xsl:value-of select="$Tab"/>
+		<xsl:text>$ConfigOutput .= '// </xsl:text>
+		
+		<xsl:call-template name="escape-string">
+			<xsl:with-param name="text" select="text()"/>
+			<xsl:with-param name="characters">\'</xsl:with-param>
+			<xsl:with-param name="escape-character">\</xsl:with-param>
+		</xsl:call-template>
+		
+		<xsl:text>'."\n";&#13;&#10;</xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="List">
+		<xsl:param name="Tab"/>
+		
+		<xsl:for-each select="Item">
+			<xsl:value-of select="$Tab"/>
+			<xsl:text>$ConfigOutput .= '// </xsl:text>
+			
+			<xsl:if test="../@Type = 'Bulleted'">
+				<xsl:text>* </xsl:text>
+			</xsl:if>
+			<xsl:if test="../@Type = 'Numbered'">
+				<xsl:value-of select="position()"/><xsl:text>. </xsl:text>
+			</xsl:if>
+			
+			<xsl:call-template name="escape-string">
+				<xsl:with-param name="text" select="text()"/>
+				<xsl:with-param name="characters">\'</xsl:with-param>
+				<xsl:with-param name="escape-character">\</xsl:with-param>
+			</xsl:call-template>
+			
+			<xsl:text>'."\n";&#13;&#10;</xsl:text>
+			
+		</xsl:for-each>
+		
 	</xsl:template>
 </xsl:stylesheet>

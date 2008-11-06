@@ -8,25 +8,40 @@ $color = $_SESSION['COLOR_BG'];
 $iCalDirName = 'calendars/';
 
 ?>
-<p><b><?php echo lang('whole_calendar'); ?>:</b><br/><?php echo htmlentities($_SESSION['CALENDAR_NAME']); ?> &nbsp; 
+<p><b><?php echo lang('whole_calendar'); ?>:</b></p>
 
+<blockquote>
+<table border="0" cellspacing="2" cellpadding="0">
+<?php
 
-<?php if (CACHE_SUBSCRIBE_LINKS && $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) {
-	?>
+echo '<tr><td><b style="font-size: 16px;">'.htmlentities($_SESSION['CALENDAR_NAME']) . '</b></td></tr>';
+
+if (CACHE_SUBSCRIBE_LINKS && $_SESSION['CALENDAR_VIEWAUTHREQUIRED'] == 0) {
+	?><tr><td>
 	<a href="<?php echo BASEURL . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.xml'; ?>"><?php echo lang('rss_feed'); ?></a> &nbsp;
 	<a href="webcal://<?php echo preg_replace('/^[A-Za-z]+:\/\//', '', BASEURL) . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.ics'; ?>"><?php echo lang('subscribe'); ?></a> &nbsp;
 	<a href="<?php echo BASEURL . CACHE_SUBSCRIBE_LINKS_PATH . htmlentities($_SESSION['CALENDAR_ID']) . '.ics'; ?>"><?php echo lang('download'); ?></a>
-	<?php
+	</td></tr><?php
 }
 else {
-	?>
+	?><tr><td>
 	<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=rss2_0&timebegin=upcoming"><?php echo lang('rss_feed'); ?></a> &nbsp;
 	<a href="webcal://<?php echo preg_replace('/^[A-Za-z]+:\/\//', '', BASEURL) . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming"><?php echo lang('subscribe'); ?></a> &nbsp;
 	<a href="<?php echo BASEURL . EXPORT_PATH; ?>?calendar=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&format=ical&timebegin=upcoming"><?php echo lang('download'); ?></a>
-	<?php
+	</td></tr><?php
 }
+
+// Get the categories from the DB
+$result =& DBQuery("SELECT count(*) as eventcount FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'"); 
+if (!is_string($result)) {
+	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
+	echo '<tr><td>'.str_replace("<br/>", " ", lang('upcoming_events')).': '.$record['eventcount'].'</td></tr>';
+	$result->free();
+}
+
 ?>
-</p>
+</table>
+</blockquote>
 
 <?php
 
@@ -38,8 +53,8 @@ else {
 				<td align="right" bgcolor="<?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>"><b><?php echo lang('upcoming_events'); ?></b></td>
 				<td align="center" bgcolor="<?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>"><b><?php echo lang('ways_to_subscribe'); ?></b></td>
 			</tr>
-<?php
 
+<?php
 // Get the categories from the DB
 $result =& DBQuery("SELECT count(e.id) as eventcount, c.id, c.name FROM ".TABLEPREFIX."vtcal_category c LEFT JOIN ".TABLEPREFIX."vtcal_event_public e ON c.calendarid = e.calendarid AND c.id = e.categoryid AND e.timeend > '" . sqlescape(NOW_AS_TEXT) . "' WHERE c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY c.id ORDER BY c.name"); 
 if (is_string($result)) {

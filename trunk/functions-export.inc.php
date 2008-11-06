@@ -187,8 +187,8 @@ function GenerateXML(&$result, $calendarID, $calendarTitle, $calendarurl) {
 		unset($repeat);
 		// read in repeatid if necessary
 		if (!empty($event['repeatid'])) {
-			//$queryRepeat = "SELECT * FROM ".TABLEPREFIX."vtcal_event_repeat WHERE calendarid='".sqlescape($calendarID)."' AND id='".sqlescape($event['repeatid'])."'";
-			$queryRepeat = "SELECT * FROM ".TABLEPREFIX."vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
+			//$queryRepeat = "SELECT * FROM ".SCHEMANAME."vtcal_event_repeat WHERE calendarid='".sqlescape($calendarID)."' AND id='".sqlescape($event['repeatid'])."'";
+			$queryRepeat = "SELECT * FROM ".SCHEMANAME."vtcal_event_repeat WHERE id='".sqlescape($event['repeatid'])."'";
 			if (is_string($repeatresult =& DBQuery($queryRepeat))) { return ""; }
 			if ( $repeatresult->numRows () > 0 ) {
 				$repeat =& $repeatresult->fetchRow(DB_FETCHMODE_ASSOC,0);

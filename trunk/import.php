@@ -173,7 +173,7 @@ $showinputbox = 1;
 if (isset($importurl)) {
 	if (checkurl($importurl)) {
 		// get list of valid category-IDs
-		$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
+		$result = DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 		for($i=0; $i<$result->numRows(); $i++) {
 			$category = $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
 			$validcategory[$category['id']] = true;
@@ -197,7 +197,7 @@ if (isset($importurl)) {
 			if (!$error) {
 				if ($eventnr > 0) {
 					// determine sponsor name & URL
-					$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
+					$result = DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['sponsorid'])."'" ); 
 					$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 				
 					$id = getNewEventId();
@@ -295,7 +295,7 @@ if ($showinputbox) {
 
 <?php
 // read event categories from DB
-$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" );
+$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name ASC" );
 if (is_string($result)) {
 	DBErrorBox($result); 
 }

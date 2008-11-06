@@ -46,7 +46,7 @@ require_once('application.inc.php');
 	$addPIDError="";
 	$pidsAdded = array();
 	if (isset($save) && checksponsor($sponsor) ) {
-		$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."'" );
+		$result = DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."'" );
 		if ( $result->numRows()>0 ) {
 			if ($result->numRows()>1) {
 				$sponsorexists = true;
@@ -101,7 +101,7 @@ require_once('application.inc.php');
 
 			if (empty($addPIDError)) {    
 				if ( isset ($id) ) { // edit, not new
-					$result = DBQuery("UPDATE ".TABLEPREFIX."vtcal_sponsor SET name='".sqlescape($sponsor['name'])."',email='".sqlescape($sponsor['email'])."',url='".sqlescape($sponsor['url'])."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id = '".sqlescape($id)."'" );
+					$result = DBQuery("UPDATE ".SCHEMANAME."vtcal_sponsor SET name='".sqlescape($sponsor['name'])."',email='".sqlescape($sponsor['email'])."',url='".sqlescape($sponsor['url'])."' WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id = '".sqlescape($id)."'" );
 	
 					// substitute existing auth info with the new one
 					$result = DBQuery("DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND sponsorid='".sqlescape($id)."'" );
@@ -110,11 +110,11 @@ require_once('application.inc.php');
 					}
 				}
 				else {
-					$query = "INSERT INTO ".TABLEPREFIX."vtcal_sponsor (calendarid,name,email,url) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($sponsor['name'])."','".sqlescape($sponsor['email'])."','".sqlescape($sponsor['url'])."')";
+					$query = "INSERT INTO ".SCHEMANAME."vtcal_sponsor (calendarid,name,email,url) VALUES ('".sqlescape($_SESSION['CALENDAR_ID'])."','".sqlescape($sponsor['name'])."','".sqlescape($sponsor['email'])."','".sqlescape($sponsor['url'])."')";
 					$result = DBQuery($query ); 
 	
 					// determine the automatically generated sponsor-id
-					$result = DBQuery("SELECT id FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."' AND email='".sqlescape($sponsor['email'])."' AND url='".sqlescape($sponsor['url'])."'" ); 
+					$result = DBQuery("SELECT id FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND name='".sqlescape($sponsor['name'])."' AND email='".sqlescape($sponsor['email'])."' AND url='".sqlescape($sponsor['url'])."'" ); 
 					$s = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 					$id = $s['id'];
 					
@@ -136,7 +136,7 @@ require_once('application.inc.php');
 		pageheader(lang('edit_sponsor'), "Update");
 		contentsection_begin(lang('edit_sponsor'));
 		if ( !isset($check) ) {
-			$result = DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
+			$result = DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" );
 			$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		}
 	}

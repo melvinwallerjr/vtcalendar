@@ -28,7 +28,7 @@ require_once('application.inc.php');
 		if ($oldpw_error==0) {
 			if ($newpw_error==0) { // new password is valid
 				// save password to DB
-				$result = DBQuery("UPDATE ".TABLEPREFIX."vtcal_user SET password='".sqlescape(crypt($user['newpassword1']))."' WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" ); 
+				$result = DBQuery("UPDATE ".SCHEMANAME."vtcal_user SET password='".sqlescape(crypt($user['newpassword1']))."' WHERE id='".sqlescape($_SESSION["AUTH_USERID"])."'" ); 
 
 				// reroute to sponsormenu page
 				redirect2URL("update.php?fbid=passwordchangesuccess");

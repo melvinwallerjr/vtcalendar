@@ -15,7 +15,7 @@ assemble_timestamp($event);
 removeslashes($event);
 
 // determine the name of the category
-$result = DBQuery("SELECT id,name AS category_name FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['categoryid'])."'" ); 
+$result = DBQuery("SELECT id,name AS category_name FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($event['categoryid'])."'" ); 
 
 if ($result->numRows() > 0) { // error checking, actually there should be always a category
 	$e = $result->fetchRow(DB_FETCHMODE_ASSOC,0);

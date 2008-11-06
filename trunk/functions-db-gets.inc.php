@@ -4,7 +4,7 @@
 // Returns a number if more than one row was found.
 // Returns a string of a DB error occurred.
 function getCalendarData($calendarid) {
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($calendarid)."'");
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_calendar WHERE id='".sqlescape($calendarid)."'");
 	
 	if ( is_string($result) ) {
 		return $result;
@@ -21,13 +21,13 @@ function getCalendarData($calendarid) {
 // Returns true if the calendar eixsts. False otherwise.
 // Returns a string of a DB error occurred.
 function calendar_exists($calendarid) {
-	$result = DBQuery("SELECT count(id) FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
+	$result = DBQuery("SELECT count(id) FROM ".SCHEMANAME."vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
 	$r = $result->fetchRow(0);
 	return ($r[0]==1);
 }
 
 function setCalendarPreferences() {
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_calendar WHERE id='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 	if (is_string($result)) return $result;
 	
 	if ($result->numRows() == 1) {
@@ -42,7 +42,7 @@ function setCalendarPreferences() {
 	}
 	$result->free();
 
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_colors WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_colors WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" );
 	if (is_string($result)) return $result;
 	
 	if ($result->numRows() == 1) {
@@ -100,7 +100,7 @@ function setCalendarPreferences() {
 		$result->free();
 	}
 	
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" );
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND admin='1'" );
 	if (is_string($result)) return $result;
 	$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	$_SESSION['CALENDAR_ADMINEMAIL'] = $sponsor['email'];
@@ -110,14 +110,14 @@ function setCalendarPreferences() {
 }
 
 function getNumCategories() {
-	$result = DBQuery("SELECT count(*) FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
+	$result = DBQuery("SELECT count(*) FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'" ); 
 	$r = $result->fetchRow(0);
 	return $r[0];
 }
 
 /* Get the name of a category from the database */
 function getCategoryName($categoryid) {
-	$result = DBQuery("SELECT name FROM ".TABLEPREFIX."vtcal_category WHERE id='".sqlescape($categoryid)."'" );
+	$result = DBQuery("SELECT name FROM ".SCHEMANAME."vtcal_category WHERE id='".sqlescape($categoryid)."'" );
 	if ($result->numRows() > 0) {
 		$category = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		return $category['name'];
@@ -129,7 +129,7 @@ function getCategoryName($categoryid) {
 
 /* Get the name of a calendar from the database */
 function getCalendarName($calendarid) {
-	$result = DBQuery("SELECT name FROM ".TABLEPREFIX."vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
+	$result = DBQuery("SELECT name FROM ".SCHEMANAME."vtcal_calendar WHERE id='".sqlescape($calendarid)."'" );
 	if ($result->numRows() > 0) {
 		$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		return $calendar['name'];
@@ -141,7 +141,7 @@ function getCalendarName($calendarid) {
 
 /* Get the name of a calendar that a sponsor belongs to from the database */
 function getSponsorCalendarName($sponsorid) {
-	$result = DBQuery("SELECT c.name FROM ".TABLEPREFIX."vtcal_sponsor AS s, ".TABLEPREFIX."vtcal_calendar AS c WHERE s.id = '".sqlescape($sponsorid)."' AND c.id = s.calendarid");
+	$result = DBQuery("SELECT c.name FROM ".SCHEMANAME."vtcal_sponsor AS s, ".SCHEMANAME."vtcal_calendar AS c WHERE s.id = '".sqlescape($sponsorid)."' AND c.id = s.calendarid");
 	if ($result->numRows() > 0) {
 		$calendar = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		return $calendar['name'];
@@ -153,7 +153,7 @@ function getSponsorCalendarName($sponsorid) {
 
 /* Get the name of a sponsor from the database */
 function getSponsorName($sponsorid) {
-	$result = DBQuery("SELECT name FROM ".TABLEPREFIX."vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
+	$result = DBQuery("SELECT name FROM ".SCHEMANAME."vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
 	if ($result->numRows() > 0) {
 		$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		return $sponsor['name'];
@@ -165,7 +165,7 @@ function getSponsorName($sponsorid) {
 
 /* Get the URL of a sponsor from the database */
 function getSponsorURL($sponsorid) {
-	$result = DBQuery("SELECT url FROM ".TABLEPREFIX."vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
+	$result = DBQuery("SELECT url FROM ".SCHEMANAME."vtcal_sponsor WHERE id='".sqlescape($sponsorid)."'" );
 	if ($result->numRows() > 0) {
 		$sponsor = $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 		return $sponsor['url'];
@@ -177,14 +177,14 @@ function getSponsorURL($sponsorid) {
 
 // Get the number of unapproved events for an entire calendar. */
 function num_unapprovedevents($repeatid) {
-	$result = DBQuery("SELECT id FROM ".TABLEPREFIX."vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
+	$result = DBQuery("SELECT id FROM ".SCHEMANAME."vtcal_event WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND repeatid='".sqlescape($repeatid)."' AND approved=0"); 
 	return $result->numRows();
 }
 
 // returns true if a particular userid exists in the database
 function userExistsInDB($userid) {
 	if ( AUTH_DB ) {
-		$query = "SELECT count(id) FROM ".TABLEPREFIX."vtcal_user WHERE id='".sqlescape($userid)."'";
+		$query = "SELECT count(id) FROM ".SCHEMANAME."vtcal_user WHERE id='".sqlescape($userid)."'";
 		$result = DBQuery($query ); 
 		$r = $result->fetchRow(0);
 		if ($r[0]>0) { return true; }
@@ -203,7 +203,7 @@ function isValidUser($userid) {
 	}
 	
 	if ( AUTH_DB ) {
-		$query = "SELECT count(id) FROM ".TABLEPREFIX."vtcal_user WHERE id='".sqlescape($userid)."'";
+		$query = "SELECT count(id) FROM ".SCHEMANAME."vtcal_user WHERE id='".sqlescape($userid)."'";
 		$result = DBQuery($query ); 
 		$r = $result->fetchRow(0);
 		if ($r[0]>0) { return true; }
@@ -225,7 +225,7 @@ function isValidUser($userid) {
  */
 function BuildExportQuery($CalendarID, &$FormData) {
 	$query = "SELECT e.*, c.name as category_name, s.name as sponsor_name"
-		." FROM ".TABLEPREFIX."vtcal_event_public e, ".TABLEPREFIX."vtcal_sponsor s, ".TABLEPREFIX."vtcal_category c"
+		." FROM ".SCHEMANAME."vtcal_event_public e, ".SCHEMANAME."vtcal_sponsor s, ".SCHEMANAME."vtcal_category c"
 		." WHERE e.calendarid='". sqlescape($CalendarID) ."' AND e.categoryid = c.id AND e.sponsorid = s.id";
 	
 	// Ignore other filters if an ID was specified.

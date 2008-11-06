@@ -4,20 +4,22 @@ require_once('../main_export_data.inc.php');
 
 // Output and mark the starting time.
 echo "Started @ " . date("Y-m-d H:i:s") . "\n\n";
-$StartTime = time();
+$StartTime = explode(' ', microtime());
 
 // Generate files for all calendars.
 ProcessCalendars();
 
 // Output the ending time and duration.
-echo "\nFinished @ " . date("Y-m-d H:i:s") . " in " . (time() - $StartTime) . " second(s)\n";
+$EndTime = explode(' ', microtime());
+$TotalTime = $EndTime[0] + $EndTime[1] - ($StartTime[1] + $StartTime[0]);
+echo "\nFinished @ " . date("Y-m-d H:i:s") . " in " . round($TotalTime, 3) . " second(s)\n";
 
 /**
  * Export files for all calendars in the database (that do not require logging in to view).
  */
 function ProcessCalendars() {
 	echo "Retrieving list of calendars: ";
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_calendar WHERE viewauthrequired = '0'");
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_calendar WHERE viewauthrequired = '0'");
 	if (is_string($result)) {
 		echo "FAILED: ".$result."\n";
 	}
@@ -66,7 +68,7 @@ function GetCategories($id) {
 	echo "    - Retrieving list of categories: ";
 	
 	$Categories = array();
-	$result =& DBQuery("SELECT id FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($id)."'");
+	$result =& DBQuery("SELECT id FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($id)."'");
 	
 	if (is_string($result)) {
 		echo "FAILED: " . $result . "\n";

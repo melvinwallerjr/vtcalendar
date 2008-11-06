@@ -163,7 +163,13 @@
 			<Item Name="rss_feed">'RSS Feed'</Item>
 			<Item Name="subscribe">'iCal Subscribe'</Item>
 			<Item Name="download">'iCal Download'</Item>
-			<Item Name="subscribe_message">'If you have a desktop calendar or PDA compatible with the iCalendar standard you can subscribe to a calendar or download events. Currently the iCalendar standard is fully supported by &lt;a href="http://www.apple.com/ical/"&gt;Apple\'s iCal&lt;/a&gt;, and the &lt;a href="http://www.mozilla.org/projects/calendar/"&gt;Mozilla Calendar&lt;/a&gt;.&lt;br&gt; &lt;br&gt; If your calendar software cannot subscribe to a whole category of events, you should still be able to download individual events by clicking on the link &amp;quot;copy this event into your personal desktop calendar&amp;quot; which you will find on each page that lists event details.'</Item>
+			<Item Name="subscribe_message"><![CDATA['
+				<p>There are two ways you can download or subscribe to events from this calendar:</p>
+				<blockquote>
+					<p><b>RSS:</b> Receive a list of upcoming events to your Web browser (i.e. <a href="http://www.mozilla.com/en-US/firefox/" target="_blank">Firefox</a> or <a href="http://www.microsoft.com/windows/downloads/ie/getitnow.mspx" target="_blank">Internet Explorer 7+</a>) or news reader (i.e. <a href="http://www.google.com/reader/view/" target="_blank">Google Reader</a>).</p>
+					<p><b>iCal:</b> If you have a desktop calendar or PDA compatible with the iCalendar standard you can subscribe to a calendar or download events. Currently the iCalendar standard is fully supported by <a href="http://www.apple.com/ical/" target="_blank">Apple\'s iCal</a>, and the <a href="http://www.mozilla.org/projects/calendar/" target="_blank">Mozilla Calendar</a>.</p>
+				</blockquote>
+				<p>If your calendar software cannot subscribe to a whole category of events, you should still be able to download individual events by clicking on the link &quot;copy this event into your personal desktop calendar&quot; which you will find on each page that lists event details.</p>']]></Item>
 			<Item Name="whole_calendar">'Entire calendar'</Item>
 		</Section>
 		

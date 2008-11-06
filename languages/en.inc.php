@@ -192,7 +192,13 @@
 		$lang['rss_feed'] = 'RSS Feed';
 		$lang['subscribe'] = 'iCal Subscribe';
 		$lang['download'] = 'iCal Download';
-		$lang['subscribe_message'] = 'If you have a desktop calendar or PDA compatible with the iCalendar standard you can subscribe to a calendar or download events. Currently the iCalendar standard is fully supported by <a href="http://www.apple.com/ical/">Apple\'s iCal</a>, and the <a href="http://www.mozilla.org/projects/calendar/">Mozilla Calendar</a>.<br> <br> If your calendar software cannot subscribe to a whole category of events, you should still be able to download individual events by clicking on the link &quot;copy this event into your personal desktop calendar&quot; which you will find on each page that lists event details.';
+		$lang['subscribe_message'] = '
+				<p>There are two ways you can download or subscribe to events from this calendar:</p>
+				<blockquote>
+					<p><b>RSS:</b> Receive a list of upcoming events to your Web browser (i.e. <a href="http://www.mozilla.com/en-US/firefox/" target="_blank">Firefox</a> or <a href="http://www.microsoft.com/windows/downloads/ie/getitnow.mspx" target="_blank">Internet Explorer 7+</a>) or news reader (i.e. <a href="http://www.google.com/reader/view/" target="_blank">Google Reader</a>).</p>
+					<p><b>iCal:</b> If you have a desktop calendar or PDA compatible with the iCalendar standard you can subscribe to a calendar or download events. Currently the iCalendar standard is fully supported by <a href="http://www.apple.com/ical/" target="_blank">Apple\'s iCal</a>, and the <a href="http://www.mozilla.org/projects/calendar/" target="_blank">Mozilla Calendar</a>.</p>
+				</blockquote>
+				<p>If your calendar software cannot subscribe to a whole category of events, you should still be able to download individual events by clicking on the link &quot;copy this event into your personal desktop calendar&quot; which you will find on each page that lists event details.</p>';
 		$lang['whole_calendar'] = 'Entire calendar';
 
 	# End Section: Subscribe View

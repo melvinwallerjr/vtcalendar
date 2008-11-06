@@ -22,15 +22,28 @@ function displaylogin($errormsg="") {
 	if (defined("HIDELOGIN")) return;
 
 	pageheader(lang('login'), "Update");
-	contentsection_begin(lang('login'));
-
-	if (!empty($errormsg)) {
-		echo "<br>\n";
-		feedback($errormsg,1);
+	if (CUSTOM_LOGIN_HTML) {
+		contentsection_begin();
+	}
+	else {
+		contentsection_begin(lang('login'));
 	}
 	?>
 	<div>
-	<?php @(readfile('static-includes/loginform-pre.txt')); ?>
+	
+	<?php
+	// Capture the login form if the login page is customized.
+	if (CUSTOM_LOGIN_HTML) {
+		ob_start();
+	}
+	
+	if (!empty($errormsg)) {
+		echo "<p>";
+		feedback($errormsg,1);
+		echo "</p>";
+	}
+	?>
+	
 	<form method="post" action="<?php echo SECUREBASEURL . basename($_SERVER['PHP_SELF']) . '?' . $_SERVER['QUERY_STRING']; ?>" name="loginform">
 	<?php
 	if (isset($eventid)) { echo "<input type=\"hidden\" name=\"eventid\" value=\"",htmlentities($eventid),"\">\n"; }
@@ -56,7 +69,23 @@ function displaylogin($errormsg="") {
 		document.loginform.login_userid.focus();
 	//--></script>
 	<?php
-	if (@(readfile('static-includes/loginform-post.txt')) === false) {
+	
+	// End capture and output a custom login page if it is being customized.
+	if (CUSTOM_LOGIN_HTML) {
+		$formhtml = ob_get_contents();
+		ob_end_clean();
+		
+		$customhtml = @(file_get_contents("static-includes/loginform.txt"));
+		if ($customhtml === false) {
+			echo "<h2>".lang('login').":</h2>".$formhtml."<p>".lang('login_failed_include')."</p>";
+		}
+		else {
+			echo str_replace("@@LOGIN_HEADER@@", lang('login'), str_replace("@@LOGIN_FORM@@", $formhtml, $customhtml));
+		}
+	}
+	
+	// Otherwise, output the default signup message.
+	else {
 		echo '<div class="LightCellBG" style="padding: 4px;">'
 			. '<h2>'.lang('help_signup').':</h2>'
 			. lang('help_signup_authorization') . '<a href="mailto:' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '">' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '</a>.' . lang('help_signup_contents')
@@ -148,12 +177,12 @@ function displaynotauthorized() {
 	
 	echo '<p>' . lang('error_not_authorized_message') . '</p>';
 	
-	if (@(readfile('static-includes/loginform-post.txt')) === false) {
+	/*if (@(readfile('static-includes/loginform-post.txt')) === false) {
 		echo '<div class="LightCellBG" style="padding: 4px;">'
 			. '<h2>'.lang('help_signup').':</h2>'
 			. lang('help_signup_authorization') . '<a href="mailto:' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '">' . htmlentities($_SESSION['CALENDAR_ADMINEMAIL']) . '</a>.' . lang('help_signup_contents')
 			. '</div>';
-	}
+	}*/
 	
 	contentsection_end();
 

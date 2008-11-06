@@ -1,1 +1,0 @@
-<!-- To include HTML before the login form, rename this file to loginform-post.txt and include HTML below. -->

@@ -32,7 +32,7 @@ else {
 }
 
 // Get the categories from the DB
-$result =& DBQuery("SELECT count(*) as eventcount FROM ".TABLEPREFIX."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'"); 
+$result =& DBQuery("SELECT count(*) as eventcount FROM ".SCHEMANAME."vtcal_category WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."'"); 
 if (!is_string($result)) {
 	$record =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	echo '<tr><td>'.str_replace("<br/>", " ", lang('upcoming_events')).': '.$record['eventcount'].'</td></tr>';
@@ -56,7 +56,7 @@ if (!is_string($result)) {
 
 <?php
 // Get the categories from the DB
-$result =& DBQuery("SELECT count(e.id) as eventcount, c.id, c.name FROM ".TABLEPREFIX."vtcal_category c LEFT JOIN ".TABLEPREFIX."vtcal_event_public e ON c.calendarid = e.calendarid AND c.id = e.categoryid AND e.timeend > '" . sqlescape(NOW_AS_TEXT) . "' WHERE c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY c.id ORDER BY c.name"); 
+$result =& DBQuery("SELECT count(e.id) as eventcount, c.id, c.name FROM ".SCHEMANAME."vtcal_category c LEFT JOIN ".SCHEMANAME."vtcal_event_public e ON c.calendarid = e.calendarid AND c.id = e.categoryid AND e.timeend > '" . sqlescape(NOW_AS_TEXT) . "' WHERE c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY c.id ORDER BY c.name"); 
 if (is_string($result)) {
 	DBErrorBox($result); 
 }

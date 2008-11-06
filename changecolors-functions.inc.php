@@ -49,7 +49,7 @@ function LoadVariables() {
 
 function MakeColorUpdateSQL($calendarid, $type) {
 	if ($type == 'insert') {
-		return "INSERT INTO ".TABLEPREFIX."vtcal_colors (calendarid"
+		return "INSERT INTO ".SCHEMANAME."vtcal_colors (calendarid"
 			. ", bg, text, text_faded, text_warning, link, body, today, todaylight, light_cell_bg, table_header_text, table_header_bg, border, keyword_highlight, h2, h3, title, tabgrayed_text, tabgrayed_bg, filternotice_bg, filternotice_font, filternotice_fontfaded, filternotice_bgimage, eventbar_past, eventbar_current, eventbar_future, monthdaylabels_past, monthdaylabels_current, monthdaylabels_future, othermonth, littlecal_today, littlecal_highlight, littlecal_fontfaded, littlecal_line, gobtn_bg, gobtn_border, newborder, newbg, approveborder, approvebg, copyborder, copybg, deleteborder, deletebg"
 		. ") VALUES ('" . sqlescape($calendarid) . "'"
 			. ",'" . sqlescape(strtoupper($GLOBALS['Color_bg'])) . "'"
@@ -98,7 +98,7 @@ function MakeColorUpdateSQL($calendarid, $type) {
 		. ")";
 	}
 	else {
-		return "UPDATE ".TABLEPREFIX."vtcal_colors SET "
+		return "UPDATE ".SCHEMANAME."vtcal_colors SET "
 			. "bg = '" . sqlescape(strtoupper($GLOBALS['Color_bg'])) . "'"
 			. ",text = '" . sqlescape(strtoupper($GLOBALS['Color_text'])) . "'"
 			. ",text_faded = '" . sqlescape(strtoupper($GLOBALS['Color_text_faded'])) . "'"

@@ -120,8 +120,8 @@ if (WEEK_STARTING_DAY != 0 && WEEK_STARTING_DAY != 1) {
 	exit("WEEK_STARTING_DAY MUST be 0 or 1.");
 }
 
-if (TABLEPREFIX != "" && substr(TABLEPREFIX, -1) != '.') {
-	exit("TABLEPREFIX must end with a period.");
+if (SCHEMANAME != "" && substr(SCHEMANAME, -1) != '.') {
+	exit("SCHEMANAME must end with a period.");
 }
 
 if (CACHE_SUBSCRIBE_LINKS && !preg_match('/[\\/\\\\]/', substr(CACHE_SUBSCRIBE_LINKS_OUTPUTDIR, -1))) {

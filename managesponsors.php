@@ -12,7 +12,7 @@ if ( isset($edit) ) {
 	redirect2URL("editsponsor.php?id=".$id); exit;
 }
 elseif ( isset($delete) ) {
-	$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" ); 
+	$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND id='".sqlescape($id)."'" ); 
 	if (is_string($result)) { DBErrorBox($result); exit; }
 	$sponsor =& $result->fetchRow(DB_FETCHMODE_ASSOC,0);
 	
@@ -29,7 +29,7 @@ contentsection_begin(lang('manage_sponsors'),true);
 
 echo '<p>'.lang('manage_sponsors_description').'</p>';
 
-$result =& DBQuery("SELECT * FROM ".TABLEPREFIX."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
+$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_sponsor WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' ORDER BY name" ); 
 
 if (is_string($result)) {
 	DBErrorBox($result);

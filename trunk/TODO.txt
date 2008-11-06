@@ -8,6 +8,13 @@ High:
   MySQL: UPDATE vtcal_event_public SET description = concat(description, '\n\n', url), url = '' WHERE URL != '';
   PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
 - Add RSS text to 'Subscribe & Download' description
+- upgradedb.php failed with an empty database
+- Rename TABLEPREFIX to SCHEMANAME so it is not confused with the 'vtcal_' table prefix.
+- Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
+- Added new calendar setting for header
+- After login do a redirect to avoid resubmitting POST when using the back button
+- Reverse order of year drop-down on 'my submitted events' page, and add next/previous month links;
+  ... or maybe do something like this: SELECT year(timebegin) as y, month(timeend) as m, count(*) as num FROM vtcal_event_public WHERE calendarid='default' GROUP BY 1,2 ORDER BY 1 DESC, 2 DESC
 
 Low:
 - Allow data currently stored in session to be loaded from the DB or a file.
@@ -75,6 +82,7 @@ TODO for Version 3.x:
 - Allow an instance of an event to be separated from the original repeating event. This would essentially be a copy, followed by adding an exclude to the repeating definition once the copy is posted.
 - Event details appear in small box when hovering over event in month/week/day view.
 - Database connection persistence?
+- Allow any sponsor to accept submissions via a public 'add new event' form.
 
 OLD TODO:
 ===========================

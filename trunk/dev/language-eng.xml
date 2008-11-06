@@ -340,6 +340,8 @@
 	<Section Name="Update" Comment="Text used by the login-protected interface">
 		
 		<Section Name="Misc">
+			<Item Name="login_failed_include" Comment="Displayed when CUSTOM_LOGIN_HTML is true but the custom login file could not be read.">'&lt;b&gt;Warning:&lt;/b&gt; Failed to read &lt;code&gt;static-includes/loginform.txt&lt;/code&gt;. Check that file exists and permissions are set correctly.'</Item>
+			
 			<Item Name="sponsor_twin_asterisk_note">'Note: The sponsor marked with a ** is the administrative sponsor of this calendar'</Item>
 			<Item Name="back_to_menu">'Back to Menu'</Item>
 			<Item Name="ok_button_text">'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;OK&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'</Item>
@@ -358,7 +360,7 @@
 			<Item Name="user_id">'User-ID'</Item>
 			<Item Name="password">'Password:'</Item>
 			<Item Name="choose_sponsor_role">'Choose your sponsor role'</Item>
-			<Item Name="error_not_authorized">'Error! Not authorized.'</Item>
+			<Item Name="error_not_authorized">'Error! Not authorized'</Item>
 			<Item Name="error_not_authorized_message">'You are currently not authorized to update the calendar because you have not been assigned to an event sponsor.'</Item>
 			<Item Name="error_bad_sponsorid">'You do not belong to the sponsor that you selected. Please select a sponsor from the list below.'</Item>
 			<Item Name="login_failed">'Your login failed. Please try again.'</Item>

@@ -338,6 +338,8 @@
 
 	# Start Section: Misc
 	
+		// Displayed when CUSTOM_LOGIN_HTML is true but the custom login file could not be read.
+		$lang['login_failed_include'] = '<b>Warning:</b> Failed to read <code>static-includes/loginform.txt</code>. Check that file exists and permissions are set correctly.';
 		$lang['sponsor_twin_asterisk_note'] = 'Note: The sponsor marked with a ** is the administrative sponsor of this calendar';
 		$lang['back_to_menu'] = 'Back to Menu';
 		$lang['ok_button_text'] = '&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -359,7 +361,7 @@
 		$lang['user_id'] = 'User-ID';
 		$lang['password'] = 'Password:';
 		$lang['choose_sponsor_role'] = 'Choose your sponsor role';
-		$lang['error_not_authorized'] = 'Error! Not authorized.';
+		$lang['error_not_authorized'] = 'Error! Not authorized';
 		$lang['error_not_authorized_message'] = 'You are currently not authorized to update the calendar because you have not been assigned to an event sponsor.';
 		$lang['error_bad_sponsorid'] = 'You do not belong to the sponsor that you selected. Please select a sponsor from the list below.';
 		$lang['login_failed'] = 'Your login failed. Please try again.';

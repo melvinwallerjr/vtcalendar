@@ -10,7 +10,7 @@ if (LANGUAGE == '') exit('LANGUAGE cannot be an empty string.');
 if (!is_numeric(ALLOWED_YEARS_AHEAD)) exit('ALLOWED_YEARS_AHEAD must be an numeric.');
 if (!is_string(DATABASE)) exit('DATABASE must be a string.');
 if (DATABASE == '') exit('DATABASE cannot be an empty string.');
-if (!is_string(TABLEPREFIX)) exit('TABLEPREFIX must be a string.');
+if (!is_string(SCHEMANAME)) exit('SCHEMANAME must be a string.');
 if (!is_string(SQLLOGFILE)) exit('SQLLOGFILE must be a string.');
 if (!is_string(REGEXVALIDUSERID)) exit('REGEXVALIDUSERID must be a string.');
 if (REGEXVALIDUSERID == '') exit('REGEXVALIDUSERID cannot be an empty string.');

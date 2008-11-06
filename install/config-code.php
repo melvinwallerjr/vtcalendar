@@ -7,7 +7,7 @@ $Form_TITLESUFFIX = '';
 $Form_LANGUAGE = 'en';
 $Form_ALLOWED_YEARS_AHEAD = '3';
 $Form_DATABASE = '';
-$Form_TABLEPREFIX = '';
+$Form_SCHEMANAME = '';
 $Form_SQLLOGFILE = '';
 $Form_REGEXVALIDUSERID = '/^[A-Za-z][\\._A-Za-z0-9\\-\\\\]{1,49}$/';
 $Form_AUTH_DB = true;
@@ -66,7 +66,7 @@ if (isset($_POST['SaveConfig'])) {
 	$Form_LANGUAGE = $_POST['LANGUAGE'];
 	$Form_ALLOWED_YEARS_AHEAD = $_POST['ALLOWED_YEARS_AHEAD'];
 	$Form_DATABASE = $_POST['DATABASE'];
-	$Form_TABLEPREFIX = $_POST['TABLEPREFIX'];
+	$Form_SCHEMANAME = $_POST['SCHEMANAME'];
 	$Form_SQLLOGFILE = $_POST['SQLLOGFILE'];
 	$Form_REGEXVALIDUSERID = $_POST['REGEXVALIDUSERID'];
 	$Form_AUTH_DB = isset($_POST['AUTH_DB']);
@@ -169,15 +169,15 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"'."\n";
 	$ConfigOutput .= 'define("DATABASE", \''. escapephpstring($GLOBALS['Form_DATABASE']) .'\');'."\n\n";
 
-	// Output Table Prefix
-	$ConfigOutput .= '// Config: Table Prefix'."\n";
+	// Output Schema Name
+	$ConfigOutput .= '// Config: Schema Name'."\n";
 	$ConfigOutput .= '// Example: public'."\n";
 	$ConfigOutput .= '// In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.'."\n";
 	$ConfigOutput .= '// If this is the case for you, enter the name of the schema here.'."\n";
-	$ConfigOutput .= '// It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.'."\n";
-	$ConfigOutput .= '// If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.'."\n";
+	$ConfigOutput .= '// It will be prefixed to the table name like so: SCHEMANAME.vtcal_calendars.'."\n";
+	$ConfigOutput .= '// If necessary quote the schema name using a backtick (`) for MySQL or double quotes (") for PostgreSQL.'."\n";
 	$ConfigOutput .= '// Note: If specified, the table prefix MUST end with a period.'."\n";
-	$ConfigOutput .= 'define("TABLEPREFIX", \''. escapephpstring($GLOBALS['Form_TABLEPREFIX']) .'\');'."\n\n";
+	$ConfigOutput .= 'define("SCHEMANAME", \''. escapephpstring($GLOBALS['Form_SCHEMANAME']) .'\');'."\n\n";
 
 	// Output SQL Log File
 	$ConfigOutput .= '// Config: SQL Log File'."\n";
@@ -367,7 +367,7 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Config: Use Custom Login Page'."\n";
 	$ConfigOutput .= '// Default: false'."\n";
 	$ConfigOutput .= '// By default the login page includes the login form and a message about how to request a login to the calendar.'."\n";
-	$ConfigOutput .= '// When set to true, a file at ./static-includes/loginform.txt will be used as a custom login page.'."\n";
+	$ConfigOutput .= '// When set to true, a file at ./static-includes/loginform.txt will be used as a custom login page:'."\n";
 	$ConfigOutput .= '// * It must include @@LOGIN_FORM@@ which will be replaced with the login form itself.'."\n";
 	$ConfigOutput .= '// * You can also include @@LOGIN_HEADER@@ which will be replaced with the "Login" header text for the translation you specified.'."\n";
 	$ConfigOutput .= '// * See the ./static-includes/loginform-EXAMPLE.txt file for an example.'."\n";
@@ -417,11 +417,10 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// When a lot of users subscribe to your calendar via the \'Subscribe & Download\' page, this can put a heavy load on your server.'."\n";
 	$ConfigOutput .= '// To avoid this you can enable this feature and either use a server or add-on that supports caching (i.e. Apache 2.2, squid-cache) or you can use a script to periodically retrieve and cache the files linked to from the \'Subscribe & Download\' page.'."\n";
 	$ConfigOutput .= '// The \'Subscribe & Download\' page will then link to the static files rather than the export page.'."\n";
-	$ConfigOutput .= '// This also affects the RSS <link> in the HTML header.'."\n";
-	$ConfigOutput .= '// For detailed instructions see http://vtcalendar.sourceforge.net/jump.php?name=cachesubscribe'."\n";
-	$ConfigOutput .= '// Notes:'."\n";
+	$ConfigOutput .= '// * This also affects the RSS <link> in the HTML header.'."\n";
 	$ConfigOutput .= '// * Enabling this feature does not stop users from accessing the export page.'."\n";
 	$ConfigOutput .= '// * This has no effect on calendars that require users to login before viewing events.'."\n";
+	$ConfigOutput .= '// For detailed instructions see http://vtcalendar.sourceforge.net/jump.php?name=cachesubscribe'."\n";
 	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS", ' . ($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output URL Extension to Static Files

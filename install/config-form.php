@@ -123,13 +123,13 @@
       </tr>
       <tr>
          <td class="VariableName" nowrap="nowrap" valign="top">
-            <b>Table Prefix:</b>
+            <b>Schema Name:</b>
          </td>
          <td class="VariableBody">
             <table class="ContentTable" width="100%" border="0" cellspacing="0" cellpadding="6">
                <tr>
                   <td class="DataField">
-                     <div class="DataFieldInput"><input type="text" id="Input_TABLEPREFIX" name="TABLEPREFIX" value="<?php echo htmlentities($GLOBALS['Form_TABLEPREFIX']); ?>" size="60"/> <span id="DataFieldInputExtra_TABLEPREFIX"> </span>
+                     <div class="DataFieldInput"><input type="text" id="Input_SCHEMANAME" name="SCHEMANAME" value="<?php echo htmlentities($GLOBALS['Form_SCHEMANAME']); ?>" size="60"/> <span id="DataFieldInputExtra_SCHEMANAME"> </span>
                      </div>
                      <div class="Example">
                         <i>Example: public</i>
@@ -140,8 +140,8 @@
                   <td class="Comment">
                      <span class="CommentLine">In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.</span>
                      <span class="CommentLine">If this is the case for you, enter the name of the schema here.</span>
-                     <span class="CommentLine">It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.</span>
-                     <span class="CommentLine">If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.</span>
+                     <span class="CommentLine">It will be prefixed to the table name like so: SCHEMANAME.vtcal_calendars.</span>
+                     <span class="CommentLine">If necessary quote the schema name using a backtick (`) for MySQL or double quotes (") for PostgreSQL.</span>
                      <span class="CommentLine">Note: If specified, the table prefix MUST end with a period.</span>
                   </td>
                </tr>

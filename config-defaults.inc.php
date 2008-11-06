@@ -40,14 +40,14 @@ if (!defined("ALLOWED_YEARS_AHEAD")) define("ALLOWED_YEARS_AHEAD", 3);
 // It has the format: "mysql://user:password@host/databasename" or "pgsql://user:password@host/databasename"
 if (!defined("DATABASE")) define("DATABASE", "");
 
-// Config: Table Prefix
+// Config: Schema Name
 // Example: public
 // In some databases (such as PostgreSQL) you may have multiple sets of VTCalendar tables within the same database, but in different schemas.
 // If this is the case for you, enter the name of the schema here.
-// It will be prefixed to the table name like so: TABLEPREFIX.vtcal_calendars.
-// If necessary include quotes. Use a backtick (`) for MySQL or double quotes (") for PostgreSQL.
+// It will be prefixed to the table name like so: SCHEMANAME.vtcal_calendars.
+// If necessary quote the schema name using a backtick (`) for MySQL or double quotes (") for PostgreSQL.
 // Note: If specified, the table prefix MUST end with a period.
-if (!defined("TABLEPREFIX")) define("TABLEPREFIX", "");
+if (!defined("SCHEMANAME")) define("SCHEMANAME", "");
 
 // Config: SQL Log File
 // Example: /var/log/vtcalendarsql.log

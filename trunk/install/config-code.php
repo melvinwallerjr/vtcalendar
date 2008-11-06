@@ -37,6 +37,7 @@ $Form_SHOW_UPCOMING_TAB = true;
 $Form_MAX_UPCOMING_EVENTS = '75';
 $Form_SHOW_MONTH_OVERLAP = true;
 $Form_COMBINED_JUMPTO = true;
+$Form_CUSTOM_LOGIN_HTML = false;
 $Form_INCLUDE_STATIC_PRE_HEADER = false;
 $Form_INCLUDE_STATIC_POST_HEADER = false;
 $Form_INCLUDE_STATIC_PRE_FOOTER = false;
@@ -105,6 +106,7 @@ if (isset($_POST['SaveConfig'])) {
 	}
 	$Form_SHOW_MONTH_OVERLAP = isset($_POST['SHOW_MONTH_OVERLAP']);
 	$Form_COMBINED_JUMPTO = isset($_POST['COMBINED_JUMPTO']);
+	$Form_CUSTOM_LOGIN_HTML = isset($_POST['CUSTOM_LOGIN_HTML']);
 	$Form_INCLUDE_STATIC_PRE_HEADER = isset($_POST['INCLUDE_STATIC_PRE_HEADER']);
 	$Form_INCLUDE_STATIC_POST_HEADER = isset($_POST['INCLUDE_STATIC_POST_HEADER']);
 	$Form_INCLUDE_STATIC_PRE_FOOTER = isset($_POST['INCLUDE_STATIC_PRE_FOOTER']);
@@ -351,7 +353,6 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// Default: true'."\n";
 	$ConfigOutput .= '// Whether or not events in month view on days that are not actually part of the current month should be shown.'."\n";
 	$ConfigOutput .= '// For example, if the first day of the month starts on a Wednesday, then Sunday-Tuesday are from the previous month.'."\n";
-	$ConfigOutput .= '// Values must be true or false.'."\n";
 	$ConfigOutput .= 'define("SHOW_MONTH_OVERLAP", ' . ($GLOBALS['Form_SHOW_MONTH_OVERLAP'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Combined 'Jump To' Drop-Down
@@ -361,6 +362,16 @@ function BuildOutput(&$ConfigOutput) {
 	$ConfigOutput .= '// When set to true, the list will contain all possible month/years combinations for the next X years (where X is ALLOWED_YEARS_AHEAD).'."\n";
 	$ConfigOutput .= '// Only the last 3 months will be included in this list.'."\n";
 	$ConfigOutput .= 'define("COMBINED_JUMPTO", ' . ($GLOBALS['Form_COMBINED_JUMPTO'] ? 'true' : 'false') .');'."\n\n";
+
+	// Output Use Custom Login Page
+	$ConfigOutput .= '// Config: Use Custom Login Page'."\n";
+	$ConfigOutput .= '// Default: false'."\n";
+	$ConfigOutput .= '// By default the login page includes the login form and a message about how to request a login to the calendar.'."\n";
+	$ConfigOutput .= '// When set to true, a file at ./static-includes/loginform.txt will be used as a custom login page.'."\n";
+	$ConfigOutput .= '// * It must include @@LOGIN_FORM@@ which will be replaced with the login form itself.'."\n";
+	$ConfigOutput .= '// * You can also include @@LOGIN_HEADER@@ which will be replaced with the "Login" header text for the translation you specified.'."\n";
+	$ConfigOutput .= '// * See the ./static-includes/loginform-EXAMPLE.txt file for an example.'."\n";
+	$ConfigOutput .= 'define("CUSTOM_LOGIN_HTML", ' . ($GLOBALS['Form_CUSTOM_LOGIN_HTML'] ? 'true' : 'false') .');'."\n\n";
 
 	// Output Include Static Pre-Header HTML
 	$ConfigOutput .= '// Config: Include Static Pre-Header HTML'."\n";
@@ -424,7 +435,7 @@ function BuildOutput(&$ConfigOutput) {
 	// Output Static Files Output Directory
 	$ConfigOutput .= '// Config: Static Files Output Directory'."\n";
 	$ConfigOutput .= '// The directory path where the static \'Subscribe & Download\' files will be outputted by the ./cache/export script.'."\n";
-	$ConfigOutput .= '// Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe).'."\n";
+	$ConfigOutput .= '// Must be an absolute path (e.g. /var/www/htdocs/vtcalendar/cache/subscribe/).'."\n";
 	$ConfigOutput .= '// Must end with a slash.'."\n";
 	$ConfigOutput .= 'define("CACHE_SUBSCRIBE_LINKS_OUTPUTDIR", \''. escapephpstring($GLOBALS['Form_CACHE_SUBSCRIBE_LINKS_OUTPUTDIR']) .'\');'."\n\n";
 

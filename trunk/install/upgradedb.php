@@ -309,21 +309,29 @@ elseif ($Submit_Preview && $FormIsComplete) {
 elseif ($Submit_Upgrade && $FormIsComplete && isset($UpgradeSQL)) {
 	?><h2>Upgrade Result:</h2><?php
 	
-	$DBCONNECTION =& DBOpen();
+	$DBCONNECTION =& DBOpen(DSN);
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}
 	else {
-		$queries = preg_split("/(\r\n\r\n)|(\n\n)/", $UpgradeSQL);
+		$queries = preg_split("/((\r\n\r\n)|(\n\n))/", $UpgradeSQL);
 		$queryError = false;
 		
 		for ($i = 0; $i < count($queries); $i++) {
 			if (!trim($queries[$i]) == "") {
-				$result =& DBquery($queries[$i]);
+				$result =& DBquery($queries[$i], NULL, $DebugInfo);
 				if (is_string($result)) {
 					$queryError = true;
-					echo "<div class='Error'><b>Error:</b> Query # " . ($i+1) . " failed: " . $result . "</div>";
-					?><textarea name="UpgradeSQL" cols="60" rows="5" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($queries[$i]); ?></textarea><?php
+					echo "<div class='Error'><b>Error:</b> Query # " . ($i+1) . " failed: " . $result;
+					?>
+					<table width="100%" border="0" cellpadding="3" cellspacing="0">
+					<tr>
+						<td width="50%"><div style="font-weight: bold; padding-bottom: 2px; padding-left: 4px;">Query:</div><textarea style="width: 100%" cols="60" rows="5" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities($queries[$i]); ?></textarea></td>
+						<td width="50%"><div style="font-weight: bold; padding-bottom: 2px; padding-left: 4px;">Error Details:</div><textarea style="width: 100%" cols="60" rows="5" readonly="readonly" onfocus="this.select();" onclick="this.select(); this.focus();"><?php echo htmlentities(str_replace($queries[$i], "", $DebugInfo)); ?></textarea></td>
+					</tr>
+					</table>
+					</div>
+					<?php
 				}
 				else {
 					echo "<div class='Success'><b>Success:</b> Query # " . ($i+1) . " successful.</div>";

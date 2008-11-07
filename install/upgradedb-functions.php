@@ -2,6 +2,7 @@
 function GetTables() {
 	$TableData = array();
 	
+	// Use different SQL depending on the database
 	if (DBTYPE == 'mysql') {
 		$query = "SHOW TABLES";
 	}
@@ -40,8 +41,11 @@ function GetTableData(&$TableData, $TableName) {
 	$TableData[$TableName]['Fields'] = array();
 	$TableData[$TableName]['Keys'] = array();
 	
+	// ====================================
 	// Get the table columns
+	// ====================================
 	
+	// Use different SQL depending on the database
 	if (DBTYPE == 'mysql') {
 		$query = "SHOW FIELDS FROM `" . $TableName . "`";
 	}
@@ -79,8 +83,11 @@ function GetTableData(&$TableData, $TableName) {
 		$result->free();
 	}
 	
+	// ====================================
 	// Get the table indexes
+	// ====================================
 	
+	// Use different SQL depending on the database
 	if (DBTYPE == 'mysql') {
 		$query = "SHOW INDEXES FROM `" . $TableName . "`";
 	}
@@ -144,8 +151,12 @@ function SetMaxLengths(&$TableData, $TableName) {
 	$query = "SELECT ";
 	for ($i = 0; $i < count($FieldNames); $i++) {
 		if ($i > 0) $query .= ", ";
-		if (preg_match('/^(varchar|text)$/', $Fields[$FieldNames[$i]]['Type'])) {
+		if (preg_match('/^(varchar|text)$/', $Fields[$FieldNames[$i]]['Type']) ||
+			(DBTYPE == 'mysql' && preg_match('/^(timestamp|datetime|date|time)$/', $Fields[$FieldNames[$i]]['Type']))) {
 			$query .= "max(length(".$FieldNames[$i].")) as ".$FieldNames[$i]."_max";
+		}
+		elseif (DBTYPE == 'postgres' && preg_match('/^(timestamp|date|time)$/', $Fields[$FieldNames[$i]]['Type'])) {
+			$query .= "max(length(cast(".$FieldNames[$i]." as varchar))) as ".$FieldNames[$i]."_max";
 		}
 		else {
 			$query .= "max(".$FieldNames[$i].") as ".$FieldNames[$i]."_max";
@@ -481,6 +492,11 @@ function GetCommonType($type) {
 		case 'character varying': return 'varchar';
 		case 'integer': return 'int';
 		case 'int(11)': return 'int';
+		case 'time with time zone': return 'time';
+		case 'time without time zone': return 'time';
+		case 'date with time zone': return 'date';
+		case 'date without time zone': return 'date';
+		case 'timestamp with time zone': return 'timestamp';
 		case 'timestamp without time zone': return 'timestamp';
 	}
 	return $type;

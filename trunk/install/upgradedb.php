@@ -234,6 +234,35 @@ elseif ($Submit_Preview && $FormIsComplete) {
 					$changes++;
 				}
 				
+				// Check if the URL column exists in the vtcal_event table.
+				if (array_key_exists('vtcal_event', $CurrentTables) && array_key_exists('url', $CurrentTables['vtcal_event']['Fields'])) {
+				
+					// Check if the URL field contains any data.
+					$result =& DBQuery("SELECT count(*) as reccount FROM " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " WHERE url != ''");
+					if (is_string($result)) {
+						echo "<div class='Error'><b>Error:</b> Could not SELECT from " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " to determine data exists in the <code>url</code> column: " . $result . "</div>";
+						$changes += 0.0001;
+					}
+					else {
+						// Concat the description and URL column if the URL columns contains data.
+						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
+						if ($record['reccount'] > 0) {
+							echo "<div class='Alter Record'><b>Update Records:</b> Data exists in the <code>url</code> column in the <code>vtcal_event</code>/<code>vtcal_event_public</code> tables. The <code>url</code> column will be appended to the end of the description column, and then it will be set to an empty string.</div>";
+							if (DBTYPE == 'mysql') {
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', url), url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', url), url = '' WHERE URL != '';\n\n";
+							}
+							elseif (DBTYPE == 'postgres') {
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || url, url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || url, url = '' WHERE URL != '';\n\n";
+							}
+							$changes++;
+						}
+						$result->free();
+					}
+				}
+
+				
 				?></blockquote><?php
 		
 				?><h2><a name="Upgrade"></a>Upgrade Database:</h2>

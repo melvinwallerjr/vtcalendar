@@ -2,7 +2,7 @@ TODO for Version 2.x:
 ===========================
 
 High:
-- Update search logging/reporting so that it knows keywords can only be up to 255 characters.
+
 
 Low:
 - Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
@@ -16,12 +16,11 @@ Low:
 - Properly handle string returns from functions like DBQuery.
 - Expand AUTH_HTTP_CACHE to LDAP
 - Improve the way AUTH_HTTP checks if the authentication was successful or not successful by also checking the body text.
-- Allow events to be flagged private so that you can only see them if you log in.
 - "Send event to a friend" form.
-- Allow week/month to be viewed as a list of events (like upcoming view).
 - A 'comments' field for sponsors where additional information (e.g. mailing address or phone number) could be stored.
 
 Future:
+- Allow events to be flagged private so that you can only see them if you log in.
 - Rich Text Editor for description (http://developer.yahoo.com/yui/editor/ or http://www.kevinroth.com/rte/)
 - Full text searching
 - A public submit an event form that submits on behalf of a non-admin sponsor (the calendar admin decides which).
@@ -81,6 +80,7 @@ TODO for Version 3.x:
 - Database connection persistence?
 - Allow any sponsor to accept submissions via a public 'add new event' form.
 - An address field that will link to Google Maps. Maybe preview the map directly in the page?
+- Allow week/month to be viewed as a list of events (like upcoming view).
 
 OLD TODO:
 ===========================

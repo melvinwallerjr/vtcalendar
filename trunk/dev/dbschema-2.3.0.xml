@@ -269,13 +269,13 @@
 	<Field Name="time" Type="varchar" Length="19" NotNull="true" AutoIncrement="false"/>
 	<Field Name="ip" Type="varchar" Length="15" NotNull="true" AutoIncrement="false"/>
 	<Field Name="numresults" Type="int" NotNull="true" AutoIncrement="false"/>
-	<Field Name="keyword" Type="varchar" Length="255" NotNull="true" AutoIncrement="false"/>
+	<Field Name="keyword" Type="text" NotNull="true" AutoIncrement="false"/>
 	<PrimaryKey>
 		<KeyField Name="id"/>
 	</PrimaryKey>
-	<Key Name="indexKeyword" Unique="false">
+	<Key Name="indexTime" Unique="false">
 		<KeyField Name="calendarid"/>
-		<KeyField Name="keyword"/>
+		<KeyField Name="time"/>
 	</Key>
 </Table>
 

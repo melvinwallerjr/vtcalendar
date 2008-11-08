@@ -3,12 +3,9 @@ TODO for Version 2.x:
 
 High:
 - Update search logging/reporting so that it knows keywords can only be up to 255 characters.
-- Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well.
-  MySQL: UPDATE vtcal_event_public SET description = concat(description, '\n\n', url), url = '' WHERE URL != '';
-  PostgreSQL (untested): UPDATE vtcal_event_public SET description = description || '\n\n' || url, url = '' WHERE URL != '';
-- Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
 
 Low:
+- Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
 - Improve description on export page.
 - After login do a redirect to avoid resubmitting POST when using the back button
 - Allow data currently stored in session to be loaded from the DB or a file.
@@ -23,8 +20,6 @@ Low:
 - "Send event to a friend" form.
 - Allow week/month to be viewed as a list of events (like upcoming view).
 - A 'comments' field for sponsors where additional information (e.g. mailing address or phone number) could be stored.
-- Develop tool for assisting with translations.
-- Store IP if logged in and logout if IP changes.
 
 Future:
 - Rich Text Editor for description (http://developer.yahoo.com/yui/editor/ or http://www.kevinroth.com/rte/)
@@ -33,9 +28,12 @@ Future:
   Events submitted this way would also need an e-mail address (and other contact info) for the person submitting the event.
   A confirmation e-mail would be sent to the address with a link the submitted will need to click to act as a spam filter.
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
+- Store IP if logged in and logout if IP changes.
+- Develop tool for assisting with translations.
 
 Finished:
-- Change the drop-down on 'my submitted events' page to only show months that actually have events (Finished 2008-11-16)
+- Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well (Finished 2008-11-07)
+- Change the drop-down on 'my submitted events' page to only show months that actually have events (Finished 2008-11-06)
 - Add RSS text to 'Subscribe & Download' description (Finished 2008-11-06)
 - upgradedb.php failed with an empty database (Finished 2008-11-06)
 - Rename TABLEPREFIX to SCHEMANAME so it is not confused with the 'vtcal_' table prefix (Finished 2008-11-06)
@@ -82,6 +80,7 @@ TODO for Version 3.x:
 - Event details appear in small box when hovering over event in month/week/day view.
 - Database connection persistence?
 - Allow any sponsor to accept submissions via a public 'add new event' form.
+- An address field that will link to Google Maps. Maybe preview the map directly in the page?
 
 OLD TODO:
 ===========================

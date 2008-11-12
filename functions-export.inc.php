@@ -460,7 +460,7 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 		
 		$resultString = $resultString."</table>\n\n";
 	}
-	elseif ($FormData['htmltype'] == "MAINSITE") {
+	elseif ($FormData['htmltype'] == "mainsite") {
 		if ($result->numRows() == 0) {
 			$resultString = '<p align="center"><i>No upcoming events.</i></p>';
 		}

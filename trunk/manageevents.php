@@ -44,7 +44,7 @@ else {
 					<td><?php echo lang('show_events_for'); ?>:</td>
 					
 					<?php
-					$dateresults =& DBQuery("SELECT substr(timebegin,1,7) as yearmonth, count(*) as eventcount FROM vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY 1 ORDER BY 1 DESC");
+					$dateresults =& DBQuery("SELECT substr(timebegin,1,7) as yearmonth, count(*) as eventcount FROM ".SCHEMANAME."vtcal_event_public WHERE calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' GROUP BY 1 ORDER BY 1 DESC");
 					if (is_string($dateresults)) {
 						?>
 							<td><select name="month">

@@ -113,11 +113,11 @@ require_once('application.inc.php');
 				$result->free();
 				
 				// substitute existing auth info with the new one
-				$query = "DELETE FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."'";
+				$query = "DELETE FROM ".SCHEMANAME."vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."'";
 				if (is_string($result =& DBQuery($query))) { DBErrorBox("Error deleting users from admin sponsor: " . $result); exit; };
 				
 				for ($i=0; $i<count($pidsAdded); $i++) {
-					$query = "INSERT INTO vtcal_auth (calendarid,userid,sponsorid) VALUES ('".$cal['id']."','".$pidsAdded[$i]."','".$administrationId."')";
+					$query = "INSERT INTO ".SCHEMANAME."vtcal_auth (calendarid,userid,sponsorid) VALUES ('".$cal['id']."','".$pidsAdded[$i]."','".$administrationId."')";
 					if (is_string($result =& DBQuery($query))) { DBErrorBox("Error adding user to admin sponsor: " . $result); exit; };
 				}
 				
@@ -226,7 +226,7 @@ require_once('application.inc.php');
 			$administrationId = $s['id'];
 			$result->free();
 
-			$query = "SELECT * FROM vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."' ORDER BY userid";
+			$query = "SELECT * FROM ".SCHEMANAME."vtcal_auth WHERE calendarid='".sqlescape($cal['id'])."' AND sponsorid='".sqlescape($administrationId)."' ORDER BY userid";
 			$result = DBQuery($query ); 
 			$i = 0;
 			while ($i < $result->numRows()) {

@@ -2,7 +2,7 @@ TODO for Version 2.x:
 ===========================
 
 High:
-
+- None
 
 Low:
 - Give final warning about truncating records in "Upgrade Database" section in upgradedb.php

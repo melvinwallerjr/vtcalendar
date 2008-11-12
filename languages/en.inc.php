@@ -496,7 +496,7 @@
 			$lang['basic_event_info_header'] = 'Basic Event Information';
 			$lang['category_description'] = 'The category that best fits your event. This facilitates searching.';
 			$lang['title_description'] = 'A short but descriptive title that is meaningful to the general audience.';
-			$lang['description_description'] = 'A detailed description of the event. To avoid unnecessary calls or e-mails to your office be as detailed as possible.<br/>You are not limited in space, and Web and e-mail addresses are automatically linked.';
+			$lang['description_description'] = 'A detailed description of the event. To avoid unnecessary calls or e-mails to your office be as detailed as possible.<br/>You are not limited in space, and Web and e-mail addresses are automatically linked.<br/>The description is limited to <span id="Description_MaxChars"></span> characters<span id="Description_CharLine" style="display: none;">, of which you are using <span id="Description_CurrentChars"></span></span>.';
 			$lang['choose_category'] = 'Please choose a category.';
 			$lang['choose_title'] = 'Please choose a title.';
 

@@ -132,7 +132,8 @@ switch($FormData['format']) {
 		echo GenerateVXML($result);
 		break;
 	case "html":
-		if (!isset($_GET['raw'])) Header("Content-Type: text/html");
+		if ($FormData['jshtml']) Header("Content-type: application/x-javascript; charset=ISO-8859-1");
+		elseif (!isset($_GET['raw'])) Header("Content-Type: text/html");
 		echo GenerateHTML($result, $CalendarID, BASEURL, $FormData);
 		break;
 	case "js":

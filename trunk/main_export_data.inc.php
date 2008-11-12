@@ -52,9 +52,9 @@ if (isset($_GET['timebegin'])) { if (preg_match('/^(today|upcoming)?$/', $_GET['
 if (!empty($_GET['timeend'])) if (isValidInput($_GET['timeend'], 'int_gte1') || isValidInput($_GET['timeend'] . " 23:59:59", 'timeend')) $FormData['timeend'] = $_GET['timeend']; else $FormErrors['timeend'] = lang('export_dates_to_error');
 if (empty($_GET['timebegin']) && !empty($_GET['timeend'])) $FormErrors['timeend'] = lang('export_dates_missingfrom');
 
-if (isset($_GET['c']) && !setVar($_GET['categories'],$_GET['c'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
-if (DOPREVIEW && !isset($_GET['categories'])) $FormErrors['categories'] = lang('export_categories_error');
+if (isset($_GET['c']) && !setVar($FormData['categories'],$_GET['c'],'categoryfilter')) $FormErrors['categories'] = lang('export_categories_error');
 if (isset($_GET['categories']) && is_string($_GET['categories'])) $FormData['categories'] = explode(",", $_GET['categories']);
+if (DOPREVIEW && !isset($FormData['categories'])) $FormErrors['categories'] = lang('export_categories_error');
 
 if (isset($_GET['sponsor'])) setVar($FormData['sponsor'],$_GET['sponsor'],'sponsortype');
 if (isset($_GET['specificsponsor'])) setVar($FormData['specificsponsor'],trim($_GET['specificsponsor']),'specificsponsor');

@@ -1,15 +1,7 @@
 <?php
 // Create an ID for an event that is as unique as possible.
 function getNewEventId() {
-	$random = rand(0,999);
-	$id = time();
-	if ($random<100) {
-		if ($random<10) {
-			$id .= "0";
-		}
-		$id .= "0";
-	}
-	return $id.$random;
+	return sprintf('%010s%03s', time(), rand(0,999));
 }
 
 // Used by the calendar admin scripts (e.g. update.php) to output small error messages.

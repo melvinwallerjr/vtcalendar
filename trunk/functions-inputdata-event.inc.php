@@ -511,7 +511,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			<strong><?php echo lang('description'); ?>:</strong>
 		</td>
 		<td valign="top">
-			<textarea name="event[description]" rows="10" cols="60" wrap=virtual><?php
+			<textarea id="Description_Box" name="event[description]" rows="10" cols="60" wrap="virtual" onkeyup="UpdateDescriptionLength()" onchange="UpdateDescriptionLength()"><?php
 	if (isset($event['description'])) {
 		if ($check) { $event['description']=$event['description']; }
 		echo HTMLSpecialChars($event['description']);
@@ -519,6 +519,26 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 ?></textarea>
 			<br/>
 			<?php echo lang('description_description'); ?>
+			<script type="text/javascript">
+			function UpdateDescriptionLength() {
+				if (document.getElementById) {
+					var textbox = document.getElementById("Description_Box");
+					var current = document.getElementById("Description_CurrentChars");
+					if (textbox && current) {
+						current.innerHTML = textbox.value.length;
+					}
+				}
+			}
+			if (document.getElementById) {
+				var container = document.getElementById("Description_CharLine");
+				var max = document.getElementById("Description_MaxChars");
+				if (container&& max) {
+					container.style.display = "";
+					max.innerHTML = "<?php echo MAXLENGTH_DESCRIPTION; ?>";
+				}
+			}
+			UpdateDescriptionLength();
+			</script>
 		</td>
 	</tr>
 	</table>

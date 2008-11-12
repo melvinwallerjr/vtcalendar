@@ -90,10 +90,10 @@ function SpecificSponsorChanged() {
 	    		<td><input name="format" type="radio" value="vxml" id="format_vxml" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "vxml") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_vxml">VoiceXML 2.0 (XML)</label></td>
 	   		</tr>
+	   		<?php if (PUBLIC_EXPORT_VTCALXML || ISCALADMIN) { ?>
 	    	<tr>
 	    		<td colspan="2" style="padding-top: 16px;"><b><?php echo lang('export_format_backup'); ?>:</b></td>
 	   		</tr>
-	   		<?php if (PUBLIC_EXPORT_VTCALXML || ISCALADMIN) { ?>
 	    	<tr>
 	    		<td valign="top"><input name="format" type="radio" value="xml" id="format_xml" onclick="ToggleHTMLSections();" <?php if (isset($FormData['format']) && $FormData['format'] == "xml") echo "CHECKED"; ?>></td>
 	    		<td><label for="format_xml">VTCalendar (XML)</label><br/><?php echo lang('export_xml_description'); ?></td>

@@ -42,11 +42,11 @@ elseif (defined("DATABASE") && DATABASE != "") {
 	else {
 	
 		// Get the number of admin users.
-		$result =& DBQuery("SELECT count(*) as usercount FROM ".TABLEPREFIX."vtcal_adminuser");
+		$result =& DBQuery("SELECT count(*) as usercount FROM ".SCHEMANAME."vtcal_adminuser");
 		
 		// Output an error message if the query failed.
 		if (is_string($result)) {
-			$FormErrors[count($FormErrors)] = "Could not SELECT from ".TABLEPREFIX."vtcal_adminuser. You must first complete step 1 and 2 of the <a href='index.php'>VTCalendar Installation</a>.<br/>Error: <code>" . htmlentities($result) . "</code>";
+			$FormErrors[count($FormErrors)] = "Could not SELECT from ".SCHEMANAME."vtcal_adminuser. You must first complete step 1 and 2 of the <a href='index.php'>VTCalendar Installation</a>.<br/>Error: <code>" . htmlentities($result) . "</code>";
 			
 			// Close the DB and assign a string to $DBCONNECTION so we get the error form.
 			DBClose();

@@ -249,12 +249,12 @@ elseif ($Submit_Preview && $FormIsComplete) {
 						if ($record['reccount'] > 0) {
 							echo "<div class='Alter Record'><b>Update Records:</b> Data exists in the <code>url</code> column in the <code>vtcal_event</code>/<code>vtcal_event_public</code> tables. The <code>url</code> column will be appended to the end of the description column, and then it will be set to an empty string.</div>";
 							if (DBTYPE == 'mysql') {
-								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', url), url = '' WHERE URL != '';\n\n";
-								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', url), url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', '" . sqlescape(lang('more_information')) . ": ', url), url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', '" . sqlescape(lang('more_information')) . ": ', url), url = '' WHERE URL != '';\n\n";
 							}
 							elseif (DBTYPE == 'postgres') {
-								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || url, url = '' WHERE URL != '';\n\n";
-								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || url, url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || '" . sqlescape(lang('more_information')) . ": ' || url, url = '' WHERE URL != '';\n\n";
+								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || '" . sqlescape(lang('more_information')) . ": ' || url, url = '' WHERE URL != '';\n\n";
 							}
 							$changes++;
 						}

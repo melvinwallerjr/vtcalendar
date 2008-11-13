@@ -471,7 +471,7 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 				
 				$resultString = $resultString.'<p id="VTCAL_EventNum'.($ievent+1).'"><a href="'.BASEURL.'main.php?calendarid='.urlencode($calendarID).'&view=event&eventid='.urlencode($event['id']).'&timebegin='.urlencode($event['timebegin']).$linkCategoryFilter.'">';
 				$resultString = $resultString.'<b>'.htmlentities(FormatDate($FormData['dateformat'], dbtime2tick($event['timebegin']))).
-					'<br>'.htmlentities(FormatTimeDisplay($event, $FormData))."<b><br></b></b>\n";
+					'<br/>'.htmlentities(FormatTimeDisplay($event, $FormData))."<b><br/></b></b>\n";
 				
 				$resultString = $resultString.'<span><u';
 				if (isset($FormData['maxtitlecharacters']) && ($FormData['maxtitlecharacters'] < strlen($event['title']))) {
@@ -480,7 +480,7 @@ function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 				else {
 					$resultString = $resultString.'>'.htmlentities($event['title']);
 				}
-				$resultString = $resultString."</u><br>\n";
+				$resultString = $resultString."</u><br/>\n";
 				
 				if ($event['location'] != "" && $FormData['showlocation'] == '1') {
 					$resultString = $resultString."<i";

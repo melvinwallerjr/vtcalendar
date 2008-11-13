@@ -251,7 +251,7 @@
 			<Item Name="export_htmlsettings">'General HTML Settings'</Item>
 			
 			<Item Name="export_keepcategoryfilter">'Keep Category Filter in VTCalendar'</Item>
-			<Item Name="export_keepcategoryfilter_description">'When events are clicked, and users go to the full VTCalendar screen, the category filter is not maintained. Check the box below if you would like to pass the category filter to VTCalendar so the day, week, month, etc. views are also filtered. This will be ignored if you did selected &amp;quot;All categories&amp;quot; in the previous section.'</Item>
+			<Item Name="export_keepcategoryfilter_description">'When events are clicked, and users go to the full VTCalendar screen, the category filter is not maintained. Check the box below if you would like to pass the category filter to VTCalendar so the day, week, month, etc. views are also filtered. This will be ignored if you selected &amp;quot;All categories&amp;quot; in the previous section.'</Item>
 			
 			<Item Name="export_htmltype">'HTML Type'</Item>
 			<Item Name="export_htmltype_description">'For the HTML export formats (including HTML via JavaScript), the output can either be a series of paragraphs or rows in a single table.'</Item>

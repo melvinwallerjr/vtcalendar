@@ -13,6 +13,7 @@ define("ISCALADMIN", isset($_SESSION['AUTH_ISCALENDARADMIN']) && $_SESSION['AUTH
 $FormData['timebegin'] = 'upcoming';
 $FormData['maxevents'] = '25';
 $FormData['sponsor'] = 'all';
+$FormData['keepcategoryfilter'] = '0';
 $FormData['htmltype'] = 'table';
 $FormData['jshtml'] = '1';
 $FormData['dateformat'] = 'normal';
@@ -62,9 +63,9 @@ if ($FormData['sponsor'] == "all") $FormData['specificsponsor'] = '';
 if ($FormData['sponsor'] == "specific" && empty($FormData['specificsponsor'])) $FormErrors['sponsor'] = lang('export_sponsor_error');
 
 if (isset($FormData['format']) && $FormData['format'] == "html") {
-	if (isset($_GET['keepcategoryfilter'])) setVar($FormData['keepcategoryfilter'],$_GET['keepcategoryfilter'],'boolean_checkbox');
+	if (isset($_GET['keepcategoryfilter'])) setVar($FormData['keepcategoryfilter'],$_GET['keepcategoryfilter'],'boolean');
 	if (isset($_GET['htmltype'])) setVar($FormData['htmltype'],$_GET['htmltype'],'htmltype');
-	if (isset($_GET['jshtml']) && !setVar($FormData['jshtml'],$_GET['jshtml'],'boolean_checkbox')) unset($FormData['jshtml']);
+	if (isset($_GET['jshtml'])) setVar($FormData['jshtml'],$_GET['jshtml'],'boolean');
 	
 	if (isset($_GET['dateformat'])) setVar($FormData['dateformat'],$_GET['dateformat'],'dateformat');
 	if (isset($_GET['timedisplay'])) setVar($FormData['timedisplay'],$_GET['timedisplay'],'timedisplay');

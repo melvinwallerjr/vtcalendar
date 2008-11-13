@@ -362,7 +362,7 @@ function GenerateJSArray(&$result, $calendarID, $calendarurl) {
 
 function GenerateHTML(&$result, $calendarID, $calendarurl, &$FormData) {
 	$resultString = "";
-	$linkCategoryFilter = isset($FormData['categories']) && isset($FormData['keepcategoryfilter']) ? "&categoryfilter=" . urlencode(implode(',', $FormData['categories'])) : '';
+	$linkCategoryFilter = isset($FormData['categories']) && $FormData['keepcategoryfilter'] ? "&categoryfilter=" . urlencode(implode(',', $FormData['categories'])) : '';
 	
 	if ($FormData['htmltype'] == "paragraph") {
 		if ($result->numRows() == 0) {

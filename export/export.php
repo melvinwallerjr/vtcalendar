@@ -45,9 +45,9 @@ if (count($FormErrors) > 0) {
 
 // If the query string is passing a valid CalendarID, set it to a variable.
 if ( isset($_GET['calendarid']) && isValidInput($_GET['calendarid'],'calendarid') )
-	{ $CalendarID = $_GET['calendarid']; }
+	{ setVar($CalendarID,$_GET['calendarid']); }
 elseif ( isset($_GET['calendar']) && isValidInput($_GET['calendar'],'calendarid') ) 
-	{ $CalendarID = $_GET['calendar']; }
+	{ setVar($CalendarID,$_GET['calendar']); }
 
 // Otherwise, the CalendarID is missing or invalid
 else { outputErrorMessage("The CalendarID was not specified or is invalid."); }

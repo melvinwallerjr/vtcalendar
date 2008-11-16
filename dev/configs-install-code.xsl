@@ -48,19 +48,22 @@
 	<xsl:template match="Config" mode="ReadFormData">
 		<xsl:param name="Tab"><xsl:text>&#9;</xsl:text></xsl:param>
 		
-		<xsl:value-of select="$Tab"/><xsl:text>$Form_</xsl:text>
-		<xsl:value-of select="@Variable"/>
-		<xsl:text> = </xsl:text>
+		<xsl:value-of select="$Tab"/>
 		<xsl:choose>
 			<xsl:when test="@Type='boolean'">
-				<xsl:text>isset($_POST['</xsl:text>
+				<xsl:text>$Form_</xsl:text>
+				<xsl:value-of select="@Variable"/>
+				<xsl:text> = isset($_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
 				<xsl:text>'])</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
+				<xsl:text>setVar($Form_</xsl:text>
+				<xsl:value-of select="@Variable"/>
+				<xsl:text>,</xsl:text>
 				<xsl:text>$_POST['</xsl:text>
 				<xsl:value-of select="@Variable"/>
-				<xsl:text>']</xsl:text>
+				<xsl:text>'])</xsl:text>
 			</xsl:otherwise>
 		</xsl:choose>
 		<xsl:text>;&#13;&#10;</xsl:text>

@@ -1,5 +1,6 @@
 <?php
 define("NOLOADDB", true);
+define("NOSESSION", true);
 @(include_once('../config.inc.php')) or die('<html><body>config.inc.php was not found. See: <a href="index.php">VTCalendar Installation</a></body></html>.');
 require_once('../application.inc.php');
 require_once("upgradedb-functions.php");
@@ -39,23 +40,23 @@ if (file_exists("../VERSION-DBCHECKED.txt")) {
 $Submit_Preview = isset($_POST['Submit_Preview']) && $_POST['Submit_Preview'] != "";
 $Submit_Upgrade = isset($_POST['Submit_Upgrade']) && $_POST['Submit_Upgrade'] != "";
 
-if (isset($_POST['UpgradeSQL'])) $UpgradeSQL = $_POST['UpgradeSQL'];
-if (isset($_GET['Success'])) $Success = $_GET['Success'];
+if (isset($_POST['UpgradeSQL'])) setVar($UpgradeSQL,$_POST['UpgradeSQL']);
+if (isset($_GET['Success'])) setVar($Success,$_GET['Success']);
 
-if (isset($_POST['DBTYPE']) && preg_match("/^(mysql|postgres)$/", $_POST['DBTYPE'])) define("DBTYPE", $_POST['DBTYPE']);
-if (isset($_GET['DBTYPE']) && preg_match("/^(mysql|postgres)$/", $_GET['DBTYPE'])) define("DBTYPE", $_GET['DBTYPE']);
+if (isset($_POST['DBTYPE']) && preg_match("/^(mysql|postgres)$/", $_POST['DBTYPE'])) setVar($Form_DBTYPE,$_POST['DBTYPE']);
+if (isset($_GET['DBTYPE']) && preg_match("/^(mysql|postgres)$/", $_GET['DBTYPE'])) setVar($Form_DBTYPE,$_GET['DBTYPE']);
 
-if (isset($_POST['POSTGRESSCHEMA']) && $_POST['POSTGRESSCHEMA'] != '') define("POSTGRESSCHEMA", $_POST['POSTGRESSCHEMA']);
-if (isset($_GET['POSTGRESSCHEMA']) && $_GET['POSTGRESSCHEMA'] != '') define("POSTGRESSCHEMA", $_GET['POSTGRESSCHEMA']);
+if (isset($_POST['POSTGRESSCHEMA']) && $_POST['POSTGRESSCHEMA'] != '') setVar($Form_POSTGRESSCHEMA,$_POST['POSTGRESSCHEMA']);
+if (isset($_GET['POSTGRESSCHEMA']) && $_GET['POSTGRESSCHEMA'] != '') setVar($Form_POSTGRESSCHEMA,$_GET['POSTGRESSCHEMA']);
 
-if (isset($_POST['DSN']) && $_POST['DSN'] != '') define("DSN", $_POST['DSN']);
-if (isset($_GET['DSN']) && $_GET['DSN'] != '') define("DSN", $_GET['DSN']);
+if (isset($_POST['DSN']) && $_POST['DSN'] != '') setVar($Form_DSN,$_POST['DSN']);
+if (isset($_GET['DSN']) && $_GET['DSN'] != '') setVar($Form_DSN,$_GET['DSN']);
 
 // Flag if the all form fields have been submitted.
-$FormIsComplete = defined("DBTYPE") && defined("DSN") && defined("POSTGRESSCHEMA");
+$FormIsComplete = isset($Form_DBTYPE) && isset($Form_DSN) && isset($Form_POSTGRESSCHEMA);
 
 // Set the field qualifier for SQL output
-if (defined("DBTYPE") && DBTYPE == 'postgres') {
+if (isset($Form_DBTYPE) && $Form_DBTYPE == 'postgres') {
 	define("FIELDQUALIFIER", '"');
 }
 else {
@@ -88,13 +89,13 @@ elseif ($Submit_Preview && $FormIsComplete) {
 	
 	$FinalSQL = "";
 	
-	$DBCONNECTION =& DBOpen(DSN);
+	$DBCONNECTION =& DBOpen($Form_DSN);
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}
 	else {
-		if (DBTYPE == 'postgres') {
-			define("SCHEMA", POSTGRESSCHEMA);
+		if ($Form_DBTYPE == 'postgres') {
+			define("SCHEMA", $Form_POSTGRESSCHEMA);
 		}
 		else {
 			$result =& DBquery("SELECT DATABASE() as SCHEMANAME");
@@ -116,11 +117,11 @@ elseif ($Submit_Preview && $FormIsComplete) {
 		else {
 			$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 			
-			if (DBTYPE == 'mysql') {
+			if ($Form_DBTYPE == 'mysql') {
 				$matchResult = preg_match("/^([\d]+\.[\d]+)/", $record["ver"], $matches);
 				define("DBVERSIONOK", $matchResult && !empty($matches[1]) && intval($matches[1]) >= 4.2);
 			}
-			elseif (DBTYPE == 'postgres') {
+			elseif ($Form_DBTYPE == 'postgres') {
 				define("DBVERSIONOK", preg_match("/^PostgreSQL 8\./i", $record["ver"]));
 			}
 			$result->free();
@@ -244,10 +245,10 @@ elseif ($Submit_Preview && $FormIsComplete) {
 						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 						if ($record['reccount'] > 0) {
 							echo "<div class='Alter Record'><b>Update Records:</b> Data exists in the <code>url</code> column in the <code>vtcal_event</code> table. The <code>url</code> column will be appended to the end of the description column, and then it will be set to an empty string.</div>";
-							if (DBTYPE == 'mysql') {
+							if ($Form_DBTYPE == 'mysql') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', '" . sqlescape(lang('more_information')) . ": ', url), url = '' WHERE URL != '';\n\n";
 							}
-							elseif (DBTYPE == 'postgres') {
+							elseif ($Form_DBTYPE == 'postgres') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || '" . sqlescape(lang('more_information')) . ": ' || url, url = '' WHERE URL != '';\n\n";
 							}
 							$changes++;
@@ -270,10 +271,10 @@ elseif ($Submit_Preview && $FormIsComplete) {
 						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 						if ($record['reccount'] > 0) {
 							echo "<div class='Alter Record'><b>Update Records:</b> Data exists in the <code>url</code> column in the <code>vtcal_event_public</code> table. The <code>url</code> column will be appended to the end of the description column, and then it will be set to an empty string.</div>";
-							if (DBTYPE == 'mysql') {
+							if ($Form_DBTYPE == 'mysql') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', '" . sqlescape(lang('more_information')) . ": ', url), url = '' WHERE URL != '';\n\n";
 							}
-							elseif (DBTYPE == 'postgres') {
+							elseif ($Form_DBTYPE == 'postgres') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_event_public" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || '" . sqlescape(lang('more_information')) . ": ' || url, url = '' WHERE URL != '';\n\n";
 							}
 							$changes++;
@@ -296,10 +297,10 @@ elseif ($Submit_Preview && $FormIsComplete) {
 						$record =& $result->fetchRow(DB_FETCHMODE_ASSOC, 0);
 						if ($record['reccount'] > 0) {
 							echo "<div class='Alter Record'><b>Update Records:</b> Data exists in the <code>url</code> column in the <code>vtcal_template</code> table. The <code>url</code> column will be appended to the end of the description column, and then it will be set to an empty string.</div>";
-							if (DBTYPE == 'mysql') {
+							if ($Form_DBTYPE == 'mysql') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_template" . FIELDQUALIFIER . " SET description = concat(description, '\\n\\n', '" . sqlescape(lang('more_information')) . ": ', url), url = '' WHERE URL != '';\n\n";
 							}
-							elseif (DBTYPE == 'postgres') {
+							elseif ($Form_DBTYPE == 'postgres') {
 								$FinalSQL .= "UPDATE " . FIELDQUALIFIER . SCHEMA . FIELDQUALIFIER . "." . FIELDQUALIFIER . "vtcal_template" . FIELDQUALIFIER . " SET description = description || E'\\n\\n' || '" . sqlescape(lang('more_information')) . ": ' || url, url = '' WHERE URL != '';\n\n";
 							}
 							$changes++;
@@ -313,9 +314,9 @@ elseif ($Submit_Preview && $FormIsComplete) {
 		
 				?><h2><a name="Upgrade"></a>Upgrade Database:</h2>
 				<form action="upgradedb.php" method="post" onsubmit="return verifyUpgrade();">
-				<input type="hidden" name="DBTYPE" value="<?php echo DBTYPE; ?>"/>
-				<input type="hidden" name="DSN" value="<?php echo DSN; ?>"/>
-				<input type="hidden" name="POSTGRESSCHEMA" value="<?php echo POSTGRESSCHEMA; ?>"/>
+				<input type="hidden" name="DBTYPE" value="<?php echo $Form_DBTYPE; ?>"/>
+				<input type="hidden" name="DSN" value="<?php echo $Form_DSN; ?>"/>
+				<input type="hidden" name="POSTGRESSCHEMA" value="<?php echo $Form_POSTGRESSCHEMA; ?>"/>
 				<blockquote><?php
 				
 				if ($changes < 1) {
@@ -355,7 +356,7 @@ elseif ($Submit_Preview && $FormIsComplete) {
 elseif ($Submit_Upgrade && $FormIsComplete && isset($UpgradeSQL)) {
 	?><h2>Upgrade Result:</h2><?php
 	
-	$DBCONNECTION =& DBOpen(DSN);
+	$DBCONNECTION =& DBOpen($Form_DSN);
 	if (is_string($DBCONNECTION)) {
 		echo "<div class='Error'><b>Error:</b> Could not connect to the database: " . $DBCONNECTION . "</div>";
 	}
@@ -435,19 +436,19 @@ else {
 	<form action="upgradedb.php" method="POST">
 		<p><b>Select Database Type:</b><br />
 			<select name="DBTYPE" id="DBTYPE" onchange="ToggleBlocks()" onclick="ToggleBlocks()">
-				<option value="" <?php if (!defined("DBTYPE")) echo "SELECTED"; ?>>(Select One)</option>
-				<option value="mysql" <?php if (defined("DBTYPE") && DBTYPE == 'mysql') echo "SELECTED"; ?>>MySQL</option>
-				<option value="postgres" <?php if (defined("DBTYPE") && DBTYPE == 'postgres') echo "SELECTED"; ?>>PostgreSQL</option>
+				<option value="" <?php if (!isset($Form_DBTYPE)) echo "SELECTED"; ?>>(Select One)</option>
+				<option value="mysql" <?php if (isset($Form_DBTYPE) && $Form_DBTYPE == 'mysql') echo "SELECTED"; ?>>MySQL</option>
+				<option value="postgres" <?php if (isset($Form_DBTYPE) && $Form_DBTYPE == 'postgres') echo "SELECTED"; ?>>PostgreSQL</option>
 			</select>
 		</p>
 		
 		<p><b>Database Connection String:</b><br /> 
-	    	<input name="DSN" type="text" id="DSN" size="60" value="<?php if (defined("DSN")) echo DSN; ?>" style="width: 600px;" /><br/>
+	    	<input name="DSN" type="text" id="DSN" size="60" value="<?php if (isset($Form_DSN)) echo $Form_DSN; ?>" style="width: 600px;" /><br/>
 	    	<i id="mysql_example">Syntax: mysql://user:password@host/database</i>
 	    	<i id="postgres_example">Syntax: pgsql://user:password@host/database</i></p>
 		
 		<p id="POSTGRESSCHEMA_Block"><b>Schema (PostgreSQL Only):</b><br /> 
-	    	<input name="POSTGRESSCHEMA" type="text" id="POSTGRESSCHEMA" size="60" value="<?php echo (defined("POSTGRESSCHEMA") ? POSTGRESSCHEMA : 'public'); ?>" style="width: 200px;" /><br/>
+	    	<input name="POSTGRESSCHEMA" type="text" id="POSTGRESSCHEMA" size="60" value="<?php echo (isset($Form_POSTGRESSCHEMA) ? $Form_POSTGRESSCHEMA : 'public'); ?>" style="width: 200px;" /><br/>
 	    	<i>Example: public</p>
 	    
 		<p><input type="submit" name="Submit_Preview" value="Preview Database Upgrades" /></p>

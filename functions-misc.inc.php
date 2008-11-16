@@ -118,14 +118,14 @@ function make_clickable($text)
 function removeslashes(&$event) {
 	if (get_magic_quotes_gpc()) {
 		$event['title']=stripslashes($event['title']);
-		$event['description']=stripslashes($event['description']);
-		$event['location']=stripslashes($event['location']);
-		$event['price']=stripslashes($event['price']);
-		$event['contact_name']=stripslashes($event['contact_name']);
-		$event['contact_phone']=stripslashes($event['contact_phone']);
-		$event['contact_email']=stripslashes($event['contact_email']);
-		$event['displayedsponsor']=stripslashes($event['displayedsponsor']);
-		$event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
+		if (isset($event['description'])) $event['description']=stripslashes($event['description']);
+		if (isset($event['location'])) $event['location']=stripslashes($event['location']);
+		if (isset($event['price'])) $event['price']=stripslashes($event['price']);
+		if (isset($event['contact_name'])) $event['contact_name']=stripslashes($event['contact_name']);
+		if (isset($event['contact_phone'])) $event['contact_phone']=stripslashes($event['contact_phone']);
+		if (isset($event['contact_email'])) $event['contact_email']=stripslashes($event['contact_email']);
+		if (isset($event['displayedsponsor'])) $event['displayedsponsor']=stripslashes($event['displayedsponsor']);
+		if (isset($event['displayedsponsorurl'])) $event['displayedsponsorurl']=stripslashes($event['displayedsponsorurl']);
 	}
 }
 

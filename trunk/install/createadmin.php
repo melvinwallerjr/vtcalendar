@@ -19,15 +19,16 @@
 require_once("../config-defaults.inc.php");
 require_once("../functions-db-generic.inc.php");
 require_once("../functions-db-sets.inc.php");
+require_once("../functions-misc.inc.php");
 
 $FormErrors = array();
 $AccountList = array();
 
 $Submit_Create = isset($_POST['Submit_Create']) && $_POST['Submit_Create'] != "";
 
-if (isset($_POST['CREATEADMIN_USERNAME'])) $Form_CREATEADMIN_USERNAME = $_POST['CREATEADMIN_USERNAME']; else $Form_CREATEADMIN_USERNAME = "";
-if (isset($_POST['CREATEADMIN_PASSWORD'])) $Form_CREATEADMIN_PASSWORD = $_POST['CREATEADMIN_PASSWORD']; else $Form_CREATEADMIN_PASSWORD = "";
-if (isset($_POST['MAINADMINS'])) $Form_MAINADMINS = $_POST['MAINADMINS']; else $Form_MAINADMINS = "";
+if (isset($_POST['CREATEADMIN_USERNAME'])) setVar($Form_CREATEADMIN_USERNAME,$_POST['CREATEADMIN_USERNAME']); else $Form_CREATEADMIN_USERNAME = "";
+if (isset($_POST['CREATEADMIN_PASSWORD'])) setVar($Form_CREATEADMIN_PASSWORD,$_POST['CREATEADMIN_PASSWORD']); else $Form_CREATEADMIN_PASSWORD = "";
+if (isset($_POST['MAINADMINS'])) setVar($Form_MAINADMINS,$_POST['MAINADMINS']); else $Form_MAINADMINS = "";
 
 if (DATABASE == "") {
 	$FormErrors[count($FormErrors)] = "DATABASE has not been set. You must first complete step 1 and 2 of the <a href='index.php'>VTCalendar Installation</a>.";

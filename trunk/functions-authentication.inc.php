@@ -343,7 +343,7 @@ function logUserIn() {
 	// Get username/password POST values.
 	if (isset($_POST['login_userid']) && isset($_POST['login_password'])) {
 		if (!setVar($userid, strtolower($_POST['login_userid']), 'userid')) unset($userid);
-		$password = $_POST['login_password'];
+		setVar($password,$_POST['login_password']);
 	}
 	else {
 		unset($userid);

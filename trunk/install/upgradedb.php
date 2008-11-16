@@ -1,4 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+define("NOLOADDB", true);
+@(include_once('../config.inc.php')) or die('<html><body>config.inc.php was not found. See: <a href="index.php">VTCalendar Installation</a></body></html>.');
+require_once('../application.inc.php');
+require_once("upgradedb-functions.php");
+require_once("upgradedb-data.php");
+
+@(include_once('../version.inc.php')) or die('<html><body>version.inc.php was not found or could not be read. Make sure it exists in the VTCalendar folder and it defines a constant named "VERSION".</body></html>');
+if (!defined("VERSION")) die('<html><body>VERSION was not defined. Make sure version.inc.php defines a constant named "VERSION" (e.g. <code>define("VERSION", "2.3.0");</code>).</body></html>');
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -12,11 +22,7 @@ function verifyUpgrade() {
 </head>
 
 <body id="UpgradeDB">
-
-
 <?php
-@(include_once('../version.inc.php')) or die('version.inc.php was not found or could not be read. Make sure it exists in the VTCalendar folder and it defines a constant named "VERSION".');
-if (!defined("VERSION")) die('VERSION was not defined. Make sure version.inc.php defines a constant named "VERSION" (e.g. <code>define("VERSION", "2.3.0");</code>).');
 
 if (file_exists("../VERSION-DBCHECKED.txt")) {
 	if (($dbVersionChecked = file_get_contents("../VERSION-DBCHECKED.txt")) === false) die("VERSION-DBCHECKED.txt exists but could not be. May not have read access to the file.");
@@ -27,18 +33,8 @@ if (file_exists("../VERSION-DBCHECKED.txt")) {
 		exit;
 	}
 }
-?>
 
-
-<h1>Install or Upgrade VTCalendar Database (MySQL 4.2+ or PostgreSQL 8+)</h1>
-
-<?php
-
-define("NOLOADDB", true);
-@(include_once('../config.inc.php')) or die('config.inc.php was not found. See: <a href="index.php">VTCalendar Installation</a>.');
-require_once('../application.inc.php');
-require_once("upgradedb-functions.php");
-require_once("upgradedb-data.php");
+?><h1>Install or Upgrade VTCalendar Database (MySQL 4.2+ or PostgreSQL 8+)</h1><?php
 
 $Submit_Preview = isset($_POST['Submit_Preview']) && $_POST['Submit_Preview'] != "";
 $Submit_Upgrade = isset($_POST['Submit_Upgrade']) && $_POST['Submit_Upgrade'] != "";

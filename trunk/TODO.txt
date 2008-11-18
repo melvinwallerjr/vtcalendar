@@ -25,7 +25,7 @@ Future:
 - Full text searching
 - Store IP if logged in and logout if IP changes.
 - Develop tool for assisting with translations.
-- When creating a new calendar allow settings (i.e. colors, header/footer HTML, sponsors) to be copied from another calendar. Allow user to select what settings by (un)checking boxes.
+- When creating a new calendar allow settings (i.e. colors, header/footer HTML, sponsors) to be copied from another calendar. Allow user to select what settings by (un)checking boxes. [bkgray]
 
 Finished:
 - Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well (Finished 2008-11-07)

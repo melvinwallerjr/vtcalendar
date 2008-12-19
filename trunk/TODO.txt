@@ -9,7 +9,7 @@ Low:
 - Improve description on export page.
 - After login do a redirect to avoid resubmitting POST when using the back button
 - Allow data currently stored in session to be loaded from the DB or a file.
-- Validate iCalendar export format.
+- Validate iCalendar export format: http://www.kanzaki.com/docs/ical/
 - Assign DB results by reference. Example: $var =& DBQuery(...) or $results =& $db->query(...)
 - Get row by reference. Example $row =& $results->fetchRow()
 - Free results by using $results->free()

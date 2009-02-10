@@ -2,7 +2,7 @@ TODO for Version 2.x:
 ===========================
 
 High:
-- None
+- Fix problems with the drop-down and event listing (pertaining to repeating events) in manageevents.php.
 
 Low:
 - Give final warning about truncating records in "Upgrade Database" section in upgradedb.php
@@ -26,6 +26,7 @@ Future:
 - Store IP if logged in and logout if IP changes.
 - Develop tool for assisting with translations.
 - When creating a new calendar allow settings (i.e. colors, header/footer HTML, sponsors) to be copied from another calendar. Allow user to select what settings by (un)checking boxes. [bkgray]
+- List other calendars in the default calendar's column. Allow calendars to chose not be displayed there. Implement it in the export script to allow the list to be displayed on other Web sites. [Wingrunner]
 
 Finished:
 - Check for the url column in upgradedb.php, and move the URL data to description as part of the upgrade (unless the URL data is empty). The URL column should be emptied as well (Finished 2008-11-07)
@@ -81,6 +82,9 @@ TODO for Version 3.x:
   When the event is accepted or rejected, a confirmation e-mail will be sent to the submitter as well.
 - An address field that will link to Google Maps. Maybe preview the map directly in the page?
 - Allow week/month to be viewed as a list of events (like upcoming view).
+
+Other Ideas:
+- Icons for events that are displayed in the event/day/week/month views. [Wingrunner]
 
 OLD TODO:
 ===========================

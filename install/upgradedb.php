@@ -366,7 +366,7 @@ elseif ($Submit_Upgrade && $FormIsComplete && isset($UpgradeSQL)) {
 		
 		for ($i = 0; $i < count($queries); $i++) {
 			if (!trim($queries[$i]) == "") {
-				$result =& DBquery($queries[$i], NULL, $DebugInfo);
+				$result =& DBquery($queries[$i]);
 				if (is_string($result)) {
 					$queryError = true;
 					echo "<div class='Error'><b>Error:</b> Query # " . ($i+1) . " failed: " . $result;

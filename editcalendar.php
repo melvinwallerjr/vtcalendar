@@ -71,14 +71,15 @@ require_once('application.inc.php');
 			// check validity of cal-admins
 			$pidsAdded = array();
 			
-			if (!empty($cal['admins']) ) {
+			if (!empty($cal['admins'])) {
 				// disassemble the admins string and check all PIDs against the DB
 				$pidsInvalid = "";
 				$pidsTokens = split ( "[ ,;\n\t]", $cal['admins'] );
+				$pidsAddedCount = 0;
+				
 				for ($i=0; $i<count($pidsTokens); $i++) {
 					$pidName = $pidsTokens[$i];
 					$pidName = trim($pidName);
-					$pidsAddedCount = 0;
 					if ( !empty($pidName) ) {
 						if ( isvaliduser ( $pidName ) ) {
 							$pidsAdded[$pidsAddedCount] = $pidName;

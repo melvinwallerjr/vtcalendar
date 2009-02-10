@@ -13,7 +13,6 @@ if (!isset($_GET['timebegin']) || !setVar($timebegin,$_GET['timebegin'],'timebeg
 if (isset($timebegin)) {
 	$year = intval(substr($timebegin, 0, 4));
 	$month = intval(substr($timebegin, 5, 2));
-	echo "A";
 }
 
 // Create timestamps for the selected month.

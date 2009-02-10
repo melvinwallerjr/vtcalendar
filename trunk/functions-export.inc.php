@@ -563,7 +563,7 @@ function GenerateICal4Event(&$event, $calendarURL) {
 	}
 	$ical.= "SUMMARY:".$event['title'].CRLF;
 
-	$ical.= "DESCRIPTION:".CRLF." ";
+	$ical.= "DESCRIPTION:";
 	if (!empty($event['description'])) {
 		$ical.= FormatICalText($event['description']);
 		$ical.= "\\n\\n".CRLF;

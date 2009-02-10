@@ -66,7 +66,7 @@ function sendemail2user($useremail,$subject,$body) {
 // highlights all occurrences of the keyword in the text
 // case-insensitive
 function highlight_keyword($keyword, $text) {
-	$keyword = preg_quote($keyword);
+	$keyword = preg_quote($keyword, '/');
 	$newtext = preg_replace('/'.$keyword.'/Usi','<span class="KeywordHighlight">\\0</span>',$text);
 	return $newtext;
 }

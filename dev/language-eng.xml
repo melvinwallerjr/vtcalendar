@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Items>
+<Items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="language.xsd">
 	<Section Name="Common" Comment="Text that may be used by all scripts.">
 		
 		<Section Name="Misc">

@@ -440,8 +440,8 @@
 			
 			<Item Name="date_and_time_header">'Date &amp;amp; Time'</Item>
 			
-			<Section Name="Reocurring Event">
-				<Item Name="recurring">'recurring'</Item>
+			<Section Name="Reoccurring Event">
+				<Item Name="reccurring">'recurring'</Item>
 				<Item Name="on_the">'on the'</Item>
 				<Item Name="last">'last'</Item>
 				<Item Name="first">'first'</Item>
@@ -841,6 +841,9 @@
 			<Item Name="manage_events">'My submitted events'</Item>
 			<Item Name="or_manage_existing_events">'or manage existing events:'</Item>
 			
+			<Item Name="one_time_events">'One-Time Events'</Item>
+			<Item Name="reoccurring_events">'Reoccurring Events'</Item>
+			
 			<Item Name="no_managed_events">'You have not submitted any events for the month of '</Item>
 			<Item Name="show_events_for">'Show events for'</Item>
 			
@@ -849,6 +852,9 @@
 			<Item Name="approved">'approved'</Item>
 			<Item Name="status_info_message">'The status information has the following meaning:'</Item>
 			<Item Name="rejected">'rejected'</Item>
+			<Item Name="rejected_reason">'Reason'</Item>
+			<Item Name="submitted_to_default_calendar">'This event was submitted to the &quot;%DEFAULTCALNAME%&quot; calendar'</Item>
+			<Item Name="submitted_to_default_calendar_but_renamed">'but was renamed to: &quot;%TITLE%&quot;'</Item>
 			<Item Name="rejected_explanation">'...event was not approved for publication'</Item>
 			<Item Name="submitted_for_approval_explanation">'...event has yet to be reviewed and approved'</Item>
 			<Item Name="approved_explanation">'...event is displayed in the calendar'</Item>

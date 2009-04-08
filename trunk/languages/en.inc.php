@@ -890,6 +890,8 @@
 	
 		$lang['manage_events'] = 'My submitted events';
 		$lang['or_manage_existing_events'] = 'or manage existing events:';
+		$lang['one_time_events'] = 'One-Time Events';
+		$lang['reocurring_events'] = 'Reocurring Events';
 		$lang['no_managed_events'] = 'You have not submitted any events for the month of ';
 		$lang['show_events_for'] = 'Show events for';
 		$lang['status'] = 'Status';
@@ -897,6 +899,9 @@
 		$lang['approved'] = 'approved';
 		$lang['status_info_message'] = 'The status information has the following meaning:';
 		$lang['rejected'] = 'rejected';
+		$lang['rejected_reason'] = 'Reason';
+		$lang['submitted_to_default_calendar'] = 'This event was submitted to the "%DEFAULTCALNAME%" calendar';
+		$lang['submitted_to_default_calendar_but_renamed'] = 'but was renamed to: "%TITLE%"';
 		$lang['rejected_explanation'] = '...event was not approved for publication';
 		$lang['submitted_for_approval_explanation'] = '...event has yet to be reviewed and approved';
 		$lang['approved_explanation'] = '...event is displayed in the calendar';

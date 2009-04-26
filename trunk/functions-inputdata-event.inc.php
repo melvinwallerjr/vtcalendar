@@ -328,7 +328,7 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 			
 			?></td><td valign="top"><?php
 			
-			if ($inputrequired && $check && !$defaultButtonPressed && $event['wholedayevent'] != 0) {
+			if ($inputrequired && $check && !$defaultButtonPressed && $event['wholedayevent'] == 0) {
 				if ((!isset($event['timebegin_hour']) || $event['timebegin_hour']==0)) {
 					feedback(lang('specify_all_day_or_starting_time'),FEEDBACKNEG);
 				}

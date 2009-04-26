@@ -91,7 +91,7 @@ function GetTableData(&$TableData, $TableName) {
 	
 	// Use different SQL depending on the database
 	if ($Form_DBTYPE == 'mysql') {
-		$query = "SHOW INDEXES FROM `" . $TableName . "`";
+		$query = "SHOW INDEX FROM `" . $TableName . "`";
 	}
 	elseif ($Form_DBTYPE == 'postgres') {
 		$query = "SELECT i.*, c.constraint_type"

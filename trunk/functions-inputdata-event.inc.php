@@ -333,7 +333,14 @@ function inputeventdata(&$event,$sponsorid,$inputrequired,$check,$displaydatetim
 					feedback(lang('specify_all_day_or_starting_time'),FEEDBACKNEG);
 				}
 				elseif (!checkeventtime($event)) {
-					feedback(lang('warning_ending_time_before_starting_time'),FEEDBACKNEG);
+					
+					// Check if the event is attempting to end at midnight.
+					$endsAtMidnight = $event['timeend_min'] == "0" && (
+							(!USE_AMPM && $event['timeend_hour'] == "23") ||
+							(USE_AMPM && $event['timeend_hour'] == "12" && $event['timeend_ampm'] == "am")
+						);
+						
+					feedback(lang('warning_ending_time_before_starting_time') . ($endsAtMidnight ? ' ' . str_replace('TIME_EXAMPLE', USE_AMPM ? '11:55pm' : '23:55', lang('warning_ending_time_before_starting_time_hint')) : ''),FEEDBACKNEG);
 				}
 			}
 			

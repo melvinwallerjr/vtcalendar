@@ -21,8 +21,10 @@ function print_event($event, $linkfeatures=true) {
 			<!-- Start Right Column -->
 			<td id="EventRightColumn" width="100%" valign="top">
 				<div id="EventTitle"><b><?php echo htmlentities($event['title']); ?></b></div>
-				<div id="EventCategory">(<?php echo htmlentities($event['category_name']); ?>)</div>
 				<?php 
+				if (!empty($event['category_name'])) {
+					?><div id="EventCategory">(<?php echo htmlentities($event['category_name']); ?>)</div><?php
+				}
 				if (!empty($event['description'])) {
 					?><p id="EventDescription"><?php echo str_replace("\r", "<br>", make_clickable(htmlentities($event['description']))); ?></p><?php
 				}

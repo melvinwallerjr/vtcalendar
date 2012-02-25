@@ -90,10 +90,12 @@ contentsection_begin(lang('approve_reject_event_updates'),true);
 echo '<p>'.lang('approval_description').'</p>';
 
 // print list with events
-$query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory";
-$query.= " FROM ".SCHEMANAME."vtcal_event e, ".SCHEMANAME."vtcal_category c, ".SCHEMANAME."vtcal_sponsor s";
-$query.= " WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND c.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.categoryid = c.id AND e.sponsorid = s.id AND e.approved = 0";
-$query.= " ORDER BY e.timebegin asc, e.wholedayevent DESC";
+$query = "SELECT e.id AS id,e.approved,e.timebegin,e.timeend,e.repeatid,e.sponsorid,e.displayedsponsor,e.displayedsponsorurl,e.title,e.wholedayevent,e.categoryid,e.description,e.location,e.price,e.contact_name,e.contact_phone,e.contact_email,c.id AS cid,c.name AS category_name,s.id AS sid,s.name AS sponsor_name,s.calendarid AS sponsor_calendarid,s.url AS sponsor_url,s.calendarid AS sponsor_calendarid, e.showondefaultcal as showondefaultcal, e.showincategory as showincategory"
+	. " FROM ".SCHEMANAME."vtcal_event e"
+	. " LEFT JOIN ".SCHEMANAME."vtcal_category c ON e.calendarid = c.calendarid AND e.categoryid = c.id"
+	. " LEFT JOIN ".SCHEMANAME."vtcal_sponsor s ON e.sponsorid = s.id"
+	. " WHERE e.calendarid='".sqlescape($_SESSION['CALENDAR_ID'])."' AND e.approved = 0"
+	. " ORDER BY e.timebegin asc, e.wholedayevent DESC";
 $result =& DBQuery($query ); 
 
 if (is_string($result)) {

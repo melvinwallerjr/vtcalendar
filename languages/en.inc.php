@@ -484,6 +484,7 @@
 			$lang['timed_event'] = 'Timed event';
 			$lang['ending_time_not_required'] = '(ending time is NOT required)';
 			$lang['warning_ending_time_before_starting_time'] = 'Warning! Ending time is not greater than starting time.';
+			$lang['warning_ending_time_before_starting_time_hint'] = 'If you want the event to end at midnight, enter TIME_EXAMPLE instead.';
 			$lang['warning_no_ending_time'] = 'Warning! The ending time is not specified.';
 			$lang['recurring_event'] = 'recurring event';
 			$lang['no_recurrences_defined'] = 'no recurrences defined.';

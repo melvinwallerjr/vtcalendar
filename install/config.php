@@ -165,6 +165,9 @@ if (isset($_POST['SaveConfig'])) {
 			$ConfigOutput .= "// This include file is called before session_start(), so it must never output any data.\n";
 			$ConfigOutput .= "// ===========================================================================\n\n";
 			
+			$ConfigOutput .= "// Turn off displaying errors to the client. See your server's error log instead.\n";
+			$ConfigOutput .= "ini_set('display_errors', false);\n\n";
+			
 			$ConfigOutput .= "// For a full list of config options (and default values) see config-defaults.inc.php.\n\n";
 			
 			BuildOutput($ConfigOutput);

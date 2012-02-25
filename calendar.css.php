@@ -272,7 +272,7 @@ td#CalRightCol.TodayHighlighted {
 
 table#FilterNotice td {
 	padding: 4px;
-	background-image: <?php echo (empty($_SESSION['COLOR_FILTERNOTICE_BGIMAGE']) ? "transparent" : $_SESSION['COLOR_FILTERNOTICE_BGIMAGE']); ?>;
+	background-image: <?php echo (empty($_SESSION['COLOR_FILTERNOTICE_BGIMAGE']) ? "transparent" : 'url(' . $_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] . ')'); ?>;
 	background-color: <?php echo $_SESSION['COLOR_FILTERNOTICE_BG']; ?>;
 	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONT']; ?>;
 	font-family: Verdana, Arial, Helvetica, sans-serif;

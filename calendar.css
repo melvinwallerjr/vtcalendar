@@ -1,0 +1,1083 @@
+@import 'scripts/jscalendar/calendar-blue.css';
+
+/* >> HTML Base */
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #fff none;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 10pt;
+	color: #000;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Trebuchet MS', 'Verdana', 'Arial', 'Helvetica', sans-serif;
+}
+h1 {
+	font-size: 18pt;
+}
+h2 {
+	font-size: 16pt;
+}
+h3 {
+	font-size: 14pt;
+}
+h4 {
+	font-size: 12pt;
+}
+h5 {
+	font-size: 11pt;
+}
+h6 {
+	font-size: 10pt;
+}
+img {
+	border: none;
+}
+p {
+	margin: 4px 0px 8px 0px;
+	padding: 0px;
+}
+a:link {
+	text-decoration: underline;
+	color: #00f;
+}
+a:visited {
+	text-decoration: underline;
+	color: #909;
+}
+a:focus, a:active, a:hover {
+	text-decoration: underline;
+	color: #f00;
+}
+th, td {
+	padding: 2px 3px;
+	vertical-align: top;
+	text-align: left;
+}
+th {
+	font-weight: bold;
+}
+thead th {
+	vertical-align: bottom;
+	text-align: center;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+fieldset {
+	margin: 0px;
+	border: none;
+	padding: 0px;
+}
+label {
+	cursor: pointer;
+}
+input, select, textarea, pre, kbd, code, .pre {
+	font-family: 'Courier New', 'Courier', monospace;
+	font-size: 9pt;
+}
+optgroup option {
+	padding-left: 10px;
+}
+input, select {
+	vertical-align: middle;
+}
+pre, kbd, code, .pre {
+	margin-top: 4px;
+	border: 1px solid; /* dynamic color */
+	padding: 0px 3px;
+	overflow: visible;
+	overflow-x: auto;
+	/* dynamic BG color */
+	white-space: nowrap;
+}
+pre, .pre {
+	padding: 3px;
+	white-space: pre;
+}
+ol { /* level 1: ordered */
+	margin: 3px 0px 3px 26px;
+	list-style: decimal outside;
+	padding: 0px;
+}
+ul { /* level 1: unordered */
+	margin: 3px 0px 3px 26px;
+	list-style: square outside;
+	padding: 0px;
+}
+ol ol, ul ol { /* level 2: ordered */
+	margin: 5px 0px;
+	list-style: lower-alpha outside;
+	padding: 0px;
+}
+ol ul, ul ul { /* level 2: unordered */
+	margin: 3px 0px 3px 26px;
+	list-style: disc outside;
+	padding: 0px;
+}
+ol ol ol, ul ol ol, ol ul ol, ul ul ol { /* level 3: ordered */
+	margin: 3px 0px 3px 26px;
+	list-style: lower-roman outside;
+	padding: 0px;
+}
+ol ol ul, ul ol ul, ol ul ul, ul ul ul  { /* level 3: unordered */
+	margin: 3px 0px 3px 26px;
+	list-style: circle outside;
+	padding: 0px;
+}
+li { /* all list items */
+	padding: 0px;
+	padding: 1px 0px;
+}
+dd {
+	margin-left: 20px;
+}
+/* << HTML Base */
+
+/* >> Generic */
+#wrapper {
+	/*padding: 0px 15px;*/
+}
+.pad {
+	padding: 5px 20px;
+}
+.odd {
+	/* dynamic BG color */
+}
+.even {
+	/* dynamic BG color */
+}
+.greyed {
+	/* dynamic color */
+}
+.bgDefault {
+	/* dynamic BG color */
+}
+.bgDark {
+	/* dynamic BG color */
+}
+thead tr.bgDark { /* Table Header Cells */
+	color: #fefefe;
+}
+.bgLight {
+	/* dynamic BG color */
+}
+.txtWarn {
+	/* dynamic color */
+}
+.bgWarn {
+	background-color: #f99;
+}
+.txtInfo {
+	color: #00c;
+}
+.bgInfo {
+}
+.txtGood {
+	color: #090;
+}
+.bgGood {
+}
+.highlight {
+	/* dynamic BG color */
+}
+.fromCal {
+	font-weight: bold;
+	font-size: 0.85em;
+}
+.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.alignLeft {
+	text-align: left;
+}
+.alignRight {
+	text-align: right;
+}
+.alignCenter {
+	text-align: center;
+}
+.valignTop {
+	vertical-align: top;
+}
+.valignMiddle {
+	vertical-align: middle;
+}
+.valignBottom {
+	vertical-align: bottom;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.none {
+	display: none;
+}
+.hide {
+	visibility: hidden;
+}
+.show {
+	visibility: visible;
+}
+/* << Generic */
+
+/* Default calendar font family, size and color */
+#CalendarBlock, #CalendarBlock td, #CalendarBlock p, #CalendarBlock h2 {
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 13px;
+	/* dynamic color */
+}
+
+/* Default link color */
+#CalendarBlock a {
+	/* dynamic color */
+}
+
+/* Background color for table headers (may be column or row headers) */
+thead tr.TableHeaderBG, tfoot tr.TableHeaderBG, th.TableHeaderBG {
+	/* dynamic BG color */
+	/* dynamic color */
+}
+
+/* Color for text that indacates an error or warning */
+#CalendarBlock .txtWarn {
+	/* dynamic color */
+}
+/* Background behind error or warning messages */
+#CalendarBlock .bgWarn {
+	background-color: #FFC;
+}
+
+/* Color for text that provides information */
+#CalendarBlock .txtInfo {
+	color: #008;
+}
+/* Background behind information messages */
+#CalendarBlock .bgInfo {
+	background-color: #FFC;
+}
+
+/* Color for text that indicates success */
+#CalendarBlock .txtGood {
+	color: #080;
+}
+/* Background behind information messages */
+#CalendarBlock .bgGood {
+	background-color: #FFC;
+}
+
+/* Second level header */
+#CalendarBlock h2 {
+	/* dynamic color */
+}
+
+/* Third level header */
+#CalendarBlock h3 {
+	margin-bottom: 4px;
+	font-size: 16px;
+	/* dynamic color */
+}
+
+/* Fourth level header */
+#CalendarBlock h4 {
+	margin-bottom: 4px;
+	font-size: 14px;
+	/* dynamic color */
+}
+
+/* Color used to highlight keywords in search results */
+#CalendarBlock .KeywordHighlight {
+	/* dynamic BG color */
+}
+
+/* Section headers used on various forms */
+#CalendarBlock div.FormSectionHeader {
+	margin-top: 16px;
+	margin-bottom: 6px;
+	border-top: 1px solid; /* dynamic color */
+	padding: 4px;
+	/* dynamic BG color */
+}
+#CalendarBlock div.FormSectionHeader h2, #CalendarBlock div.FormSectionHeader h3 {
+	margin: 0px;
+	padding: 0px;
+}
+#CalendarBlock div.FormSectionHeader p {
+	padding: 2px 2px 2px 15px;
+}
+
+#CalendarBlock .calendarColors td {
+	padding: 0px 10px;
+}
+#CalendarBlock label {
+	cursor: pointer;
+}
+#CalendarBlock .LightCellBG {
+	/* dynamic BG color */
+}
+
+/* >> Header */
+body.dw #wrapper {
+	padding: 12px;
+}
+#CalendarBlock .calLogo {
+	position: absolute;
+	z-index: 2;
+	margin-left: 10px;
+	width: 34px;
+	height: 34px;
+}
+#CalendarBlock #calBar h2.calendartitle {
+	float: left;
+	margin: 0px 0px 0px 40px;
+	padding: 0px 10px;
+	font-family: 'Trebuchet MS', 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 20px;
+}
+/* << Header */
+
+/* >> Tabs */
+#calBar {
+	z-index: 1;
+	margin-top: 10px;
+	border-bottom: 1px solid; /* dynamic color */
+}
+#calBar .navBar {
+	position: relative;
+	bottom: -1px;
+	height: 23px;
+}
+#calBar .navBar ul {
+	height: 23px;
+}
+#calBar ul {
+	margin: 0px;
+	padding: 0px 10px 0px 1px; /* indenting tab ends */
+	list-style: none;
+}
+#calBar li {
+	float: left;
+	margin: 0px 2px 0px 2px; /* spacing between tabs */
+	padding: 0px;
+	list-style: none;
+	font-family: 'Trebuchet MS', 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 13px;
+}
+#calBar a {
+	display: -moz-inline-block; /* FF2 */
+	display: inline-block;
+	white-space: nowrap;
+	font-weight: bold;
+}
+#calBar li a {
+	background: transparent url('images/tab_bg.gif') no-repeat 0px 0px;
+}
+#calBar li a b {
+	display: -moz-inline-block; /* FF2 */
+	display: inline-block;
+	border-bottom: 1px solid;
+	padding: 3px 13px 0px 13px;
+	height: 19px;
+	background: transparent url('images/tab_bgrt.gif') no-repeat right top;
+}
+div.selTab { /* selected tabulated section */
+	display: block;
+}
+div.offTab { /* unselected tabulated section */
+	display: none;
+}
+#calBar li.selTab a { /* selected tab */
+	cursor: default;
+}
+#calBar li.selTab b { /* selected tab */
+	border-bottom: none;
+	padding: 3px 13px 1px 13px;
+}
+#calBar li a:link, #calBar li a:visited { /* unselected tabs */
+	text-decoration: none;
+	/* dynamic color */
+}
+#calBar li a:focus, #calBar li a:active, #calBar li a:hover {
+	text-decoration: none;
+}
+#calBar li.selTab a:focus, #calBar li.selTab a:active, #calBar li.selTab a:hover {
+	text-decoration: none;
+}
+#calBar li.calSearch {
+}
+#calBar .calUpdate {
+	float: right;
+}
+#calBar li.calUpdate a {
+	cursor: pointer;
+}
+#auxNav {
+	padding: 2px 8px;
+	/* dynamic BG color */
+	text-align: right;
+	font-size: 11px;
+}
+/* << Tabs */
+
+/* >> Page Body */
+#CalendarTable {
+	/* dynamic BG color */
+}
+#CalSideCol {
+	padding: 0px;
+}
+
+/* > Month Selector */
+#MonthSelector td {
+	padding: 4px;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 16px;
+}
+#MonthSelector a:link, #MonthSelector a:visited {
+	text-decoration: none;
+}
+#MonthSelector a:focus, #MonthSelector a:active, #MonthSelector a:hover {
+	text-decoration: underline;
+}
+#MonthSelector div#LeftArrowButton, #MonthSelector div#RightArrowButton,
+#MonthSelector div#LeftArrowButtonDisabled, #MonthSelector div#RightArrowButtonDisabled {
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 16px;
+}
+#MonthSelector div#LeftArrowButtonDisabled,
+#MonthSelector div#RightArrowButtonDisabled {
+	/* dynamic color */
+}
+/* < Month Selector */
+
+/* > Little Calendar */
+div#LittleCalendar-Padding {
+	padding: 3px;
+	/* dynamic BG color */
+}
+table#LittleCalendar {
+	/* dynamic BG color */
+}
+table#LittleCalendar th, table#LittleCalendar td {
+	padding: 0px;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	text-align: center;
+	font-weight: normal;
+	font-size: 11px;
+}
+table#LittleCalendar .LittleCalendar-Week {
+	border-right: 1px solid; /* dynamic color */
+	/* dynamic BG color */
+}
+table#LittleCalendar a {
+	display: block;
+	padding: 3px;
+	text-decoration: none;
+}
+/* A small line below the S/M/T/W/T/F/S row in the little calendar */
+table#LittleCalendar thead th {
+	border-bottom: 1px solid; /* dynamic color */
+	padding: 3px;
+}
+/* The background color behind the days currently being displayed */
+table#LittleCalendar td.SelectedDay {
+	/* dynamic BG color */
+}
+/* A border around today on the little calendar */
+a.LittleCal-Today, a.LittleCal-TodayGrayedOut {
+	border: 1px solid; /* dynamic color */
+	padding: 2px !important;
+	/* dynamic BG color */
+}
+/* Grayed out days that are not part of the current month */
+a.LittleCal-GrayedOut, a.LittleCal-TodayGrayedOut {
+	/* dynamic color */
+}
+table#LittleCalendar a:focus, table#LittleCalendar a:active, table#LittleCalendar a:hover {
+	border: 1px solid; /* dynamic color */
+	padding: 2px !important;
+	outline: none;
+}
+/* < Little Calendar */
+
+/* Other Left Column Stuff */
+div#JumpToDateSelectorLabel {
+	padding: 10px 0px 2px 8px;
+	font-weight: bold;
+}
+table#JumpToDateSelector {
+	margin-bottom: 8px;
+}
+table#JumpToDateSelector.Split td {
+	padding-left: 6px;
+}
+table#JumpToDateSelector.Combined {
+	width: 100%;
+}
+input.buttonGo {
+	border: 1px solid; /* dynamic color */
+	padding: 0px;
+	width: 25px;
+	height: 20px;
+	text-align: center;
+	/* dynamic BG color */
+}
+form#JumpToDateSelectorForm {
+	margin: 0px;
+	padding: 0px;
+}
+#JumpToDateSelector input, #JumpToDateSelector select,
+#JumpToCalendarSelector input, #JumpToCalendarSelector select {
+	font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+td#CalSideCol table#TodaysDate td {
+	padding: 6px;
+	/* dynamic BG color */
+}
+td#CalSideCol table#JumpToCalendarSelector {
+	margin-top: 8px;
+}
+td#CalSideCol table#SubscribeLink td {
+	padding-top: 12px;
+}
+td#CalSideCol table#CategoryFilterLink td {
+	padding-top: 8px;
+}
+
+td#CalMainCol {
+	border: solid; /* dynamic color */
+	border-width: 0px 7px;
+	padding: 0px;
+	/* dynamic BG color */
+}
+td#CalMainCol.TodayHighlighted {
+	border-bottom: 7px solid; /* dynamic color */
+}
+/* << Page Body */
+
+/* >> Filter Notice */
+table#FilterNotice td {
+	padding: 4px;
+	/* dynamic BG color & image */
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 11px;
+	/* dynamic color */
+}
+table#FilterNotice a {
+	/* dynamic color */
+}
+table#FilterNotice a:hover {
+	/* dynamic color */
+}
+/* << Filter Notice */
+
+/* >> Title & Navi */
+div#TitleAndNavi {
+	/* dynamic BG color */
+}
+
+div#TitleAndNavi table {
+	width: 100%;
+}
+
+div#TitleAndNavi.TodayHighlighted {
+	/* dynamic BG color */
+}
+
+div#TitleAndNavi td {
+	padding: 4px;
+}
+
+div#TitleAndNavi a:link, div#TitleAndNavi a:visited {
+	text-decoration: none;
+}
+div#TitleAndNavi a:focus, div#TitleAndNavi a:active, div#TitleAndNavi a:hover {
+	text-decoration: underline;
+}
+
+td#DateOrTitle {
+	padding-left: 8px;
+}
+td#DateOrTitle h2, #UpdateBlock h2.DateOrTitle {
+	margin: 0px !important;
+	padding: 0px !important;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+td#NavPreviousNext {
+	padding-left: 18px !important;
+	text-align: right;
+}
+td#NavPreviousNext td {
+	padding: 0px 2px;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 13px;
+}
+td#NavPreviousNext b {
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-size: 16px;
+}
+/* << Title & Navi */
+
+/* >> Content */
+td#CalendarContent {
+	padding: 3px;
+}
+
+/* >> Event Table */
+#EventTable {
+	/* dynamic BG color */
+}
+
+#EventTable #EventLeftColumn {
+	padding: 6px;
+	font-size: 16px;
+}
+#EventTable #EventRightColumn {
+	border-left: 3px solid; /* dynamic color */
+	padding: 6px;
+}
+div#EventTitle {
+	font-size: 18px;
+}
+div#EventDetailPadding, div#iCalendarLink {
+	margin: 0px;
+	padding: 14px 0px 0px 0px;
+}
+table#EventDetail {
+	border-collapse: collapse;
+}
+table#EventDetail td {
+	border: 1px solid; /* dynamic color */
+	padding: 4px 8px 4px 4px;
+}
+td.EventDetail-Label {
+	/* dynamic BG color */
+	/* dynamic color */
+}
+/* << Event Table */
+
+/* >> Day Table */
+#DayTable td.NoAnnouncement {
+	padding: 10px;
+	font-size: 15px;
+}
+
+#DayTable td {
+	padding: 4px;
+}
+
+#DayTable tr.BorderTop td {
+	border-top: 1px solid; /* dynamic color */
+}
+#DayTable div.EventLeftBar {
+	border-left: 3px solid; /* dynamic color */
+	padding-left: 6px;
+}
+
+#DayTable tr#FirstDateRow td.DateRow {
+	padding: 0px;
+}
+
+#DayTable td.DateRow div#TodayDateRow {
+	/* dynamic BG color */
+}
+
+#DayTable td.DateRow {
+	padding: 8px 0px 0px 0px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#DayTable td.DateRow a {
+	text-decoration: none;
+}
+
+#DayTable td.DateRow a:hover {
+	text-decoration: underline;
+}
+
+#DayTable td.DateRow div {
+	padding: 8px;
+	/* dynamic BG color */
+}
+
+#DayTable td.TimeColumn i, #DayTable td.TimeColumn-Past i {
+}
+
+/* Cell used to display the time and duration of the event in 'day' view for events that have passed. */
+#DayTable td.TimeColumn, #DayTable td.TimeColumn-Past {
+}
+
+/* Cell used to display the event title and description in 'day' view for events that have passed */
+#DayTable td.DataColumn, #DayTable td.DataColumn-Past {
+}
+
+#DayTable td.TimeColumn-Past, #DayTable td.DataColumn-Past {
+	/* dynamic color */
+}
+#DayTable td.DataColumn-Past a {
+	/* dynamic color */
+}
+#DayTable td.DataColumn-Past div.EventLeftBar {
+	/* dynamic color */
+}
+/* << Day Table */
+
+/* >> Weekday Table */
+#WeekdayTable {
+	border-collapse: collapse;
+}
+
+#WeekdayTable th, #WeekdayTable td {
+	border: 1px solid; /* dynamic color */
+	padding: 4px;
+}
+
+#WeekdayTable td td {
+	border: none;
+	padding: 0px;
+	background-color: transparent !important;
+}
+
+/* Weekday Header Styles */
+#WeekdayTable thead th {
+	/* dynamic BG color */
+	/* dynamic color */
+}
+#WeekdayTable thead th.Weekday-Today {
+	/* dynamic BG color */
+}
+
+/* Weekday Body Styles */
+#WeekdayTable tbody td.Weekday-Today {
+	/* dynamic BG color */
+}
+#WeekdayTable tbody div.WeekEvent, #WeekdayTable tbody div.WeekEvent-Past {
+	padding-top: 2px;
+	padding-bottom: 9px;
+}
+#WeekdayTable tbody div.WeekEvent-Past {
+	/* dynamic color */
+}
+#WeekdayTable tbody div.WeekEvent-Past a {
+	/* dynamic color */
+}
+#WeekdayTable tbody div.WeekEvent-Time {
+	font-size: 11px;
+}
+#WeekdayTable tbody div.WeekEvent-Title, #WeekdayTable tbody div.WeekEvent-Category {
+	border-left: 3px solid; /* dynamic color */
+	padding-left: 3px;
+}
+#WeekdayTable tbody td.Weekday-Today div.WeekEvent-Title,
+#WeekdayTable tbody td.Weekday-Today div.WeekEvent-Category {
+	/* dynamic border color */
+}
+#WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Title,
+#WeekdayTable tbody div.WeekEvent-Past div.WeekEvent-Category {
+	/* dynamic border color */
+}
+#WeekdayTable tbody div.WeekEvent-Title a {
+	text-decoration: none;
+}
+#WeekdayTable tbody div.WeekEvent-Title a:hover,
+#WeekdayTable tbody div.WeekEvent-Title a:focus {
+	text-decoration: underline;
+}
+#WeekdayTable tbody div.WeekEvent-Category {
+	font-size: 11px;
+	font-style: italic;
+}
+/* << Weekday Table */
+
+/* >> Month Table */
+#MonthTable {
+	border-collapse: collapse;
+	/* dynamic color */
+}
+#MonthTable th, #MonthTable td {
+	border: 1px solid; /* dynamic color */
+	padding: 0px;
+}
+#MonthTable thead th {
+	padding: 5px;
+	/* dynamic BG color */
+	/* dynamic color */
+}
+#MonthTable tbody td {
+	padding-bottom: 8px;
+}
+#MonthTable tbody td td {
+	margin: 0px !important;
+	border: none !important;
+	padding: 0px !important;
+}
+#MonthTable div.DayNumber a {
+	display: block;
+	padding: 3px 3px 5px 4px;
+	line-height: 1em;
+	text-decoration: none !important;
+	text-align: right;
+}
+#MonthTable div.DayNumber a.NoPrint {
+	padding: 2px 4px;
+}
+#MonthTable p.EventItem, #MonthTable p.EventItem-Past {
+	margin: 0px 3px;
+	padding: 2px 0px 5px 8px;
+	background: url('images/bullet.gif') no-repeat 0px 8px;
+}
+
+/* Hover color for the 'day number'. */
+#MonthTable div.DayNumber a:hover, #MonthTable div.DayNumber a:focus {
+	/* dynamic BG color */
+}
+
+/* Background color for today. */
+#MonthTable tbody td.MonthDay-Today {
+	/* dynamic BG color */
+}
+/* Background color for the 'day number' for today. */
+#MonthTable tbody td.MonthDay-Today div.DayNumber {
+	/* dynamic BG color */
+}
+
+/* Link color for the 'day number' and events of past days. */
+#MonthTable td.MonthDay-Past div.DayNumber a, #MonthTable p.EventItem-Past a {
+	/* dynamic color */
+}
+
+/* Hover color for the 'day number' for past days. */
+#MonthTable td.MonthDay-Past div.DayNumber a:hover,
+#MonthTable td.MonthDay-Past div.DayNumber a:focus {
+	/* dynamic BG color */
+}
+
+/* Hover color for the 'day number' for today. */
+#MonthTable td.MonthDay-Today div.DayNumber a:hover,
+#MonthTable td.MonthDay-Today div.DayNumber a:focus {
+	/* dynamic BG color */
+}
+
+#MonthTable td.MonthDay-OtherMonth {
+	/* dynamic BG color */
+}
+#MonthTable a:link, #MonthTable a:visited {
+	text-decoration: none;
+}
+#MonthTable a:focus, #MonthTable a:active, #MonthTable a:hover {
+	text-decoration: underline;
+}
+/* << Month Table */
+
+/* >> Export View */
+#ExportForm.HideHTML .HTMLOnly {
+	display: none;
+}
+#ExportForm p.FormError {
+	border-top: 2px solid; /* dynamic color */
+	padding: 4px;
+	background-color: #EEEEEE;
+}
+/* << Export View */
+
+/* >> Misc Styles */
+body #PoweredBy {
+	margin: 0px;
+	border-bottom: 1px solid #666;
+	padding: 4px 16px 4px 4px;
+	/* dynamic BG color */
+	text-align: right;
+	font-size: 11px;
+}
+#PoweredBy a {
+	text-decoration: none;
+}
+
+.NoPrint {
+	font-size: 11px;
+}
+
+table#UpdateMainMenu td {
+	padding: 5px 10px;
+}
+#UpdateMainMenu h2 {
+	margin: 0px;
+	padding: 0px 0px 4px 0px;
+	border: solid;
+	border-width: 0px 0px 1px 0px;
+	font-size: 15px;
+}
+#UpdateMainMenu dl {
+	margin-top: 2px;
+	padding-top: 0px;
+}
+#UpdateMainMenu dt {
+	font-size: 14px;
+}
+#UpdateMainMenu dd {
+	padding-bottom: 8px;
+}
+
+div.AdminButtons-Padding {
+	padding: 5px;
+}
+table.AdminButtons td {
+	border: none;
+	padding: 0px;
+}
+div.AdminButtons-Padding td, div.AdminButtons-RightPadding td {
+	padding-right: 8px;
+}
+table.AdminButtons a {
+	display: block;
+	border: 1px solid; /* dynamic color */
+	padding: 5px;
+	/* dynamic BG color */
+	background-repeat: no-repeat;
+	background-position: center left;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 13px;
+	text-align: center;
+	/* dynamic color */
+}
+div.AdminButtons-Small table.AdminButtons a {
+	padding: 2px 2px 2px 20px !important;
+	font-weight: normal;
+	font-size: 11px;
+}
+table.AdminButtons a.AdminButtons-New {
+	/* dynamic border color */
+	padding-left: 25px;
+	background: url('images/new-button.gif') no-repeat left center; /* dynamic color */
+	text-align: left;
+}
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-New {
+	background: url('images/new-small-button.gif') no-repeat left center;
+}
+table.AdminButtons a.AdminButtons-Edit {
+	/* dynamic border color */
+	padding-left: 25px;
+	background: url('images/edit-button.gif') no-repeat left center; /* dynamic color */
+	text-align: left;
+}
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-Edit {
+	background: url('images/edit-small-button.gif') no-repeat left center;
+}
+table.AdminButtons .AdminButtons-Copy {
+	/* dynamic border color */
+	padding-left: 25px;
+	background: url('images/copy-button.gif') no-repeat left center; /* dynamic color */
+	text-align: left;
+}
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-Copy {
+	background: url('images/copy-small-button.gif') no-repeat left center;
+}
+table.AdminButtons .AdminButtons-Delete, table.AdminButtons .AdminButtons-Reject {
+	/* dynamic border color */
+	padding-left: 25px;
+	background: url('images/delete-button.gif') no-repeat left center; /* dynamic color */
+	text-align: left;
+}
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-Delete,
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-Reject {
+	background: url('images/delete-small-button.gif') no-repeat left center;
+}
+table.AdminButtons a.AdminButtons-Approve {
+	/* dynamic border color */
+	padding-left: 25px;
+	background: url('images/ok-button.gif') no-repeat left center; /* dynamic color */
+	text-align: left;
+}
+div.AdminButtons-Small table.AdminButtons a.AdminButtons-Approve {
+	background: url('images/ok-small-button.gif') no-repeat left center;
+}
+
+div#UpdateBlock {
+	border-top: none;
+	/* dynamic BG color */
+}
+div#UpdateBlock h2 {
+	margin: 0px;
+	padding: 0px;
+	font-weight: normal;
+	font-size: 18px;
+}
+
+div#MenuButton {
+	padding-left: 8px;
+	/* dynamic BG color */
+}
+div#MenuButton td {
+	padding: 0px;
+}
+div#MenuButton a, b.MenuButton a {
+	display: block;
+	padding: 6px 6px 6px 28px;
+	background: url('images/arrow-doubleback.gif') no-repeat left center; /* dynamic color */
+	text-decoration: none;
+	font-weight: bold;
+}
+div#MenuButton a:focus, div#MenuButton a:active, div#MenuButton a:hover,
+b.MenuButton a:focus, b.MenuButton a:active, b.MenuButton a:hover {
+	text-decoration: underline;
+}
+b.MenuButton a {
+	padding: 0px 6px 0px 28px;
+}
+b.MenuButton {
+	float: left;
+	display: block;
+	padding: 0px 0px 0px 28px;
+}
+div#MenuButton a:hover, div#MenuButton a:focus {
+	/* dynamic BG color */
+}
+
+/* The following two styles are for manageevents.php */
+.DefaultCalendarEvent {
+	padding-left: 8px;
+}
+.DefaultCalendarEvent div {
+	padding-left: 15px;
+	background: url('images/subeventdoublearrow.gif') no-repeat 0px 3px;
+}
+
+/* JavaScript Date Selector */
+.calendar th, .calendar td {
+	cursor: pointer;
+}
+.popCal {
+	cursor: pointer;
+}
+
+/* DBErrorBox */
+.ErrorTable {
+	background-color: #FFEAEB;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #A60004;
+}
+.ErrorTable td {
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 13px;
+}
+.ErrorTable h1 {
+	margin: 0px;
+	padding: 0px;
+	font-size: 16px;
+}
+#ReleaseNote {
+	padding-top: 4px;
+}
+/* << Misc Styles */

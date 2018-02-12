@@ -8,14 +8,14 @@ else { $ie = 0; }
 ?>
 
 .feedbackpos {
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	COLOR: #008800;
+	font-weight: bold; 
+	font-size: <?php if ($ie) { echo "x-"; } ?>small; 
+	color: #080;
 }
 .feedbackneg {
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: <?php if ($ie) { echo "x-"; } ?>small; 
-	COLOR: #CC0000;
+	font-weight: bold; 
+	font-size: <?php if ($ie) { echo "x-"; } ?>small; 
+	color: #c00;
 }
 code, pre {
 	 font-size: 10pt;

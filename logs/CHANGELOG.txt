@@ -1,0 +1,53 @@
+The project has not had any activity in seven months and I was wondering if anyone has heard from the project owners. I've tried contacting the project owners to contribute to the project but not gotten a response.
+
+I've done some work on the release candidate and was hoping to share my efforts. I've cleaned up a lot of existing issues and added or adjusted code for some of the requested features. Below is a list of some of the items I've addressed. As this is not an official release candidate I have appended a revision letter to the version number.
+
+2.3.0.550 RC 1a (updated November 2009)
+--------------------------------
+ - corrected session management that required you to log into every page view to administer the calendar
+ - updated session management to maintain proper sponsor editing status when switching calendars while logged in
+ - corrected login process to prevent repost and making admin pages not viewable when logged out
+ - corrected an error in 'upgradedb.php' inserting the default record to 'vtc_calendar' with 'htmlheader'=null
+ - corrected undefined $DebugInfo variable in 'upgradedb.php' to now use $GLOBALS['DebugInfo']
+ - added a Debug Mode toggle that is available to Main Administrators to help locate problems in the calendar
+ - corrected output of yearmonthday2timestamp()
+ - updated emailaddressok() and checkemail() with a better structure test, and removed deprecated PHP function
+ - replaced all uses of ereg() and eregi(), these functions are deprecated in PHP as of 5.3 and removed from 6.0
+ - corrected error in file_get_contents() and file_put_contents() where '&' should have been '&&'
+ - corrected missing event attribute name for $event['title'] in import.php
+ - removed invalid use of BLOCKQUOTE, BLOCKQUOTE and Q tags are only to be use for literal quoting or paraphrasing of an external source, these tags are not for presentational adjustments
+ - removed invalid and deprecated HTML tags for XHTML implementation (i.e. FONT, bgcolor=, and others)
+ - corrected all link query strings via HTML encoding: http://www.htmlhelp.com/tools/validator/problems.html#amp
+ - corrected all language files to use HTML encoded content for XML/XHTML and cross-language encoding support
+ - added a language modify/create page to allow Main Administrators to adjust current or add new language support
+ - modified code to properly represent TABLE headers where appropriate
+ - upgraded all HTML content to be XML/XHTML compliant
+ - modified markup for context, such as using <p>..</p> in place of ..<br><br> where appropriate
+ - moved additional in-page content strings to language file calls where they belonged
+ - corrected invalid month/day name trimming to 3 characters where short name should have been used
+ - replaced the color picker with a more reliable version that offers more functionality
+ - corrected error in logic preventing feedback messages for event time errors
+ - added a WYSIWYG editor (TinyMCE) to the event submission page to allow HTML encoded event pages, language packs are available from http://tinymce.moxiecode.com/download.php
+ - added a field for web map links for directions to the event
+ - changed event contact e-mail field to also allow contact web addresses to reduce spammer problems
+ - updated form entry fields to accept HTML character encoding (more work on this could be done for a user friendly experience)
+ - expanded automatic character encoding of event submission fields to help avoid XML/XHTML compliance issues
+ - fixed 'timed event' submission to accept ending times up to and including midnight
+ - adjusted the PRINT CSS to improve the printable output
+ - changed the 'Powered By' footer to a function call and added it to the footer template for more consistent page rendering and to make it easy to omit from the calendar if necessary
+ - replaced calendar header icon with the one currently used by the VTCalendar project site, resized
+ - placed the administrator/sponsor login status in an unused area of the calendar header for a more consistent user experience
+ - added a calendar jump-to to the side navigation to make it easy for the user to change to other calendars
+ - added the source calendar name to the listing of any event in the main calendar that originates from a sub-calendar
+ - removed the use of HTML comments to 'hide' code from the browser
+  * NEVER EVER-EVER-EVER comment out code/content with an HTML comment!
+  * The content is still processed by PHP adding to server load and delaying page delivery.
+  * === AND ===
+  * The content is still sent to the client using more bandwidth.
+  * === AND ===
+  * Some browsers (like older Netscape) errors on parsing HTML comments by matching
+  * opening comment tags (<!--) with "ANY" closing angle bracket (>) and showing the hidden code
+
+
+NOTE:
+I've taken care in updating and editing the project to improve support of code standards. However, as I don't use all of the features and functionality that the project incorporates, I have not had the opportunity to test for all possible minor bugs that I may have introduced. If you find any problems or issues I will gladly correct them.

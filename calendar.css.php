@@ -1,9 +1,9 @@
 <?php
 require_once('application.inc.php');
-header("Content-Type: text/css");
+header('Content-Type: text/css');
 ?>
 
-@import "scripts/codebox.css";
+@import 'scripts/codebox.css';
 
 /*===================================
         Calendar-Wide Styles
@@ -11,7 +11,7 @@ header("Content-Type: text/css");
 
 /* Default calendar font family, size and color */
 #CalendarBlock, #CalendarBlock td, #CalendarBlock p, #CalendarBlock h2 {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	font-size: 13px;
 	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 }
@@ -23,8 +23,8 @@ header("Content-Type: text/css");
 
 /* Background color for table headers (may be column or row headers) */
 tr.TableHeaderBG td, td.TableHeaderBG {
-	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?>;
 	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?>;
 }
 
 /* Color for the text that notifies users of an error or warning */
@@ -34,12 +34,12 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 
 /* Color for text that notififies the user of a normal or success message */
 #CalendarBlock .NotificationText {
-	color: #008800;
+	color: #080;
 }
 
 /* Background behind messages on update.php */
 #CalendarBlock .NotificationTextBG {
-	background-color: #FFFFCC;
+	background-color: #ffc;
 }
 
 /* Second level header used primarily on update.php */
@@ -49,8 +49,8 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 
 /* Third level header used primarily on the changeeevent.php form */
 #CalendarBlock h3 {
-	color: <?php echo $_SESSION['COLOR_H3']; ?>;
 	font-size: 16px;
+	color: <?php echo $_SESSION['COLOR_H3']; ?>;
 }
 
 /* Color used to highlight keywords in search results */
@@ -61,9 +61,9 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 /* Section headers used on various forms */
 #CalendarBlock div.FormSectionHeader {
 	margin-top: 16px;
-	padding: 4px;
 	margin-bottom: 6px;
 	border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
+	padding: 4px;
 	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
 }
 #CalendarBlock div.FormSectionHeader h3 {
@@ -86,45 +86,51 @@ tr.TableHeaderBG td, td.TableHeaderBG {
 table#TopNaviTable {
 	border-bottom: 6px solid <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
+
 table#TopNaviTable td {
 	padding: 0;
 }
+
 td.TopNavi-ColorPadding {
 	border-bottom: 8px solid <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
+
 table#TopNaviTable td.TopNavi-ColorPadding td {
 	padding-top: 8px;
 }
 
 /* The font style for the calendar title */
 table#TopNaviTable td#NaviBar-CalendarTitle {
-	font-weight: bold;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 18px;
+	padding-right: 8px;
 	padding-bottom: 2px;
 	padding-left: 4px;
-	padding-right: 8px;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+	font-weight: bold;
+	font-size: 18px;
 }
+
 /* The color for the calendar title link */
 table#TopNaviTable td#NaviBar-CalendarTitle a {
-	color: <?php echo $_SESSION['COLOR_TITLE']; ?>;
 	text-decoration: none;
+	color: <?php echo $_SESSION['COLOR_TITLE']; ?>;
 }
+
 .NaviBar-Tab div {
-	margin-left: 2px;
 	margin-right: 2px;
-	font-weight: bold;
-	padding: 4px;
-	padding-left: 12px;
-	padding-right: 12px;
+	margin-left: 2px;
+	padding: 4px 12px;
 	background-color: <?php echo $_SESSION['COLOR_TABGRAYED_BG']; ?>;
+	font-weight: bold;
 }
+
 #CalendarBlock .NaviBar-Tab a {
 	color: <?php echo $_SESSION['COLOR_TABGRAYED_TEXT']; ?>;
 }
+
 #CalendarBlock #NaviBar-Selected div {
 	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 }
+
 #CalendarBlock #NaviBar-Selected a {
 	color: <?php echo $_SESSION['COLOR_LINK']; ?>;
 }
@@ -146,19 +152,21 @@ table#TopNaviTable td#NaviBar-CalendarTitle a {
 
 #MonthSelector td {
 	padding: 4px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
 	font-size: 16px;
 }
+
 #MonthSelector a {
 	text-decoration: none;
 }
+
 #MonthSelector a:hover, #MonthSelector a:focus {
 	text-decoration: underline;
 }
 
 #MonthSelector div#LeftArrowButton, #MonthSelector div#RightArrowButton,
 #MonthSelector div#LeftArrowButtonDisabled, #MonthSelector div#RightArrowButtonDisabled {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
 	font-size: 16px;
 }
 
@@ -181,13 +189,13 @@ table#LittleCalendar {
 
 table#LittleCalendar td {
 	padding: 0;
-	font-family:  Arial, Helvetica, sans-serif;
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	font-size: 11px;
 }
 table#LittleCalendar a {
-	text-decoration: none;
 	display: block;
 	padding: 3px;
+	text-decoration: none;
 }
 
 /* A small line below the S/M/T/W/T/F/S row in the little calendar */
@@ -221,19 +229,24 @@ div#JumpToDateSelectorLabel {
 	font-weight: bold;
 	padding-bottom: 2px;
 }
+
 table#JumpToDateSelector td {
 	padding-bottom: 14px;
 }
+
 table#JumpToDateSelector.Split td {
 	padding-left: 6px;
 }
+
 table#JumpToDateSelector.Combined {
 	width: 100%;
 }
+
 input#JumpToDateSelector-Button {
 	background-color: <?php echo $_SESSION['COLOR_GOBTN_BG']; ?>;
 	border: 1px solid <?php echo $_SESSION['COLOR_GOBTN_BORDER']; ?>;
 }
+
 form#JumpToDateSelectorForm {
 	margin: 0; padding: 0;
 }
@@ -252,12 +265,12 @@ td#CalLeftCol table#CategoryFilterLink td {
 }
 
 td#CalRightCol {
-	padding: 0;
 	border-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	border-left-style: solid;
 	border-left-width: 7px;
 	border-right-style: solid;
 	border-right-width: 7px;
+	padding: 0;
 	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 
@@ -272,11 +285,11 @@ td#CalRightCol.TodayHighlighted {
 
 table#FilterNotice td {
 	padding: 4px;
-	background-image: <?php echo (empty($_SESSION['COLOR_FILTERNOTICE_BGIMAGE']) ? "transparent" : 'url(' . $_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] . ')'); ?>;
+	background-image: <?php echo (empty($_SESSION['COLOR_FILTERNOTICE_BGIMAGE']) ? 'transparent' : 'url(' . $_SESSION['COLOR_FILTERNOTICE_BGIMAGE'] . ')'); ?>;
 	background-color: <?php echo $_SESSION['COLOR_FILTERNOTICE_BG']; ?>;
-	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONT']; ?>;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
 	font-size: 11px;
+	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONT']; ?>;
 }
 table#FilterNotice a {
 	color: <?php echo $_SESSION['COLOR_FILTERNOTICE_FONTFADED']; ?>;
@@ -313,23 +326,23 @@ td#DateOrTitle {
 td#DateOrTitle h2 {
 	padding: 0 !important;
 	margin: 0 !important;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 16px;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
 	font-weight: bold;
+	font-size: 16px;
 }
 
 td#NavPreviousNext {
 	padding-left: 18px !important;
 }
 td#NavPreviousNext td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
 	padding: 2px;
 	padding-top: 0;
 	padding-bottom: 0;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 13px;
 }
 td#NavPreviousNext b {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
 	font-size: 16px;
 }
 
@@ -353,15 +366,15 @@ td#CalendarContent {
 	font-size: 16px;
 }
 #EventTable #EventRightColumn {
-	padding: 6px;
 	border-left: 4px solid <?php echo $_SESSION['COLOR_EVENTBAR_CURRENT']; ?>;
+	padding: 6px;
 }
 div#EventTitle {
 	font-size: 18px;
 }
 p#EventDescription, div#EventDetailPadding, div#iCalendarLink {
-	padding: 0;
 	margin: 0;
+	padding: 0;
 	padding-top: 14px;
 }
 table#EventDetail {
@@ -394,8 +407,8 @@ td.EventDetail-Label {
 	border-top: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
 }
 #DayTable div.EventLeftBar {
-	padding-left: 5px;
 	border-left: 5px solid <?php echo $_SESSION['COLOR_EVENTBAR_CURRENT']; ?>;
+	padding-left: 5px;
 }
 
 #DayTable tr#FirstDateRow td.DateRow {
@@ -407,10 +420,10 @@ td.EventDetail-Label {
 }
 
 #DayTable td.DateRow {
-	font-size: 14px;
-	font-weight: bold;
 	padding: 0;
 	padding-top: 8px;
+	font-weight: bold;
+	font-size: 14px;
 }
 
 #DayTable td.DateRow a {
@@ -456,13 +469,13 @@ td.EventDetail-Label {
 }
 
 #WeekdayTable td {
-	padding: 4px;
 	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
+	padding: 4px;
 }
 
 #WeekdayTable td td {
+	border: 0 none #000;
 	padding: 0;
-	border: 0 none #000000;
 	background-color: transparent !important;
 }
 
@@ -470,8 +483,8 @@ td.EventDetail-Label {
 --------------------------*/
 
 #WeekdayTable thead td {
-	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
 	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
 }
 
 #WeekdayTable thead td.Weekday-Today {
@@ -520,8 +533,8 @@ td.EventDetail-Label {
 	text-decoration: underline;
 }
 #WeekdayTable tbody div.WeekEvent-Category {
-	font-size: 11px;
 	font-style: italic;
+	font-size: 11px;
 }
 
 /*===================================
@@ -537,38 +550,38 @@ td.EventDetail-Label {
 	padding: 0;
 }
 #MonthTable thead td {
-	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
-	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
 	padding: 5px;
+	background-color: <?php echo $_SESSION['COLOR_TABLE_HEADER_BG']; ?>;
+	color: <?php echo $_SESSION['COLOR_TABLE_HEADER_TEXT']; ?> !important;
 }
 #MonthTable tbody td {
 	padding-bottom: 8px;
 }
 #MonthTable tbody td td {
-	padding: 0 !important;
 	margin: 0 !important;
 	border: 0 !important;
+	padding: 0 !important;
 }
 
 #MonthTable div.DayNumber a {
-	text-decoration: none !important;
+	display: block;
 	padding: 3px;
 	padding-left: 4px;
 	padding-bottom: 5px;
+	text-decoration: none !important;
 	line-height: 1;
-	display: block;
 }
 
 #MonthTable p.EventItem,
 #MonthTable p.EventItem-Past {
-	padding: 0;
 	margin: 0;
 	margin-left: 3px;
 	margin-right: 3px;
+	padding: 0;
 	padding-top: 2px;
 	padding-bottom: 5px;
 	padding-left: 8px;
-	background-image: url("images/bullet.gif");
+	background-image: url('images/bullet.gif');
 	background-repeat: no-repeat;
 	background-position: 0 8px;
 }
@@ -626,9 +639,9 @@ td.EventDetail-Label {
 }
 
 #ExportForm p.FormError {
-	padding: 4px;
-	background-color: #EEEEEE;
 	border-top: 2px solid <?php echo $_SESSION['COLOR_TEXT_WARNING']; ?>;
+	padding: 4px;
+	background-color: #eee;
 }
 
 /*===================================
@@ -636,9 +649,9 @@ td.EventDetail-Label {
 ===================================*/
 
 #PoweredBy td {
+	padding-right: 16px;
 	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
 	font-size: 11px;
-	padding-right: 16px;
 }
 #PoweredBy td a {
 	text-decoration: none;
@@ -660,17 +673,17 @@ div#AdminButtons-Padding td, div#AdminButtons-RightPadding td {
 	padding-right: 8px;
 }
 table#AdminButtons a {
-	text-align: center;
 	display: block;
-	padding: 5px;
-	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
-	font-weight: bold;
-	font-size: 13px;
-	text-decoration: none;
 	border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;
+	padding: 5px;
 	background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;
 	background-repeat: no-repeat;
 	background-position: center left;
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+	font-size: 13px;
+	color: <?php echo $_SESSION['COLOR_TEXT']; ?>;
 }
 div#AdminButtons-Small table#AdminButtons a {
 	padding: 2px;
@@ -679,54 +692,54 @@ div#AdminButtons-Small table#AdminButtons a {
 	font-size: 11px;
 }
 table#AdminButtons a#AdminButtons-New {
-	text-align: left;
+	border-color: <?php echo $_SESSION['COLOR_NEWBORDER']; ?>;
 	padding-left: 25px;
 	background-color: <?php echo $_SESSION['COLOR_NEWBG']; ?>;
-	border-color: <?php echo $_SESSION['COLOR_NEWBORDER']; ?>;
-	background-image: url("images/new-button.gif");
+	background-image: url('images/new-button.gif');
+	text-align: left;
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-New {
-	background-image: url("images/new-small-button.gif");
+	background-image: url('images/new-small-button.gif');
 }
 table#AdminButtons a#AdminButtons-Edit {
-	text-align: left;
+	border-color: <?php echo $_SESSION['COLOR_NEWBORDER'] ?>;
 	padding-left: 25px;
 	background-color: <?php echo $_SESSION['COLOR_NEWBG'] ?>;
-	border-color: <?php echo $_SESSION['COLOR_NEWBORDER'] ?>;
-	background-image: url("images/edit-button.gif");
+	background-image: url('images/edit-button.gif');
+	text-align: left;
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Edit {
-	background-image: url("images/edit-small-button.gif");
+	background-image: url('images/edit-small-button.gif');
 }
 table#AdminButtons #AdminButtons-Copy {
-	text-align: left;
+	border-color: <?php echo $_SESSION['COLOR_COPYBORDER'] ?>;
 	padding-left: 25px;
 	background-color: <?php echo $_SESSION['COLOR_COPYBG'] ?>;
-	border-color: <?php echo $_SESSION['COLOR_COPYBORDER'] ?>;
-	background-image: url("images/copy-button.gif");
+	background-image: url('images/copy-button.gif');
+	text-align: left;
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Copy {
-	background-image: url("images/copy-small-button.gif");
+	background-image: url('images/copy-small-button.gif');
 }
 table#AdminButtons #AdminButtons-Delete, table#AdminButtons #AdminButtons-Reject {
-	text-align: left;
+	border-color: <?php echo $_SESSION['COLOR_DELETEBORDER'] ?>;
 	padding-left: 25px;
 	background-color: <?php echo $_SESSION['COLOR_DELETEBG'] ?>;
-	border-color: <?php echo $_SESSION['COLOR_DELETEBORDER'] ?>;
-	background-image: url("images/delete-button.gif");
+	background-image: url('images/delete-button.gif');
+	text-align: left;
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Delete, div#AdminButtons-Small table#AdminButtons a#AdminButtons-Reject {
-	background-image: url("images/delete-small-button.gif");
+	background-image: url('images/delete-small-button.gif');
 }
 table#AdminButtons a#AdminButtons-Approve {
-	text-align: left;
+	border-color: <?php echo $_SESSION['COLOR_APPROVEBORDER'] ?>;
 	padding-left: 25px;
 	background-color: <?php echo $_SESSION['COLOR_APPROVEBG'] ?>;
-	border-color: <?php echo $_SESSION['COLOR_APPROVEBORDER'] ?>;
-	background-image: url("images/ok-button.gif");
+	background-image: url('images/ok-button.gif');
+	text-align: left;
 }
 div#AdminButtons-Small table#AdminButtons a#AdminButtons-Approve {
-	background-image: url("images/ok-small-button.gif");
+	background-image: url('images/ok-small-button.gif');
 }
 
 dd {
@@ -734,15 +747,15 @@ dd {
 }
 
 div#UpdateBlock {
-	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 	border-top-style: none;
 	border-top-width: 0;
+	background-color: <?php echo $_SESSION['COLOR_BG']; ?>;
 }
 div#UpdateBlock h2 {
-	padding: 0;
 	margin: 0;
-	font-size: 18px;
+	padding: 0;
 	font-weight: normal;
+	font-size: 18px;
 }
 
 div#MenuButton {
@@ -753,15 +766,15 @@ div#MenuButton td {
 	padding: 0;
 }
 div#MenuButton a {
-	text-decoration: none;
-	font-weight: bold;
-	padding: 6px;
 	display: block;
+	padding: 6px;
 	padding-left: 28px;
 	background-color: <?php echo $_SESSION['COLOR_BODY']; ?>;
+	background-image: url('images/arrow-doubleback.gif');
 	background-repeat: no-repeat;
 	background-position: center left;
-	background-image: url("images/arrow-doubleback.gif");
+	text-decoration: none;
+	font-weight: bold;
 }
 div#MenuButton a:hover, div#MenuButton a:focus {
 	background-color: <?php echo $_SESSION['COLOR_TODAY']; ?>;
@@ -773,8 +786,7 @@ div#MenuButton a:hover, div#MenuButton a:focus {
 }
 .DefaultCalendarEvent div {
 	padding-left: 15px;
-	background-image: url("images/subeventdoublearrow.gif");
+	background-image: url('images/subeventdoublearrow.gif');
 	background-repeat: no-repeat;
 	background-position: 0 3px;
 }
-

@@ -1,42 +1,39 @@
+@import url('../calendar.css');
+
 body {
-	font-family: Arial;
-	font-size: 13px;
+	padding: 10px 20px;
 }
-a {
-	color: #0000FF;
+pre, kbd, code, .pre {
+	border-color: #ccc;
+	background-color: #f9f9f9;
 }
-form {
-	margin: 0;
-	padding: 0;
-}
-h1 {
-	font-size: 24px;
-	padding-bottom: 8px;
-	border-bottom: 2px solid #333333;
-}
-h2 {
+.warning {
+	border: 1px solid #f33;
+	padding: 8px;
+	background-color: #fee;
 	font-size: 16px;
-	padding: 6px;
-	background-color: #CCDBFF;
-	border-top: 1px solid #666666;
+}
+.txtWarn {
+	color: #c00;
+}
+.txtInfo {
+	color: #009;
+}
+.txtGood {
+	color: #090;
+}
+.bgWarn {
+	background-color: #fee;
+}
+.bgInfo {
+	background-color: #eef;
+}
+.bgGood {
+	background-color: #efe;
 }
 
-blockquote {
-	margin-left: 22px;
-	margin-right: 0px;
-}
-
-label {
-	cursor: pointer;
-}
-
-code {
-	color: #0000FF;
-}
-
-div.Error, div.Success, div.Table, div.Field, div.PrimaryKey, div.Index,
-div.Unused, div.Create, div.Alter,
-div.Download, div.Question, div.Download32, div.Question32 {
+div.Error, div.Success, div.Table, div.Field, div.PrimaryKey, div.Index, div.Unused,
+div.Create, div.Alter, div.Download, div.Question, div.Download32, div.Question32 {
 	margin-bottom: 2px;
 	padding: 5px;
 }
@@ -54,43 +51,61 @@ div.Download32, div.Question32 {
 	padding-left: 45px !important;
 }
 
-div.Error { background-image: url(failed.png); }
-div.Success { background-image: url(success.png); }
-div.Table { background-image: url(table.png); }
-div.PrimaryKey { background-image: url(primarykey.png); }
-div.Index { background-image: url(index.png); }
-div.Field { background-image: url(field.png); }
-div.Download { background-image: url(down.png); }
-div.Question { background-image: url(help.png); }
-div.Record { background-image: url(field.png); }
+div.Error {
+	background-image: url('failed.png');
+}
+div.Success {
+	background-image: url('success.png');
+}
+div.Table {
+	background-image: url('table.png');
+}
+div.PrimaryKey {
+	background-image: url('primarykey.png');
+}
+div.Index {
+	background-image: url('index.png');
+}
+div.Field {
+	background-image: url('field.png');
+}
+div.Download {
+	background-image: url('down.png');
+}
+div.Question {
+	background-image: url('help.png');
+}
+div.Record {
+	background-image: url('field.png');
+}
+div.Question32 {
+	background-image: url('help32.png');
+}
+div.Download32 {
+	background-image: url('down32.png');
+}
 
-div.Question32 { background-image: url(help32.png); }
-div.Download32 { background-image: url(down32.png); }
-
-/* ====================================
-          config.php Styles 
-==================================== */
-
+/* >> config.php */
 table.VariableTable {
-	border-right: 1px solid #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
-td.VariableName {
-	background-color: #EEEEEE;
+.VariableName {
+	background-color: #eee;
 }
-td.VariableName, td.VariableBody {
-	border-top: 1px solid #CCCCCC;
-	border-left: 1px solid #CCCCCC;
+.VariableName, .VariableBody {
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
 }
-td.DataField {
-	padding-top: 0;
+.DataField {
+	padding-top: 0px;
 }
-td.Comment {
-	padding-top: 0;
+.Comment {
+	padding-top: 0px;
 }
 #SaveFailed {
-	border: 1px solid #660000;
-	background-color: #FFEEEE;
+	border: 1px solid #600;
+	background-color: #fee;
 	padding: 8px;
 	font-weight: none;
 }
@@ -101,31 +116,25 @@ td.Comment {
 	padding-top: 0;
 	margin-top: 0;
 }
+/* << config.php */
 
-
-
-/* ====================================
-         upgradedb.php Styles 
-==================================== */
-
+/* >> upgradedb.php */
 h3.Table {
-	background-image: url(table-big.png);
-	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 8px 0px 0px 38px;
 	height: 24px;
-	padding: 0;
-	padding-left: 38px;
-	padding-top: 8px;
-	margin: 0;
+	background: url('table-big.png') no-repeat;
 }
 #UpgradeDB div.Error {
-	background-color: #FFDDDD;
+	background-color: #fdd;
 }
 div.Unused {
-	background-color: #EEEEEE;
+	background-color: #eee;
 }
 div.Create {
-	background-color: #DDFFDD;
+	background-color: #dfd;
 }
 div.Alter {
-	background-color: #FFFF99;
+	background-color: #ff9;
 }
+/* << upgradedb.php */

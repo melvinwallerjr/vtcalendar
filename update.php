@@ -3,177 +3,229 @@ require_once('application.inc.php');
 
 if (!authorized()) { exit; }
 
-pageheader(lang('update_calendar'), "Update");
+$status_message = '';
+if ($_SESSION['AUTH_ISMAINADMIN']) {
+	if (isset($_GET['debug']) && $_GET['debug'] == 'toggle') {
+		if (isset($_SESSION['DEBUG']) && $_SESSION['DEBUG'] == 'true') {
+			$_SESSION['DEBUG'] = 'false';
+			unset($_SESSION['DEFAULT_LANGUAGE']); // kill default language data in session
+		}
+		else {
+			$_SESSION['DEBUG'] = 'true';
+			$tmp_array = $lang; // store base language array
+			require('languages/' . LANGUAGE . '.inc.php'); // load selected default language
+			$_SESSION['DEFAULT_LANGUAGE'] = $lang; // store default language in session
+			$lang = $tmp_array; // reload selected language array
+			$status_message = '
+<p align="center"><strong>Translation Notation:</strong> Selected Language = <span style="color:#fefefe; background:#3c3 none;">{S{Text String}S}</span>, Default Language = <span style="color:#fefefe; background:#99f none;">{D{Text String}D}</span>, Missing Text = <span style="color:#c00; background:#ff0 none; font-weight:bold;">{X{text_string}X}</span>.</p>' . "\n";
+		}
+	}
+}
 
-?>
+pageheader(lang('update_calendar', false), 'Update');
 
-<!-- Start Link Table -->
-<div id="UpdateBlock"><div style="border: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;">
+echo '
+<div id="UpdateBlock"><div style="border:1px solid ' . $_SESSION['COLOR_BORDER'] . ';">';
+echo $status_message; // show 'one time' interpretation instructions for language highlighting
 
-<?php
-if (isset($_GET['fbid']) && !setVar($fbid,$_GET['fbid'])) unset($fbid);
-if (isset($_GET['fbparam']) && !setVar($fbparam,$_GET['fbparam'])) unset($fbparam);
+if (isset($_GET['fbid']) && !setVar($fbid, $_GET['fbid'])) { unset($fbid); }
+if (isset($_GET['fbparam']) && !setVar($fbparam, $_GET['fbparam'])) { unset($fbparam); }
 if (isset($fbid) && isset($fbparam)) {
-	$startHTML = '<div class="NotificationBG" style="padding: 8px; border-bottom: 1px solid '.$_SESSION['COLOR_BORDER'].';">';
+	$startHTML = '
+<div class="NotificationBG pad" style="border-bottom:1px solid ' . $_SESSION['COLOR_BORDER'] . ';">';
 	$endHTML = '</div>';
-	if ($fbid=="eaddsuccess" && !$_SESSION['AUTH_ISCALENDARADMIN']) {
+	if ($fbid == 'eaddsuccess' && !$_SESSION['AUTH_ISCALENDARADMIN']) {
 		echo $startHTML;
-		feedback(lang('new_event_submitted_notice')." ".urldecode("\"$fbparam\""),FEEDBACKPOS);
+		feedback(lang('new_event_submitted_notice') . ' ' . urldecode('"' . $fbparam . '"'), FEEDBACKPOS);
 		echo $endHTML;
 	}
-	elseif ($fbid=="eupdatesuccess" && !$_SESSION['AUTH_ISCALENDARADMIN'] ) {
+	elseif ($fbid == 'eupdatesuccess' && !$_SESSION['AUTH_ISCALENDARADMIN'] ) {
 		echo $startHTML;
-		feedback(lang('updated_event_submitted_notice')." ".urldecode("\"$fbparam\""),FEEDBACKPOS);
+		feedback(lang('updated_event_submitted_notice') . ' ' . urldecode('"' . $fbparam . '"'), FEEDBACKPOS);
 		echo $endHTML;
 	}
-	elseif ($fbid=="urlchangesuccess") {
+	elseif ($fbid == 'urlchangesuccess') {
 		echo $startHTML;
-		feedback(lang('hompage_changed_notice')." ".urldecode("\"$fbparam\""),FEEDBACKPOS);
+		feedback(lang('hompage_changed_notice') . ' ' . urldecode('"' . $fbparam . '"'), FEEDBACKPOS);
 		echo $endHTML;
 	}
-	elseif ($fbid=="emailchangesuccess") {
+	elseif ($fbid == 'emailchangesuccess') {
 		echo $startHTML;
-		feedback(lang('email_changed_notice')." ".urldecode("\"$fbparam\""),FEEDBACKPOS);
+		feedback(lang('email_changed_notice') . ' ' . urldecode('"' . $fbparam . '"'), FEEDBACKPOS);
 		echo $endHTML;
 	}
 }
 
-?>
+echo '
+<table id="UpdateMainMenu" width="100%" border="0" cellspacing="0" cellpadding="10">
+<tbody><tr>
 
-<table id="UpdateMainMenu" width="100%" cellspacing="0" cellpadding="10" border="0">
-<tr>
-	
-	<!-- Start Sponsor Level Column -->
-	<td valign="top">
-			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('event_options_header'); ?>:</h2>
-			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><a href="addevent.php"><?php echo lang('add_new_event'); ?></a></dt>
-				<dd><?php echo lang('add_event_description'); ?></dd>
-				<dt><a href="manageevents.php"><?php echo lang('manage_events'); ?></a></dt>
-				<dd style="padding-bottom: 4px;"><?php echo lang('manage_event_description'); ?></dd>
-				<dt><a href="managetemplates.php"><?php echo lang('manage_templates'); ?></a></dt>
-				<dd style="padding-bottom: 4px;"><?php echo lang('manage_template_description'); ?></dd>
-			</dl>
-			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('backup_header'); ?>:</h2>
-			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><a href="main.php?calendarid=<?php echo urlencode($_SESSION['CALENDAR_ID']); ?>&amp;view=export"><?php echo lang('export_events'); ?></a></dt>
-				<dd><?php echo lang('export_events_description'); ?></dd>
-				<dt><a href="import.php"><?php echo lang('import_events'); ?></a></dt>
-				<dd><?php echo lang('import_events_description'); ?></dd>
-			</dl>
-		
-			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 8px;"><?php echo lang('options_for'); ?>: <?php echo htmlentities($_SESSION["AUTH_SPONSORNAME"]); ?>:&nbsp;</h2>
-			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><a href="changehomepage.php"><?php echo lang('change_homepage'); ?></a></dt>
-				<dd><?php echo lang('change_homepage_description'); ?></dd>
-				<dt><a href="changeemail.php"><?php echo lang('change_email'); ?></a></dt>
-				<dd><?php echo lang('change_email_description'); ?></dd>
-			</dl>
-		
-		<?php
-		if ( $_SESSION['AUTH_LOGINSOURCE'] == "DB" && strlen($_SESSION["AUTH_USERID"]) > strlen(AUTH_DB_USER_PREFIX) && substr($_SESSION["AUTH_USERID"],0,strlen(AUTH_DB_USER_PREFIX)) == AUTH_DB_USER_PREFIX ) {
-			?>
-			<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 8px;"><?php echo lang('options_for'); ?>: <?php echo $_SESSION["AUTH_USERID"]; ?>:&nbsp;</h2>
-			<dl style="margin-top: 0; padding-top: 2px;">
-				<dt><a href="changeuserpassword.php"><?php echo lang('change_password_of_user'); ?></a></dt>
-				<dd><?php echo lang('change_password_of_user_description'); ?></dd>
-			</dl>
-			<?php
-		} // end: if ( AUTH_DB ... )
-		?>
-	</td>
-	<!-- End Sponsor Level Column -->
-<?php
+<!-- Sponsor Column -->
+<td>
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';">' . lang('event_options_header').  ':</h2>
+
+<dl>
+
+<dt><a href="addevent.php">' . lang('add_new_event') . '</a></dt>
+<dd>' . lang('add_event_description') . '</dd>
+
+<dt><a href="manageevents.php">' . lang('manage_events') . '</a></dt>
+<dd>' . lang('manage_event_description') . '</dd>
+
+<dt><a href="managetemplates.php">' . lang('manage_templates') . '</a></dt>
+<dd>' . lang('manage_template_description') . '</dd>
+
+</dl>
+
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';">' . lang('backup_header') . ':</h2>
+
+<dl>
+
+<dt><a href="main.php?calendarid=' . urlencode($_SESSION['CALENDAR_ID']) . '&amp;view=export">' . lang('export_events') . '</a></dt>
+<dd>' . lang('export_events_description') . '</dd>
+
+<dt><a href="import.php">' . lang('import_events') . '</a></dt>
+<dd>' . lang('import_events_description') . '</dd>
+
+</dl>
+
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . '">' . lang('options_for') . ' ' . htmlspecialchars($_SESSION['AUTH_SPONSORNAME'], ENT_COMPAT, 'UTF-8') . ':</h2>
+
+<dl>
+
+<dt><a href="changehomepage.php">' . lang('change_homepage') . '</a></dt>
+<dd>' . lang('change_homepage_description') . '</dd>
+
+<dt><a href="changeemail.php">' . lang('change_email') . '</a></dt>
+<dd>' . lang('change_email_description') . '</dd>
+
+</dl>';
+
+if ($_SESSION['AUTH_LOGINSOURCE'] == 'DB' && strlen($_SESSION['AUTH_USERID']) > strlen(AUTH_DB_USER_PREFIX) &&
+ substr($_SESSION['AUTH_USERID'], 0, strlen(AUTH_DB_USER_PREFIX)) == AUTH_DB_USER_PREFIX) {
+	echo '
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . '">' . lang('options_for') . ': <strong>' . $_SESSION['AUTH_USERID'] . '</strong></h2>
+
+<dl>
+
+<dt><a href="changeuserpassword.php">' . lang('change_password_of_user') . '</a></dt>
+<dd> ' . lang('change_password_of_user_description') . '</dd>
+
+</dl>';
+}
+echo '</td><!-- End Sponsor Column -->';
 
 if ($_SESSION['AUTH_ISCALENDARADMIN']) {
-	?>
-	<td valign="top" style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; background-color: <?php echo $_SESSION['COLOR_LIGHT_CELL_BG']; ?>;">
-		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('calendar_options'); ?>:&nbsp;</h2>
-		<dl style="margin-top: 0; padding-top: 2px;">
-			<dt><a href="approval.php"><?php echo lang('approve_reject_event_updates'); ?></a></dt>
-			<dd style="padding-bottom: 8px;"><?php echo lang('approve_reject_event_updates_description'); ?></dd>
+	echo '
+<td class="bgLight" style="border-left:1px solid ' . $_SESSION['COLOR_BORDER'] . '">
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';">' . lang('calendar_options') . ':</h2>
 
-			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="managesponsors.php"><?php echo lang('manage_sponsors'); ?></a></dt>
-			<dd style="padding-bottom: 2px;"><?php echo lang('manage_sponsors_description'); ?></dd>
+<dl>
 
-			<dt><a href="deleteinactivesponsors.php"><?php echo lang('delete_inactive_sponsors'); ?></a></dt>
-			<dd style="padding-bottom: 8px;"><?php echo lang('delete_inactive_sponsors_description'); ?></dd>
+<dt><a href="approval.php">' . lang('approve_reject_event_updates') . '</a></dt>
+<dd>' . lang('approve_reject_event_updates_description') . '</dd>
 
-			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="changecalendarsettings.php"><?php echo lang('change_header_footer_auth'); ?></a></dt>
-			<dd style="padding-bottom: 2px;"><?php echo lang('change_header_footer_auth_description'); ?></dd>
+</dl>
 
-			<dt><a href="changecolors.php"><?php echo lang('change_colors'); ?></a></dt>
-			<dd style="padding-bottom: 8px;"><?php echo lang('change_colors_description'); ?></dd>
+<dl>
 
-			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="manageeventcategories.php"><?php echo lang('manage_event_categories'); ?></a></dt>
-			<dd style="padding-bottom: 8px;"><?php echo lang('manage_event_categories_description'); ?></dd>
+<dt style="border-top:1px dotted ' . $_SESSION['COLOR_BORDER'] . '"><a href="managesponsors.php">' . lang('manage_sponsors') . '</a></dt>
+<dd>' . lang('manage_sponsors_description') . '</dd>
 
-			<dt style="border-top: 1px dotted <?php echo $_SESSION['COLOR_BORDER']; ?>; padding-top: 6px;"><a href="managesearchkeywords.php"><?php echo lang('manage_search_keywords'); ?></a></dt>
-			<dd><?php echo lang('manage_search_keywords_description'); ?></dd>
+<dt><a href="deleteinactivesponsors.php">' . lang('delete_inactive_sponsors') . '</a></dt>
+<dd>' . lang('delete_inactive_sponsors_description') . '</dd>
 
-			<dt><a href="managefeaturedsearchkeywords.php"><?php echo lang('manage_featured_search_keywords'); ?></a></dt>
-			<dd><?php echo lang('manage_featured_search_keywords_description'); ?></dd>
+</dl>
 
-			<dt><a href="viewsearchlog.php"><?php echo lang('view_search_log'); ?></a></dt>
-			<dd><?php echo lang('view_search_log_description'); ?></dd>
-		</dl>
-	</td>
-	<?php
+<dl>
+
+<dt style="border-top: 1px dotted ' . $_SESSION['COLOR_BORDER'] . '"><a href="changecalendarsettings.php">' . lang('change_header_footer_auth') . '</a></dt>
+<dd>' . lang('change_header_footer_auth_description') . '</dd>
+
+<dt><a href="changecolors.php">' . lang('change_colors') . '</a></dt>
+<dd>' . lang('change_colors_description') . '</dd>
+
+</dl>
+
+<dl>
+
+<dt style="border-top:1px dotted ' . $_SESSION['COLOR_BORDER'] . '"><a href="manageeventcategories.php">' . lang('manage_event_categories') . '</a></dt>
+<dd>' . lang('manage_event_categories_description') . '</dd>
+
+</dl>
+
+<dl>
+
+<dt style="border-top:1px dotted ' . $_SESSION['COLOR_BORDER'] . '"><a href="managesearchkeywords.php">' . lang('manage_search_keywords') . '</a></dt>
+<dd>' . lang('manage_search_keywords_description') . '</dd>
+
+<dt><a href="managefeaturedsearchkeywords.php">' . lang('manage_featured_search_keywords') . '</a></dt>
+<dd>' . lang('manage_featured_search_keywords_description') . '</dd>
+
+<dt><a href="viewsearchlog.php">' . lang('view_search_log') . '</a></dt>
+<dd>' . lang('view_search_log_description') . '</dd>
+
+</dl>
+</td>';
 }
 
-if ( $_SESSION['AUTH_ISMAINADMIN'] ) {
-	?>
-	<td valign="top" style="border-left: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>; <?php if (!$_SESSION['AUTH_ISCALENDARADMIN']) echo "background-color: " . $_SESSION['COLOR_LIGHT_CELL_BG']; ?>">
-		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('main_administrators_options'); ?>:&nbsp;</h2>
-		<dl style="margin-top: 0; padding-top: 2px;">
-			<dt><?php	if ( AUTH_DB ) { ?><a href="manageusers.php"><?php echo lang('manage_users'); ?></a> <?php echo AUTH_DB_NOTICE; ?><?php } ?></dt>
-			<dd><?php echo lang('manage_users_description'); ?></dd>
-		</dl>
-		<dl>
-			<dt><a href="managecalendars.php"><?php echo lang('manage_calendars'); ?></a></dt>
-			<dd><?php echo lang('manage_calendars_description'); ?></dd>
-		</dl>
-		<dl>
-			<dt><a href="managemainadmins.php"><?php echo lang('manage_main_admins'); ?></a></dt>
-			<dd><?php echo lang('manage_main_admins_description'); ?></dd>
-		</dl>
-		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('community'); ?>:&nbsp;</h2>
-		<p><?php echo lang('external_resources'); ?>:</p>
-		<ul>
-			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=docs"><?php echo lang('external_resources_docs'); ?></a></li>
-			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=vtcalendar-announce"><?php echo lang('external_resources_announce'); ?></a></li>
-			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=forums"><?php echo lang('external_resources_forums'); ?></a></li>
-			<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=bugs"><?php echo lang('external_resources_bugs'); ?></a></li>
-		</ul>
-		
-		<style type="text/css">
-		#ReleaseNote {
-			padding-top: 4px;
-		}
-		#ReleaseMessage {
-			padding-bottom: 16px;
-		}
-		#PreReleaseNote {
-			padding-top: 8px;
-		}
-		</style>
-		<h2 style="margin:0; padding: 0; padding-bottom: 4px; border-bottom: 1px solid <?php echo $_SESSION['COLOR_BORDER']; ?>;"><?php echo lang('version_check'); ?>:&nbsp;</h2>
-		<div style="margin-top: 0; padding-top: 10px;" id="VersionResult"></div>
-		<script type="text/javascript"><!-- //<![CDATA[
-		function CheckVersionHandler(image, messageHTML, tableHTML) {
-			document.getElementById("VersionResult").innerHTML = tableHTML;
-		}
-		// ]]> --></script>
-		<iframe src="checkversion.php" width="1" height="1" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
-	</td>
-	<?php
-}
+if ($_SESSION['AUTH_ISMAINADMIN']) {
+	echo '
+<td' . (!$_SESSION['AUTH_ISCALENDARADMIN']? ' class="bgLight"' : '') . ' style="border-left:1px solid ' . $_SESSION['COLOR_BORDER'] . ';">
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';">' . lang('main_administrators_options') . ':</h2>
 
-?>
-</tr>
-</table>
-</div></div>
-<?php
-	pagefooter();
+<dl>';
+
+	if (AUTH_DB) {
+		echo '
+<dt><a href="manageusers.php">' . lang('manage_users') . '</a> ' . AUTH_DB_NOTICE . '</dt>
+<dd>' . lang('manage_users_description') . '</dd>' . "\n";
+	}
+	echo '
+<dt><a href="managecalendars.php">' . lang('manage_calendars') . '</a></dt>
+<dd>' . lang('manage_calendars_description') . '</dd>
+
+<dt><a href="managelanguages.php">' . lang('manage_language_files') . '</a></dt>
+<dd>' . lang('manage_language_files_description') . '</dd>
+
+<dt><a href="managemainadmins.php">' . lang('manage_main_admins') . '</a></dt>
+<dd>' . lang('manage_main_admins_description') . '</dd>
+
+<dt><a href="update.php?debug=toggle">' . ((isset($_SESSION['DEBUG']) && $_SESSION['DEBUG'] == 'true')? lang('debug_disable') : lang('debug_enable')) . '</a></dt>
+<dd>' . lang('debug_description') . '</dd>
+
+</dl>
+
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';">' . lang('community') . ':</h2>
+
+<p>' . lang('external_resources') . ':</p>
+
+<ul>
+<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=docs">' . lang('external_resources_docs') . '</a></li>
+<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=vtcalendar-announce">' . lang('external_resources_announce') . '</a></li>
+<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=forums">' . lang('external_resources_forums') . '</a></li>
+<li><a href="http://vtcalendar.sourceforge.net/jump.php?name=bugs">' . lang('external_resources_bugs') . '</a></li>
+</ul>
+
+<h2 style="border-color: ' . $_SESSION['COLOR_BORDER'] . ';"> ' . lang('version_check') . ':</h2>
+
+<div style="padding-top:10px;" id="VersionResult">&nbsp;</div>
+
+<script type="text/javascript">/* <![CDATA[ */
+function CheckVersionHandler(image, messageHTML, tableHTML)
+{
+	document.getElementById("VersionResult").innerHTML = tableHTML;
+}
+/* ]]> */</script>
+
+<iframe src="checkversion.php" width="1" height="1" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+</td>';
+}
+echo '</tr></tbody>
+</table></div>
+
+</div><!-- #UpdateBlock -->' . "\n";
+
+pagefooter();
 DBclose();
 ?>

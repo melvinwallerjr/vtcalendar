@@ -1,1 +1,1 @@
-<?php echo lang('filter_events');?>
+<?php echo lang('filter_events'); ?>

@@ -1,14 +1,21 @@
 .NoPrint {
-	display: none;
+	display: none !important;
 }
 
 body, p, div, td, blockquote {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	font-size: 13px;
 }
 
-#TopNaviHolder, .NaviBar-Tab, #CalLeftCol, #NavPreviousNext, #iCalendarLink, #PoweredBy, #TopNavi-Logo, .TopNavi-ColorPadding {
+.navBar ul, #auxNav {
 	display: none;
+}
+#TopNaviHolder, .NaviBar-Tab, #CalSideCol, #NavPreviousNext,
+#iCalendarLink, #PoweredBy, #TopNavi-Logo, .TopNavi-ColorPadding {
+	display: none;
+}
+td#CalMainCol, td#CalMainCol.TodayHighlighted {
+	border: none;
 }
 a {
 	text-decoration: none;
@@ -49,7 +56,8 @@ a {
 	border-right: 1px solid #666666;
 	border-bottom: 1px solid #666666;
 }
-#WeekdayTable td, .MonthDay-OtherMonth, .MonthDay-Past, .MonthDay-Today, .MonthDay-Future, #EventDetail td, #MonthTable thead td  {
+#WeekdayTable td, .MonthDay-OtherMonth, .MonthDay-Past,
+.MonthDay-Today, .MonthDay-Future, #EventDetail td, #MonthTable thead td  {
 	border-left: 1px solid #666666;
 	border-top: 1px solid #666666;
 }

@@ -92,7 +92,7 @@ foreach (glob('*.js') as $filename) {
 		 <td>
 			 <?php
 			 $calendar->make_input_field(
-				
+
 				// calendar options go here; see the documentation and/or calendar-setup.js
 				array(
 					'firstDay'       => 1, // show Monday first
@@ -100,7 +100,7 @@ foreach (glob('*.js') as $filename) {
 					'showOthers'     => true,
 					'ifFormat'       => '%Y-%m-%d %I:%M %P',
 					'timeFormat'     => '12'),
-				
+
 				// field attributes go here
 				array(
 					'style'          => 'width: 15em; color: #840; background-color: #ff8; border: 1px solid #000; text-align: center',

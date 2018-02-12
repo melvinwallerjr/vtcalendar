@@ -4,51 +4,61 @@ require_once('application.inc.php');
 if (!authorized()) { exit; }
 if (!$_SESSION['AUTH_ISMAINADMIN'] ) { exit; } // additional security
 
-if (!isset($_POST['edit']) || !setVar($edit,$_POST['edit'],'edit')) unset($edit);
-if (!isset($_POST['delete']) || !setVar($delete,$_POST['delete'],'delete')) unset($delete);
-if (!isset($_POST['userid']) || !setVar($userid,$_POST['userid'],'userid')) unset($userid);
+if (!isset($_POST['edit']) || !setVar($edit, $_POST['edit'], 'edit')) { unset($edit); }
+if (!isset($_POST['delete']) || !setVar($delete, $_POST['delete'], 'delete')) { unset($delete); }
+if (!isset($_POST['userid']) || !setVar($userid, $_POST['userid'], 'userid')) { unset($userid); }
 
-
-if ( isset($edit) ) {
-	redirect2URL("changeuserinfo.php?chooseuser=1&userid=".$userid); exit;
+if (isset($edit)) {
+	redirect2URL('changeuserinfo.php?chooseuser=1&userid=' . $userid);
+	exit;
 }
-elseif ( isset($delete) ) {
-	redirect2URL("deleteuser.php?userid=".$userid); exit;
+elseif (isset($delete)) {
+	redirect2URL('deleteuser.php?userid=' . $userid);
+	exit;
 }
 
-pageheader(lang('manage_users'), "Update");
-contentsection_begin(lang('manage_users'),true);
-?>
-<form method="post" name="mainform" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+pageheader(lang('manage_users', false), 'Update');
+contentsection_begin(lang('manage_users'), true);
 
-<p><a href="changeuserinfo.php"><?php echo lang('add_new_user'); ?></a> <?php echo lang('or_modify_existing_user'); ?></p>
+$numLines = 15;
 
-<?php
-	$numLines = 15;
-?>
-<select name="userid" size="<?php echo $numLines; ?>" style="width:200px">
-<?php
+echo '
+<form name="mainform" action="' . $_SERVER['PHP_SELF'] . '" method="post">
 
-$result =& DBQuery("SELECT * FROM ".SCHEMANAME."vtcal_user ORDER BY id" ); 
-if (is_string($result)) {
-	DBErrorBox($result);
-}
+<p><a href="changeuserinfo.php">' . lang('add_new_user') . '</a> <label for="userid">' . lang('or_modify_existing_user') . '</label></p>
+
+<p><select id="userid" name="userid" size="' . $numLines . '" ondblclick="document.mainform.edit.click()" style="width:200px">';
+$result =& DBQuery("
+SELECT
+	*
+FROM
+	" . SCHEMANAME . "vtcal_user
+ORDER BY
+	id
+");
+if (is_string($result)) { DBErrorBox($result); }
 else {
-	for ($i=0; $i<$result->numRows(); $i++) {
-		$user =& $result->fetchRow(DB_FETCHMODE_ASSOC,$i);
-		?><option value="<?php echo $user['id']; ?>"><?php echo $user['id']; ?></option><?php
-	} // end: for ($i=0; $i<$result->numRows(); $i++)
-	
-	?></select><br>
-	<input type="submit" name="edit" value="<?php echo lang('edit'); ?>">
-	<input type="submit" name="delete" value="<?php echo lang('delete'); ?>"><br>
-	<br>
-	<b><?php echo $result->numRows(); ?> Users total</b>
-	</form>
-	<script language="JavaScript" type="text/javascript"><!--
-	document.mainform.userid.focus();
-	//--></script><?php
+	for ($i=0; $i < $result->numRows(); $i++) {
+		$user =& $result->fetchRow(DB_FETCHMODE_ASSOC, $i);
+		echo '
+<option value="' . $user['id'] . '">' . $user['id'] . '</option>';
+	}
+	echo '
+</select></p>
+
+<p><input type="submit" name="edit" value="' . lang('edit', false) . '" />
+&nbsp;
+<input type="submit" name="delete" value="' . lang('delete', false) . '" /></p>
+
+<p><b>' . $result->numRows() . ' ' . lang('users_total') . '</b></p>
+
+</form>
+
+<script type="text/javascript">/* <![CDATA[ */
+document.mainform.userid.focus();
+/* ]]> */</script>' . "\n";
 }
+
 contentsection_end();
 pagefooter();
 DBclose();

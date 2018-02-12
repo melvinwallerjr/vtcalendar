@@ -33,7 +33,7 @@ Additional Restrictions:
 - The name of the product must not be used to endorse or promote products
   derived from this software without prior written permission. For written
   permission, please contact the copyright holders (see contact information,
-  above). 
+  above).
 
 - The name and trademarks of copyright holder(s) and/or Virginia Polytechnic
   Institute and State University may NOT be used in advertising or publicity

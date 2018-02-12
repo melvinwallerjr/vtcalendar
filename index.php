@@ -1,8 +1,8 @@
 <?php
-if (!file_exists("config.inc.php")) {
-	Header("Location: install/index.php");
+if (!file_exists('config.inc.php')) {
+	header('Location: install/');
 	exit;
 }
-Header("Location: main.php");
+header('Location: main.php');
 exit;
 ?>
